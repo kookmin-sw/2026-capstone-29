@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MirrorTest.unity
     guid: 42ce7bc95d906c241b57f1828e534f60
+  - enabled: 1
+    path: Assets/Scenes/MirrorTestNextScene.unity
+    guid: 0dbec99b4f2532f44bc4d2a6bec8590a
   m_configObjects: {}
