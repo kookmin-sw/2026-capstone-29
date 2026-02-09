@@ -10,6 +10,5 @@ public class Readme : ScriptableObject {
 	[Serializable]
 	public class Section {
 		public string heading, text, linkText, url;
-
 	}
 }
