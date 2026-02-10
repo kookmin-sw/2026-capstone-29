@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/00_Scenes/MirrorTest.unity
+    guid: 42ce7bc95d906c241b57f1828e534f60
+  - enabled: 1
     path: Assets/00_Scenes/UIWithMirror/Title_Prot.unity
     guid: b5d5032b3c753a6418c43ea1b6fa9b80
   - enabled: 1
@@ -20,9 +23,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/00_Scenes/CharSelect.unity
     guid: faf9a6a95ef614a4e9db0b8f14b30a79
-  - enabled: 1
-    path: Assets/00_Scenes/MirrorTest.unity
-    guid: 42ce7bc95d906c241b57f1828e534f60
   - enabled: 1
     path: Assets/00_Scenes/MirrorTestNextScene.unity
     guid: 0dbec99b4f2532f44bc4d2a6bec8590a

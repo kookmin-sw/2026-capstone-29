@@ -19,11 +19,12 @@ public class TempGameManager : MonoBehaviour
         {
             SpawnItem(Vector3.zero);
         }
-
+        /*
         if (Input.GetKeyDown("c"))
         {
             ChangeScene();
         }
+        */
     }
 
 
