@@ -1,4 +1,5 @@
 ﻿ using UnityEngine;
+ using Mirror;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -12,7 +13,7 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM 
     [RequireComponent(typeof(PlayerInput))]
 #endif
-    public class ThirdPersonController : MonoBehaviour
+    public class ThirdPersonController : NetworkBehaviour
     {
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
@@ -134,26 +135,49 @@ namespace StarterAssets
 
         private void Start()
         {
+            // 원격 플레이어면 입력/물리 비활성화만 하고 종료
+            if (!isLocalPlayer)
+            {
+                #if ENABLE_INPUT_SYSTEM
+                if (TryGetComponent(out PlayerInput pInput)) pInput.enabled = false;
+                #endif
+                if (TryGetComponent(out StarterAssetsInputs sInput)) sInput.enabled = false;
+                if (TryGetComponent(out CharacterController cc)) cc.enabled = false;
+
+                // 혹시 ThirdPersonController 자체도 원격에서 돌 필요 없으면 꺼도 됨(선택)
+                // enabled = false;
+
+                return;
+            }
+        }
+
+        public override void OnStartLocalPlayer()
+        {
+            // 로컬 플레이어가 확정되는 시점에 "반드시" 다시 켜기
+        #if ENABLE_INPUT_SYSTEM
+            if (TryGetComponent(out PlayerInput pInput)) pInput.enabled = true;
+            _playerInput = GetComponent<PlayerInput>();
+        #endif
+            if (TryGetComponent(out StarterAssetsInputs sInput)) sInput.enabled = true;
+            if (TryGetComponent(out CharacterController cc)) cc.enabled = true;
+
+            // 기존 Start()에 있던 로컬 초기화 내용 옮겨오기
+            if (_mainCamera == null)
+                _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+
             _cinemachineTargetYaw = CinemachineCameraTarget.transform.rotation.eulerAngles.y;
-            
             _hasAnimator = TryGetComponent(out _animator);
             _controller = GetComponent<CharacterController>();
             _input = GetComponent<StarterAssetsInputs>();
-#if ENABLE_INPUT_SYSTEM 
-            _playerInput = GetComponent<PlayerInput>();
-#else
-			Debug.LogError( "Starter Assets package is missing dependencies. Please use Tools/Starter Assets/Reinstall Dependencies to fix it");
-#endif
 
             AssignAnimationIDs();
-
-            // reset our timeouts on start
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
         }
 
         private void Update()
         {
+            if (!isLocalPlayer) return;
             _hasAnimator = TryGetComponent(out _animator);
 
             JumpAndGravity();
@@ -163,6 +187,8 @@ namespace StarterAssets
 
         private void LateUpdate()
         {
+            // 카메라 회전 역시 내 캐릭터일 때만 계산합니다.
+            if (!isLocalPlayer) return;
             CameraRotation();
         }
 
@@ -213,6 +239,11 @@ namespace StarterAssets
 
         private void Move()
         {
+            // [디버그 추가] 입력 값이 들어오는지 콘솔창에서 확인
+        if (isLocalPlayer && _input.move != Vector2.zero) 
+        {
+            Debug.Log($"[Input] Move: {_input.move}");
+        }
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
