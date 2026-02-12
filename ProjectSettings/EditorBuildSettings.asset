@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/00_Scenes/TitleMirror.unity
+    guid: 74b67a884c7dfed4aaa543795561ead9
+  - enabled: 1
+    path: Assets/00_Scenes/TPSTestScene.unity
+    guid: 7b0d711c710be0b4fb6be1dcdcc0c6d2
   m_configObjects: {}

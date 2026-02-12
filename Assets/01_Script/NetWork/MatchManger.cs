@@ -41,20 +41,20 @@ public class MatchManager : NetworkManager
     {
         base.OnServerSceneChanged(sceneName);
 
-        // 게임 씬에 도착했을 때만 캐릭터를 소환
         if (sceneName == gameSceneName)
         {
             Debug.Log("게임 씬 도착: 플레이어 캐릭터 소환을 시작합니다.");
-            
+
             foreach (var conn in NetworkServer.connections.Values)
             {
-                // 이미 플레이어가 할당되어 있지 않은 연결에 대해서만 생성
-                if (conn.identity == null)
-                {
-                    GameObject player = Instantiate(playerPrefab);
-                    // 이 함수가 실행되어야 클라이언트 화면에 캐릭터가 나타나고 권한이 부여됨
-                    NetworkServer.AddPlayerForConnection(conn, player);
-                }
+                if (conn.identity != null) continue;
+
+                Transform startPos = GetStartPosition(); // NetworkStartPosition 기반 
+                Vector3 pos = startPos ? startPos.position : Vector3.zero;
+                Quaternion rot = startPos ? startPos.rotation : Quaternion.identity;
+
+                GameObject player = Instantiate(playerPrefab, pos, rot);
+                NetworkServer.AddPlayerForConnection(conn, player);
             }
         }
     }
