@@ -402,6 +402,10 @@ namespace StarterAssets
 
         private void OnFootstep(AnimationEvent animationEvent)
         {
+            if (!isLocalPlayer) return;          // 로컬만 재생(권장)
+            if (_controller == null) return;     // 안전장치
+            if (FootstepAudioClips == null || FootstepAudioClips.Length == 0) return;
+
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
                 if (FootstepAudioClips.Length > 0)
@@ -414,6 +418,10 @@ namespace StarterAssets
 
         private void OnLand(AnimationEvent animationEvent)
         {
+            if (!isLocalPlayer) return;          // 로컬만 재생(권장)
+            if (_controller == null) return;
+            if (LandingAudioClip == null) return;
+            
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
