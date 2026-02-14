@@ -5367,6 +5367,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   timeLimit: 300
+  ui: {fileID: 0}
 --- !u!4 &267798462 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9426881e30ddc9c41b828714006af500, type: 3}
@@ -5484,7 +5485,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 518.23}
+  m_AnchoredPosition: {x: 0, y: 188.65}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &431937822

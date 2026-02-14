@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/00_Scenes/MirrorTest.unity
+    guid: 42ce7bc95d906c241b57f1828e534f60
+  - enabled: 1
     path: Assets/00_Scenes/TitleMirror.unity
     guid: 74b67a884c7dfed4aaa543795561ead9
   - enabled: 1
