@@ -12,6 +12,8 @@ namespace StarterAssets
 		public Vector2 look;
 		public bool jump;
 		public bool sprint;
+		public bool punch;
+		public bool charge;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -43,8 +45,11 @@ namespace StarterAssets
 		{
 			SprintInput(value.isPressed);
 		}
-#endif
 
+		// 펀치, 차징키 추가
+		public void OnPunch(InputValue value) { PunchInput(value.isPressed); }
+		public void OnCharge(InputValue value) { ChargeInput(value.isPressed); }
+#endif
 
 		public void MoveInput(Vector2 newMoveDirection)
 		{
@@ -75,6 +80,9 @@ namespace StarterAssets
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
+		
+		public void PunchInput(bool newPunchState) { punch = newPunchState; }
+		public void ChargeInput(bool newChargeState) { charge = newChargeState; }
 	}
 	
 }
