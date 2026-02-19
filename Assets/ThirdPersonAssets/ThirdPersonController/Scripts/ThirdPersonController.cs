@@ -195,7 +195,7 @@ namespace StarterAssets
         private void AssignAnimationIDs()
         {
             _animIDSpeed = Animator.StringToHash("Speed");
-            _animIDGrounded = Animator.StringToHash("Grounded");
+            _animIDGrounded = Animator.StringToHash("IsGrounded");
             _animIDJump = Animator.StringToHash("Jump");
             _animIDFreeFall = Animator.StringToHash("FreeFall");
             _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
@@ -240,10 +240,11 @@ namespace StarterAssets
         private void Move()
         {
             // [디버그 추가] 입력 값이 들어오는지 콘솔창에서 확인
-        if (isLocalPlayer && _input.move != Vector2.zero) 
-        {
-            Debug.Log($"[Input] Move: {_input.move}");
-        }
+            if (isLocalPlayer && _input.move != Vector2.zero) 
+            {
+                Debug.Log($"[Input] Move: {_input.move}");
+            }
+            
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
