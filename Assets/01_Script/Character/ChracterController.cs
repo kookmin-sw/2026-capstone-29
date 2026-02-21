@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterControl : MonoBehaviour
 {
@@ -17,6 +17,8 @@ public class CharacterControl : MonoBehaviour
     public float moveSpeed = 5f;   // 이동 속도
     public float turnSpeed = 10f;  // 회전 속도
     public float jumpForce = 5f;
+
+    public float maxSlopeAngle = 45f;
 
      private Vector3 inputDir;
 
@@ -141,11 +143,20 @@ public class CharacterControl : MonoBehaviour
         }
     }
 
-    // 3D 바닥 체크
+    // 3D 바닥 체크 -> raycast를 sphereCast로 변경하여 비탈길에서도 땅 판정을 적용할 수 있음.
     bool IsGrounded()
     {
-        float distToGround = col.bounds.extents.y;
-        
-        return Physics.Raycast(col.bounds.center, Vector3.down, distToGround + 0.1f);
+        float dist = col.bounds.extents.y + 0.15f;
+        float radius = col.bounds.extents.x * 0.9f;
+
+        if (Physics.SphereCast(col.bounds.center, radius, Vector3.down,
+            out RaycastHit hit, dist - radius + 0.15f))
+        {
+            float angle = Vector3.Angle(Vector3.up, hit.normal);
+
+            // 45도 이하만 바닥, 그 이상은 벽으로 취급
+            return angle <= maxSlopeAngle;
+        }
+        return false;
     }
 }
