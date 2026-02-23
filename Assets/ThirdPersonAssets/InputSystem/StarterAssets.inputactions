@@ -240,7 +240,7 @@
                 {
                     "name": "",
                     "id": "2464e138-7491-497d-95e8-b08320868360",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
                     "groups": ";KeyboardMouse",
@@ -250,9 +250,20 @@
                 },
                 {
                     "name": "",
+                    "id": "be7845b1-20fb-4d4e-9494-c0fac8e719d8",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Punch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "60d84e12-ac1d-4ccc-827a-6b06fdfc18b0",
                     "path": "<Keyboard>/x",
-                    "interactions": "",
+                    "interactions": "Hold(duration=1.5)",
                     "processors": "",
                     "groups": ";KeyboardMouse",
                     "action": "Charge",
