@@ -31,8 +31,9 @@ Material:
     m_Ints: []
     m_Floats:
     - Vector1_17E53C12: 1
-    - Vector1_244B0600: 10
+    - Vector1_244B0600: 3
     - Vector1_36E8227: 0.1
+    - Vector1_3D886DA1: 0.92
     - Vector1_46E42935: 0.597
     - Vector1_47683D42: 0.411
     - Vector1_A0EAD698: 0.1
@@ -42,9 +43,9 @@ Material:
     - Vector1_E03AB928: 0.025
     - Vector1_E5C51606: 11.95
     - Vector1_F38B44AA: 0.35
-    - _WaveFrequency: -800
-    - _WaveScale: 0.12
-    - _WaveSpeed: 20
+    - _WaveFrequency: 100
+    - _WaveScale: 0.02
+    - _WaveSpeed: 10
     m_Colors:
     - Color_7D9A58EC: {r: 0.049127813, g: 0.21262987, b: 0.4528302, a: 0.9843137}
     - Color_F01C36BF: {r: 0.09656405, g: 0.46262187, b: 0.6603774, a: 0}
