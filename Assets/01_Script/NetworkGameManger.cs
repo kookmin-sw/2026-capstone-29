@@ -10,10 +10,8 @@ public class NetworkGameManger : NetworkBehaviour
 
     [Header("UI 연결")]
     public Text timerText; // 중앙 타이머 텍스트
-    public RectTransform p1HealthGroup; // 플레이어 1 체력그룹
-    public RectTransform p1Health; // 줄어들 체력바
-    public RectTransform p2HealthGroup;
-    public RectTransform p2Health; 
+    public Image p1HealthBar; // 줄어들 체력바
+    public Image p2HealthBar; 
     
     [Header("Game Settting")]
     [SyncVar(hook = nameof(OnTimerChanged))] // 시간 변경시 변경 함수 호출
@@ -45,6 +43,23 @@ public class NetworkGameManger : NetworkBehaviour
 
         // 0초되면 게임 종료 로직 실행하기(임시)
         Debug.Log("Game Over : Time Up!");
+    }
+
+    // 캐릭터 스폰시 UI와 연결 - NetworkCharacterModel 내부의 체력
+    public void RegisterPlayer(NetworkCharacterModel model)
+    {
+        if(player1 == null)
+        {
+            player1 = model;
+            player1.OnHealthChanged += (health) => p1HealthBar.fillAmount = health / 100f; // 이벤트 연결
+            p1HealthBar.fillAmount = player1.currentHealth / 100f; // 초기값 설정
+        }
+        else if(player2 == null)
+        {
+            player2 = model;
+            player2.OnHealthChanged += (health) => p2HealthBar.fillAmount = health / 100f; // 이벤트 연결
+            p2HealthBar.fillAmount = player2.currentHealth / 100f; // 초기값 설정
+        }
     }
 
     // 타이머 텍스트 변경 함수

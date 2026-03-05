@@ -67,4 +67,13 @@ public class NetworkCharacterModel : NetworkBehaviour
         }
     }
 
+    // 게임 매니저 연결
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+
+        // 신 내부의 GameManager를 찾아 자신을 등록
+        if(NetworkGameManger.instance != null)
+            NetworkGameManger.instance.RegisterPlayer(this);
+    }
 }
