@@ -2061,6 +2061,7 @@ GameObject:
   - component: {fileID: 333161416401883765}
   - component: {fileID: 4718869586242285096}
   - component: {fileID: 7800181713239899064}
+  - component: {fileID: 7160506015266680202}
   - component: {fileID: 5667111270259709118}
   - component: {fileID: 2604010561112184392}
   - component: {fileID: 7228191456826477894}
@@ -2070,7 +2071,6 @@ GameObject:
   - component: {fileID: 3108973503478204641}
   - component: {fileID: 8816865865353920358}
   - component: {fileID: 8168581654164968438}
-  - component: {fileID: 7160506015266680202}
   m_Layer: 8
   m_Name: TestChar141
   m_TagString: Player
@@ -2164,6 +2164,22 @@ MonoBehaviour:
   syncInterval: 0
   clientAuthority: 1
   animator: {fileID: 5667111270259709118}
+--- !u!114 &7160506015266680202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8682926521355642049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70c9af9ee41ae824d93209ef75cc4865, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  currentHealth: 100
 --- !u!95 &5667111270259709118
 Animator:
   serializedVersion: 5
@@ -2210,7 +2226,7 @@ CharacterController:
   m_StepOffset: 0.25
   m_SkinWidth: 0.02
   m_MinMoveDistance: 0
-  m_Center: {x: 0, y: 0.6, z: 0}
+  m_Center: {x: 0, y: 0.65, z: 0}
 --- !u!114 &7228191456826477894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2441,22 +2457,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   comboResetTime: 1
---- !u!114 &7160506015266680202
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8682926521355642049}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 70c9af9ee41ae824d93209ef75cc4865, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  currentHealth: 100
 --- !u!1 &8716808006679135750
 GameObject:
   m_ObjectHideFlags: 0
