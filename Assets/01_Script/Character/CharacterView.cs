@@ -12,6 +12,14 @@ public class CharacterView : MonoBehaviour
     [Header("전투 히트박스")]
     public CharacterHitBox rightHandHitbox;
     public CharacterHitBox leftHandHitbox;
+    
+    [Header("Sound Settings")]
+    public AudioSource audioSource;
+    public AudioClip punchSounds;
+    public AudioClip hitSounds;
+    public AudioClip chargeSounds;
+    public AudioClip readySounds;
+
 
     private void Awake()
     {
@@ -49,6 +57,8 @@ public class CharacterView : MonoBehaviour
         if (hp > 0)
         {
             anim.SetTrigger("GetHit");
+            audioSource.PlayOneShot(punchSounds);
+            audioSource.PlayOneShot(hitSounds);
         }
     }
 
@@ -74,15 +84,18 @@ public class CharacterView : MonoBehaviour
     {
         if (!isCharging)
         {
+            
             // 차지 안 할 땐 둘 다 끄기
             if (chargingEffect) chargingEffect.SetActive(false);
             if (chargeReadyEffect) chargeReadyEffect.SetActive(false);
             return;
         }
+        audioSource.PlayOneShot(chargeSounds);
 
         if (isReady)
         {
             // 완료되면: 1단계 끄고 2단계 켜기
+            audioSource.PlayOneShot(readySounds);
             if (chargingEffect) chargingEffect.SetActive(false);
             if (chargeReadyEffect) chargeReadyEffect.SetActive(true);
         }
