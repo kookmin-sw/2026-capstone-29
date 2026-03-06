@@ -3,32 +3,42 @@ using UnityEngine;
 public class CharacterView : MonoBehaviour
 {
     private Animator anim;
-    private CharacterModel model;
+    private NetworkCharacterModel model;
 
     [Header("이펙트")]
     public GameObject chargingEffect;
     public GameObject chargeReadyEffect;
 
+    [Header("전투 히트박스")]
+    public CharacterHitBox rightHandHitbox;
+    public CharacterHitBox leftHandHitbox;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        model = GetComponent<CharacterModel>();
+        model = GetComponent<NetworkCharacterModel>();
     }
 
     private void OnEnable()
     {
-        // 모델의 이벤트 구독 (데이터가 변하면 UI/애니메이션 갱신)
-        model.OnHealthChanged += HandleHealthChange;
-        model.OnDie += HandleDie;
-        model.OnComboChanged += HandleCombo;
+        if (model != null)
+        {
+            model.OnComboChanged += HandleCombo;
+            model.OnStrongAttack += PlayStrongAttackEffect;
+            model.OnHealthChanged += HandleHealthChange;
+            model.OnDie += HandleDie;
+        }
     }
 
     private void OnDisable()
     {
-        // 구독 해제 (메모리 누수 방지)
-        model.OnHealthChanged -= HandleHealthChange;
-        model.OnDie -= HandleDie;
-        model.OnComboChanged -= HandleCombo;
+        if (model != null)
+        {
+            model.OnComboChanged -= HandleCombo;
+            model.OnStrongAttack -= PlayStrongAttackEffect;
+            model.OnHealthChanged -= HandleHealthChange;
+            model.OnDie -= HandleDie;
+        }
     }
 
     // --- 이벤트 핸들러 ---
@@ -36,7 +46,7 @@ public class CharacterView : MonoBehaviour
     void HandleHealthChange(float hp)
     {
         // 체력이 깎였는데 아직 살았으면 피격 모션
-        if (hp > 0) 
+        if (hp > 0)
         {
             anim.SetTrigger("GetHit");
         }
@@ -100,5 +110,35 @@ public class CharacterView : MonoBehaviour
     {
         // 0.1보다 크면 달리는 모션 (Blend Tree 사용 시 유용)
         anim.SetFloat("Speed", currentSpeed);
+    }
+
+    public void EnableRightPunchHitbox()
+    {
+        if (rightHandHitbox != null)
+            rightHandHitbox.EnableHitbox();
+        if (leftHandHitbox != null)
+            leftHandHitbox.EnableHitbox();
+    }
+
+    // 애니메이션 이벤트가 호출할 함수 2 (주먹 회수할 때 끄기)
+    public void DisableRightPunchHitbox()
+    {
+        if (rightHandHitbox != null)
+            rightHandHitbox.DisableHitbox();
+        if (leftHandHitbox != null)
+            leftHandHitbox.DisableHitbox();
+    }
+    
+    public void EnableLeftPunchHitbox()
+    {
+        if (leftHandHitbox != null)
+            leftHandHitbox.EnableHitbox();
+    }
+
+    // 애니메이션 이벤트가 호출할 함수 2 (주먹 회수할 때 끄기)
+    public void DisableLeftPunchHitbox()
+    {
+        if (leftHandHitbox != null) 
+            leftHandHitbox.DisableHitbox();
     }
 }
