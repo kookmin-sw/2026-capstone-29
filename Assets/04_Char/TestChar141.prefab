@@ -2242,8 +2242,8 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  MoveSpeed: 2
-  SprintSpeed: 5.335
+  MoveSpeed: 5
+  SprintSpeed: 5
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
   LandingAudioClip: {fileID: 8300000, guid: ff697d3070687ce4583faa0561a145a2, type: 3}
@@ -2441,6 +2441,11 @@ MonoBehaviour:
   chargeReadyEffect: {fileID: 6685519116993151449}
   rightHandHitbox: {fileID: 1844788542519875462}
   leftHandHitbox: {fileID: 8062618640898966722}
+  audioSource: {fileID: 0}
+  punchSounds: {fileID: 0}
+  hitSounds: {fileID: 0}
+  chargeSounds: {fileID: 0}
+  readySounds: {fileID: 0}
 --- !u!114 &8168581654164968438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3136,8 +3141,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.08
-  m_Center: {x: 0, y: 0.1, z: 0}
+  m_Radius: 0.1
+  m_Center: {x: 0, y: 0.15, z: 0}
 --- !u!1 &8806590035380368081 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2715566404302941441, guid: ed58d7124b08d8949b7ffcf2612fe853, type: 3}
@@ -3176,5 +3181,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.08
-  m_Center: {x: -1.5863429e-11, y: 0.1, z: 3.3308096e-11}
+  m_Radius: 0.1
+  m_Center: {x: 0, y: 0.15, z: 0}
