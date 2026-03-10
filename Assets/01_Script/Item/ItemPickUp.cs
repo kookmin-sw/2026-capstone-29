@@ -4,23 +4,6 @@
 public class ItemPickUp : MonoBehaviour
 {
     [SerializeField] GameObject player;
-    ItemManager IM;
-    
-
-    [SerializeField] private ScriptableObject WeaponAsset;
-    [SerializeField] private ScriptableObject ActiveAsset;
-    [SerializeField] private ScriptableObject PassiveAsset;
-
-    private IWeapon weapon;
-    private IActive active;
-    private IPassive passive;
-
-    
-    private void Start()
-    {
-        IM = player.GetComponent<ItemManager>();
-
-    }
 
     private void OnTriggerEnter(Collider other)
     {

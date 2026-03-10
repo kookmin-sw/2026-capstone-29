@@ -28,10 +28,15 @@ public class ItemManager : MonoBehaviour
             weaponTimer += Time.deltaTime;
             if (weaponAvailable <= weaponTimer)
             {
+                Debug.Log("아이템 해제.");
                 hasWeapon = false;
                 weapon = null;
                 weaponTimer = 0;
                 weaponAvailable = 0;
+            }
+            else
+            {
+                Debug.Log(weapon != null);
             }
         }
         if (hasActive) 
@@ -52,8 +57,19 @@ public class ItemManager : MonoBehaviour
             hasPassive = false;
             passive = null;
         }
+        
 
     }
+
+    public void ApplyWeaponTimer(float available)
+    {
+        weaponAvailable = available;
+    }
+    public void ApplyActiveTimer(float available)
+    {
+        activeAvailable = available;
+    }
+
     public bool HasWeapon()
     {
         return hasWeapon;

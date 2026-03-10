@@ -18,12 +18,16 @@ public interface IEquipment // legacy
 public interface IWeapon // 근접 무기
 {
     public void Attack();
+    public float AvailableTime();
 }
 
 
 
 public interface IActive // 액티브 아이템
 {
+
+    public void Effect();
+    public float AvailableTime();
 }
 
 public interface IPassive // 패시브 아이템

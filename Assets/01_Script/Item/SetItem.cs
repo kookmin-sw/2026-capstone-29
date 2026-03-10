@@ -14,13 +14,17 @@ public class SetItem : MonoBehaviour, IEquip
 
             if (item.CompareTag("Weapon"))
             {
+
                 im.weapon = itemAsset as IWeapon;
                 im.GetWeapon();
+                im.weaponAvailable = im.weapon.AvailableTime();
+                Debug.Log("아이템 장착!");
             }
             if (item.CompareTag("Active"))
             {
                 im.active = itemAsset as IActive;
                 im.GetActive();
+                im.activeAvailable = im.active.AvailableTime();
             }
             if (item.CompareTag("Passive"))
             {
