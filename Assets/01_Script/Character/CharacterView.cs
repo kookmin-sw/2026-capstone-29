@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterView : MonoBehaviour
 {
@@ -110,19 +110,19 @@ public class CharacterView : MonoBehaviour
     // 컨트롤러가 직접 호출할 수도 있는 메서드 (강공격 등)
     public void PlayStrongAttackEffect()
     {
-        anim.SetTrigger("DoStrongAttack");
+        //anim.SetTrigger("DoStrongAttack");
     }
 
     public void UpdatePhysicsAnimation(float yVelocity, bool isGrounded)
     {
-        anim.SetFloat("VerticalSpeed", yVelocity);
-        anim.SetBool("IsGrounded", isGrounded);
+        //anim.SetFloat("VerticalSpeed", yVelocity);
+        //anim.SetBool("IsGrounded", isGrounded);
     }
 
     public void UpdateMovementAnimation(float currentSpeed)
     {
         // 0.1보다 크면 달리는 모션 (Blend Tree 사용 시 유용)
-        anim.SetFloat("Speed", currentSpeed);
+        //anim.SetFloat("Speed", currentSpeed);
     }
 
     public void EnableRightPunchHitbox()
