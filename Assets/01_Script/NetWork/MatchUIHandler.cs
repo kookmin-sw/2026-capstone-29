@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MatchUIHandler : MonoBehaviour
 {
-
     public NetworkDiscovery networkDiscovery;
     
     [Header("UI Panels")]
@@ -30,84 +29,37 @@ public class MatchUIHandler : MonoBehaviour
     // [매치 메이킹] 버튼에 연결
     public void ClickMatchmaking()
     {
-
-        if (NetworkServer.active || NetworkClient.active) return;
-        CancelInvoke(nameof(StartAsHost)); // 기존 Invoke 예약 취소
-
         if (matchingPanel != null) matchingPanel.SetActive(true);
         if (successPanel != null) successPanel.SetActive(false);
 
-#if UNITY_EDITOR
-        // 에디터는 무조건 Host
-        Debug.Log("에디터 Host 모드");
-        StartAsHost();
-
-#elif UNITY_WEBGL
-        // WebGL 빌드: URL로 Host/Client 구분
-        string url = Application.absoluteURL;
-        if (url.Contains("host=true"))
-        {
-            Debug.Log("WebGL Host 모드");
-            StartAsHost();
-        }
-        else
-        {
-            Debug.Log("WebGL Client 모드 - localhost로 접속 시도");
-            NetworkManager.singleton.networkAddress = "localhost";
-            NetworkManager.singleton.StartClient();
-        }
-
-#else
-        // Windows 빌드: Discovery로 자동 매칭
         networkDiscovery.StartDiscovery();
         float randomDelay = 3.0f + Random.Range(0f, 1.0f);
         Invoke(nameof(StartAsHost), randomDelay);
-
-#endif
     }
 
-#if !UNITY_WEBGL
     // LAN 검색으로 방을 찾았을 때 실행
     public void OnServerFound(ServerResponse response)
     {
         // [조건 추가] 이미 내가 호스트(서버)이거나 클라이언트로 접속 중이라면 무시합니다.
-        if (NetworkServer.active || NetworkClient.active)
+        if (NetworkServer.active || NetworkClient.active) 
         {
-            return;
+            return; 
         }
-
-        #if UNITY_EDITOR
-            return;
-        #endif
-
+        
         // 위 조건이 통과되어야만 아래 코드가 실행됩니다.
         Debug.Log("외부 서버를 발견했습니다. 접속을 시도합니다.");
         CancelInvoke(nameof(StartAsHost));
         networkDiscovery.StopDiscovery();
         NetworkManager.singleton.StartClient(response.uri);
     }
-#endif
+
     void StartAsHost()
     {
-        if (NetworkServer.active || NetworkClient.active) return;
-
-    #if !UNITY_WEBGL
         networkDiscovery.StopDiscovery();
-        // Host는 Multiplex로 둘 다 Listen
-        var multiplex = NetworkManager.singleton.GetComponent<MultiplexTransport>();
-        if (multiplex != null)
-            Transport.active = multiplex;
-        else
-            Debug.LogError("MultiplexTransport를 찾을 수 없습니다!");
-    #endif
-
-        NetworkManager.singleton.StartHost();
-        Debug.Log("HOST 시작됨");
-
-    #if !UNITY_WEBGL
-        networkDiscovery.AdvertiseServer();
-    #endif
+        NetworkManager.singleton.StartHost(); // 호스트 시작 (Online Scene이 없어서 타이틀 유지)
+        networkDiscovery.AdvertiseServer();   // 이제 내 방을 주변에 알림
     }
+
     // 서버가 보낸 메시지를 받았을 때 UI 변경
     void OnMatchSuccess(MatchSuccessMessage msg)
     {

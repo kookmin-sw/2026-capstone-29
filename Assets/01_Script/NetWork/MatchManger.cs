@@ -2,7 +2,6 @@ using Mirror;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using kcp2k;
 
 public class MatchManager : NetworkManager
 {
@@ -11,18 +10,6 @@ public class MatchManager : NetworkManager
     public float sceneChangeDelay = 3.0f; // 매칭 성공 후 대기 시간
     private bool isMatchStarted = false;
 
-
-    public override void Awake()
-    {
-        base.Awake();
-
-    #if UNITY_WEBGL
-        Transport.active = GetComponent<Mirror.SimpleWeb.SimpleWebTransport>();
-    #else
-        // Windows/에디터는 KCP만
-        Transport.active = GetComponent<KcpTransport>();
-    #endif
-    }
     // 1. 서버에 새로운 클라이언트가 '연결'되었을 때 호출 (캐릭터 생성 전)
     public override void OnServerConnect(NetworkConnectionToClient conn)
     {
@@ -33,10 +20,10 @@ public class MatchManager : NetworkManager
         {
             isMatchStarted = true;
             Debug.Log("2명 연결 확인! 매칭 성공 메시지를 보냅니다.");
-
+            
             // 모든 클라이언트에게 매칭 성공 알림 (UI 표시용)
             NetworkServer.SendToAll(new MatchSuccessMessage());
-
+            
             // 씬 전환 코루틴 시작
             StartCoroutine(ChangeSceneRoutine());
         }
