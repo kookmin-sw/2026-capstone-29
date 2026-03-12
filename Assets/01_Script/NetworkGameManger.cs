@@ -1,21 +1,37 @@
 using Mirror;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class NetworkGameManger : NetworkBehaviour
 {
     public static NetworkGameManger instance; 
+    public static event Action OnGameOverEvent; // 게임 오버시 발생하는 이벤트
 
     [Header("UI 연결")]
     public Text timerText; // 중앙 타이머 텍스트
     public Image p1HealthBar; // 줄어들 체력바
     public Image p2HealthBar; 
-    
+    public GameObject gameOverPanel; // 게임 오버 패널
+    public Text gameOverText; // 게임 종료 텍스트
+    public Button TitleButton; // 타이틀로 돌아가는 버튼
+
+    [Header("Scene Setting")]
+    public string titleSceneName = "TitleMirror";
+
     [Header("Game Settting")]
     [SyncVar(hook = nameof(OnTimerChanged))] // 시간 변경시 변경 함수 호출
     public int remainingTime = 300; // 300초 타이머 
+
+    // 게임 종료시 
+    [SyncVar(hook = nameof(OnGameOverStateChanged))]
+    private bool isGameOver = false;
+
+    [SyncVar]
+    private int gameOverWinnerIndex = -1; // 1 = P1 승, 2 = P2 승, 0 = 무승부
 
     private NetworkCharacterModel player1;
     private NetworkCharacterModel player2;
@@ -35,14 +51,124 @@ public class NetworkGameManger : NetworkBehaviour
     [Server]
     private IEnumerator TimerCoroutine()
     {
-        while(remainingTime > 0)
+        while(remainingTime > 0 && !isGameOver)
         {
             yield return new WaitForSeconds(1f);
             remainingTime--;
         }
+        
+        // 시간 초과시 목숨, 체력으로 승자 결정
+        if(!isGameOver)
+        {
+            DetermineWinnerByHealth();
+        }
+    }
 
-        // 0초되면 게임 종료 로직 실행하기(임시)
-        Debug.Log("Game Over : Time Up!");
+    // 시간초과시 승부 결정 로직 - 임시로 체력만
+    [Server]
+    private void DetermineWinnerByHealth()
+    {
+        if (player1 == null || player2 == null)
+        {
+            TriggerGameOver(0); // 무승부
+            return;
+        }
+
+        if (player1.currentHealth > player2.currentHealth)
+            TriggerGameOver(1);
+        else if (player2.currentHealth > player1.currentHealth)
+            TriggerGameOver(2);
+        else
+            TriggerGameOver(0); // 동점 무승부
+    }
+
+    // NetworkCharacterModel에서 호출됨
+    public void OnPlayerGameOver(NetworkCharacterModel deadPlayer)
+    {
+        if (!isServer || isGameOver) return;
+ 
+        if (deadPlayer == player1)
+            TriggerGameOver(2); // P1이 졌으니 P2 승
+        else if (deadPlayer == player2)
+            TriggerGameOver(1); // P2가 졌으니 P1 승
+    }
+
+    // 게임 종료 트리거 
+    [Server]
+    private void TriggerGameOver(int winnerIndex)
+    {
+        isGameOver = true;
+        gameOverWinnerIndex = winnerIndex;
+        Debug.Log($"Game Over! Winner Index: {winnerIndex}");
+    }
+
+    // SyncVar hook - 모든 클라이언트에서 호출됨
+    void OnGameOverStateChanged(bool oldV, bool newV)
+    {
+        if (newV)
+            ShowGameOverUI();
+    }
+    
+    // 게임 종료시 UI 등장
+    private void ShowGameOverUI()
+    {
+        // 마우스 다시 컨트롤 할 수 있도록
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        // 카메라, 입력 잠금
+        OnGameOverEvent?.Invoke();
+        
+        if (gameOverPanel != null)
+            gameOverPanel.SetActive(true);
+ 
+        if (gameOverText != null)
+        {
+            switch (gameOverWinnerIndex)
+            {
+                case 1: gameOverText.text = "Player 1  Win!"; break;
+                case 2: gameOverText.text = "Player 2  Win!"; break;
+                default: gameOverText.text = "Draw!"; break;
+            }
+        }
+
+    }
+
+    // 타이틀로 돌아가기 버튼 클릭
+    public void OnReturnToTitleClicked()
+    {
+        // 호스트/서버이면 모든 클라이언트를 끊고 서버도 종료
+        if (NetworkServer.active && NetworkClient.isConnected)
+        {
+            // 호스트 모드: 모든 클라이언트에게 씬 이동 명령 후 서버 종료
+            RpcReturnToTitle();
+            StartCoroutine(StopHostAndLoadTitle());
+        }
+        else if (NetworkClient.isConnected)
+        {
+            // 클라이언트만 연결 해제
+            NetworkManager.singleton.StopClient();
+            SceneManager.LoadScene(titleSceneName);
+        }
+    }
+
+    // 호스트가 종료시
+    [ClientRpc]
+    private void RpcReturnToTitle()
+    {
+        // 서버가 아닌 클라이언트에게만 실행
+        if (!isServer)
+        {
+            NetworkManager.singleton.StopClient();
+            SceneManager.LoadScene(titleSceneName);
+        }
+    }
+ 
+    private IEnumerator StopHostAndLoadTitle()
+    {
+        yield return new WaitForSeconds(0.5f); // 클라이언트 RPC 전달 대기
+        NetworkManager.singleton.StopHost();
+        SceneManager.LoadScene(titleSceneName);
     }
 
     // 캐릭터 스폰시 UI와 연결 - NetworkCharacterModel 내부의 체력
