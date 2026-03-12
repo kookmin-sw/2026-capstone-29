@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 494991009480bff4c9a6cb3778b231a8, type: 3}
   m_Name: Status_Arrow
   m_EditorClassIdentifier: 
-  availableTime: 0
-  useableTime: 0
-  damage: 0
-  range: 0
+  availableTime: 10
+  useableTime: 10
+  damage: 10
+  range: 1000
   projectileDrop: 0
   startUpDelay: 0
   RecoveryDelay: 0

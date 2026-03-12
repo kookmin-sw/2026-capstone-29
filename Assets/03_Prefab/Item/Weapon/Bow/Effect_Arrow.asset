@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f167aa618b3f140902acb658d1ca74, type: 3}
   m_Name: Effect_Arrow
   m_EditorClassIdentifier: 
-  weapon: {fileID: 0}
+  weapon: {fileID: 3355009657678065256, guid: 57339faf1aa996147b26ef9308320329, type: 3}
+  availableTime: 100
