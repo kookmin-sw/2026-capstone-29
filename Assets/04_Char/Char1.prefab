@@ -5357,7 +5357,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e823cd5b5d27c0f4b8256e7c12ee3e6d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6512,6 +6512,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chargingEffect: {fileID: 2385403253084280600}
   chargeReadyEffect: {fileID: 6724087298290976301}
+  rightHandHitbox: {fileID: 0}
+  leftHandHitbox: {fileID: 0}
+  audioSource: {fileID: 0}
+  punchSounds: {fileID: 0}
+  hitSounds: {fileID: 0}
+  chargeSounds: {fileID: 0}
+  readySounds: {fileID: 0}
 --- !u!114 &8519451768833821646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6530,6 +6537,7 @@ MonoBehaviour:
   moveSpeed: 5
   turnSpeed: 10
   jumpForce: 5
+  maxSlopeAngle: 45
   comboResetTime: 1
   chargeTimeNeeded: 2
 --- !u!65 &8879236746008013396
@@ -11378,7 +11386,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e823cd5b5d27c0f4b8256e7c12ee3e6d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

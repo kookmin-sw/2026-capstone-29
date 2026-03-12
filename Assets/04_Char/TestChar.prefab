@@ -1366,6 +1366,11 @@ MonoBehaviour:
   chargeReadyEffect: {fileID: 7203063539510080544}
   rightHandHitbox: {fileID: 1290185699004887366}
   leftHandHitbox: {fileID: 2023801890849557609}
+  audioSource: {fileID: 0}
+  punchSounds: {fileID: 0}
+  hitSounds: {fileID: 0}
+  chargeSounds: {fileID: 0}
+  readySounds: {fileID: 0}
 --- !u!114 &-8124410460140795185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2733,6 +2738,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7551214510463213710, guid: 3f37ec0a1f92e3e43bfe41b86859602b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e823cd5b5d27c0f4b8256e7c12ee3e6d, type: 2}
     - target: {fileID: 9074910485312926251, guid: 3f37ec0a1f92e3e43bfe41b86859602b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
