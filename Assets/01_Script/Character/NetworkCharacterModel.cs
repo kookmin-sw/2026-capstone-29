@@ -1,6 +1,7 @@
 using UnityEngine;
 using Mirror;
 using System;
+using Mirror.Examples.Common;
 
 public class NetworkCharacterModel : NetworkBehaviour
 {
@@ -16,6 +17,14 @@ public class NetworkCharacterModel : NetworkBehaviour
     [SyncVar(hook = nameof(OnDieHook))] 
     private bool isDead = false;
 
+    // 목숨 세팅
+    [Header("Lives Setting")]
+    public int maxLives = 1;
+
+    // 남아있는 목숨 -> 서버에서 클라이언트에 전파
+    [SyncVar(hook = nameof(OnLivesChangedHook))]
+    private int remaingLives;
+
     public int ComboCount => comboCount;
     public bool IsCharging => isCharging;
     public float CurrentHealth => currentHealth;
@@ -26,6 +35,14 @@ public class NetworkCharacterModel : NetworkBehaviour
     public event Action<bool> OnChargeStateChanged;
     public event Action OnStrongAttack;
     public event Action<float> OnHealthChanged;
+    public event Action<int> OnLivesChanged;
+    public event Action OnGameOver; // 모든 목숨 소진시
+
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+        remaingLives = maxLives;
+    }
 
     [Command]
     public void CmdNextCombo() { comboCount = (comboCount % 3) + 1; }
@@ -58,13 +75,57 @@ public class NetworkCharacterModel : NetworkBehaviour
 
     void OnComboChangedHook(int oldV, int newV) => OnComboChanged?.Invoke(newV);
     void OnChargeStateChangedHook(bool oldV, bool newV) => OnChargeStateChanged?.Invoke(newV);
-    void OnHealthChangedHook(float oldV, float newV) => OnHealthChanged?.Invoke(newV);
+    void OnHealthChangedHook(float oldV, float newV) 
+    {
+        Debug.Log($"Health Changed: {oldV} -> {newV}"); 
+        OnHealthChanged?.Invoke(newV);
+    }
+    
+    // 목숨 변경시
+    void OnLivesChangedHook(int oldV, int newV) => OnLivesChanged?.Invoke(newV);
+
+    // 사망 시
     void OnDieHook(bool oldV, bool newV)
     {
         if (newV == true && oldV == false) 
         {
             OnDie?.Invoke();
+
+            // 목숨 차감은 서버에서만
+            if(isServer)
+            {
+                remaingLives--;
+
+                // 목숨 남은 경우 부활
+                if(remaingLives > 0)
+                {
+                    StartCoroutine(RespawnCoroutine());
+                }
+                else
+                {
+                    RpcNotifyGameOver();
+                }
+            }
         }
+    }
+
+    // 부활 코루틴
+    [Server]
+    private System.Collections.IEnumerator RespawnCoroutine()
+    {
+        yield return new WaitForSeconds(2f); // 2초 후 부활
+        currentHealth = 100f;
+        isDead = false;
+    }
+
+    [ClientRpc]
+    private void RpcNotifyGameOver()
+    {
+        OnGameOver?.Invoke();
+ 
+        // GameManager에 게임 오버 알림
+        if (NetworkGameManger.instance != null)
+            NetworkGameManger.instance.OnPlayerGameOver(this);
     }
 
     // 게임 매니저 연결

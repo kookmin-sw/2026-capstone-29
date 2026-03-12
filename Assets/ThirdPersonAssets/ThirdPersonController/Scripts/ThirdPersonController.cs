@@ -1,4 +1,4 @@
-﻿ using UnityEngine;
+﻿using UnityEngine;
  using Mirror;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
@@ -109,6 +109,9 @@ namespace StarterAssets
 
         private bool _hasAnimator;
 
+        // 게임 오버 플래그 - true가 되면 입력/카메라 모두 차단
+        private bool _isGameOver = false;
+
         private bool IsCurrentDeviceMouse
         {
             get
@@ -121,6 +124,21 @@ namespace StarterAssets
             }
         }
 
+
+        private void OnEnable()
+        {
+            NetworkGameManger.OnGameOverEvent += HandleGameOver;
+        }
+
+        private void OnDisable()
+        {
+            NetworkGameManger.OnGameOverEvent -= HandleGameOver;
+        }
+
+        private void HandleGameOver()
+        {
+            _isGameOver = true;
+        }
 
         private void Awake()
         {
@@ -176,6 +194,7 @@ namespace StarterAssets
         private void Update()
         {
             if (!isLocalPlayer) return;
+            if (_isGameOver) return; // 게임 오버 시 이동·점프 입력 차단
             _hasAnimator = TryGetComponent(out _animator);
 
             JumpAndGravity();
@@ -187,6 +206,7 @@ namespace StarterAssets
         {
             // 카메라 회전 역시 내 캐릭터일 때만 계산합니다.
             if (!isLocalPlayer) return;
+            if (_isGameOver) return; // 게임 오버 시 카메라 회전 차단
             CameraRotation();
         }
 
@@ -234,13 +254,7 @@ namespace StarterAssets
         }
 
         private void Move()
-        {
-            // [디버그 추가] 입력 값이 들어오는지 콘솔창에서 확인
-            if (isLocalPlayer && _input.move != Vector2.zero) 
-            {
-                Debug.Log($"[Input] Move: {_input.move}");
-            }
-            
+        {           
             // set target speed based on move speed, sprint speed and if sprint is pressed
             float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
 
