@@ -71,7 +71,6 @@ public class CharacterControl : MonoBehaviour
         if (view != null)
         {
             view.UpdateMovementAnimation(inputDir.magnitude); // 0이면 정지, 1이면 이동
-            view.UpdatePhysicsAnimation(rb.velocity.y, IsGrounded());
         }
     }
 

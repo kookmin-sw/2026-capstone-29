@@ -58,6 +58,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SelfHarm",
+                    "type": "Button",
+                    "id": "e00f3227-01f8-41a6-8396-f784856dea8e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -267,6 +276,28 @@
                     "processors": "",
                     "groups": ";KeyboardMouse",
                     "action": "Charge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2745b954-7afd-4da2-a795-3eea33104bf7",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "Hold(duration=1.5)",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "Charge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b9760f96-3f71-4250-8e93-587fc311efd4",
+                    "path": "<Keyboard>/0",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "SelfHarm",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

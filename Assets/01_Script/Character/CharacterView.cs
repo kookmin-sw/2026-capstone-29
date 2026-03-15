@@ -57,8 +57,11 @@ public class CharacterView : MonoBehaviour
         if (hp > 0)
         {
             anim.SetTrigger("GetHit");
-            audioSource.PlayOneShot(punchSounds);
-            audioSource.PlayOneShot(hitSounds);
+            if (audioSource != null)
+            {
+                audioSource.PlayOneShot(punchSounds);
+                audioSource.PlayOneShot(hitSounds);
+            }
         }
     }
 
@@ -90,7 +93,8 @@ public class CharacterView : MonoBehaviour
             if (chargeReadyEffect) chargeReadyEffect.SetActive(false);
             return;
         }
-        audioSource.PlayOneShot(chargeSounds);
+        if (audioSource != null)
+            audioSource.PlayOneShot(chargeSounds);
 
         if (isReady)
         {
@@ -113,11 +117,6 @@ public class CharacterView : MonoBehaviour
         anim.SetTrigger("DoStrongAttack");
     }
 
-    public void UpdatePhysicsAnimation(float yVelocity, bool isGrounded)
-    {
-        anim.SetFloat("VerticalSpeed", yVelocity);
-        anim.SetBool("IsGrounded", isGrounded);
-    }
 
     public void UpdateMovementAnimation(float currentSpeed)
     {
