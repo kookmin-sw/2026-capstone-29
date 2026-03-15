@@ -13,10 +13,8 @@ public class MatchUIHandler : MonoBehaviour
     private void Start()
     {
         // 클라이언트에서 매칭 성공 메시지를 받으면 실행할 함수 등록
-        if (!NetworkClient.active)
-        {
-            NetworkClient.RegisterHandler<MatchSuccessMessage>(OnMatchSuccess);
-        }
+        NetworkClient.RegisterHandler<MatchSuccessMessage>(OnMatchSuccess);
+
     }
 
     private void OnDestroy()
@@ -31,6 +29,8 @@ public class MatchUIHandler : MonoBehaviour
     {
         if (matchingPanel != null) matchingPanel.SetActive(true);
         if (successPanel != null) successPanel.SetActive(false);
+
+        networkDiscovery.StopDiscovery(); // 타이틀 복귀 후 이전 상태가 남아있으면 초기화 후 시작
 
         networkDiscovery.StartDiscovery();
         float randomDelay = 3.0f + Random.Range(0f, 1.0f);
