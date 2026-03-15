@@ -37,25 +37,21 @@ public class MatchManager : NetworkManager
     }
 
     // 2. 게임 씬으로 완전히 전환된 후 서버에서 실행됨
-    public override void OnServerSceneChanged(string sceneName)
+    public override void OnServerReady(NetworkConnectionToClient conn)
     {
-        base.OnServerSceneChanged(sceneName);
+        base.OnServerReady(conn);
 
-        if (sceneName == gameSceneName)
+        // 게임 씬일 때만 실행
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == gameSceneName)
         {
-            Debug.Log("게임 씬 도착: 플레이어 캐릭터 소환을 시작합니다.");
+            if (conn.identity != null) return;
 
-            foreach (var conn in NetworkServer.connections.Values)
-            {
-                if (conn.identity != null) continue;
+            Transform startPos = GetStartPosition();
+            Vector3 pos = startPos ? startPos.position : Vector3.zero;
+            Quaternion rot = startPos ? startPos.rotation : Quaternion.identity;
 
-                Transform startPos = GetStartPosition(); // NetworkStartPosition 기반 
-                Vector3 pos = startPos ? startPos.position : Vector3.zero;
-                Quaternion rot = startPos ? startPos.rotation : Quaternion.identity;
-
-                GameObject player = Instantiate(playerPrefab, pos, rot);
-                NetworkServer.AddPlayerForConnection(conn, player);
-            }
+            GameObject player = Instantiate(playerPrefab, pos, rot);
+            NetworkServer.AddPlayerForConnection(conn, player);
         }
     }
 

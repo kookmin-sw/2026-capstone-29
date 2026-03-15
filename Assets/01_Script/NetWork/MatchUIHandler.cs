@@ -13,10 +13,8 @@ public class MatchUIHandler : MonoBehaviour
     private void Start()
     {
         // 클라이언트에서 매칭 성공 메시지를 받으면 실행할 함수 등록
-        if (!NetworkClient.active)
-        {
-            NetworkClient.RegisterHandler<MatchSuccessMessage>(OnMatchSuccess);
-        }
+        NetworkClient.RegisterHandler<MatchSuccessMessage>(OnMatchSuccess);
+
     }
 
     private void OnDestroy()
