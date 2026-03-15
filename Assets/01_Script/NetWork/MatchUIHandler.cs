@@ -30,6 +30,8 @@ public class MatchUIHandler : MonoBehaviour
         if (matchingPanel != null) matchingPanel.SetActive(true);
         if (successPanel != null) successPanel.SetActive(false);
 
+        networkDiscovery.StopDiscovery(); // 타이틀 복귀 후 이전 상태가 남아있으면 초기화 후 시작
+
         networkDiscovery.StartDiscovery();
         float randomDelay = 3.0f + Random.Range(0f, 1.0f);
         Invoke(nameof(StartAsHost), randomDelay);

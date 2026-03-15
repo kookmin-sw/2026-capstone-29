@@ -141,7 +141,7 @@ public class NetworkGameManger : NetworkBehaviour
         if (NetworkServer.active && NetworkClient.isConnected)
         {
             // 호스트 모드: 모든 클라이언트에게 씬 이동 명령 후 서버 종료
-            RpcReturnToTitle();
+            // RpcReturnToTitle();
             StartCoroutine(StopHostAndLoadTitle());
         }
         else if (NetworkClient.isConnected)
@@ -150,16 +150,9 @@ public class NetworkGameManger : NetworkBehaviour
             NetworkManager.singleton.StopClient();
             SceneManager.LoadScene(titleSceneName);
         }
-    }
-
-    // 호스트가 종료시
-    [ClientRpc]
-    private void RpcReturnToTitle()
-    {
-        // 서버가 아닌 클라이언트에게만 실행
-        if (!isServer)
+        else
         {
-            NetworkManager.singleton.StopClient();
+            // 이미 연결이 끊긴 클라이언트가 버튼 누를 때
             SceneManager.LoadScene(titleSceneName);
         }
     }
@@ -167,9 +160,33 @@ public class NetworkGameManger : NetworkBehaviour
     private IEnumerator StopHostAndLoadTitle()
     {
         yield return new WaitForSeconds(0.5f); // 클라이언트 RPC 전달 대기
-        NetworkManager.singleton.StopHost();
-        SceneManager.LoadScene(titleSceneName);
+        if (NetworkManager.singleton is MatchManager matchManager)
+        {
+            matchManager.ReturnToTitle();
+        }
+        else
+        {
+            NetworkManager.singleton.StopHost();
+            SceneManager.LoadScene(titleSceneName);
+        }
+        // NetworkManager.singleton.StopHost();
+        // SceneManager.LoadScene(titleSceneName);
     }
+
+    // 서버가 끊킨 클라이언트 경우 UI가 나타나도록
+    public void ForceShowDisconnectUI()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        OnGameOverEvent?.Invoke(); // 입력 차단
+
+        if (gameOverPanel != null)
+            gameOverPanel.SetActive(true);
+
+        if (gameOverText != null)
+            gameOverText.text = "연결을 끊켰습니다.";
+    }   
 
     // 캐릭터 스폰시 UI와 연결 - NetworkCharacterModel 내부의 체력
     public void RegisterPlayer(NetworkCharacterModel model)

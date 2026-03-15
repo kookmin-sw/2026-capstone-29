@@ -61,4 +61,45 @@ public class MatchManager : NetworkManager
         base.OnStopServer();
         isMatchStarted = false;
     }
+
+    public override void OnStopClient()
+    {
+        base.OnStopClient();
+        isMatchStarted = false; // 추가: 클라이언트로만 접속했다가 나올 때도 초기화
+    }
+
+    // 서버가 끊킨 경우 클라이언트가 게임 신에 유지되도록
+    public override void OnClientDisconnect()
+    {
+        base.OnClientDisconnect();
+
+        // 순수 클라이언트(서버가 아닌 쪽)가 연결 끊겼을 때
+        if (!NetworkServer.active)
+        {
+            string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+            if (currentScene == gameSceneName)
+            {
+                // 게임오버 UI 강제 표시 (서버 연결 없이도 버튼 접근 가능하게)
+                if (NetworkGameManger.instance != null)
+                {
+                    NetworkGameManger.instance.ForceShowDisconnectUI();
+                }
+            }
+        }
+    }
+
+    public void ReturnToTitle()
+    {
+        StartCoroutine(ReturnToTitleRoutine());
+    }
+
+    private IEnumerator ReturnToTitleRoutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        StopHost();
+        // StopHost() 후 이 오브젝트(NetworkManager)를 직접 파괴
+        // 그러면 타이틀 씬의 새 MatchManager가 singleton으로 정상 등록됨
+        Destroy(gameObject);
+        UnityEngine.SceneManagement.SceneManager.LoadScene("TitleMirror");
+    }
 }
