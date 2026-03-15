@@ -673,7 +673,7 @@ MonoBehaviour:
   gameOverText: {fileID: 1329035649}
   TitleButton: {fileID: 894446949}
   titleSceneName: TitleMirror
-  remainingTime: 20
+  remainingTime: 200
 --- !u!4 &381696587
 Transform:
   m_ObjectHideFlags: 0

@@ -70,6 +70,13 @@ public class NetworkCharacterModel : NetworkBehaviour
         }
     }
 
+    [Command]
+    public void CmdSelfHarm(float damageAmount)
+    {
+        Debug.Log($"Self Harm: {damageAmount} damage");
+        CmdTakeDamage(damageAmount);
+    }
+
     [ClientRpc]
     void RpcPlayStrongAttack() { OnStrongAttack?.Invoke(); }
 

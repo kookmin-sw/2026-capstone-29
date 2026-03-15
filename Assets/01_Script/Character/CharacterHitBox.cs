@@ -23,14 +23,26 @@ public class CharacterHitBox : MonoBehaviour
         if (target != null && target.gameObject != this.transform.root.gameObject)
         {
             Debug.Log($"적 적중! 대미지 {damage}를 줍니다.");
-            
+
             // 3. 대상의 서버(Cmd)로 대미지를 깎으라고 명령!
             target.CmdTakeDamage(damage);
 
             // 한 번 때렸으면 다단히트(여러 번 맞는 것) 방지를 위해 콜라이더를 즉시 끔
             hitboxCollider.enabled = false;
         }
+        
+            // 로컬용
+        CharacterModel localTarget = other.GetComponent<CharacterModel>();
+        if (localTarget != null && other.transform.root.gameObject != this.transform.root.gameObject)
+        {
+            Debug.Log($"로컬 적중! {damage} 대미지");
+            localTarget.TakeDamage(damage);
+            hitboxCollider.enabled = false;
+            return;
+        }
     }
+
+    
 
     // 공격 애니메이션이 재생될 때 켜주는 함수 (nPlayerCombat 등에서 호출)
     public void EnableHitbox()
