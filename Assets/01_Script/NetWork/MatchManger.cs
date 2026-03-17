@@ -94,10 +94,6 @@ public class MatchManager : NetworkManager
                 }
             }
         }
-        else // 게임 신이 아닌 경우 연결이 끊기도록 설정
-        {
-            base.OnClientDisconnect();
-        }
     }
 
     public void ReturnToTitle()

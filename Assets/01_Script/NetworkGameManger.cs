@@ -36,7 +36,7 @@ public class NetworkGameManger : NetworkBehaviour
     private NetworkCharacterModel player1;
     private NetworkCharacterModel player2;
 
-    private bool _isLeavingVoluntarily = false; // 클라이언트 자발적 종료시 UI 등장 방지
+    public bool _isLeavingVoluntarily = false; // 클라이언트 자발적 종료시 UI 등장 방지
 
     private void Awake()
     {
@@ -200,7 +200,7 @@ public class NetworkGameManger : NetworkBehaviour
             gameOverPanel.SetActive(true);
 
         if (gameOverText != null)
-            gameOverText.text = "연결을 끊켰습니다.";
+            gameOverText.text = "연결이 끊켰습니다.";
     }   
 
     // 캐릭터 스폰시 UI와 연결 - NetworkCharacterModel 내부의 체력

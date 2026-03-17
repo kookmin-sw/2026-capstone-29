@@ -297,7 +297,7 @@ MonoBehaviour:
   headlessStartMode: 0
   editorAutoStart: 0
   sendRate: 60
-  offlineScene: Assets/00_Scenes/TitleMirror.unity
+  offlineScene: 
   onlineScene: 
   offlineSceneLoadDelay: 0
   transport: {fileID: 488677359}
