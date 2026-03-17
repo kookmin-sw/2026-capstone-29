@@ -66,7 +66,7 @@ public class PlayerCombat : NetworkBehaviour
     {
         if (_input.selfHarm)
         {
-            _model.CmdSelfHarm(1f);
+            _model.CmdSelfHarm(20f);
             _input.selfHarm = false;
         }
     }
