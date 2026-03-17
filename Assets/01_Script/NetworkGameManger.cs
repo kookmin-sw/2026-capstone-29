@@ -36,6 +36,8 @@ public class NetworkGameManger : NetworkBehaviour
     private NetworkCharacterModel player1;
     private NetworkCharacterModel player2;
 
+    private bool _isLeavingVoluntarily = false; // 클라이언트 자발적 종료시 UI 등장 방지
+
     private void Awake()
     {
         if(instance == null)
@@ -147,8 +149,8 @@ public class NetworkGameManger : NetworkBehaviour
         else if (NetworkClient.isConnected)
         {
             // 클라이언트만 연결 해제
-            NetworkManager.singleton.StopClient();
-            SceneManager.LoadScene(titleSceneName);
+            _isLeavingVoluntarily = true;
+            StartCoroutine(StopClientAndLoadTitle());
         }
         else
         {
@@ -156,7 +158,8 @@ public class NetworkGameManger : NetworkBehaviour
             SceneManager.LoadScene(titleSceneName);
         }
     }
- 
+    
+    // 호스트가 타이틀 버튼을 누른 경우 - 신 매니저 파괴 후 타이틀 화면으로 이동
     private IEnumerator StopHostAndLoadTitle()
     {
         yield return new WaitForSeconds(0.5f); // 클라이언트 RPC 전달 대기
@@ -173,9 +176,21 @@ public class NetworkGameManger : NetworkBehaviour
         // SceneManager.LoadScene(titleSceneName);
     }
 
+    // 클라이언트가 타이틀 버튼을 누른 경우 - 타이틀화면 변경동안 기존 매니저 제거
+    private IEnumerator StopClientAndLoadTitle()
+    {
+        yield return new WaitForSeconds(0.5f);
+        NetworkManager.singleton.StopClient();
+        Destroy(NetworkManager.singleton.gameObject); // 신 파괴하고 한 프레임 대기하고 신 전환
+        yield return null;
+        SceneManager.LoadScene(titleSceneName);
+    }
+
     // 서버가 끊킨 클라이언트 경우 UI가 나타나도록
     public void ForceShowDisconnectUI()
     {
+        if (_isLeavingVoluntarily) return; // 자발적 종료시 UI 뜨지 않도록
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
