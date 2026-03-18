@@ -35,6 +35,8 @@ public class CharacterView : MonoBehaviour
             model.OnStrongAttack += PlayStrongAttackEffect;
             model.OnHealthChanged += HandleHealthChange;
             model.OnDie += HandleDie;
+            model.OnChargeStateChanged += HandleChargeStateChanged;
+            model.OnChargeReadyChanged += HandleChargeReadyChanged;
         }
     }
 
@@ -46,6 +48,8 @@ public class CharacterView : MonoBehaviour
             model.OnStrongAttack -= PlayStrongAttackEffect;
             model.OnHealthChanged -= HandleHealthChange;
             model.OnDie -= HandleDie;
+            model.OnChargeStateChanged -= HandleChargeStateChanged;
+            model.OnChargeReadyChanged -= HandleChargeReadyChanged;
         }
     }
 
@@ -81,6 +85,17 @@ public class CharacterView : MonoBehaviour
         {
             anim.SetInteger("ComboStep", 0);
         }
+    }
+
+    void HandleChargeStateChanged(bool newIsCharging)
+    {
+        bool isReady = model.IsChargeReady; 
+        UpdateChargeEffect(newIsCharging, isReady);
+    }
+
+    void HandleChargeReadyChanged(bool newIsReady)
+    {
+        UpdateChargeEffect(model.IsCharging, newIsReady);
     }
 
     public void UpdateChargeEffect(bool isCharging, bool isReady)

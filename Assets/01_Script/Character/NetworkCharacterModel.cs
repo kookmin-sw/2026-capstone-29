@@ -4,18 +4,26 @@ using System;
 using Mirror.Examples.Common;
 
 public class NetworkCharacterModel : NetworkBehaviour
-{
+{   
+    // 콤보 카운트 훅
     [SyncVar(hook = nameof(OnComboChangedHook))]
     private int comboCount = 0;
 
-    [SyncVar(hook = nameof(OnChargeStateChangedHook))]
-    private bool isCharging = false;
-
+    // 체력 변경 훅
     [SyncVar(hook = nameof(OnHealthChangedHook))]
     public float currentHealth = 100f;
 
+    // 사망 훅
     [SyncVar(hook = nameof(OnDieHook))] 
     private bool isDead = false;
+
+    // 차징 중 훅
+    [SyncVar(hook = nameof(OnChargeStateChangedHook))]
+    private bool isCharging = false;
+
+    // 차지 완료 훅
+    [SyncVar(hook = nameof(OnChargeReadyChangedHook))]
+    private bool isChargeReady = false;
 
     // 목숨 세팅
     [Header("Lives Setting")]
@@ -29,14 +37,16 @@ public class NetworkCharacterModel : NetworkBehaviour
     public bool IsCharging => isCharging;
     public float CurrentHealth => currentHealth;
     public bool IsDead => isDead;
+    public bool IsChargeReady => isChargeReady;
 
     public event Action<int> OnComboChanged;
     public event Action OnDie;
-    public event Action<bool> OnChargeStateChanged;
     public event Action OnStrongAttack;
     public event Action<float> OnHealthChanged;
     public event Action<int> OnLivesChanged;
     public event Action OnGameOver; // 모든 목숨 소진시
+    public event Action<bool> OnChargeStateChanged;
+    public event Action<bool> OnChargeReadyChanged;
 
     public override void OnStartServer()
     {
@@ -52,6 +62,9 @@ public class NetworkCharacterModel : NetworkBehaviour
 
     [Command]
     public void CmdSetCharging(bool state) { isCharging = state; }
+
+    [Command]
+    public void CmdSetChargeReady(bool state) { isChargeReady = state; }
 
     [Command]
     public void CmdStrongAttack() { RpcPlayStrongAttack(); }
@@ -82,6 +95,7 @@ public class NetworkCharacterModel : NetworkBehaviour
 
     void OnComboChangedHook(int oldV, int newV) => OnComboChanged?.Invoke(newV);
     void OnChargeStateChangedHook(bool oldV, bool newV) => OnChargeStateChanged?.Invoke(newV);
+    void OnChargeReadyChangedHook(bool oldV, bool newV) => OnChargeReadyChanged?.Invoke(newV);
     void OnHealthChangedHook(float oldV, float newV) 
     {
         Debug.Log($"Health Changed: {oldV} -> {newV}"); 
