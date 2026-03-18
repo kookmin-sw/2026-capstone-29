@@ -143,19 +143,18 @@ public class NetworkGameManger : NetworkBehaviour
         if (NetworkServer.active && NetworkClient.isConnected)
         {
             // 호스트 모드: 모든 클라이언트에게 씬 이동 명령 후 서버 종료
-            // RpcReturnToTitle();
             StartCoroutine(StopHostAndLoadTitle());
         }
         else if (NetworkClient.isConnected)
         {
-            // 클라이언트만 연결 해제
+            // 클라이언트가 먼저 연결 해제
             _isLeavingVoluntarily = true;
             StartCoroutine(StopClientAndLoadTitle());
         }
         else
         {
-            // 이미 연결이 끊긴 클라이언트가 버튼 누를 때
-            SceneManager.LoadScene(titleSceneName);
+            // 이미 연결이 끊긴 클라이언트가 버튼 누를 때 - 오브젝트가 비활성이므로 코루틴 x
+            LoadTitleDirectly();
         }
     }
     
@@ -172,17 +171,26 @@ public class NetworkGameManger : NetworkBehaviour
             NetworkManager.singleton.StopHost();
             SceneManager.LoadScene(titleSceneName);
         }
-        // NetworkManager.singleton.StopHost();
-        // SceneManager.LoadScene(titleSceneName);
     }
 
-    // 클라이언트가 타이틀 버튼을 누른 경우 - 타이틀화면 변경동안 기존 매니저 제거
+    // 클라이언트가 먼저 타이틀 버튼을 누른 경우 - 타이틀화면 변경동안 기존 매니저 제거
     private IEnumerator StopClientAndLoadTitle()
     {
         yield return new WaitForSeconds(0.5f);
         NetworkManager.singleton.StopClient();
         Destroy(NetworkManager.singleton.gameObject); // 신 파괴하고 한 프레임 대기하고 신 전환
         yield return null;
+        SceneManager.LoadScene(titleSceneName);
+    }
+
+    // 연결이 끊킨 클라이언트가 타이틀로 돌아가는 경우
+    private void LoadTitleDirectly()
+    {
+        if(NetworkManager.singleton != null)
+        {
+            DestroyImmediate(NetworkManager.singleton.gameObject); // 프레임 대기 없이 즉시 파괴
+        }
+
         SceneManager.LoadScene(titleSceneName);
     }
 
@@ -200,7 +208,7 @@ public class NetworkGameManger : NetworkBehaviour
             gameOverPanel.SetActive(true);
 
         if (gameOverText != null)
-            gameOverText.text = "연결이 끊켰습니다.";
+            gameOverText.text = "호스트와 연결이 끊켰습니다.";
     }   
 
     // 캐릭터 스폰시 UI와 연결 - NetworkCharacterModel 내부의 체력
