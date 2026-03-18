@@ -62,37 +62,24 @@ public class MatchManager : NetworkManager
         isMatchStarted = false;
     }
 
+    // 클라이언트가 종료될 때 플래그 초기화
     public override void OnStopClient()
     {
-        // 게임 신에서 호스트의 의해 연결이 끊킨경우 씬이동 방지
-        string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-        if (!NetworkServer.active && currentScene == gameSceneName)
-        {
-            isMatchStarted = false;
-            // base 호출 안 함 → Mirror의 자동 오프라인 씬 이동 방지
-            return;
-        }
-
         base.OnStopClient();
-        isMatchStarted = false; // 추가: 클라이언트로만 접속했다가 나올 때도 초기화
+        isMatchStarted = false;
     }
 
-    // 서버가 끊킨 경우 클라이언트가 게임 신에 유지되도록
     public override void OnClientDisconnect()
     {
-
-        // 순수 클라이언트(서버가 아닌 쪽)가 연결 끊겼을 때
+        // 순수 클라이언트가 게임 씬에서 연결 끊겼을 때만 처리
         if (!NetworkServer.active)
         {
-            string currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-            if (currentScene == gameSceneName) // 게임 신인 경우에만 
-            {
-                // 게임오버 UI 강제 표시 (서버 연결 없이도 버튼 접근 가능하게)
-                if (NetworkGameManger.instance != null)
-                {
-                    NetworkGameManger.instance.ForceShowDisconnectUI();
-                }
-            }
+            if (NetworkGameManger.instance != null)
+                NetworkGameManger.instance.ForceShowDisconnectUI();
+        }
+        else
+        {
+            base.OnClientDisconnect(); // 호스트 측은 기본 처리
         }
     }
 
@@ -105,9 +92,9 @@ public class MatchManager : NetworkManager
     {
         yield return new WaitForSeconds(0.5f);
         StopHost();
-        Destroy(gameObject); // 게임 신 매니저 파괴
-
-        yield return null;
+        
+        DestroyImmediate(gameObject); // 게임 신 매니저 파괴
+        // yield return null;
 
         UnityEngine.SceneManagement.SceneManager.LoadScene("TitleMirror");
     }
