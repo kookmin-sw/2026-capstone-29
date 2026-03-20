@@ -36,7 +36,7 @@ public class ItemManager : MonoBehaviour
             }
             else
             {
-                Debug.Log(weapon != null);
+                //Debug.Log(weapon != null);
             }
         }
         if (hasActive) 

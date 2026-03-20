@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UIElements;
 
 public interface IFieldItem
 {
@@ -15,9 +16,9 @@ public interface IEquipment // legacy
     public void Effect();
 }
 
-public interface IWeapon // 근접 무기
+public interface IWeapon //
 {
-    public void Attack();
+    public void SummonWeapon(Vector3 pos, Quaternion qt);
     public float AvailableTime();
 }
 

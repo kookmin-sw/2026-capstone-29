@@ -17,6 +17,7 @@ public class SetItem : MonoBehaviour, IEquip
 
                 im.weapon = itemAsset as IWeapon;
                 im.GetWeapon();
+                im.weapon.SummonWeapon(user.transform.position, Quaternion.identity);
                 im.weaponAvailable = im.weapon.AvailableTime();
                 Debug.Log("아이템 장착!");
             }
