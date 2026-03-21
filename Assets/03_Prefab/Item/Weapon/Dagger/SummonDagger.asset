@@ -9,16 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 494991009480bff4c9a6cb3778b231a8, type: 3}
-  m_Name: Status_Bow
+  m_Script: {fileID: 11500000, guid: e3f167aa618b3f140902acb658d1ca74, type: 3}
+  m_Name: SummonDagger
   m_EditorClassIdentifier: 
-  availableTime: 1000
-  useableTime: 10
-  damage: 10
-  range: 1000
-  projectileDrop: 0
-  startUpDelay: 0
-  RecoveryDelay: 0
-  electroShock: 0
-  knockBack: 0
-  stop: 0
+  weapon: {fileID: 0}
+  availableTime: 10

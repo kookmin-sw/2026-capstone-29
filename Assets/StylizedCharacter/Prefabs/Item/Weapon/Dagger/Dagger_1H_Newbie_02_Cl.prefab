@@ -84,7 +84,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 1f9e6cacbb0f44eead07233c699d6442, type: 2}
+  - {fileID: 2100000, guid: 84799d8d9cf05ba4faccaf1ba212417b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -222,10 +222,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8572962983016454243}
-  - component: {fileID: 8601068295520626504}
   m_Layer: 0
   m_Name: Dagger_1H_Newbie_02_Cl
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -247,53 +246,3 @@ Transform:
   - {fileID: 4431360540324142524}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8601068295520626504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9057469775725495001}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02b63d4491d14e4588a9177a05a9c58e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Type: 9
-  Mappers: []
-  IsTakeTwoHands: 0
-  CopySkinMaterial: 0
-  Wrappers:
-  - Type: 0
-    Enabled: 0
-    Target: {fileID: 0}
-  - Type: 1
-    Enabled: 0
-    Target: {fileID: 0}
-  - Type: 2
-    Enabled: 0
-    Target: {fileID: 0}
-  - Type: 4
-    Enabled: 0
-    Target: {fileID: 0}
-  - Type: 5
-    Enabled: 0
-    Target: {fileID: 0}
-  - Type: 6
-    Enabled: 0
-    Target: {fileID: 0}
-  - Type: 7
-    Enabled: 0
-    Target: {fileID: 0}
-  - Type: 8
-    Enabled: 0
-    Target: {fileID: 0}
-  - Type: 9
-    Enabled: 0
-    Target: {fileID: 0}
-  - Type: 10
-    Enabled: 0
-    Target: {fileID: 0}
-  - Type: 11
-    Enabled: 0
-    Target: {fileID: 0}
