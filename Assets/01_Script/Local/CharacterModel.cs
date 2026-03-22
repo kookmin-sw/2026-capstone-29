@@ -40,7 +40,7 @@ public class CharacterModel : MonoBehaviour
     public void ResetCombo()
     {
         comboCount = 0;
-        OnComboChanged?.Invoke(comboCount);
+        OnComboChanged?.Invoke(0);
     }
 
     public void SetCharging(bool state)

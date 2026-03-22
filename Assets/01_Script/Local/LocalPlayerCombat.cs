@@ -13,6 +13,8 @@ public class LocalPlayerCombat : MonoBehaviour
     [Header("공격 설정")]
     [SerializeField] private float comboResetTime = 1.0f;
     private float _lastAttackTime;
+    // 현재 공격 모션 중인지 체크용
+    private bool _isAttacking = false;
 
     private void Awake()
     {
@@ -48,6 +50,7 @@ public class LocalPlayerCombat : MonoBehaviour
         CheckComboTimer();
     }
 
+
     private void HandlePunch()
     {
         if (_input.punch && !_model.IsCharging)
@@ -58,6 +61,7 @@ public class LocalPlayerCombat : MonoBehaviour
         }
     }
 
+
     private void HandleSelfHarm()
     {
         if (_input.selfHarm)
@@ -67,7 +71,7 @@ public class LocalPlayerCombat : MonoBehaviour
         }
     }
 
-    
+
     private void OnChargeStarted(InputAction.CallbackContext context)
     {
         if (_model.IsDead) return;
@@ -104,4 +108,5 @@ public class LocalPlayerCombat : MonoBehaviour
             _model.ResetCombo();   // 서버 Cmd 대신 직접 호출
         }
     }
+    
 }
