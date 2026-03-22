@@ -48,8 +48,19 @@ public class CharacterLocalView : MonoBehaviour
             model.OnDie -= HandleDie;
         }
     }
+    private void Update()
+    {
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
 
-    // --- 이벤트 핸들러 ---
+        bool useRootMotion = stateInfo.IsName("Movement") ||
+                            stateInfo.IsName("Jumping") ||
+                            stateInfo.IsName("Falling") ||
+                            stateInfo.IsName("Quickshift") ||
+                            stateInfo.IsName("Crouch");
+        
+        anim.applyRootMotion = useRootMotion;
+    }
+
 
     void HandleHealthChange(float hp)
     {
@@ -57,6 +68,11 @@ public class CharacterLocalView : MonoBehaviour
         if (hp > 0)
         {
             anim.SetTrigger("GetHit");
+            if (audioSource != null)
+            {
+                audioSource.PlayOneShot(punchSounds);
+                audioSource.PlayOneShot(hitSounds);
+            }
         }
     }
 
@@ -69,11 +85,13 @@ public class CharacterLocalView : MonoBehaviour
     {
         if (step > 0)
         {
+            anim.ResetTrigger("AttackTrigger");
             anim.SetInteger("ComboStep", step);
             anim.SetTrigger("AttackTrigger");
         }
         else
         {
+            anim.ResetTrigger("AttackTrigger");
             anim.SetInteger("ComboStep", 0);
         }
     }
@@ -94,7 +112,8 @@ public class CharacterLocalView : MonoBehaviour
         if (isReady)
         {
             // 완료되면: 1단계 끄고 2단계 켜기
-            audioSource.PlayOneShot(readySounds);
+            if (audioSource != null)
+                audioSource.PlayOneShot(readySounds);
             if (chargingEffect) chargingEffect.SetActive(false);
             if (chargeReadyEffect) chargeReadyEffect.SetActive(true);
         }

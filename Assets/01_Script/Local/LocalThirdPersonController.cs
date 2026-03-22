@@ -21,6 +21,12 @@ namespace StarterAssets
         [Tooltip("Sprint speed of the character in m/s")]
         public float SprintSpeed = 5.335f;
 
+        [Tooltip("Crouch speed of the character in m/s")]
+        public float CrouchSpeed = 3.0f;
+
+        [Tooltip("Shift speed of the character in m/s")]
+        public float ShiftSpeed = 8.0f;
+
         [Tooltip("How fast the character turns to face movement direction")]
         [Range(0.0f, 0.3f)]
         public float RotationSmoothTime = 0.12f;
@@ -96,7 +102,11 @@ namespace StarterAssets
         private int _animIDVerticalSpeed;
         private int _animIDGrounded;
 
-#if ENABLE_INPUT_SYSTEM 
+        private int _animIDCrouch;
+        private int _animIDShift;
+
+
+#if ENABLE_INPUT_SYSTEM
         private PlayerInput _playerInput;
 #endif
         private Animator _animator;
@@ -153,7 +163,6 @@ namespace StarterAssets
             AssignAnimationIDs();
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
-            Debug.Log($"hasAnimator: {_hasAnimator}");
         }
 
         private void Update()
@@ -177,6 +186,8 @@ namespace StarterAssets
             _animIDSpeed = Animator.StringToHash("Speed");
             _animIDVerticalSpeed = Animator.StringToHash("VerticalSpeed");
             _animIDGrounded = Animator.StringToHash("Grounded");
+            _animIDCrouch = Animator.StringToHash("Crouch");
+            _animIDShift = Animator.StringToHash("Shift");
         }
 
         private void GroundedCheck()
@@ -211,7 +222,11 @@ namespace StarterAssets
 
         private void Move()
         {
-            float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+            float targetSpeed = _input.crouch ? CrouchSpeed :
+                                _input.shift ? ShiftSpeed :
+                                _input.sprint ? SprintSpeed :
+                                MoveSpeed;
+
 
             if (_input.move == Vector2.zero) targetSpeed = 0.0f;
 
@@ -255,6 +270,14 @@ namespace StarterAssets
             if (_hasAnimator)
             {
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
+                _animator.SetBool(_animIDCrouch, _input.crouch);
+
+
+                if (_input.shift && _input.move != Vector2.zero)
+                {
+                    _animator.SetTrigger(_animIDShift);
+                    _input.shift = false;
+                }
             }
         }
 
