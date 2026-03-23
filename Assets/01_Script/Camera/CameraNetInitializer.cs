@@ -6,56 +6,81 @@ using UnityEngine.InputSystem.Users;
 
 public class CameraNetInitializer : NetworkBehaviour
 {
+    private bool _isGameOver = false; // 게임 종료 플래그 추가
+    private PlayerInput _playerInput;
+
+    // OnEnable / OnDisable 추가
+    private void OnEnable()
+    {
+
+    }
+
+    private void OnDisable()
+    {
+        NetworkGameManger.OnGameOverEvent -= HandleGameOver;
+        Application.focusChanged -= OnAppFocusChanged;
+    }
+
+    private void Update()
+    {
+        if (_isGameOver)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
+
+    // 게임오버 시 PlayerInput 비활성화 + 커서 해제
+    private void HandleGameOver()
+    {
+        _isGameOver = true;
+
+        // PlayerInput을 꺼야 포커스 복귀 시 Input System이 커서를 재잠금하지 않음
+        if (_playerInput != null) _playerInput.enabled = false;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    // Alt+Tab 후 복귀 시 게임오버 상태면 커서 강제 유지
+    private void OnAppFocusChanged(bool hasFocus)
+    {
+        if (hasFocus && _isGameOver)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
+
     public override void OnStartLocalPlayer()
     {
+        NetworkGameManger.OnGameOverEvent += HandleGameOver;
+        Application.focusChanged += OnAppFocusChanged;
+
         // --- 입력 강제 페어링/스킴 전환 ---
-        var pi = GetComponent<PlayerInput>();
-        if (pi != null)
+        _playerInput = GetComponent<PlayerInput>();
+        _playerInput = GetComponent<PlayerInput>();
+        if (_playerInput != null)
         {
-            // 기존에 이상하게 잡힌 디바이스가 있으면 정리(선택)
-            // pi.user.UnpairDevicesAndRemoveUser(); // 버전에 따라 없을 수 있음
-
-            // PerformPairingWithDevice 로 "현재 pi.user"에 디바이스를 페어링
             if (Keyboard.current != null)
-                InputUser.PerformPairingWithDevice(Keyboard.current, pi.user);
-
+                InputUser.PerformPairingWithDevice(Keyboard.current, _playerInput.user);
             if (Mouse.current != null)
-                InputUser.PerformPairingWithDevice(Mouse.current, pi.user);
+                InputUser.PerformPairingWithDevice(Mouse.current, _playerInput.user);
 
-            // 액션맵/스킴 강제
-            pi.SwitchCurrentActionMap("Player");
+            _playerInput.SwitchCurrentActionMap("Player");
 
-            // 네 Control Scheme 이름이 KeyboardMouse 임 (스샷 기준)
             if (Keyboard.current != null && Mouse.current != null)
-                pi.SwitchCurrentControlScheme("KeyboardMouse", Keyboard.current, Mouse.current);
+                _playerInput.SwitchCurrentControlScheme("KeyboardMouse", Keyboard.current, Mouse.current);
             else if (Keyboard.current != null)
-                pi.SwitchCurrentControlScheme("KeyboardMouse", Keyboard.current);
-
-            Debug.Log($"[PI after pair] scheme={pi.currentControlScheme}, devices={pi.devices.Count}");
-        }
-        else
-        {
-            Debug.LogError("[PI] PlayerInput 컴포넌트가 없습니다.");
+                _playerInput.SwitchCurrentControlScheme("KeyboardMouse", Keyboard.current);
         }
 
-        // --- 카메라 연결(기존 코드) ---
+        // --- 카메라 연결 (기존 코드 유지) ---
         CinemachineVirtualCamera vcam = Object.FindAnyObjectByType<CinemachineVirtualCamera>();
-        if (vcam == null)
-        {
-            Debug.LogError("게임 씬에 CinemachineVirtualCamera가 없습니다!");
-            return;
-        }
+        if (vcam == null) { Debug.LogError("CinemachineVirtualCamera 없음"); return; }
 
         Transform target = transform.Find("PlayerCameraRoot");
-        if (target != null)
-        {
-            vcam.Follow = target;
-            vcam.LookAt = target;
-        }
-        else
-        {
-            Debug.LogError("플레이어 프리팹 내부에 'PlayerCameraRoot'를 찾을 수 없습니다.");
-        }
+        if (target != null) { vcam.Follow = target; vcam.LookAt = target; }
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

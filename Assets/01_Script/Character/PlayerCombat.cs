@@ -47,6 +47,7 @@ public class PlayerCombat : NetworkBehaviour
         if (!isLocalPlayer || _model.IsDead) return;
 
         HandlePunch();
+        HandleSelfHarm();
         CheckComboTimer();
     }
 
@@ -60,13 +61,23 @@ public class PlayerCombat : NetworkBehaviour
             _input.punch = false;  // 입력 소비
         }
     }
+    
+    private void HandleSelfHarm()
+    {
+        if (_input.selfHarm)
+        {
+            _model.CmdSelfHarm(20f);
+            _input.selfHarm = false;
+        }
+    }
+
     private void OnChargeStarted(InputAction.CallbackContext context)
     {
         if (!isLocalPlayer || _model.IsDead) return;
 
         // 누르기 시작: 기 모으기 이펙트(1단계) 켜기
         _model.CmdSetCharging(true);
-        _view.UpdateChargeEffect(true, false); 
+        _view.UpdateChargeEffect(true, false);
     }
 
     private void OnChargeReady(InputAction.CallbackContext context)

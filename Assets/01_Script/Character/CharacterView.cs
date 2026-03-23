@@ -35,6 +35,8 @@ public class CharacterView : MonoBehaviour
             model.OnStrongAttack += PlayStrongAttackEffect;
             model.OnHealthChanged += HandleHealthChange;
             model.OnDie += HandleDie;
+            model.OnChargeStateChanged += HandleChargeStateChanged;
+            model.OnChargeReadyChanged += HandleChargeReadyChanged;
         }
     }
 
@@ -46,7 +48,21 @@ public class CharacterView : MonoBehaviour
             model.OnStrongAttack -= PlayStrongAttackEffect;
             model.OnHealthChanged -= HandleHealthChange;
             model.OnDie -= HandleDie;
+            model.OnChargeStateChanged -= HandleChargeStateChanged;
+            model.OnChargeReadyChanged -= HandleChargeReadyChanged;
         }
+    }
+    private void Update()
+    {
+        AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+        
+        bool useRootMotion = stateInfo.IsName("Movement") || 
+                            stateInfo.IsName("Jumping") || 
+                            stateInfo.IsName("Falling") ||
+                            stateInfo.IsName("Quickshift") ||
+                            stateInfo.IsName("Crouch");
+        
+        anim.applyRootMotion = useRootMotion;
     }
 
     // --- 이벤트 핸들러 ---
@@ -57,8 +73,11 @@ public class CharacterView : MonoBehaviour
         if (hp > 0)
         {
             anim.SetTrigger("GetHit");
-            audioSource.PlayOneShot(punchSounds);
-            audioSource.PlayOneShot(hitSounds);
+            if (audioSource != null)
+            {
+                audioSource.PlayOneShot(punchSounds);
+                audioSource.PlayOneShot(hitSounds);
+            }
         }
     }
 
@@ -71,13 +90,26 @@ public class CharacterView : MonoBehaviour
     {
         if (step > 0)
         {
+            anim.ResetTrigger("AttackTrigger");
             anim.SetInteger("ComboStep", step);
             anim.SetTrigger("AttackTrigger");
         }
         else
         {
+            anim.ResetTrigger("AttackTrigger");
             anim.SetInteger("ComboStep", 0);
         }
+    }
+
+    void HandleChargeStateChanged(bool newIsCharging)
+    {
+        bool isReady = model.IsChargeReady; 
+        UpdateChargeEffect(newIsCharging, isReady);
+    }
+
+    void HandleChargeReadyChanged(bool newIsReady)
+    {
+        UpdateChargeEffect(model.IsCharging, newIsReady);
     }
 
     public void UpdateChargeEffect(bool isCharging, bool isReady)
@@ -90,12 +122,14 @@ public class CharacterView : MonoBehaviour
             if (chargeReadyEffect) chargeReadyEffect.SetActive(false);
             return;
         }
-        audioSource.PlayOneShot(chargeSounds);
+        if (audioSource != null)
+            audioSource.PlayOneShot(chargeSounds);
 
         if (isReady)
         {
             // 완료되면: 1단계 끄고 2단계 켜기
-            audioSource.PlayOneShot(readySounds);
+            if (audioSource != null)
+                audioSource.PlayOneShot(readySounds);
             if (chargingEffect) chargingEffect.SetActive(false);
             if (chargeReadyEffect) chargeReadyEffect.SetActive(true);
         }
@@ -113,11 +147,6 @@ public class CharacterView : MonoBehaviour
         anim.SetTrigger("DoStrongAttack");
     }
 
-    public void UpdatePhysicsAnimation(float yVelocity, bool isGrounded)
-    {
-        anim.SetFloat("VerticalSpeed", yVelocity);
-        anim.SetBool("IsGrounded", isGrounded);
-    }
 
     public void UpdateMovementAnimation(float currentSpeed)
     {

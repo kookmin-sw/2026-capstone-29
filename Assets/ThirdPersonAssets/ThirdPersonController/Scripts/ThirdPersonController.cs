@@ -1,5 +1,5 @@
-﻿ using UnityEngine;
- using Mirror;
+﻿using UnityEngine;
+using Mirror;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -21,6 +21,12 @@ namespace StarterAssets
 
         [Tooltip("Sprint speed of the character in m/s")]
         public float SprintSpeed = 5.335f;
+
+        [Tooltip("Crouch speed of the character in m/s")]
+        public float CrouchSpeed = 3.0f;
+
+        [Tooltip("Shift speed of the character in m/s")]
+        public float ShiftSpeed = 8.0f;
 
         [Tooltip("How fast the character turns to face movement direction")]
         [Range(0.0f, 0.3f)]
@@ -97,6 +103,9 @@ namespace StarterAssets
         private int _animIDVerticalSpeed;
         private int _animIDGrounded;
 
+        private int _animIDCrouch;
+        private int _animIDShift;
+
 #if ENABLE_INPUT_SYSTEM 
         private PlayerInput _playerInput;
 #endif
@@ -108,6 +117,9 @@ namespace StarterAssets
         private const float _threshold = 0.01f;
 
         private bool _hasAnimator;
+
+        // 게임 오버 플래그 - true가 되면 입력/카메라 모두 차단
+        private bool _isGameOver = false;
 
         private bool IsCurrentDeviceMouse
         {
@@ -121,6 +133,21 @@ namespace StarterAssets
             }
         }
 
+
+        private void OnEnable()
+        {
+            NetworkGameManger.OnGameOverEvent += HandleGameOver;
+        }
+
+        private void OnDisable()
+        {
+            NetworkGameManger.OnGameOverEvent -= HandleGameOver;
+        }
+
+        private void HandleGameOver()
+        {
+            _isGameOver = true;
+        }
 
         private void Awake()
         {
@@ -136,9 +163,9 @@ namespace StarterAssets
             // 원격 플레이어면 입력/물리 비활성화만 하고 종료
             if (!isLocalPlayer)
             {
-                #if ENABLE_INPUT_SYSTEM
+#if ENABLE_INPUT_SYSTEM
                 if (TryGetComponent(out PlayerInput pInput)) pInput.enabled = false;
-                #endif
+#endif
                 if (TryGetComponent(out StarterAssetsInputs sInput)) sInput.enabled = false;
                 if (TryGetComponent(out CharacterController cc)) cc.enabled = false;
 
@@ -152,10 +179,10 @@ namespace StarterAssets
         public override void OnStartLocalPlayer()
         {
             // 로컬 플레이어가 확정되는 시점에 "반드시" 다시 켜기
-        #if ENABLE_INPUT_SYSTEM
+#if ENABLE_INPUT_SYSTEM
             if (TryGetComponent(out PlayerInput pInput)) pInput.enabled = true;
             _playerInput = GetComponent<PlayerInput>();
-        #endif
+#endif
             if (TryGetComponent(out StarterAssetsInputs sInput)) sInput.enabled = true;
             if (TryGetComponent(out CharacterController cc)) cc.enabled = true;
 
@@ -176,6 +203,7 @@ namespace StarterAssets
         private void Update()
         {
             if (!isLocalPlayer) return;
+            if (_isGameOver) return; // 게임 오버 시 이동·점프 입력 차단
             _hasAnimator = TryGetComponent(out _animator);
 
             JumpAndGravity();
@@ -187,6 +215,7 @@ namespace StarterAssets
         {
             // 카메라 회전 역시 내 캐릭터일 때만 계산합니다.
             if (!isLocalPlayer) return;
+            if (_isGameOver) return; // 게임 오버 시 카메라 회전 차단
             CameraRotation();
         }
 
@@ -195,6 +224,8 @@ namespace StarterAssets
             _animIDSpeed = Animator.StringToHash("Speed");
             _animIDVerticalSpeed = Animator.StringToHash("VerticalSpeed");
             _animIDGrounded = Animator.StringToHash("Grounded");
+            _animIDCrouch = Animator.StringToHash("Crouch");
+            _animIDShift = Animator.StringToHash("Shift");
         }
 
         private void GroundedCheck()
@@ -235,14 +266,12 @@ namespace StarterAssets
 
         private void Move()
         {
-            // [디버그 추가] 입력 값이 들어오는지 콘솔창에서 확인
-            if (isLocalPlayer && _input.move != Vector2.zero) 
-            {
-                Debug.Log($"[Input] Move: {_input.move}");
-            }
-            
             // set target speed based on move speed, sprint speed and if sprint is pressed
-            float targetSpeed = _input.sprint ? SprintSpeed : MoveSpeed;
+            
+            float targetSpeed = _input.crouch ? CrouchSpeed :
+                                _input.shift ? ShiftSpeed :
+                                _input.sprint ? SprintSpeed :
+                                MoveSpeed;
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -303,6 +332,14 @@ namespace StarterAssets
             if (_hasAnimator)
             {
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
+                _animator.SetBool(_animIDCrouch, _input.crouch);
+
+
+                if (_input.shift && _input.move != Vector2.zero)
+                {
+                    _animator.SetTrigger(_animIDShift);
+                    _input.shift = false;
+                }
             }
         }
 
@@ -420,7 +457,7 @@ namespace StarterAssets
             if (!isLocalPlayer) return;          // 로컬만 재생(권장)
             if (_controller == null) return;
             if (LandingAudioClip == null) return;
-            
+
             if (animationEvent.animatorClipInfo.weight > 0.5f)
             {
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);

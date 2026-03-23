@@ -2,27 +2,14 @@ using Mirror;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using kcp2k;
 
 public class MatchManager : NetworkManager
 {
     [Header("Match Settings")]
     public string gameSceneName = "TPSTestScene"; 
-    public float sceneChangeDelay = 3.0f; // 매칭 성공 후 대기 시간
+    public float sceneChangeDelay = 1.5f; // 매칭 성공 후 대기 시간
     private bool isMatchStarted = false;
 
-
-    public override void Awake()
-    {
-        base.Awake();
-
-    #if UNITY_WEBGL
-        Transport.active = GetComponent<Mirror.SimpleWeb.SimpleWebTransport>();
-    #else
-        // Windows/에디터는 KCP만
-        Transport.active = GetComponent<KcpTransport>();
-    #endif
-    }
     // 1. 서버에 새로운 클라이언트가 '연결'되었을 때 호출 (캐릭터 생성 전)
     public override void OnServerConnect(NetworkConnectionToClient conn)
     {
@@ -33,10 +20,10 @@ public class MatchManager : NetworkManager
         {
             isMatchStarted = true;
             Debug.Log("2명 연결 확인! 매칭 성공 메시지를 보냅니다.");
-
+            
             // 모든 클라이언트에게 매칭 성공 알림 (UI 표시용)
             NetworkServer.SendToAll(new MatchSuccessMessage());
-
+            
             // 씬 전환 코루틴 시작
             StartCoroutine(ChangeSceneRoutine());
         }
@@ -50,25 +37,21 @@ public class MatchManager : NetworkManager
     }
 
     // 2. 게임 씬으로 완전히 전환된 후 서버에서 실행됨
-    public override void OnServerSceneChanged(string sceneName)
+    public override void OnServerReady(NetworkConnectionToClient conn)
     {
-        base.OnServerSceneChanged(sceneName);
+        base.OnServerReady(conn);
 
-        if (sceneName == gameSceneName)
+        // 게임 씬일 때만 실행
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == gameSceneName)
         {
-            Debug.Log("게임 씬 도착: 플레이어 캐릭터 소환을 시작합니다.");
+            if (conn.identity != null) return;
 
-            foreach (var conn in NetworkServer.connections.Values)
-            {
-                if (conn.identity != null) continue;
+            Transform startPos = GetStartPosition();
+            Vector3 pos = startPos ? startPos.position : Vector3.zero;
+            Quaternion rot = startPos ? startPos.rotation : Quaternion.identity;
 
-                Transform startPos = GetStartPosition(); // NetworkStartPosition 기반 
-                Vector3 pos = startPos ? startPos.position : Vector3.zero;
-                Quaternion rot = startPos ? startPos.rotation : Quaternion.identity;
-
-                GameObject player = Instantiate(playerPrefab, pos, rot);
-                NetworkServer.AddPlayerForConnection(conn, player);
-            }
+            GameObject player = Instantiate(playerPrefab, pos, rot);
+            NetworkServer.AddPlayerForConnection(conn, player);
         }
     }
 
@@ -77,5 +60,42 @@ public class MatchManager : NetworkManager
     {
         base.OnStopServer();
         isMatchStarted = false;
+    }
+
+    // 클라이언트가 종료될 때 플래그 초기화
+    public override void OnStopClient()
+    {
+        base.OnStopClient();
+        isMatchStarted = false;
+    }
+
+    public override void OnClientDisconnect()
+    {
+        // 순수 클라이언트가 게임 씬에서 연결 끊겼을 때만 처리
+        if (!NetworkServer.active)
+        {
+            if (NetworkGameManger.instance != null)
+                NetworkGameManger.instance.ForceShowDisconnectUI();
+        }
+        else
+        {
+            base.OnClientDisconnect(); // 호스트 측은 기본 처리
+        }
+    }
+
+    public void ReturnToTitle()
+    {
+        StartCoroutine(ReturnToTitleRoutine());
+    }
+
+    private IEnumerator ReturnToTitleRoutine()
+    {
+        yield return new WaitForSeconds(0.5f);
+        StopHost();
+        
+        DestroyImmediate(gameObject); // 게임 신 매니저 파괴
+        // yield return null;
+
+        UnityEngine.SceneManagement.SceneManager.LoadScene("TitleMirror");
     }
 }
