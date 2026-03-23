@@ -55,8 +55,8 @@ public class PlayerItem_Gun : NetworkBehaviour, IEquipment // 총 오브젝트�
         GameObject bullet = Instantiate(bulletObj, transform.position + transform.forward, transform.rotation);
 
         // 총알 스크립트 가져와서 주인을 자신으로 설정
-        BulletScript bulletScript = bullet.GetComponent<BulletScript>();
-        bulletScript.owner = gameObject;
+        //Bullet bulletScript = bullet.GetComponent<BulletScript>();
+        //bulletScript.owner = gameObject;
 
         // 모든 클라이언트에서 총알 생성하라고 명령
         NetworkServer.Spawn(bullet);

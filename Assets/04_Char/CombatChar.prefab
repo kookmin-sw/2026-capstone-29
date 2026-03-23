@@ -218,6 +218,8 @@ MonoBehaviour:
   syncInterval: 0
   MoveSpeed: 2
   SprintSpeed: 5.335
+  CrouchSpeed: 3
+  ShiftSpeed: 8
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
   LandingAudioClip: {fileID: 8300000, guid: ff697d3070687ce4583faa0561a145a2, type: 3}
@@ -284,6 +286,8 @@ MonoBehaviour:
   punch: 0
   charge: 0
   selfHarm: 0
+  crouch: 0
+  shift: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
@@ -366,7 +370,7 @@ Animator:
   m_GameObject: {fileID: 7046033076753342609}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: b02f7765ace5dff4a866b767512e4a05, type: 3}
-  m_Controller: {fileID: 9100000, guid: 5d27039763e9ee54681e50e97b7b8e65, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9b64260b213e4e14e84340a3983374d9, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1

@@ -94,6 +94,8 @@ namespace StarterAssets
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
 
+        private float _speedMultiplier = 1f; // 아이템 관련 변수. 플레이어 이동 속도에 관여함.
+
         // timeout deltatime
         private float _jumpTimeoutDelta;
         private float _fallTimeoutDelta;
@@ -272,6 +274,8 @@ namespace StarterAssets
                                 _input.shift ? ShiftSpeed :
                                 _input.sprint ? SprintSpeed :
                                 MoveSpeed;
+
+            targetSpeed *= _speedMultiplier;
 
             // a simplistic acceleration and deceleration designed to be easy to remove, replace, or iterate upon
 
@@ -463,5 +467,9 @@ namespace StarterAssets
                 AudioSource.PlayClipAtPoint(LandingAudioClip, transform.TransformPoint(_controller.center), FootstepAudioVolume);
             }
         }
+
+        //아이템에서 호출할 속도 제어 메소드
+        public float GetSpeedMultiplier() => _speedMultiplier;
+        public void SetSpeedMultiplier(float value) => _speedMultiplier = value;
     }
 }
