@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/02_Materials/Map/FogParticle.mat.meta
+guid: b68a30cfe9fef794983a63964237d6ea
+========
 guid: 5d27039763e9ee54681e50e97b7b8e65
+>>>>>>>> main:Assets/CombatGirlsCharacterPack/CombatGirl_Shield/Animations/NSword_Shield_Controller.controller.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 9100000

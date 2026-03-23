@@ -9,6 +9,10 @@ TagManager:
   - Heal
   - Interaction
   - GameManager
+  - Weapon
+  - Active
+  - Passive
+  - Field
   layers:
   - Default
   - TransparentFX
