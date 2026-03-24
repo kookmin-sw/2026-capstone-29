@@ -224,6 +224,7 @@ GameObject:
   - component: {fileID: 3257679802634302414}
   - component: {fileID: 4927189939073729148}
   - component: {fileID: 9089101093673116978}
+  - component: {fileID: -3718772317914960602}
   m_Layer: 0
   m_Name: Dagger_Weapon
   m_TagString: Untagged
@@ -282,3 +283,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemStat: {fileID: 11400000, guid: 16a00e49dfd06f240aae189702c8827f, type: 2}
+--- !u!114 &-3718772317914960602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6873630758949736316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  _assetId: 1403896116
+  serverOnly: 0
+  visibility: 0
+  hasSpawned: 0

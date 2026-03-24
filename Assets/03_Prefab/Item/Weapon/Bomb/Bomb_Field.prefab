@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6020797279337392097}
   - component: {fileID: 4302907732603831659}
+  - component: {fileID: -3765547716977938443}
   m_Layer: 0
   m_Name: Bomb_Field
   m_TagString: Weapon
@@ -46,7 +47,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea4638f2ea7504d4aad15dc3c64c3f14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   itemAsset: {fileID: 11400000, guid: 6a98e6caaf3e2cd4ebf70c0fcc5a9669, type: 2}
+--- !u!114 &-3765547716977938443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4407808829857150432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  _assetId: 2451547897
+  serverOnly: 0
+  visibility: 0
+  hasSpawned: 0
 --- !u!1001 &2150408640230733919
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using Mirror;
 
-public class BowAnimationController : MonoBehaviour
+public class BowAnimationController : NetworkBehaviour
 {
     [Header("참조")]
     [Tooltip("활 오브젝트의 Animator. 비워두면 자동으로 찾음.")]
@@ -26,7 +27,7 @@ public class BowAnimationController : MonoBehaviour
     private void Update()
     {
         if (bowAnimator == null) return;
-
+        if (!isOwned) return;
         HandleInput();
     }
 

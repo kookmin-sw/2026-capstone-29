@@ -1,19 +1,24 @@
 ﻿using UnityEngine;
+using Mirror;
 
 // 화살 오브젝트.
 // 장전(Nocked) 상태에서는 활을 따라다니며 대기.
 // 발사(Launched) 후에는 지정된 방향으로 날아가며, 10초 경과 또는 피격 판정 시 파괴.
-public class WeaponArrow : MonoBehaviour
+public class WeaponArrow : NetworkBehaviour
 {
     [Header("아이템 정보")]
     [SerializeField] public ItemStatus itemStat;
 
-    // 내부 상태
-    private bool isNocked;      // 활에 장전된 상태
-    private bool isLaunched;    // 발사된 상태
+    [HideInInspector] public GameObject owner;
+
+    // 내부 상태. SyncVar로 상태 동기화.
+    [SyncVar] private bool isNocked;      // 활에 장전된 상태
+    [SyncVar] private bool isLaunched;    // 발사된 상태
+    
+    [SyncVar] private Vector3 flyDirection;
+    [SyncVar] private float flySpeed;
+
     private float lifeTimer;
-    private Vector3 flyDirection;
-    private float flySpeed;
 
     private void Update()
     {
@@ -27,10 +32,14 @@ public class WeaponArrow : MonoBehaviour
         transform.position += flyDirection * flySpeed * Time.deltaTime;
 
         // 수명 체크
-        lifeTimer += Time.deltaTime;
-        if (lifeTimer >= itemStat.availableTime)
+        if (isServer)
         {
-            DestroyArrow();
+
+            lifeTimer += Time.deltaTime;
+            if (lifeTimer >= itemStat.availableTime)
+            {
+                NetworkServer.Destroy(gameObject);
+            }
         }
     }
 
@@ -56,8 +65,9 @@ public class WeaponArrow : MonoBehaviour
         transform.rotation = Quaternion.LookRotation(flyDirection);
     }
 
-    // 충돌 시 피격 판정 처리. 발사 상태일 때만 반응.
+    // 충돌 시 피격 판정 처리. 발사 상태일 때만 반응. 서버에서만 판정 감지하도록 설정.
     // Collider의 Is Trigger를 켜두거나, OnCollisionEnter로 변경 가능.
+    [ServerCallback]
     private void OnTriggerEnter(Collider other)
     {
         if (!isLaunched) return;
@@ -67,11 +77,7 @@ public class WeaponArrow : MonoBehaviour
 
         // TODO: 데미지 처리
 
-        DestroyArrow();
+        NetworkServer.Destroy(this.gameObject);
     }
 
-    private void DestroyArrow()
-    {
-        Destroy(gameObject);
-    }
 }

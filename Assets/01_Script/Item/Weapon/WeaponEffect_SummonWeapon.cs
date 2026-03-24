@@ -1,16 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UIElements;
+﻿using UnityEngine;
 
-[CreateAssetMenu(menuName ="Item/Weapon/SummonWeapon")]
+[CreateAssetMenu(menuName = "Item/Weapon/SummonWeapon")]
 public class WeaponEffect_SummonWeapon : ScriptableObject, IWeapon
 {
     [SerializeField] GameObject weapon;
     public float availableTime = 100f;
-    public void SummonWeapon(Vector3 pos, Quaternion qt)
+
+    public GameObject SummonWeapon(Vector3 pos, Quaternion qt)
     {
-        GameObject.Instantiate(weapon, pos, qt);
+        // Instantiate만 하고 반환
+        return GameObject.Instantiate(weapon, pos, qt);
     }
 
     public float AvailableTime()
