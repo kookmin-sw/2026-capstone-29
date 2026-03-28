@@ -33,7 +33,7 @@ public class CharacterModel : MonoBehaviour
 
     public void NextCombo()
     {
-        comboCount = (comboCount % 3) + 1;
+        comboCount = (comboCount % 4) + 1;
         OnComboChanged?.Invoke(comboCount);
     }
 

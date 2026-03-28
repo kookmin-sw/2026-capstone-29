@@ -28,6 +28,9 @@ namespace StarterAssets
         [Tooltip("Shift speed of the character in m/s")]
         public float ShiftSpeed = 8.0f;
 
+        [Tooltip("Dash cooldown in seconds")]
+        public float ShiftCooldown = 2.0f;
+
         [Tooltip("How fast the character turns to face movement direction")]
         [Range(0.0f, 0.3f)]
         public float RotationSmoothTime = 0.12f;
@@ -99,6 +102,7 @@ namespace StarterAssets
         // timeout deltatime
         private float _jumpTimeoutDelta;
         private float _fallTimeoutDelta;
+        private float _shiftCooldownDelta = 0.0f;
 
         // animation IDs
         private int _animIDSpeed;
@@ -268,6 +272,11 @@ namespace StarterAssets
 
         private void Move()
         {
+            if (_shiftCooldownDelta > 0.0f)
+                _shiftCooldownDelta -= Time.deltaTime;
+
+            if (_shiftCooldownDelta > 0.0f)
+                _input.shift = false;
             // set target speed based on move speed, sprint speed and if sprint is pressed
             
             float targetSpeed = _input.crouch ? CrouchSpeed :
@@ -339,10 +348,17 @@ namespace StarterAssets
                 _animator.SetBool(_animIDCrouch, _input.crouch);
 
 
-                if (_input.shift && _input.move != Vector2.zero)
+                if (_input.shift)
                 {
-                    _animator.SetTrigger(_animIDShift);
-                    _input.shift = false;
+                    AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+                    bool isAttacking = _animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")
+                    ||_animator.GetCurrentAnimatorStateInfo(0).IsTag("Strong Attack");
+                    if (_input.move != Vector2.zero && !isAttacking)
+                    {
+                        _animator.SetTrigger(_animIDShift);
+                        _shiftCooldownDelta = ShiftCooldown;
+                    }
+                    _input.shift = false; // 공격 중이든 아니든 항상 소비
                 }
             }
         }

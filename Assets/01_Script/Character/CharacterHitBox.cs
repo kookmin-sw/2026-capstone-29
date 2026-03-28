@@ -1,49 +1,100 @@
 using UnityEngine;
 using Mirror;
+using System.Collections.Generic;
 
 public class CharacterHitBox : MonoBehaviour
 {
     public float damage = 10f; // 주먹 한 방의 대미지
     public Collider hitboxCollider; // 주먹에 달린 콜라이더
 
+    [Header("Hit Effect")]
+    public int effectIndex = 0;
+    public GameObject hitEffectPrefab;  // VFX_ImpactClassic01 프리팹들을 여기에 드래그
+    public float effectDuration = 2f;
+
+    [Header("State Permission")]
+    // 이 히트박스가 활성화될 수 있는 스테이트 이름 목록
+    public List<string> allowedStates = new List<string>();
+
+    private Animator _anim;
+    private HashSet<GameObject> _hitTargets = new HashSet<GameObject>();
+
     private void Awake()
     {
         // 평소에는 주먹 콜라이더를 꺼둡니다 (닿아도 안 맞게)
         if (hitboxCollider != null)
             hitboxCollider.enabled = false;
+
+        _anim = this.transform.root.GetComponentInChildren<Animator>();
     }
 
     // 트리거(주먹)가 무언가에 닿았을 때 실행됨
     private void OnTriggerEnter(Collider other)
     {
-        // 1. 내가 때린 대상이 NetworkCharacterModel을 가지고 있는지 확인
-        NetworkCharacterModel target = other.GetComponent<NetworkCharacterModel>();
+        if (!IsAllowedState()) return;
 
-        // 2. 대상이 존재하고, 내 자신을 때린 게 아니라면
+        NetworkCharacterModel target = other.GetComponent<NetworkCharacterModel>();
         if (target != null && target.gameObject != this.transform.root.gameObject)
         {
-            Debug.Log($"적 적중! 대미지 {damage}를 줍니다.");
+            if (_hitTargets.Contains(target.gameObject)) return;
+            _hitTargets.Add(target.gameObject);
 
-            // 3. 대상의 서버(Cmd)로 대미지를 깎으라고 명령!
+            Vector3 hitPoint  = other.ClosestPoint(hitboxCollider.transform.position);
+            Vector3 hitNormal = (hitPoint - other.transform.position).normalized;
+            if (hitNormal == Vector3.zero) hitNormal = Vector3.up;
+
             target.CmdTakeDamage(damage);
-
-            // 한 번 때렸으면 다단히트(여러 번 맞는 것) 방지를 위해 콜라이더를 즉시 끔
+            target.CmdSpawnHitEffect(hitPoint, hitNormal, effectIndex); // 인덱스 전달
             hitboxCollider.enabled = false;
+            return;
         }
-        
-            // 로컬용
+
+        // 로컬용
         CharacterModel localTarget = other.GetComponent<CharacterModel>();
         if (localTarget != null && other.transform.root.gameObject != this.transform.root.gameObject)
         {
-            Debug.Log($"로컬 적중! {damage} 대미지");
+            if (_hitTargets.Contains(localTarget.gameObject)) return;
+            _hitTargets.Add(localTarget.gameObject);
+
+            Debug.Log($"{_anim}! {damage} 대미지");
+            SpawnHitEffect(other);
             localTarget.TakeDamage(damage);
             hitboxCollider.enabled = false;
             return;
         }
     }
 
-    
+    private bool IsAllowedState()
+    {
+        if (_anim == null) return true;           // Animator 없으면 제한 없음
+        if (allowedStates.Count == 0) return true; // 목록 비어있으면 제한 없음
 
+        AnimatorStateInfo stateInfo = _anim.GetCurrentAnimatorStateInfo(0);
+        foreach (string state in allowedStates)
+        {
+            if (stateInfo.IsName(state)) return true;
+        }
+        return false;
+    }
+
+    private void SpawnHitEffect(Collider other)
+    {
+        if (hitEffectPrefab == null) return;
+
+        Vector3 hitPoint = other.ClosestPoint(hitboxCollider.transform.position);
+        Vector3 hitNormal = (hitPoint - other.transform.position).normalized;
+        if (hitNormal == Vector3.zero) hitNormal = Vector3.up;
+
+        GameObject effect = Instantiate(hitEffectPrefab, hitPoint, Quaternion.LookRotation(hitNormal));
+
+        foreach (var ps in effect.GetComponentsInChildren<ParticleSystem>(true))
+        {
+            ps.Clear();
+            ps.Play();
+        }
+
+        Destroy(effect, effectDuration);
+    }
     // 공격 애니메이션이 재생될 때 켜주는 함수 (nPlayerCombat 등에서 호출)
     public void EnableHitbox()
     {
@@ -54,5 +105,11 @@ public class CharacterHitBox : MonoBehaviour
     public void DisableHitbox()
     {
         hitboxCollider.enabled = false;
+    }
+    
+    public void ResetHitbox()
+    {
+        hitboxCollider.enabled = false;
+        _hitTargets.Clear();
     }
 }

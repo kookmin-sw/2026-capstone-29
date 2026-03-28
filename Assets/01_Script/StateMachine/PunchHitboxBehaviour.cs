@@ -14,13 +14,13 @@ public class PunchHitboxBehaviour : StateMachineBehaviour
         if (_localView == null) 
             _localView = animator.GetComponentInParent<CharacterLocalView>();
         
-        _view?.EnableRightPunchHitbox();
-        _localView?.EnableRightPunchHitbox();
+        _view?.EnableRightHandHitbox();
+        _localView?.EnableRightHandHitbox();
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo info, int layerIndex)
     {
-        _view?.DisableRightPunchHitbox();
-        _localView?.DisableRightPunchHitbox();
+        _view?.DisableRightHandHitbox();
+        _localView?.DisableRightHandHitbox();
     }
 }

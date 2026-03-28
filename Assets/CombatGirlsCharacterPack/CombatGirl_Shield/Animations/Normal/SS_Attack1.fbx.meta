@@ -61,14 +61,14 @@ ModelImporter:
       curves: []
       events:
       - time: 0.29424512
-        functionName: EnableRightPunchHitbox
+        functionName: EnableRightHandHitbox
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.33011857
-        functionName: DisableRightPunchHitbox
+        functionName: DisableRightHandHitbox
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

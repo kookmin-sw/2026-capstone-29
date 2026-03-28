@@ -29,6 +29,11 @@ public class NetworkCharacterModel : NetworkBehaviour
     [Header("Lives Setting")]
     public int maxLives = 1;
 
+    // 배열로 변경
+    [Header("Hit Effect")]
+    public GameObject[] hitEffectPrefabs;  // 0: 오른손, 1: 왼손, 2: 발, 3: --
+    public float effectDuration = 2f;
+
     // 남아있는 목숨 -> 서버에서 클라이언트에 전파
     [SyncVar(hook = nameof(OnLivesChangedHook))]
     private int remaingLives;
@@ -55,7 +60,7 @@ public class NetworkCharacterModel : NetworkBehaviour
     }
 
     [Command]
-    public void CmdNextCombo() { comboCount = (comboCount % 3) + 1; }
+    public void CmdNextCombo() { comboCount = (comboCount % 4) + 1; }
 
     [Command]
     public void CmdResetCombo() { comboCount = 0; }
@@ -137,6 +142,29 @@ public class NetworkCharacterModel : NetworkBehaviour
         yield return new WaitForSeconds(2f); // 2초 후 부활
         currentHealth = 100f;
         isDead = false;
+    }
+
+    // 이펙트 연결 
+    [Command]
+    public void CmdSpawnHitEffect(Vector3 hitPoint, Vector3 hitNormal, int effectIndex)
+    {
+        RpcSpawnHitEffect(hitPoint, hitNormal, effectIndex);
+    }
+
+    [ClientRpc]
+    void RpcSpawnHitEffect(Vector3 hitPoint, Vector3 hitNormal, int effectIndex)
+    {
+        if (hitEffectPrefabs == null || effectIndex >= hitEffectPrefabs.Length) return;
+        GameObject prefab = hitEffectPrefabs[effectIndex];
+        if (prefab == null) return;
+
+        GameObject effect = Instantiate(prefab, hitPoint, Quaternion.LookRotation(hitNormal));
+        foreach (var ps in effect.GetComponentsInChildren<ParticleSystem>(true))
+        {
+            ps.Clear();
+            ps.Play();
+        }
+        Destroy(effect, effectDuration);
     }
 
     [ClientRpc]
