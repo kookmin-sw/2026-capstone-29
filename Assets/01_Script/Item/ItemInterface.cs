@@ -22,6 +22,11 @@ public interface IWeapon //
     public float AvailableTime();
 }
 
+public interface IPlayerWeapon
+{
+    public void SetUser(GameObject user);
+}
+
 
 
 public interface IActive // 액티브 아이템

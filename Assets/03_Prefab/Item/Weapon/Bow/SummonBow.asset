@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f167aa618b3f140902acb658d1ca74, type: 3}
   m_Name: SummonBow
   m_EditorClassIdentifier: 
-  weapon: {fileID: 6274896817975956434, guid: 2742456afb1a1bc4f846dbb5380c6dc7, type: 3}
+  weapon: {fileID: 1001214639232489233, guid: 442d59dfa8c61154db66c271ebaea5a0, type: 3}
   availableTime: 10

@@ -28,6 +28,8 @@ public class SetItem : NetworkBehaviour, IEquip
             im.GetWeapon();
             GameObject weaponObj = im.weapon.SummonWeapon(user.transform.position, Quaternion.identity);
             NetworkServer.Spawn(weaponObj);
+            IPlayerWeapon ipw = weaponObj.GetComponent<IPlayerWeapon>();
+            ipw.SetUser(user);
             im.weaponAvailable = im.weapon.AvailableTime();
 
             // 모든 클라이언트에 장착 사실 알림

@@ -4,7 +4,7 @@ using Mirror;
 // 활 무기 컨트롤러.
 // 좌클릭 유지 → 화살 생성 및 활에 귀속, 당긴 시간에 비례하여 발사 위력 증가.
 // 좌클릭 해제 → 활이 바라보는 방향으로 화살 발사.
-public class WeaponBow : NetworkBehaviour
+public class WeaponBow : NetworkBehaviour, IPlayerWeapon
 {
     [Header("아이템 정보")]
     [SerializeField] public ItemStatus itemStat;
@@ -25,6 +25,17 @@ public class WeaponBow : NetworkBehaviour
     [Tooltip("최대 속도에 도달하는 데 걸리는 시간 (초)")]
     [SerializeField] private float maxChargeTime = 1.4f;
 
+    [Header("추적 설정")]
+    [Tooltip("플레이어 기준 위치 오프셋")]
+    [SerializeField] private Vector3 followPositionOffset = new Vector3(-0.084f, 0.053f, 0.058f);
+
+    [Tooltip("플레이어 기준 회전 오프셋")]
+    [SerializeField] private Vector3 followRotationOffset = Vector3.zero;
+
+    [Header("히트박스")]
+    [Tooltip("활 오브젝트의 히트박스. 비워두면 자식에서 자동 탐색.")]
+    [SerializeField] private CharacterHitBox weaponHitbox;
+
     // 현재 장전 중인 화살-서버사이드 관리
     private WeaponArrow loadedArrow;
     private GameObject loadedArrowObj;
@@ -36,10 +47,32 @@ public class WeaponBow : NetworkBehaviour
 
 
     //소유자 참조
-    [HideInInspector] public GameObject owner;
+    [SerializeField] public GameObject owner;
 
     /// 현재 차징 비율 (0~1). 외부에서 UI 등에 활용 가능.
     public float ChargeRatio => isCharging ? Mathf.Clamp01(chargeTimer / maxChargeTime) : 0f;
+
+
+    private void Awake()
+    {
+    }
+
+    public void SetUser(GameObject user)
+{
+    owner = user;
+    // 서버에서 호출되면 모든 클라이언트에 전파
+    RpcSetUser(user, "CombatGirls_Sword_Shield/root/add_weapon_r");
+}
+
+[ClientRpc]
+private void RpcSetUser(GameObject user, string socketPath)
+{
+    owner = user;
+    WeaponEquipHandler handler = GetComponent<WeaponEquipHandler>();
+    if (handler != null)
+        handler.Equip(user, socketPath);
+}
+
 
     private void Update()
     {
@@ -58,11 +91,13 @@ public class WeaponBow : NetworkBehaviour
             lifeTimer += Time.deltaTime;
             if (lifeTimer > itemStat.availableTime)
             {
-                NetworkServer.Destroy(this.gameObject);
+                // 먼저 모든 클라이언트에서 복원
+                RpcUnequip();
+
                 if (loadedArrowObj != null)
-                {
                     NetworkServer.Destroy(loadedArrowObj);
-                }
+
+                NetworkServer.Destroy(gameObject);
                 return;
             }
         }
@@ -96,7 +131,13 @@ public class WeaponBow : NetworkBehaviour
             CmdReleaseArrow(ratio);
         }
     }
-
+    [ClientRpc]
+    private void RpcUnequip()
+    {
+        WeaponEquipHandler handler = GetComponent<WeaponEquipHandler>();
+        if (handler != null)
+            handler.Unequip();
+    }
     // 화살을 생성하고 활에 장전한다.
     [Command(requiresAuthority = false)]
     private void CmdBeginCharge()
