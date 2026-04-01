@@ -36,25 +36,38 @@ public class BowAnimationController : NetworkBehaviour
         // 좌클릭 누르면 당기기 시작
         if (Input.GetMouseButtonDown(0) && !isPulling)
         {
-            StartPull();
+            CmdStartPull();
         }
         // 좌클릭 떼면 발사
         else if (Input.GetMouseButtonUp(0) && isPulling)
         {
-            ReleasePull();
+            CmdReleasePull();
         }
     }
 
     // 시위 당기기 시작. idle → pull_start → pull_loop 전환.
+    [Command]
+    public void CmdStartPull()
+    {
+        RpcStartPull();
+    }
 
-    public void StartPull()
+    // 시위 놓기. pull_loop → pull_end → idle 전환.
+    [Command]
+    public void CmdReleasePull()
+    {
+        RpcReleasePull();
+    }
+
+    [ClientRpc]
+    private void RpcStartPull()
     {
         isPulling = true;
         bowAnimator.SetBool(PullHash, true);
     }
 
-    // 시위 놓기. pull_loop → pull_end → idle 전환.
-    public void ReleasePull()
+    [ClientRpc]
+    private void RpcReleasePull()
     {
         isPulling = false;
         bowAnimator.SetBool(PullHash, false);

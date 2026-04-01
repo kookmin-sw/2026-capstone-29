@@ -27,7 +27,7 @@ public class SetItem : NetworkBehaviour, IEquip
             im.weapon = itemAsset as IWeapon;
             im.GetWeapon();
             GameObject weaponObj = im.weapon.SummonWeapon(user.transform.position, Quaternion.identity);
-            NetworkServer.Spawn(weaponObj);
+            NetworkServer.Spawn(weaponObj, user.GetComponent<NetworkIdentity>().connectionToClient);
             IPlayerWeapon ipw = weaponObj.GetComponent<IPlayerWeapon>();
             ipw.SetUser(user);
             im.weaponAvailable = im.weapon.AvailableTime();

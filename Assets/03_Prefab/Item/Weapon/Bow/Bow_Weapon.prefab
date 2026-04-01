@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1001214639232489233}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -32.145863, y: 36.976112, z: 26.603315}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -58,8 +58,8 @@ MonoBehaviour:
   minLaunchSpeed: 5
   maxLaunchSpeed: 40
   maxChargeTime: 1.4
-  followPositionOffset: {x: -0.084, y: 0.053, z: 0.058}
-  followRotationOffset: {x: 0, y: 0, z: 0}
+  followPositionOffset: {x: 0, y: -0.3, z: 0}
+  followRotationOffset: {x: 90, y: 0, z: 0}
   weaponHitbox: {fileID: 2532498058483183799}
   owner: {fileID: 0}
 --- !u!114 &905062388878126110
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 968575b5f4ed84b4aa0a8fb5a483063a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  positionOffset: {x: -0.084, y: 0.053, z: 0.058}
+  positionOffset: {x: 0, y: 0, z: 0}
   rotationOffset: {x: 0, y: 0, z: 0}
   weaponHitbox: {fileID: 0}
   followTarget: {fileID: 0}
@@ -156,7 +156,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3528327415044655354}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -164,7 +164,7 @@ Transform:
   - {fileID: 5994223683538030611}
   - {fileID: 9063041453670020194}
   m_Father: {fileID: 836941026227307015}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &3604819647238036836
 Animator:
   serializedVersion: 5

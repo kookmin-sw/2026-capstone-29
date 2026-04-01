@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using Mirror;
+﻿using Mirror;
+using UnityEngine;
 
 // 활 무기 컨트롤러.
 // 좌클릭 유지 → 화살 생성 및 활에 귀속, 당긴 시간에 비례하여 발사 위력 증가.
@@ -26,11 +26,11 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
     [SerializeField] private float maxChargeTime = 1.4f;
 
     [Header("추적 설정")]
-    [Tooltip("플레이어 기준 위치 오프셋")]
-    [SerializeField] private Vector3 followPositionOffset = new Vector3(-0.084f, 0.053f, 0.058f);
+    [Tooltip("플레이어 기준 화살 위치 오프셋")]
+    [SerializeField] public Vector3 followPositionOffset;
 
-    [Tooltip("플레이어 기준 회전 오프셋")]
-    [SerializeField] private Vector3 followRotationOffset = Vector3.zero;
+    [Tooltip("플레이어 기준 화살 회전 오프셋")]
+    [SerializeField] public Vector3 followRotationOffset;
 
     [Header("히트박스")]
     [Tooltip("활 오브젝트의 히트박스. 비워두면 자식에서 자동 탐색.")]
@@ -38,7 +38,7 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
 
     // 현재 장전 중인 화살-서버사이드 관리
     private WeaponArrow loadedArrow;
-    private GameObject loadedArrowObj;
+    [SyncVar] private GameObject loadedArrowObj;
 
     //차징 상태-클라이언트 관리
     private float chargeTimer;
@@ -102,14 +102,26 @@ private void RpcSetUser(GameObject user, string socketPath)
             }
         }
 
-        //장전된 화살은 활을 따라다닌다.
-        if (isServer && isCharging && loadedArrow != null)
+        //장전된 화살이 활의 nockPoint를 따라가도록 위치/회전 갱신.
+        if (isCharging && loadedArrowObj != null)
         {
-            FollowNockPoint();
+            /*
+            if (loadedArrow == null)
+            {
+                // 화살이 외부 요인으로 파괴된 경우 차징 취소
+                CancelCharge();
+                return;
+            }
+            */
+
+            Transform spawnPoint = nockPoint != null ? nockPoint : transform;
+            loadedArrowObj.transform.position = spawnPoint.position + spawnPoint.TransformDirection(followPositionOffset);
+            loadedArrowObj.transform.rotation = spawnPoint.rotation * 
+                Quaternion.Euler(followRotationOffset.x, followRotationOffset.y, followRotationOffset.z);
         }
 
         // 좌클릭 시작 → 화살 장전
-        if (Input.GetMouseButtonDown(0) && !isCharging)
+        if (Input.GetMouseButtonDown(0) && !isCharging && isOwned)
         {
             isCharging = true;
             chargeTimer = 0;
@@ -117,13 +129,13 @@ private void RpcSetUser(GameObject user, string socketPath)
         }
 
         // 좌클릭 유지 → 차징 시간 누적
-        if (isCharging)
+        if (isCharging && isOwned)
         {
             chargeTimer += Time.deltaTime;
         }
 
         // 좌클릭 해제 → 발사
-        if (Input.GetMouseButtonUp(0) && isCharging)
+        if (Input.GetMouseButtonUp(0) && isCharging && isOwned)
         {
             float ratio = Mathf.Clamp01(chargeTimer / maxChargeTime);
             isCharging = false;
@@ -144,7 +156,8 @@ private void RpcSetUser(GameObject user, string socketPath)
     {
         Transform spawnPoint = nockPoint != null ? nockPoint : transform;
 
-        GameObject arrowObj = Instantiate(arrow, spawnPoint.position, spawnPoint.rotation);
+        GameObject arrowObj = Instantiate(arrow, spawnPoint.position + spawnPoint.TransformDirection(followPositionOffset), 
+            spawnPoint.rotation * Quaternion.Euler(followRotationOffset.x, followRotationOffset.y, followRotationOffset.z));
         NetworkServer.Spawn(arrowObj);
 
         loadedArrowObj = arrowObj;
@@ -170,23 +183,10 @@ private void RpcSetUser(GameObject user, string socketPath)
     [ClientRpc]
     void RpcOnBeginCharge()
     {
-
+        isCharging = true;
     }
 
-    // 장전된 화살이 활의 nockPoint를 따라가도록 위치/회전 갱신.
-    private void FollowNockPoint()
-    {
-        if (loadedArrow == null)
-        {
-            // 화살이 외부 요인으로 파괴된 경우 차징 취소
-            CancelCharge();
-            return;
-        }
 
-        Transform spawnPoint = nockPoint != null ? nockPoint : transform;
-        loadedArrow.transform.position = spawnPoint.position;
-        loadedArrow.transform.rotation = spawnPoint.rotation;
-    }
 
     // 차징된 시간에 비례하는 속도로 화살을 발사한다.
     [Command(requiresAuthority = false)]
@@ -201,7 +201,9 @@ private void RpcSetUser(GameObject user, string socketPath)
         float launchSpeed = Mathf.Lerp(minLaunchSpeed, maxLaunchSpeed, chargeRatio);
 
         // 활이 바라보는 방향 (forward)
-        Vector3 direction = (nockPoint != null ? nockPoint : transform).forward;
+        Transform spawnPoint = (nockPoint != null ? nockPoint : transform);
+        Quaternion adjusted = spawnPoint.rotation * Quaternion.Euler(followRotationOffset);
+        Vector3 direction = adjusted * Vector3.forward;
 
         loadedArrow.Launch(direction, launchSpeed);
 
@@ -215,7 +217,7 @@ private void RpcSetUser(GameObject user, string socketPath)
     [ClientRpc]
     void RpcOnRelease()
     {
-
+        isCharging = false;
     }
 
     // 차징을 취소하고 상태를 초기화한다.
