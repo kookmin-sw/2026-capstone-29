@@ -3,12 +3,13 @@ using Mirror.Discovery;
 using UnityEngine;
 using UnityEngine.UI; 
 
-public class MatchUIHandler : MonoBehaviour
+public class TitleUIHandler : MonoBehaviour
 {
     public NetworkDiscovery networkDiscovery;
     
     [Header("UI Panels")]
-    public GameObject matchPanel; // 매칭 패넝
+    public GameObject matchPanel; // 매칭 패널
+    public GameObject keySettingPanel; // 키설정 패널
 
     public Text matchingText; // "매칭 중..." 텍스트
     public Text timeText; // 매칭 시간 텍스트
@@ -152,5 +153,27 @@ public class MatchUIHandler : MonoBehaviour
         if(matchingText != null) matchingText.gameObject.SetActive(false);
         if(timeText != null) timeText.gameObject.SetActive(false);
         if(matchCancelButton != null) matchCancelButton.SetActive(false);
+    }
+
+    // 키설정 버튼 클릭시
+    public void ClickKeySetting()
+    {
+        if(keySettingPanel != null) keySettingPanel.SetActive(true);
+    }
+
+    // 키설정 닫을 시
+    public void CancleKeySetting()
+    {
+        if(keySettingPanel != null) keySettingPanel.SetActive(false);
+    }
+
+    // 게임 종료 버튼 클릭시
+    public void QuitGame()
+    {
+    #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false; // 에디터에서 플레이 모드 종료
+    #else
+        Application.Quit(); // 빌드된 게임에서 실제 종료
+    #endif
     }
 }
