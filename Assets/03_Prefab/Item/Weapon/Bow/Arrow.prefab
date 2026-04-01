@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7682845304398843991}
   - component: {fileID: 5139069466735473110}
   - component: {fileID: -47834042764493833}
+  - component: {fileID: -4179355378918491307}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -29,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 2019689283678102327}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -27.7652, y: 64.77552, z: 5.090682}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -48,7 +49,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955df3ac54a0f7f4e83b397bad5a9479, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   itemStat: {fileID: 11400000, guid: e2e4fcc605db6b241831c6fa2a15bbc2, type: 2}
+  owner: {fileID: 0}
 --- !u!54 &7682845304398843991
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -109,7 +114,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d65a2166bb343541a445962f78c25d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   gravityScale: 0.2
+--- !u!114 &-4179355378918491307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019689283678102327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  _assetId: 3793641999
+  serverOnly: 0
+  visibility: 0
+  hasSpawned: 0
 --- !u!1001 &4583243189055386551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -162,6 +187,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 8eb2c39a0108f28418d96aed59e651b5, type: 2}
+    - target: {fileID: -4046894564183344062, guid: dc26ea35a01dbaa469221ea0a97031c1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc26ea35a01dbaa469221ea0a97031c1, type: 3}
       propertyPath: m_Name
       value: Arrow

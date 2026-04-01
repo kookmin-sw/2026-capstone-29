@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 
 // 활 무기 컨트롤러.
 // 좌클릭 유지 → 화살 생성 및 활에 귀속, 당긴 시간에 비례하여 발사 위력 증가.
 // 좌클릭 해제 → 활이 바라보는 방향으로 화살 발사.
-public class WeaponBow : MonoBehaviour
+public class WeaponBow : NetworkBehaviour, IPlayerWeapon
 {
     [Header("아이템 정보")]
     [SerializeField] public ItemStatus itemStat;
@@ -24,87 +25,172 @@ public class WeaponBow : MonoBehaviour
     [Tooltip("최대 속도에 도달하는 데 걸리는 시간 (초)")]
     [SerializeField] private float maxChargeTime = 1.4f;
 
-    // 현재 장전 중인 화살
+    [Header("추적 설정")]
+    [Tooltip("플레이어 기준 화살 위치 오프셋")]
+    [SerializeField] public Vector3 followPositionOffset;
+
+    [Tooltip("플레이어 기준 화살 회전 오프셋")]
+    [SerializeField] public Vector3 followRotationOffset;
+
+    [Header("히트박스")]
+    [Tooltip("활 오브젝트의 히트박스. 비워두면 자식에서 자동 탐색.")]
+    [SerializeField] private CharacterHitBox weaponHitbox;
+
+    // 현재 장전 중인 화살-서버사이드 관리
     private WeaponArrow loadedArrow;
+    [SyncVar] private GameObject loadedArrowObj;
+
+    //차징 상태-클라이언트 관리
     private float chargeTimer;
     private bool isCharging;
     private float lifeTimer;
 
+
+    //소유자 참조
+    [SerializeField] public GameObject owner;
+
     /// 현재 차징 비율 (0~1). 외부에서 UI 등에 활용 가능.
     public float ChargeRatio => isCharging ? Mathf.Clamp01(chargeTimer / maxChargeTime) : 0f;
+
+
+    private void Awake()
+    {
+    }
+
+    public void SetUser(GameObject user)
+{
+    owner = user;
+    // 서버에서 호출되면 모든 클라이언트에 전파
+    RpcSetUser(user, "CombatGirls_Sword_Shield/root/add_weapon_r");
+}
+
+[ClientRpc]
+private void RpcSetUser(GameObject user, string socketPath)
+{
+    owner = user;
+    WeaponEquipHandler handler = GetComponent<WeaponEquipHandler>();
+    if (handler != null)
+        handler.Equip(user, socketPath);
+}
+
 
     private void Update()
     {
         if (arrow == null) return;
 
-        lifeTimer += Time.deltaTime;
-        if (lifeTimer > itemStat.availableTime)
+        //부모 위치/방햐 추적 - 양측 클라이언트
+        if (transform.parent != null)
         {
-            Destroy(this.gameObject);
-            Destroy(arrow);
-            return;
+            transform.rotation = transform.parent.rotation;
+            transform.position = transform.parent.position + transform.parent.forward * 1.5f;
         }
-        // 좌클릭 시작 → 화살 장전
-        if (Input.GetMouseButtonDown(0) && !isCharging)
+
+        //수명 관리는 서버에서만 해준다.
+        if (isServer)
         {
-            BeginCharge();
+            lifeTimer += Time.deltaTime;
+            if (lifeTimer > itemStat.availableTime)
+            {
+                // 먼저 모든 클라이언트에서 복원
+                RpcUnequip();
+
+                if (loadedArrowObj != null)
+                    NetworkServer.Destroy(loadedArrowObj);
+
+                NetworkServer.Destroy(gameObject);
+                return;
+            }
+        }
+
+        //장전된 화살이 활의 nockPoint를 따라가도록 위치/회전 갱신.
+        if (isCharging && loadedArrowObj != null)
+        {
+            /*
+            if (loadedArrow == null)
+            {
+                // 화살이 외부 요인으로 파괴된 경우 차징 취소
+                CancelCharge();
+                return;
+            }
+            */
+
+            Transform spawnPoint = nockPoint != null ? nockPoint : transform;
+            loadedArrowObj.transform.position = spawnPoint.position + spawnPoint.TransformDirection(followPositionOffset);
+            loadedArrowObj.transform.rotation = spawnPoint.rotation * 
+                Quaternion.Euler(followRotationOffset.x, followRotationOffset.y, followRotationOffset.z);
+        }
+
+        // 좌클릭 시작 → 화살 장전
+        if (Input.GetMouseButtonDown(0) && !isCharging && isOwned)
+        {
+            isCharging = true;
+            chargeTimer = 0;
+            CmdBeginCharge();
         }
 
         // 좌클릭 유지 → 차징 시간 누적
-        if (isCharging)
+        if (isCharging && isOwned)
         {
             chargeTimer += Time.deltaTime;
-
-            // 장전된 화살이 활 위치를 따라다님
-            FollowNockPoint();
         }
 
         // 좌클릭 해제 → 발사
-        if (Input.GetMouseButtonUp(0) && isCharging)
+        if (Input.GetMouseButtonUp(0) && isCharging && isOwned)
         {
-            ReleaseArrow();
+            float ratio = Mathf.Clamp01(chargeTimer / maxChargeTime);
+            isCharging = false;
+            chargeTimer = 0f;
+            CmdReleaseArrow(ratio);
         }
     }
-
+    [ClientRpc]
+    private void RpcUnequip()
+    {
+        WeaponEquipHandler handler = GetComponent<WeaponEquipHandler>();
+        if (handler != null)
+            handler.Unequip();
+    }
     // 화살을 생성하고 활에 장전한다.
-    private void BeginCharge()
+    [Command(requiresAuthority = false)]
+    private void CmdBeginCharge()
     {
         Transform spawnPoint = nockPoint != null ? nockPoint : transform;
 
-        GameObject arrowObj = Instantiate(arrow, spawnPoint.position, spawnPoint.rotation);
+        GameObject arrowObj = Instantiate(arrow, spawnPoint.position + spawnPoint.TransformDirection(followPositionOffset), 
+            spawnPoint.rotation * Quaternion.Euler(followRotationOffset.x, followRotationOffset.y, followRotationOffset.z));
+        NetworkServer.Spawn(arrowObj);
+
+        loadedArrowObj = arrowObj;
         loadedArrow = arrowObj.GetComponent<WeaponArrow>();
 
         if (loadedArrow == null)
         {
             Debug.LogError("[WeaponBow] arrowPrefab에 WeaponArrow 컴포넌트가 없습니다.");
-            Destroy(arrowObj);
+            NetworkServer.Destroy(arrowObj);
             return;
         }
 
         // 화살을 장전 상태로 설정 (발사 전까지 자체 로직 비활성)
         loadedArrow.SetNocked(true);
+        loadedArrow.owner = owner;
 
-        chargeTimer = 0f;
+        isCharging = true;
+
+        //클라잉언트에 장전 상태 알림.
+        RpcOnBeginCharge();
+    }
+
+    [ClientRpc]
+    void RpcOnBeginCharge()
+    {
         isCharging = true;
     }
 
-    // 장전된 화살이 활의 nockPoint를 따라가도록 위치/회전 갱신.
-    private void FollowNockPoint()
-    {
-        if (loadedArrow == null)
-        {
-            // 화살이 외부 요인으로 파괴된 경우 차징 취소
-            CancelCharge();
-            return;
-        }
 
-        Transform spawnPoint = nockPoint != null ? nockPoint : transform;
-        loadedArrow.transform.position = spawnPoint.position;
-        loadedArrow.transform.rotation = spawnPoint.rotation;
-    }
 
     // 차징된 시간에 비례하는 속도로 화살을 발사한다.
-    private void ReleaseArrow()
+    [Command(requiresAuthority = false)]
+    private void CmdReleaseArrow(float chargeRatio)
     {
         if (loadedArrow == null)
         {
@@ -112,16 +198,25 @@ public class WeaponBow : MonoBehaviour
             return;
         }
 
-        float ratio = Mathf.Clamp01(chargeTimer / maxChargeTime);
-        float launchSpeed = Mathf.Lerp(minLaunchSpeed, maxLaunchSpeed, ratio);
+        float launchSpeed = Mathf.Lerp(minLaunchSpeed, maxLaunchSpeed, chargeRatio);
 
         // 활이 바라보는 방향 (forward)
-        Vector3 direction = (nockPoint != null ? nockPoint : transform).forward;
+        Transform spawnPoint = (nockPoint != null ? nockPoint : transform);
+        Quaternion adjusted = spawnPoint.rotation * Quaternion.Euler(followRotationOffset);
+        Vector3 direction = adjusted * Vector3.forward;
 
         loadedArrow.Launch(direction, launchSpeed);
 
         loadedArrow = null;
         chargeTimer = 0f;
+        isCharging = false;
+
+        RpcOnRelease();
+    }
+
+    [ClientRpc]
+    void RpcOnRelease()
+    {
         isCharging = false;
     }
 
@@ -129,7 +224,9 @@ public class WeaponBow : MonoBehaviour
     private void CancelCharge()
     {
         if (loadedArrow != null)
-            Destroy(loadedArrow.gameObject);
+        {
+            NetworkServer.Destroy(loadedArrow.gameObject);
+        }
 
         loadedArrow = null;
         chargeTimer = 0f;

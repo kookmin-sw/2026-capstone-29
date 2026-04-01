@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using Mirror;
+using UnityEngine;
 
-public class ScaleArrow : MonoBehaviour
+public class ScaleArrow : NetworkBehaviour
 {
-    [Tooltip("중력 배율. 1이 기본, 낮출수록 낙차 감소")]
+    [Tooltip("중력 배율")]
     [SerializeField] private float gravityScale = 0.3f;
 
     private Rigidbody rb;
@@ -10,11 +11,13 @@ public class ScaleArrow : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        rb.useGravity = false; // 기본 중력 끄기
+        rb.useGravity = false;
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
+        // 서버에서만 물리 처리
+        if (!isServer) return;
         rb.AddForce(Physics.gravity * gravityScale, ForceMode.Acceleration);
     }
 }
