@@ -10,10 +10,14 @@ public class PlayerCombat : NetworkBehaviour
     private CharacterView _view;
     private PlayerInput _playerInput;
     private InputAction _chargeAction;
+    private Animator _animator;
 
     [Header("공격 설정")]
     [SerializeField] private float comboResetTime = 1.0f;
     private float _lastAttackTime;
+    // 현재 공격 모션 중인지 체크용
+    private bool _isAttacking = false;
+    private bool _chargeStarted = false;
 
 
 
@@ -22,8 +26,9 @@ public class PlayerCombat : NetworkBehaviour
         _input = GetComponent<StarterAssetsInputs>();
         _model = GetComponent<NetworkCharacterModel>();
         _view = GetComponent<CharacterView>();
-        
+
         _playerInput = GetComponent<PlayerInput>();
+        _animator = GetComponent<Animator>();
         _chargeAction = _playerInput.actions["Charge"];
     }
 
@@ -54,14 +59,14 @@ public class PlayerCombat : NetworkBehaviour
     private void HandlePunch()
     {
         // 차징 중에는 일반 펀치 불가
-        if (_input.punch && !_model.IsCharging)
+        if (_input.punch && !_model.IsCharging && !IsStrongAttacking)
         {
             _lastAttackTime = Time.time;
             _model.CmdNextCombo(); // 서버에 콤보 증가 요청
             _input.punch = false;  // 입력 소비
         }
     }
-    
+
     private void HandleSelfHarm()
     {
         if (_input.selfHarm)
@@ -71,38 +76,47 @@ public class PlayerCombat : NetworkBehaviour
         }
     }
 
+    private bool IsAttacking =>
+        _animator != null && _animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack");
+
+    private bool IsStrongAttacking =>
+        _animator != null && _animator.GetCurrentAnimatorStateInfo(0).IsTag("StrongAttack");
+
+
     private void OnChargeStarted(InputAction.CallbackContext context)
     {
-        if (!isLocalPlayer || _model.IsDead) return;
+        if (!isLocalPlayer || _model.IsDead || IsAttacking || IsStrongAttacking) return;
 
         // 누르기 시작: 기 모으기 이펙트(1단계) 켜기
+        _chargeStarted = true;
         _model.CmdSetCharging(true);
         _view.UpdateChargeEffect(true, false);
     }
 
     private void OnChargeReady(InputAction.CallbackContext context)
     {
-        if (!isLocalPlayer || _model.IsDead) return;
+        if (!isLocalPlayer || _model.IsDead || IsAttacking || IsStrongAttacking) return;
 
         // 에디터에서 설정한 Hold Time(1.5초) 도달!: 이펙트를 '준비 완료(2단계)'로 변경
-        _view.UpdateChargeEffect(true, true); 
+        _view.UpdateChargeEffect(true, true);
+        _input.punch = false;
     }
 
     private void OnChargeCanceled(InputAction.CallbackContext context)
     {
-        if (!isLocalPlayer || _model.IsDead) return;
+        if (!isLocalPlayer || _model.IsDead || IsAttacking || IsStrongAttacking) return;
 
         // context.duration을 쓰면 내가 몇 초 동안 누르고 있었는지 정확히 알려줍니다!
         // 에디터에서 Hold Time을 1.5로 했으니, duration이 1.5 이상이면 강공격 발동
-        if (context.duration >= 1.5f) 
+        if (context.duration >= 1.5f)
         {
-            Debug.Log("Platycombat");
-            _model.CmdStrongAttack(); 
+            _model.CmdStrongAttack();
         }
 
         // 차징 상태 해제 및 이펙트 끄기
+        _chargeStarted = false;
         _model.CmdSetCharging(false);
-        _view.UpdateChargeEffect(false, false); 
+        _view.UpdateChargeEffect(false, false);
     }
 
 

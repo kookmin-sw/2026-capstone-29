@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class CharacterView : MonoBehaviour
 {
@@ -12,13 +12,17 @@ public class CharacterView : MonoBehaviour
     [Header("전투 히트박스")]
     public CharacterHitBox rightHandHitbox;
     public CharacterHitBox leftHandHitbox;
-    
+    public CharacterHitBox leftFootHitbox;
+
     [Header("Sound Settings")]
     public AudioSource audioSource;
     public AudioClip punchSounds;
     public AudioClip hitSounds;
     public AudioClip chargeSounds;
     public AudioClip readySounds;
+    
+    // 히트박스 초기화
+    private int _prevStateHash;
 
 
     private void Awake()
@@ -35,8 +39,8 @@ public class CharacterView : MonoBehaviour
             model.OnStrongAttack += PlayStrongAttackEffect;
             model.OnHealthChanged += HandleHealthChange;
             model.OnDie += HandleDie;
-            model.OnChargeStateChanged += HandleChargeStateChanged;
-            model.OnChargeReadyChanged += HandleChargeReadyChanged;
+            //model.OnChargeStateChanged += HandleChargeStateChanged;
+            // model.OnChargeReadyChanged += HandleChargeReadyChanged;
         }
     }
 
@@ -48,24 +52,39 @@ public class CharacterView : MonoBehaviour
             model.OnStrongAttack -= PlayStrongAttackEffect;
             model.OnHealthChanged -= HandleHealthChange;
             model.OnDie -= HandleDie;
-            model.OnChargeStateChanged -= HandleChargeStateChanged;
-            model.OnChargeReadyChanged -= HandleChargeReadyChanged;
+            // model.OnChargeStateChanged -= HandleChargeStateChanged;
+            // model.OnChargeReadyChanged -= HandleChargeReadyChanged;
         }
     }
     private void Update()
     {
         AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-        
-        bool useRootMotion = stateInfo.IsName("Movement") || 
-                            stateInfo.IsName("Jumping") || 
+        // 애니매이션의 이동을 따름
+        bool useRootMotion = stateInfo.IsName("Movement") ||
+                            stateInfo.IsName("Jumping") ||
                             stateInfo.IsName("Falling") ||
                             stateInfo.IsName("Quickshift") ||
+                            stateInfo.IsName("Combo Attack 4") ||
                             stateInfo.IsName("Crouch");
-        
+
         anim.applyRootMotion = useRootMotion;
+        // 이전 프레임과 스테이트가 바뀌었으면 히트박스 리셋
+        if (stateInfo.fullPathHash != _prevStateHash)
+        {
+            _prevStateHash = stateInfo.fullPathHash;
+            ResetAllHitboxes();
+        }
     }
 
-    // --- 이벤트 핸들러 ---
+
+    private void ResetAllHitboxes()
+    {
+        // 히트박스 콜라이더는 끄되, 피격 목록만 초기화 (다음 공격 준비)
+        if (rightHandHitbox != null) rightHandHitbox.ResetHitbox();
+        if (leftHandHitbox  != null) leftHandHitbox.ResetHitbox();
+        if (leftFootHitbox  != null) leftFootHitbox.ResetHitbox();
+        // 검/방패 히트박스도 있다면 여기에 추가
+    }
 
     void HandleHealthChange(float hp)
     {
@@ -101,9 +120,10 @@ public class CharacterView : MonoBehaviour
         }
     }
 
+    // --- 이벤트 핸들러 ---
     void HandleChargeStateChanged(bool newIsCharging)
     {
-        bool isReady = model.IsChargeReady; 
+        bool isReady = model.IsChargeReady;
         UpdateChargeEffect(newIsCharging, isReady);
     }
 
@@ -116,7 +136,7 @@ public class CharacterView : MonoBehaviour
     {
         if (!isCharging)
         {
-            
+
             // 차지 안 할 땐 둘 다 끄기
             if (chargingEffect) chargingEffect.SetActive(false);
             if (chargeReadyEffect) chargeReadyEffect.SetActive(false);
@@ -154,33 +174,40 @@ public class CharacterView : MonoBehaviour
         anim.SetFloat("Speed", currentSpeed);
     }
 
-    public void EnableRightPunchHitbox()
+    public void EnableRightHandHitbox()
     {
         if (rightHandHitbox != null)
             rightHandHitbox.EnableHitbox();
-        if (leftHandHitbox != null)
-            leftHandHitbox.EnableHitbox();
+
     }
 
-    // 애니메이션 이벤트가 호출할 함수 2 (주먹 회수할 때 끄기)
-    public void DisableRightPunchHitbox()
+    public void DisableRightHandHitbox()
     {
         if (rightHandHitbox != null)
             rightHandHitbox.DisableHitbox();
-        if (leftHandHitbox != null)
-            leftHandHitbox.DisableHitbox();
+            
     }
-    
-    public void EnableLeftPunchHitbox()
+
+    public void EnableLeftHandHitbox()
     {
         if (leftHandHitbox != null)
             leftHandHitbox.EnableHitbox();
     }
 
-    // 애니메이션 이벤트가 호출할 함수 2 (주먹 회수할 때 끄기)
-    public void DisableLeftPunchHitbox()
+    public void DisableLeftHandHitbox()
     {
-        if (leftHandHitbox != null) 
+        if (leftHandHitbox != null)
             leftHandHitbox.DisableHitbox();
+    }
+    public void EnableLeftFootHitbox()
+    {
+        if (leftFootHitbox != null)
+            leftFootHitbox.EnableHitbox();
+    }
+
+    public void DisableLeftFootHitbox()
+    {
+        if (leftFootHitbox != null)
+            leftFootHitbox.DisableHitbox();
     }
 }
