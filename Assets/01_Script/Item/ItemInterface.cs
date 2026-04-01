@@ -18,8 +18,13 @@ public interface IEquipment // legacy
 
 public interface IWeapon //
 {
-    public void SummonWeapon(Vector3 pos, Quaternion qt);
+    public GameObject SummonWeapon(Vector3 pos, Quaternion qt);
     public float AvailableTime();
+}
+
+public interface IPlayerWeapon
+{
+    public void SetUser(GameObject user);
 }
 
 

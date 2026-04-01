@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2937909232488812922}
   - component: {fileID: 1296373147013082832}
   - component: {fileID: 4238909117161619721}
+  - component: {fileID: 1619856829656249254}
   m_Layer: 0
   m_Name: Bow
   m_TagString: Untagged
@@ -69,8 +70,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b86e87d5162a5349802c44f32178241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   itemStat: {fileID: 11400000, guid: db0e3d3a0343b8148bcff386c2efc5a2, type: 2}
   arrow: {fileID: 919132149155446097, guid: dc26ea35a01dbaa469221ea0a97031c1, type: 3}
+  nockPoint: {fileID: 0}
+  minLaunchSpeed: 5
+  maxLaunchSpeed: 40
+  maxChargeTime: 1.4
+  owner: {fileID: 0}
 --- !u!114 &4238909117161619721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,7 +92,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22c3c9f90a10b844dbe6dd95b52167cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   bowAnimator: {fileID: 0}
+--- !u!114 &1619856829656249254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2595451280045958548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  _assetId: 3886171524
+  serverOnly: 0
+  visibility: 0
+  hasSpawned: 0
 --- !u!1 &6135233053195654461
 GameObject:
   m_ObjectHideFlags: 0
@@ -232,7 +261,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 07744b46d52906f41ac3abff84075b52, type: 2}
+  - {fileID: 2100000, guid: 23a87e7f7337a1641bc677feb7fd9180, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
