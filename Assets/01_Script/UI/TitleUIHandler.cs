@@ -10,6 +10,7 @@ public class TitleUIHandler : MonoBehaviour
     [Header("UI Panels")]
     public GameObject matchPanel; // 매칭 패널
     public GameObject keySettingPanel; // 키설정 패널
+    public GameObject ExitPanel; // 게임 종료 패널
 
     public Text matchingText; // "매칭 중..." 텍스트
     public Text timeText; // 매칭 시간 텍스트
@@ -167,7 +168,7 @@ public class TitleUIHandler : MonoBehaviour
         if(keySettingPanel != null) keySettingPanel.SetActive(false);
     }
 
-    // 게임 종료 버튼 클릭시
+    // 찐 게임 종료 버튼 클릭시
     public void QuitGame()
     {
     #if UNITY_EDITOR
@@ -175,5 +176,17 @@ public class TitleUIHandler : MonoBehaviour
     #else
         Application.Quit(); // 빌드된 게임에서 실제 종료
     #endif
+    }
+
+    // 게임 종료 버튼 클릭시
+    public void ClickExitGame()
+    {
+        if(ExitPanel != null) ExitPanel.SetActive(true);
+    }
+    
+    // 게임 종료 버튼 취소시
+    public void CancleExitGame()
+    {
+        if(ExitPanel != null) ExitPanel.SetActive(false);
     }
 }
