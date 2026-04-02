@@ -88,6 +88,22 @@ public class NetworkCharacterModel : NetworkBehaviour
         }
     }
 
+    // 추락 데미지 판정
+    [Command]
+    public void CmdFallDamage(float damage)
+    {
+        if(IsDead) return;
+
+        // 기존 데미지 함수 재활용
+        CmdTakeDamage(damage);
+
+        // 리스폰 위치 이동
+        if(NetworkGameManger.instance != null)
+        {
+            NetworkGameManger.instance.RespawnPlayer(this);
+        }
+    }
+
     [Command]
     public void CmdSelfHarm(float damageAmount)
     {
@@ -142,6 +158,12 @@ public class NetworkCharacterModel : NetworkBehaviour
         yield return new WaitForSeconds(2f); // 2초 후 부활
         currentHealth = 100f;
         isDead = false;
+
+        // 위치 이동 추가
+        if(NetworkGameManger.instance != null)
+        {
+            NetworkGameManger.instance.RespawnPlayer(this);
+        }
     }
 
     // 이펙트 연결 
