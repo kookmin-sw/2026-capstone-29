@@ -25,6 +25,10 @@ public class NetworkGameManger : NetworkBehaviour
     [Header("Game Settting")]
     [SyncVar(hook = nameof(OnTimerChanged))] // 시간 변경시 변경 함수 호출
     public int remainingTime = 300; // 300초 타이머 
+    
+    // 스폰 포인트 세팅
+    [Header("Spawn Setting")]
+    public Transform[] spawnPoints; // 여러 스폰포인트이기에 배열형태
 
     // 게임 종료시 
     [SyncVar(hook = nameof(OnGameOverStateChanged))]
@@ -235,4 +239,39 @@ public class NetworkGameManger : NetworkBehaviour
             timerText.text = newV.ToString();
     }
 
+    // 플레이어 리스폰(서버에서)
+    [Server]
+    public void RespawnPlayer(NetworkCharacterModel character)
+    {
+        // 스폰포인트 미설정시
+        if(spawnPoints == null || spawnPoints.Length == 0) return;
+        
+        // 플레이어 1은 0번, 플레이어 2는 1번 스폰위치에
+        int spawnIndex = 0;
+        if(character == player1 && spawnPoints.Length > 1)
+            spawnIndex =1;
+        
+        Transform spawnPoint = spawnPoints[spawnIndex];
+
+        // 모든 클라이언트에서 위치 이동
+        RpcTeleportPlayer(character.netIdentity, spawnPoint.position, spawnPoint.rotation);
+    }
+
+    // 모든 클라이언트에서 위치 이동 - 리스폰
+    [ClientRpc]
+    private void RpcTeleportPlayer(NetworkIdentity targetIdentity, Vector3 position, Quaternion rotation)
+    {
+        if(targetIdentity == null) return;
+        
+        // 잠시 컨트롤러 비활성화 후 이동
+        CharacterController cc = targetIdentity.GetComponent<CharacterController>();
+        if(cc != null) cc.enabled = false;
+
+        // 이동
+        targetIdentity.transform.position = position;
+        targetIdentity.transform.rotation = rotation;
+
+        // 컨트롤러 다시 활성화
+        if(cc != null) cc.enabled = true;
+    }
 }
