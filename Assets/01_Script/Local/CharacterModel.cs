@@ -25,6 +25,7 @@ public class CharacterModel : MonoBehaviour
     public event Action<float> OnHealthChanged;
     public event Action<int> OnLivesChanged;
     public event Action OnGameOver;
+    public event Action OnRespawn;
 
     private void Start()
     {
@@ -92,6 +93,7 @@ public class CharacterModel : MonoBehaviour
 
         if (remainingLives > 0)
         {
+            OnRespawn?.Invoke();
             StartCoroutine(RespawnCoroutine());
         }
         else

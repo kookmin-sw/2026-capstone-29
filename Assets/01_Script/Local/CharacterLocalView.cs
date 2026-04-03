@@ -38,6 +38,7 @@ public class CharacterLocalView : MonoBehaviour
             model.OnStrongAttack += PlayStrongAttackEffect;
             model.OnHealthChanged += HandleHealthChange;
             model.OnDie += HandleDie;
+            model.OnRespawn += HandleRespawn;
         }
     }
 
@@ -99,6 +100,10 @@ public class CharacterLocalView : MonoBehaviour
     void HandleDie()
     {
         anim.SetBool("Die", true);
+    }
+    void HandleRespawn()
+    {
+        anim.SetBool("Die", false);
     }
 
     void HandleCombo(int step)

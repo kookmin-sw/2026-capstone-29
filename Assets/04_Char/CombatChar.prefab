@@ -363,13 +363,13 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  currentHealth: 200
-  maxLives: 1
+  currentHealth: 100
+  maxLives: 3
   hitEffectPrefabs:
   - {fileID: 7775297073632181632, guid: 7eefe271218ab3e4f816adc8b0c7278c, type: 3}
   - {fileID: 1226031520979461127, guid: 9c692d73cd82e0d409bec909e987a5b8, type: 3}
   - {fileID: 1226031520979461127, guid: 9c692d73cd82e0d409bec909e987a5b8, type: 3}
-  effectDuration: 2
+  effectDuration: 1
 --- !u!95 &3873752212823095745
 Animator:
   serializedVersion: 5

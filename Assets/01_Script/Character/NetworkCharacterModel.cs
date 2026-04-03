@@ -52,6 +52,7 @@ public class NetworkCharacterModel : NetworkBehaviour
     public event Action OnGameOver; // 모든 목숨 소진시
     public event Action<bool> OnChargeStateChanged;
     public event Action<bool> OnChargeReadyChanged;
+    public event Action OnRespawn;
 
     public override void OnStartServer()
     {
@@ -129,17 +130,17 @@ public class NetworkCharacterModel : NetworkBehaviour
     // 사망 시
     void OnDieHook(bool oldV, bool newV)
     {
-        if (newV == true && oldV == false) 
+        if (newV == true && oldV == false)
         {
             OnDie?.Invoke();
 
             // 목숨 차감은 서버에서만
-            if(isServer)
+            if (isServer)
             {
                 remaingLives--;
 
                 // 목숨 남은 경우 부활
-                if(remaingLives > 0)
+                if (remaingLives > 0)
                 {
                     StartCoroutine(RespawnCoroutine());
                 }
@@ -148,6 +149,10 @@ public class NetworkCharacterModel : NetworkBehaviour
                     RpcNotifyGameOver();
                 }
             }
+        }
+        if (newV == false && oldV == true)
+        {
+            OnRespawn?.Invoke(); // 클라이언트에서 실행됨
         }
     }
 
@@ -158,7 +163,6 @@ public class NetworkCharacterModel : NetworkBehaviour
         yield return new WaitForSeconds(2f); // 2초 후 부활
         currentHealth = 100f;
         isDead = false;
-
         // 위치 이동 추가
         if(NetworkGameManger.instance != null)
         {

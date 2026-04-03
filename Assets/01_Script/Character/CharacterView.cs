@@ -39,6 +39,7 @@ public class CharacterView : MonoBehaviour
             model.OnStrongAttack += PlayStrongAttackEffect;
             model.OnHealthChanged += HandleHealthChange;
             model.OnDie += HandleDie;
+            model.OnRespawn += HandleRespawn;
             //model.OnChargeStateChanged += HandleChargeStateChanged;
             // model.OnChargeReadyChanged += HandleChargeReadyChanged;
         }
@@ -103,6 +104,11 @@ public class CharacterView : MonoBehaviour
     void HandleDie()
     {
         anim.SetBool("Die", true);
+    }
+
+    void HandleRespawn()
+    {
+        anim.SetBool("Die", false);
     }
 
     void HandleCombo(int step)
