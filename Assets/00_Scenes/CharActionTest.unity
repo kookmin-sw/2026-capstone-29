@@ -1705,10 +1705,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: SandBag
       objectReference: {fileID: 0}
+    - target: {fileID: 8063685960123188438, guid: 6d77686be0801b54598bce5f3b0ed517, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 57bb52833028408469338c969095d4fb, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5169921539493346853, guid: 6d77686be0801b54598bce5f3b0ed517, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2107347796}
   m_SourcePrefab: {fileID: 100100000, guid: 6d77686be0801b54598bce5f3b0ed517, type: 3}
 --- !u!1001 &1074192584
 PrefabInstance:
@@ -2273,6 +2280,35 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1 &2107347795 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5169921539493346853, guid: 6d77686be0801b54598bce5f3b0ed517, type: 3}
+  m_PrefabInstance: {fileID: 1064590853}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2107347796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107347795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d93a2e8e8fde7e47aedff115e0fa3dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testCombo1: 0
+  testCombo2: 0
+  testCombo3: 0
+  testCombo4: 0
+  testStrongAttack: 0
+  testChargeStart: 0
+  testChargeReady: 0
+  testChargeRelease: 0
+  testGetHit: 0
+  testDie: 0
+  testRespawn: 0
+  verticalSpeed: -2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
