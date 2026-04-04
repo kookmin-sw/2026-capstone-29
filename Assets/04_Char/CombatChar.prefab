@@ -197,12 +197,12 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.6
+  m_Height: 1.7
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
+  m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!114 &7706726928457275033
 MonoBehaviour:
@@ -219,11 +219,13 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  MoveSpeed: 2
-  SprintSpeed: 5.335
+  MoveSpeed: 6
   CrouchSpeed: 3
-  ShiftSpeed: 8
-  ShiftCooldown: 2
+  JumpMoveSpeed: 6
+  AttackMoveSpeed: 3
+  ShiftCooldown: 1
+  ShiftDashDistance: 5
+  ShiftDashDuration: 0.3
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
   LandingAudioClip: {fileID: 8300000, guid: ff697d3070687ce4583faa0561a145a2, type: 3}
@@ -244,8 +246,8 @@ MonoBehaviour:
   JumpTimeout: 0.3
   FallTimeout: 0.15
   Grounded: 1
-  GroundedOffset: -0.14
-  GroundedRadius: 0.28
+  GroundedOffset: 0.1
+  GroundedRadius: 0.3
   GroundLayers:
     serializedVersion: 2
     m_Bits: 1
@@ -1122,6 +1124,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2295636307640178401}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3832665968652910830, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5513496859125599021}
     - targetCorrespondingSourceObject: {fileID: 6577774710051638320, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8103347001044039069}
@@ -1153,6 +1158,11 @@ PrefabInstance:
 --- !u!4 &1548581317186969206 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5969132363413860385, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+  m_PrefabInstance: {fileID: 5164279409534725719}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1777516416661648381 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6845529714357214634, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
   m_PrefabInstance: {fileID: 5164279409534725719}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &2081727343877120615 stripped
@@ -1244,6 +1254,11 @@ MonoBehaviour:
   hitEffectPrefab: {fileID: 0}
   effectDuration: 2
   allowedStates: []
+--- !u!4 &4218140458038681260 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9017029606761771259, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+  m_PrefabInstance: {fileID: 5164279409534725719}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4247035219156830511 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9033012237371238264, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
@@ -1369,6 +1384,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 736581117297395710, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
   m_PrefabInstance: {fileID: 5164279409534725719}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8258310505721458361 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3832665968652910830, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+  m_PrefabInstance: {fileID: 5164279409534725719}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5513496859125599021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8258310505721458361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 041f432379ebd974b824e05445ef06d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightHandBoneName: hand_r
+  leftHandBoneName: hand_l
+  addWeaponR: {fileID: 1777516416661648381}
+  addWeaponL: {fileID: 4218140458038681260}
 --- !u!1001 &7073802677572510922
 PrefabInstance:
   m_ObjectHideFlags: 0

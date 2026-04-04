@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5139069466735473110}
   - component: {fileID: -47834042764493833}
   - component: {fileID: -4179355378918491307}
+  - component: {fileID: -7266600929504728432}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -100,8 +101,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.05, y: 0.05, z: 0.05}
-  m_Center: {x: 0, y: 0.01, z: 0.38}
+  m_Size: {x: 0.05, y: 0.05, z: 0.79792976}
+  m_Center: {x: 0, y: 0.01, z: 0.006035164}
 --- !u!114 &-47834042764493833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,6 +136,24 @@ MonoBehaviour:
   serverOnly: 0
   visibility: 0
   hasSpawned: 0
+--- !u!114 &-7266600929504728432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019689283678102327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 066a24dbb03a7f542a83b2d831bed8a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  hitboxCollider: {fileID: 5139069466735473110}
+  effectIndex: 3
+  hitEffectPrefab: {fileID: 0}
+  effectDuration: 2
+  allowedStates: []
 --- !u!1001 &4583243189055386551
 PrefabInstance:
   m_ObjectHideFlags: 0

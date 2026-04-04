@@ -61,11 +61,7 @@ public class CharacterView : MonoBehaviour
     {
         AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
         // 애니매이션의 이동을 따름
-        bool useRootMotion = stateInfo.IsName("Movement") ||
-                            stateInfo.IsName("Jumping") ||
-                            stateInfo.IsName("Falling") ||
-                            stateInfo.IsName("Quickshift") ||
-                            stateInfo.IsName("Combo Attack 4") ||
+        bool useRootMotion = stateInfo.IsName("Combo Attack 4") ||
                             stateInfo.IsName("Crouch");
 
         anim.applyRootMotion = useRootMotion;

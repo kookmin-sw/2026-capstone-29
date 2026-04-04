@@ -124,12 +124,12 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.6
+  m_Height: 1.7
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
+  m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!114 &3589278774611050100
 MonoBehaviour:
@@ -143,11 +143,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6deedba5eea89d04f9d5878c9d474195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 2
-  SprintSpeed: 5.335
+  MoveSpeed: 6
   CrouchSpeed: 3
-  ShiftSpeed: 10
-  ShiftCooldown: 2
+  JumpMoveSpeed: 6
+  AttackMoveSpeed: 3
+  ShiftCooldown: 1
+  ShiftDashDistance: 3
+  ShiftDashDuration: 0.3
   RotationSmoothTime: 0.12
   SpeedChangeRate: 10
   LandingAudioClip: {fileID: 0}
@@ -158,8 +160,8 @@ MonoBehaviour:
   JumpTimeout: 0.5
   FallTimeout: 0.15
   Grounded: 1
-  GroundedOffset: -0.14
-  GroundedRadius: 0.5
+  GroundedOffset: 0.1
+  GroundedRadius: 0.3
   GroundLayers:
     serializedVersion: 2
     m_Bits: 1
@@ -268,7 +270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 100
-  maxLives: 1
+  maxLives: 3
 --- !u!114 &8552363490144822697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1000,6 +1002,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2295636307640178401}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3832665968652910830, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5363168195777180398}
     - targetCorrespondingSourceObject: {fileID: 6577774710051638320, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1344337710141032076}
@@ -1024,6 +1029,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5969132363413860385, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
   m_PrefabInstance: {fileID: 5164279409534725719}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1777516416661648381 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6845529714357214634, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+  m_PrefabInstance: {fileID: 5164279409534725719}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2081727343877120615 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6577774710051638320, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
@@ -1043,6 +1053,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   hitboxCollider: {fileID: 4645412204146245682}
+  effectIndex: 0
   hitEffectPrefab: {fileID: 1226031520979461127, guid: 9c692d73cd82e0d409bec909e987a5b8, type: 3}
   effectDuration: 2
   allowedStates:
@@ -1087,6 +1098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   hitboxCollider: {fileID: 9029192443860563999}
+  effectIndex: 0
   hitEffectPrefab: {fileID: 7775297073632181632, guid: 7eefe271218ab3e4f816adc8b0c7278c, type: 3}
   effectDuration: 1
   allowedStates:
@@ -1156,6 +1168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   hitboxCollider: {fileID: 6159838956049605345}
+  effectIndex: 0
   hitEffectPrefab: {fileID: 1226031520979461127, guid: 9c692d73cd82e0d409bec909e987a5b8, type: 3}
   effectDuration: 1
   allowedStates:
@@ -1165,6 +1178,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 736581117297395710, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
   m_PrefabInstance: {fileID: 5164279409534725719}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8258310505721458361 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3832665968652910830, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+  m_PrefabInstance: {fileID: 5164279409534725719}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5363168195777180398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8258310505721458361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 041f432379ebd974b824e05445ef06d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rightHandBoneName: hand_r
+  leftHandBoneName: hand_l
+  addWeaponR: {fileID: 1777516416661648381}
+  addWeaponL: {fileID: 0}
 --- !u!1001 &7073802677572510922
 PrefabInstance:
   m_ObjectHideFlags: 0

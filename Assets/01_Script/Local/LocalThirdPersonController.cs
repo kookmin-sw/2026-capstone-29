@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -16,19 +17,28 @@ namespace StarterAssets
     {
         [Header("Player")]
         [Tooltip("Move speed of the character in m/s")]
-        public float MoveSpeed = 2.0f;
-
-        [Tooltip("Sprint speed of the character in m/s")]
-        public float SprintSpeed = 5.335f;
+        public float MoveSpeed = 5.0f;
 
         [Tooltip("Crouch speed of the character in m/s")]
         public float CrouchSpeed = 3.0f;
 
-        [Tooltip("Shift speed of the character in m/s")]
-        public float ShiftSpeed = 8.0f;
+        [Tooltip("JumpMove speed of the character in m/s")]
+        public float JumpMoveSpeed = 4.0f;
+
+        [Tooltip("공격 중 이동 속도")]
+        public float AttackMoveSpeed = 1.0f;
+
+
+        [Header("Shift Dash Settings")]
 
         [Tooltip("Dash cooldown in seconds")]
-        public float ShiftCooldown = 2.0f;
+        public float ShiftCooldown = 1.0f;
+
+        [Tooltip("대시로 이동할 고정 거리 (m)")]
+        public float ShiftDashDistance = 5.0f;
+
+        [Tooltip("대시 지속 시간 (초)")]
+        public float ShiftDashDuration = 0.3f;
 
         [Tooltip("How fast the character turns to face movement direction")]
         [Range(0.0f, 0.3f)]
@@ -109,6 +119,8 @@ namespace StarterAssets
         private int _animIDCrouch;
         private int _animIDShift;
 
+        private bool _isDashing = false;
+        private Vector3 _dashDirection;
 
 #if ENABLE_INPUT_SYSTEM
         private PlayerInput _playerInput;
@@ -176,7 +188,8 @@ namespace StarterAssets
 
             GroundedCheck();
             JumpAndGravity();
-            Move();
+            if (!_isDashing)
+                Move();
         }
 
         private void LateUpdate()
@@ -232,9 +245,10 @@ namespace StarterAssets
             if (_shiftCooldownDelta > 0.0f)
                 _input.shift = false;
 
-            float targetSpeed = _input.crouch ? CrouchSpeed :
-                                _input.shift ? ShiftSpeed :
-                                _input.sprint ? SprintSpeed :
+            float targetSpeed = !Grounded ? JumpMoveSpeed : 
+                                _animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack") ? AttackMoveSpeed :
+                                _animator.GetCurrentAnimatorStateInfo(0).IsTag("Strong Attack") ? AttackMoveSpeed :
+                                _input.crouch ? CrouchSpeed :
                                 MoveSpeed;
 
 
@@ -248,8 +262,12 @@ namespace StarterAssets
             if (currentHorizontalSpeed < targetSpeed - speedOffset ||
                 currentHorizontalSpeed > targetSpeed + speedOffset)
             {
+                // creates curved result rather than a linear one giving a more organic speed change
+                // note T in Lerp is clamped, so we don't need to clamp our speed
                 _speed = Mathf.Lerp(currentHorizontalSpeed, targetSpeed * inputMagnitude,
                     Time.deltaTime * SpeedChangeRate);
+
+                // round speed to 3 decimal places
                 _speed = Mathf.Round(_speed * 1000f) / 1000f;
             }
             else
@@ -276,7 +294,6 @@ namespace StarterAssets
 
             _controller.Move(targetDirection.normalized * (_speed * Time.deltaTime) +
                              new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
-
             if (_hasAnimator)
             {
                 _animator.SetFloat(_animIDSpeed, _animationBlend);
@@ -285,17 +302,44 @@ namespace StarterAssets
 
                 if (_input.shift)
                 {
-                    AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
-                    bool isAttacking = _animator.GetCurrentAnimatorStateInfo(0).IsTag("Attack")
-                    ||_animator.GetCurrentAnimatorStateInfo(0).IsTag("Strong Attack");
-                    if (_input.move != Vector2.zero && !isAttacking)
+                    bool isAttacking = _animator.GetCurrentAnimatorStateInfo(0).IsTag("Strong Attack")
+                                    || _animator.GetCurrentAnimatorStateInfo(0).IsName("Combo Attack 4");
+
+                    if (_input.move != Vector2.zero && !_isDashing && !isAttacking)
                     {
                         _animator.SetTrigger(_animIDShift);
                         _shiftCooldownDelta = ShiftCooldown;
+
+                        // 대시 방향: 현재 캐릭터가 바라보는 방향
+                        _dashDirection = Quaternion.Euler(0f, _targetRotation, 0f) * Vector3.forward;
+                        StartCoroutine(DashCoroutine());
                     }
-                    _input.shift = false; // 공격 중이든 아니든 항상 소비
+                    _input.shift = false;
                 }
             }
+        }
+
+        private IEnumerator DashCoroutine()
+        {
+            _isDashing = true;
+
+            float elapsed = 0f;
+            float distancePerFrame;
+
+            while (elapsed < ShiftDashDuration)
+            {
+                float dt = Time.deltaTime;
+                elapsed += dt;
+
+                // 남은 비율에 따라 속도를 감속 (초반 빠르고 후반 느리게)
+                float t = 1f - (elapsed / ShiftDashDuration);
+                distancePerFrame = (ShiftDashDistance / ShiftDashDuration) * t * 2f * dt;
+
+                _controller.Move(_dashDirection * distancePerFrame);
+                yield return null;
+            }
+
+            _isDashing = false;
         }
 
         private void JumpAndGravity()

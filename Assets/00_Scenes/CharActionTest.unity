@@ -1132,9 +1132,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5727106888003554109, guid: 62db5f82e573111409a6050a837ed676, type: 3}
-      propertyPath: maxLives
-      value: 3
+    - target: {fileID: 5363168195777180398, guid: 62db5f82e573111409a6050a837ed676, type: 3}
+      propertyPath: addWeaponL
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7046033076753342609, guid: 62db5f82e573111409a6050a837ed676, type: 3}
       propertyPath: m_Name
@@ -1714,7 +1714,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5169921539493346853, guid: 6d77686be0801b54598bce5f3b0ed517, type: 3}
-      insertIndex: -1
+      insertIndex: 3
       addedObject: {fileID: 2107347796}
   m_SourcePrefab: {fileID: 100100000, guid: 6d77686be0801b54598bce5f3b0ed517, type: 3}
 --- !u!1001 &1074192584
