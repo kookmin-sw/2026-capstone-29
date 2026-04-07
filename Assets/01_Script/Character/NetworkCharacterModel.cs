@@ -2,6 +2,7 @@ using UnityEngine;
 using Mirror;
 using System;
 using Mirror.Examples.Common;
+using StarterAssets;
 
 public class NetworkCharacterModel : NetworkBehaviour
 {   
@@ -203,7 +204,7 @@ public class NetworkCharacterModel : NetworkBehaviour
             NetworkGameManger.instance.OnPlayerGameOver(this);
     }
 
-    // 게임 매니저 연결
+    // 게임 매니저 연결 - 모든 클라이언트가
     public override void OnStartClient()
     {
         base.OnStartClient();
@@ -211,5 +212,17 @@ public class NetworkCharacterModel : NetworkBehaviour
         // 신 내부의 GameManager를 찾아 자신을 등록
         if(NetworkGameManger.instance != null)
             NetworkGameManger.instance.RegisterPlayer(this);
+    }
+
+    // UI 매니저 연결 - 내 플레이어에서만
+    public override void OnStartLocalPlayer()
+    {
+        base.OnStartLocalPlayer();
+
+        // 내 플레이어가 소환됐을 때 UI매니저 등록
+        StarterAssetsInputs input = GetComponent<StarterAssetsInputs>();
+        InGameUIManger uiManager = FindObjectOfType<InGameUIManger>();
+        if(input != null && uiManager != null)
+            uiManager.RegisterInput(input);
     }
 }
