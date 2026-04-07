@@ -31,10 +31,10 @@ public class NetworkGameManger : NetworkBehaviour
     public Transform[] spawnPoints; // 여러 스폰포인트이기에 배열형태
 
     // 게임 종료시 
-    [SyncVar(hook = nameof(OnGameOverStateChanged))]
+    [SyncVar]
     private bool isGameOver = false;
 
-    [SyncVar]
+    [SyncVar(hook = nameof(OnWinnerIndexChanged))]
     private int gameOverWinnerIndex = -1; // 1 = P1 승, 2 = P2 승, 0 = 무승부
 
     private NetworkCharacterModel player1;
@@ -66,13 +66,13 @@ public class NetworkGameManger : NetworkBehaviour
         // 시간 초과시 목숨, 체력으로 승자 결정
         if(!isGameOver)
         {
-            DetermineWinnerByHealth();
+            DetermineWinner();
         }
     }
 
     // 시간초과시 승부 결정 로직 - 임시로 체력만
     [Server]
-    private void DetermineWinnerByHealth()
+    private void DetermineWinner()
     {
         if (player1 == null || player2 == null)
         {
@@ -80,9 +80,13 @@ public class NetworkGameManger : NetworkBehaviour
             return;
         }
 
-        if (player1.currentHealth > player2.currentHealth)
+        if (player1.remaingLives > player2.remaingLives)
             TriggerGameOver(1);
-        else if (player2.currentHealth > player1.currentHealth)
+        else if (player2.remaingLives > player1.remaingLives)
+            TriggerGameOver(2);
+        else if(player1.currentHealth > player2.currentHealth)
+            TriggerGameOver(1);
+        else if(player2.currentHealth > player1.currentHealth)
             TriggerGameOver(2);
         else
             TriggerGameOver(0); // 동점 무승부
@@ -108,13 +112,13 @@ public class NetworkGameManger : NetworkBehaviour
         Debug.Log($"Game Over! Winner Index: {winnerIndex}");
     }
 
-    // SyncVar hook - 모든 클라이언트에서 호출됨
-    void OnGameOverStateChanged(bool oldV, bool newV)
+    // WinnerIndex hook
+    void OnWinnerIndexChanged(int oldV, int newV)
     {
-        if (newV)
+        if(isGameOver)
             ShowGameOverUI();
     }
-    
+
     // 게임 종료시 UI 등장
     private void ShowGameOverUI()
     {

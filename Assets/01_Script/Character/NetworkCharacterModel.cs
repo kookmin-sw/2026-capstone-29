@@ -37,7 +37,7 @@ public class NetworkCharacterModel : NetworkBehaviour
 
     // 남아있는 목숨 -> 서버에서 클라이언트에 전파
     [SyncVar(hook = nameof(OnLivesChangedHook))]
-    private int remaingLives;
+    public int remaingLives;
 
     public int ComboCount => comboCount;
     public bool IsCharging => isCharging;
