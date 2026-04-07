@@ -17,6 +17,7 @@ namespace StarterAssets
 		public bool selfHarm;
 		public bool crouch;
         public bool shift;
+		public bool pause;
 
 		[Header("Movement Settings")]
 		public bool analogMovement;
@@ -55,6 +56,7 @@ namespace StarterAssets
 		public void OnSelfHarm(InputValue value) { SelfHarmInput(value.isPressed); }
         public void OnCrouch(InputValue value) { CrouchInput(value.isPressed); }  // 추가
         public void OnShift(InputValue value)  { ShiftInput(value.isPressed); }   // 추가
+		public void OnPause(InputValue value) { PauseInput(value.isPressed); }
 #endif
 
 		public void MoveInput(Vector2 newMoveDirection)
@@ -92,7 +94,9 @@ namespace StarterAssets
 		public void SelfHarmInput(bool newSelfHarmState) { selfHarm = newSelfHarmState; }
 	    public void CrouchInput(bool newCrouchState) { if (newCrouchState) crouch = !crouch; } 
 		
-        public void ShiftInput(bool newShiftState) { shift = newShiftState; } 
+        public void ShiftInput(bool newShiftState) { shift = newShiftState; }
+		
+		public void PauseInput(bool newPauseState) { if(newPauseState) pause = !pause; }
     }
 	
 }
