@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Mirror;
 using System;
 using Mirror.Examples.Common;
@@ -26,6 +26,17 @@ public class NetworkCharacterModel : NetworkBehaviour
     [SyncVar(hook = nameof(OnChargeReadyChangedHook))]
     private bool isChargeReady = false;
 
+    //활 장착 훅
+    [SyncVar(hook = nameof(OnHasBowChangedHook))]
+    private bool hasBow = false;
+
+    //활 장전 훅
+    [SyncVar(hook = nameof(OnBowDrawChangedHook))]
+    private bool isBowDraw = false;
+    //활 발사 훅
+    [SyncVar(hook = nameof(OnBowReleaseHook))]
+    private int bowReleaseCount = 0;
+
     // 목숨 세팅
     [Header("Lives Setting")]
     public int maxLives = 1;
@@ -43,7 +54,9 @@ public class NetworkCharacterModel : NetworkBehaviour
     public bool IsCharging => isCharging;
     public float CurrentHealth => currentHealth;
     public bool IsDead => isDead;
+    public bool HasBow => hasBow;
     public bool IsChargeReady => isChargeReady;
+    public bool IsBowDraw => isBowDraw;
 
     public event Action<int> OnComboChanged;
     public event Action OnDie;
@@ -53,6 +66,9 @@ public class NetworkCharacterModel : NetworkBehaviour
     public event Action OnGameOver; // 모든 목숨 소진시
     public event Action<bool> OnChargeStateChanged;
     public event Action<bool> OnChargeReadyChanged;
+    public event Action<bool> OnHasBowChanged;
+    public event Action<bool> OnBowDrawChanged;
+    public event Action OnBowRelease;
     public event Action OnRespawn;
 
     public override void OnStartServer()
@@ -75,6 +91,10 @@ public class NetworkCharacterModel : NetworkBehaviour
 
     [Command]
     public void CmdStrongAttack() { RpcPlayStrongAttack(); }
+
+
+    [Command]
+    public void CmdSetBowDraw(bool state) { isBowDraw = state; }
 
     [Command(requiresAuthority = false)]
     public void CmdTakeDamage(float damageAmount)
@@ -106,6 +126,14 @@ public class NetworkCharacterModel : NetworkBehaviour
         }
     }
 
+
+    [Server]
+    public void ServerSetHasBow(bool state)
+    {
+        hasBow = state;
+        if (!state) isBowDraw = false;
+    }
+    
     [Command]
     public void CmdSelfHarm(float damageAmount)
     {
@@ -113,12 +141,23 @@ public class NetworkCharacterModel : NetworkBehaviour
         CmdTakeDamage(damageAmount);
     }
 
+    [Command]
+    public void CmdBowRelease()
+    {
+        isBowDraw = false;
+        bowReleaseCount++;
+    }
+
+
     [ClientRpc]
     void RpcPlayStrongAttack() { OnStrongAttack?.Invoke(); }
 
     void OnComboChangedHook(int oldV, int newV) => OnComboChanged?.Invoke(newV);
     void OnChargeStateChangedHook(bool oldV, bool newV) => OnChargeStateChanged?.Invoke(newV);
-    void OnChargeReadyChangedHook(bool oldV, bool newV) => OnChargeReadyChanged?.Invoke(newV);
+    void OnChargeReadyChangedHook(bool oldV, bool newV) => OnChargeReadyChanged?.Invoke(newV); 
+    void OnHasBowChangedHook(bool oldV, bool newV) => OnHasBowChanged?.Invoke(newV);
+    void OnBowDrawChangedHook(bool oldV, bool newV) => OnBowDrawChanged?.Invoke(newV);
+    void OnBowReleaseHook(int oldV, int newV) => OnBowRelease?.Invoke();
     void OnHealthChangedHook(float oldV, float newV) 
     {
         Debug.Log($"Health Changed: {oldV} -> {newV}"); 

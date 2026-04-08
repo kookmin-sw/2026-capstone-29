@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterView : MonoBehaviour
 {
@@ -36,7 +36,10 @@ public class CharacterView : MonoBehaviour
         if (model != null)
         {
             model.OnComboChanged += HandleCombo;
-            model.OnStrongAttack += PlayStrongAttackEffect;
+            model.OnStrongAttack += PlayStrongAttackEffect; 
+            model.OnHasBowChanged += HandleHasBow;
+            model.OnBowDrawChanged += HandleBowDraw;
+            model.OnBowRelease += HandleBowRelease;
             model.OnHealthChanged += HandleHealthChange;
             model.OnDie += HandleDie;
             model.OnRespawn += HandleRespawn;
@@ -51,6 +54,9 @@ public class CharacterView : MonoBehaviour
         {
             model.OnComboChanged -= HandleCombo;
             model.OnStrongAttack -= PlayStrongAttackEffect;
+            model.OnHasBowChanged -= HandleHasBow;
+            model.OnBowDrawChanged -= HandleBowDraw;
+            model.OnBowRelease -= HandleBowRelease;
             model.OnHealthChanged -= HandleHealthChange;
             model.OnDie -= HandleDie;
             // model.OnChargeStateChanged -= HandleChargeStateChanged;
@@ -132,6 +138,23 @@ public class CharacterView : MonoBehaviour
     void HandleChargeReadyChanged(bool newIsReady)
     {
         UpdateChargeEffect(model.IsCharging, newIsReady);
+    }
+
+    void HandleHasBow(bool hasBow)
+    {
+        anim.SetBool("HasBow", hasBow);        
+        if (!hasBow)
+            anim.SetBool("IsDraw", false);
+    }
+
+    void HandleBowDraw(bool isDraw)
+    {
+        anim.SetBool("IsDraw", isDraw);
+    }
+
+    void HandleBowRelease()
+    {
+        anim.SetBool("IsDraw", false);
     }
 
     public void UpdateChargeEffect(bool isCharging, bool isReady)
