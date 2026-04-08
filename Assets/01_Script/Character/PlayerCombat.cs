@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Mirror;
 using StarterAssets;
 using UnityEngine.InputSystem;
@@ -17,7 +17,8 @@ public class PlayerCombat : NetworkBehaviour
     private float _lastAttackTime;
     // 현재 공격 모션 중인지 체크용
     private bool _isAttacking = false;
-    private bool _chargeStarted = false;
+    private bool _chargeStarted = false; 
+    private bool _isBowDrawing = false;
 
 
 
@@ -58,6 +59,9 @@ public class PlayerCombat : NetworkBehaviour
 
     private void HandlePunch()
     {
+        //주먹 나가기 전에 활 부착 여부 확인(추후 무기 추가시 현재 구조 변경 예정.)
+        if (_animator.GetBool("HasBow")) return;
+
         // 차징 중에는 일반 펀치 불가
         if (_input.punch && !_model.IsCharging && !IsStrongAttacking)
         {

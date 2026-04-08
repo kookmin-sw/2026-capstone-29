@@ -58,21 +58,22 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
     }
 
     public void SetUser(GameObject user)
-{
-    owner = user;
-    // 서버에서 호출되면 모든 클라이언트에 전파
-    RpcSetUser(user, "CombatGirls_Sword_Shield/root/add_weapon_r");
-}
+    {
+        owner = user;
+        var model = user.GetComponent<NetworkCharacterModel>();
+        if (model != null) model.ServerSetHasBow(true);
+        // 서버에서 호출되면 모든 클라이언트에 전파
+        RpcSetUser(user, "CombatGirls_Sword_Shield/root/add_weapon_l");
+    }
 
-[ClientRpc]
-private void RpcSetUser(GameObject user, string socketPath)
-{
-    owner = user;
-    WeaponEquipHandler handler = GetComponent<WeaponEquipHandler>();
-    if (handler != null)
-        handler.Equip(user, socketPath);
-}
-
+    [ClientRpc]
+    private void RpcSetUser(GameObject user, string socketPath)
+    {
+        owner = user;
+        WeaponEquipHandler handler = GetComponent<WeaponEquipHandler>();
+        if (handler != null)
+            handler.Equip(user, socketPath);
+    }
 
     private void Update()
     {
@@ -91,7 +92,12 @@ private void RpcSetUser(GameObject user, string socketPath)
             lifeTimer += Time.deltaTime;
             if (lifeTimer > itemStat.availableTime)
             {
-                // 먼저 모든 클라이언트에서 복원
+                if (owner != null)
+                {
+                    var model = owner.GetComponent<NetworkCharacterModel>();
+                    if (model != null) model.ServerSetHasBow(false);
+                }
+                //모든 클라이언트에서 복원
                 RpcUnequip();
 
                 if (loadedArrowObj != null)
@@ -126,7 +132,12 @@ private void RpcSetUser(GameObject user, string socketPath)
             isCharging = true;
             chargeTimer = 0;
             CmdBeginCharge();
+
+            // 활 당기기 애니메이션
+            var model = owner.GetComponent<NetworkCharacterModel>();
+            if (model != null) model.CmdSetBowDraw(true);
         }
+        
 
         // 좌클릭 유지 → 차징 시간 누적
         if (isCharging && isOwned)
@@ -141,6 +152,11 @@ private void RpcSetUser(GameObject user, string socketPath)
             isCharging = false;
             chargeTimer = 0f;
             CmdReleaseArrow(ratio);
+
+
+            // 발사 애니메이션
+            var model = owner.GetComponent<NetworkCharacterModel>();
+            if (model != null) model.CmdBowRelease();
         }
     }
     [ClientRpc]
