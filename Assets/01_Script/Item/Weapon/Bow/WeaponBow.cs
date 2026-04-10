@@ -113,7 +113,10 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
                 if (owner != null)
                 {
                     var model = owner.GetComponent<NetworkCharacterModel>();
-                    if (model != null) model.ServerSetHasBow(false);
+                    if (model != null) 
+                    {
+                        model.ServerSetHasBow(false);
+                    }
                 }
                 //모든 클라이언트에서 복원
                 RpcUnequip();
@@ -121,6 +124,7 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
                 if (loadedArrowObj != null)
                     NetworkServer.Destroy(loadedArrowObj);
 
+                
                 NetworkServer.Destroy(gameObject);
                 return;
             }
@@ -169,10 +173,8 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
             float ratio = Mathf.Clamp01(chargeTimer / maxChargeTime);
             isCharging = false; 
             chargeTimer = 0f;
-            //isRecovered = false; //쿨타임 돌리기
             
             CmdReleaseArrow(ratio);
-
 
             // 발사 애니메이션
             var model = owner.GetComponent<NetworkCharacterModel>();

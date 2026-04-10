@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 494991009480bff4c9a6cb3778b231a8, type: 3}
   m_Name: Status_Bow
   m_EditorClassIdentifier: 
-  availableTime: 20
+  availableTime: 10
   useableTime: 10
   damage: 10
   range: 1000

@@ -144,7 +144,11 @@ public class CharacterView : MonoBehaviour
     {
         anim.SetBool("HasBow", hasBow);        
         if (!hasBow)
+        {
             anim.SetBool("IsDraw", false);
+
+            anim.SetTrigger("BowHasGone");
+        }
     }
 
     void HandleBowDraw(bool isDraw)
@@ -154,7 +158,8 @@ public class CharacterView : MonoBehaviour
 
     void HandleBowRelease()
     {
-        anim.SetBool("IsDraw", false);
+        anim.SetBool("IsDraw", false); 
+        anim.SetTrigger("BowRelease");
     }
 
     public void UpdateChargeEffect(bool isCharging, bool isReady)

@@ -41,8 +41,6 @@ public class CharacterHitBox : MonoBehaviour
 
         if (target != null && other.gameObject != ownerObj)
         {
-            Debug.Log($"[HitBox] other: {other.gameObject}, ownerObj: {ownerObj}, same: {other.gameObject == ownerObj}");
-            Debug.Log($"{this.name} 닿음");
             if (_hitTargets.Contains(target.gameObject)) return;
             _hitTargets.Add(target.gameObject);
 

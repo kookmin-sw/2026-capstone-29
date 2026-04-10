@@ -131,7 +131,10 @@ public class NetworkCharacterModel : NetworkBehaviour
     public void ServerSetHasBow(bool state)
     {
         hasBow = state;
-        if (!state) isBowDraw = false;
+        if (!state) 
+        {
+            isBowDraw = false; 
+        }
     }
     
     [Command]
@@ -144,6 +147,7 @@ public class NetworkCharacterModel : NetworkBehaviour
     [Command]
     public void CmdBowRelease()
     {
+        Debug.Log("발사 ");
         isBowDraw = false;
         bowReleaseCount++;
     }
