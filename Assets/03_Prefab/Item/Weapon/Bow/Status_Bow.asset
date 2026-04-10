@@ -18,7 +18,7 @@ MonoBehaviour:
   range: 1000
   projectileDrop: 0
   startUpDelay: 0
-  RecoveryDelay: 0
-  electroShock: 0
+  RecoveryDelay: 0.5
+  Stun: 0
   knockBack: 0
   stop: 0

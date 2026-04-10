@@ -4,12 +4,15 @@ using Mirror;
 // 화살 오브젝트.
 // 장전(Nocked) 상태에서는 활을 따라다니며 대기.
 // 발사(Launched) 후에는 지정된 방향으로 날아가며, 10초 경과 또는 피격 판정 시 파괴.
-public class WeaponArrow : NetworkBehaviour
+public class WeaponArrow : NetworkBehaviour, IWeaponHitBox
 {
     [Header("아이템 정보")]
     [SerializeField] public ItemStatus itemStat;
 
-    [HideInInspector] public GameObject owner;
+    [SyncVar] private GameObject owner; 
+    
+    [Header("히트박스")]
+    [SerializeField] private CharacterHitBox hitBox;
 
     // 내부 상태. SyncVar로 상태 동기화.
     [SyncVar] private bool isNocked;      // 활에 장전된 상태
@@ -19,6 +22,15 @@ public class WeaponArrow : NetworkBehaviour
     [SyncVar] private float flySpeed;
 
     private float lifeTimer;
+
+    private void Awake()
+    {
+        if (hitBox == null)
+        {
+            hitBox = GetComponent<CharacterHitBox>();
+            hitBox.damage = itemStat.damage;
+        }
+    }
 
     private void Update()
     {
@@ -48,7 +60,12 @@ public class WeaponArrow : NetworkBehaviour
     {
         isNocked = nocked;
         isLaunched = false;
-        lifeTimer = 0f;
+        lifeTimer = 0f; 
+        
+        if (hitBox != null)
+        {
+            hitBox.DisableHitbox();
+        }
     }
 
     // 화살을 발사한다. WeaponBow에서 호출.
@@ -63,21 +80,28 @@ public class WeaponArrow : NetworkBehaviour
 
         // 화살이 날아가는 방향을 바라보도록 회전
         transform.rotation = Quaternion.LookRotation(flyDirection);
+
+        if (hitBox != null)
+        {
+            hitBox.EnableHitbox();
+            RpcEnableHitbox();
+        }
     }
 
-    // 충돌 시 피격 판정 처리. 발사 상태일 때만 반응. 서버에서만 판정 감지하도록 설정.
-    // Collider의 Is Trigger를 켜두거나, OnCollisionEnter로 변경 가능.
-    [ServerCallback]
-    private void OnTriggerEnter(Collider other)
+    [ClientRpc]
+    private void RpcEnableHitbox()
     {
-        if (!isLaunched) return;
+        if (hitBox != null)
+            hitBox.EnableHitbox();
+    }
 
-        // 활 자체나 발사자와의 충돌은 무시 (필요에 따라 태그/레이어로 필터링)
-        if (other.CompareTag("Player")) return;
-
-        // TODO: 데미지 처리
-
-        NetworkServer.Destroy(this.gameObject);
+    public void SetOwner(GameObject user)
+    {
+        owner = user;
+    }
+    public GameObject GetOwner()
+    {
+        return owner;
     }
 
 }

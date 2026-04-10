@@ -61,6 +61,7 @@ MonoBehaviour:
   followPositionOffset: {x: 0, y: -0.3, z: 0}
   followRotationOffset: {x: 90, y: 0, z: 0}
   weaponHitbox: {fileID: 2532498058483183799}
+  bowAnim: {fileID: 936501660860678738}
   owner: {fileID: 0}
 --- !u!114 &905062388878126110
 MonoBehaviour:
@@ -109,6 +110,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 0
   hitboxCollider: {fileID: 7053299513091816131}
+  effectIndex: 0
+  hitEffectPrefab: {fileID: 0}
+  effectDuration: 2
+  allowedStates: []
 --- !u!65 &7053299513091816131
 BoxCollider:
   m_ObjectHideFlags: 0

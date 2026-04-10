@@ -27,6 +27,12 @@ public interface IPlayerWeapon
     public void SetUser(GameObject user);
 }
 
+public interface IWeaponHitBox
+{
+    public void SetOwner(GameObject user);
+    public GameObject GetOwner();
+}
+
 
 
 public interface IActive // 액티브 아이템

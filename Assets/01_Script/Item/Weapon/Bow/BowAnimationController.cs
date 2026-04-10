@@ -24,6 +24,7 @@ public class BowAnimationController : NetworkBehaviour
             Debug.LogError($"[BowAnimationController] {gameObject.name} 없음.");
     }
 
+    /*
     private void Update()
     {
         if (bowAnimator == null) return;
@@ -43,6 +44,14 @@ public class BowAnimationController : NetworkBehaviour
         {
             CmdReleasePull();
         }
+    }
+    */
+    // WeaponBow에서 호출하는 공개 메서드
+    [ClientRpc]
+    public void RpcSetPull(bool pulling)
+    {
+        if (bowAnimator != null)
+            bowAnimator.SetBool(PullHash, pulling);
     }
 
     // 시위 당기기 시작. idle → pull_start → pull_loop 전환.
