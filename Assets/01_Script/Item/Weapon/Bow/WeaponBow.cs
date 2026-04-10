@@ -36,6 +36,10 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
     [Tooltip("활 오브젝트의 히트박스. 비워두면 자식에서 자동 탐색.")]
     [SerializeField] private CharacterHitBox weaponHitbox;
 
+    [Header("활 애니메이션")]
+    [Tooltip("활의 애니메이션 컨트롤러.")]
+    [SerializeField] private BowAnimationController bowAnim;
+
     // 현재 장전 중인 화살-서버사이드 관리
     private WeaponArrow loadedArrow;
     [SyncVar] private GameObject loadedArrowObj;
@@ -44,6 +48,11 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
     private float chargeTimer;
     private bool isCharging;
     private float lifeTimer;
+
+    //쿨타임
+    private float recoveryTimer;
+    private bool isRecovered = true;
+
 
 
     //소유자 참조
@@ -90,6 +99,15 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
         if (isServer)
         {
             lifeTimer += Time.deltaTime;
+            if (!isRecovered)
+            {
+                recoveryTimer += Time.deltaTime;
+                if (recoveryTimer >= itemStat.RecoveryDelay)
+                {
+                    isRecovered = true;
+                    //recoveryTimer = 0;
+                }
+            }
             if (lifeTimer > itemStat.availableTime)
             {
                 if (owner != null)
@@ -127,7 +145,7 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
         }
 
         // 좌클릭 시작 → 화살 장전
-        if (Input.GetMouseButtonDown(0) && !isCharging && isOwned)
+        if (Input.GetMouseButtonDown(0) && !isCharging && isOwned && isRecovered)
         {
             isCharging = true;
             chargeTimer = 0;
@@ -140,7 +158,7 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
         
 
         // 좌클릭 유지 → 차징 시간 누적
-        if (isCharging && isOwned)
+        if (isCharging && isOwned && Input.GetMouseButton(0))
         {
             chargeTimer += Time.deltaTime;
         }
@@ -149,8 +167,10 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
         if (Input.GetMouseButtonUp(0) && isCharging && isOwned)
         {
             float ratio = Mathf.Clamp01(chargeTimer / maxChargeTime);
-            isCharging = false;
+            isCharging = false; 
             chargeTimer = 0f;
+            //isRecovered = false; //쿨타임 돌리기
+            
             CmdReleaseArrow(ratio);
 
 
@@ -167,9 +187,10 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
             handler.Unequip();
     }
     // 화살을 생성하고 활에 장전한다.
-    [Command(requiresAuthority = false)]
+    [Command(requiresAuthority = true)]
     private void CmdBeginCharge()
     {
+        if (!isRecovered) return;
         Transform spawnPoint = nockPoint != null ? nockPoint : transform;
 
         GameObject arrowObj = Instantiate(arrow, spawnPoint.position + spawnPoint.TransformDirection(followPositionOffset), 
@@ -188,10 +209,11 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
 
         // 화살을 장전 상태로 설정 (발사 전까지 자체 로직 비활성)
         loadedArrow.SetNocked(true);
-        loadedArrow.owner = owner;
+        loadedArrow.SetOwner(owner);
 
         isCharging = true;
 
+        bowAnim.RpcSetPull(true);
         //클라잉언트에 장전 상태 알림.
         RpcOnBeginCharge();
     }
@@ -205,7 +227,7 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
 
 
     // 차징된 시간에 비례하는 속도로 화살을 발사한다.
-    [Command(requiresAuthority = false)]
+    [Command(requiresAuthority = true)]
     private void CmdReleaseArrow(float chargeRatio)
     {
         if (loadedArrow == null)
@@ -228,6 +250,9 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
         isCharging = false;
 
         RpcOnRelease();
+        bowAnim.RpcSetPull(false);
+        isRecovered = false;
+        recoveryTimer = 0f;
     }
 
     [ClientRpc]

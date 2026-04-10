@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Mirror;
 using System.Collections.Generic;
 
@@ -33,9 +33,16 @@ public class CharacterHitBox : MonoBehaviour
     {
         if (!IsAllowedState()) return;
 
+
+        //소유자 obj
+        GameObject ownerObj = GetOwnerRoot();
+
         NetworkCharacterModel target = other.GetComponent<NetworkCharacterModel>();
-        if (target != null && target.gameObject != this.transform.root.gameObject)
+
+        if (target != null && other.gameObject != ownerObj)
         {
+            Debug.Log($"[HitBox] other: {other.gameObject}, ownerObj: {ownerObj}, same: {other.gameObject == ownerObj}");
+            Debug.Log($"{this.name} 닿음");
             if (_hitTargets.Contains(target.gameObject)) return;
             _hitTargets.Add(target.gameObject);
 
@@ -51,7 +58,7 @@ public class CharacterHitBox : MonoBehaviour
 
         // 로컬용
         CharacterModel localTarget = other.GetComponent<CharacterModel>();
-        if (localTarget != null && other.transform.root.gameObject != this.transform.root.gameObject)
+        if (localTarget != null && other.transform.root.gameObject != ownerObj)
         {
             if (_hitTargets.Contains(localTarget.gameObject)) return;
             _hitTargets.Add(localTarget.gameObject);
@@ -64,6 +71,17 @@ public class CharacterHitBox : MonoBehaviour
         }
     }
 
+    //소유주 판별 함수로 소유주 판별하는 방식으로 변경. 무기가 root에 있지 않으므로
+    private GameObject GetOwnerRoot()
+    {
+        IWeaponHitBox weapon = GetComponent<IWeaponHitBox>();
+        if (weapon != null && weapon.GetOwner() != null)
+        {
+            return weapon.GetOwner();
+        }
+        return transform.root.gameObject;
+    }
+
     private bool IsAllowedState()
     {
         if (_anim == null) return true;           // Animator 없으면 제한 없음
@@ -74,6 +92,7 @@ public class CharacterHitBox : MonoBehaviour
         {
             if (stateInfo.IsName(state)) return true;
         }
+
         return false;
     }
 
