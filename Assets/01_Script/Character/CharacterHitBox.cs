@@ -36,13 +36,11 @@ public class CharacterHitBox : MonoBehaviour
 
         //소유자 obj
         GameObject ownerObj = GetOwnerRoot();
-
+        Debug.Log($"[HitBox] other: {other.gameObject}, ownerObj: {ownerObj}, same: {other.gameObject == ownerObj}");
         NetworkCharacterModel target = other.GetComponent<NetworkCharacterModel>();
 
         if (target != null && other.gameObject != ownerObj)
         {
-            Debug.Log($"[HitBox] other: {other.gameObject}, ownerObj: {ownerObj}, same: {other.gameObject == ownerObj}");
-            Debug.Log($"{this.name} 닿음");
             if (_hitTargets.Contains(target.gameObject)) return;
             _hitTargets.Add(target.gameObject);
 
