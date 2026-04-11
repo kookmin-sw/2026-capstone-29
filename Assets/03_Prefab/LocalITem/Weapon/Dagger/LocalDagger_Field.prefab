@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3724142561659006807}
   - component: {fileID: -9107379120077544817}
   m_Layer: 0
-  m_Name: Dagger_Field
+  m_Name: LocalDagger_Field
   m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneId: 0
-  _assetId: 1885015820
+  _assetId: 2838793904
   serverOnly: 0
   visibility: 0
   hasSpawned: 0

@@ -25,6 +25,7 @@ public interface IWeapon //
 public interface IPlayerWeapon
 {
     public void SetUser(GameObject user);
+    public void ThrowWeapon();
 }
 
 public interface IWeaponHitBox

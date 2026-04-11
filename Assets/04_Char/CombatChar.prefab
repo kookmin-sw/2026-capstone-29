@@ -291,9 +291,11 @@ MonoBehaviour:
   sprint: 0
   punch: 0
   charge: 0
+  interaction: 0
   selfHarm: 0
   crouch: 0
   shift: 0
+  pause: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1
@@ -372,6 +374,7 @@ MonoBehaviour:
   - {fileID: 1226031520979461127, guid: 9c692d73cd82e0d409bec909e987a5b8, type: 3}
   - {fileID: 1226031520979461127, guid: 9c692d73cd82e0d409bec909e987a5b8, type: 3}
   effectDuration: 1
+  remaingLives: 0
 --- !u!95 &3873752212823095745
 Animator:
   serializedVersion: 5
@@ -1085,7 +1088,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9033012237371238264, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9066586585157275512, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
       propertyPath: m_Layer

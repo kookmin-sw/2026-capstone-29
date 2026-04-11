@@ -11,8 +11,10 @@ public class ItemStatus : ScriptableObject
     [Header("아이템 사용 가능 횟수")]
     [Tooltip("useableTime을 참조하여 아이템을 일정 횟수만 사용할 수 있게끔 조정")]
     [SerializeField] public float useableTime; // 사용 가능 횟수
-
+    
+    [Header("")]
     [SerializeField] public float damage; // 대미지
+    [SerializeField] public float speed; // 탄속
 
     [SerializeField] public float range; // 거리. 이는 원거리 발사체에 대해 적용
     [SerializeField] public float projectileDrop; // 낙차
@@ -22,6 +24,7 @@ public class ItemStatus : ScriptableObject
     [Tooltip("RecoveryDelay를 참조하여 아이템을 사용한 후 일정 시간 뒤에 사용할 수 있게끔 조정")]
     [SerializeField] public float RecoveryDelay; // 후딜
 
+    [Header("")]
     [SerializeField] public bool Stun; // 감전 cc 및 스턴에 적용
     [SerializeField] public bool knockBack; // 넉백 cc
     [SerializeField] public bool stop; // 저지 cc

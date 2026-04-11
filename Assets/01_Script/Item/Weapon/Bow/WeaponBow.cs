@@ -275,4 +275,10 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
         chargeTimer = 0f;
         isCharging = false;
     }
+
+    public void ThrowWeapon()
+    {
+        Debug.Log("이걸 왜던짐?ㅋ");
+        return;
+    }
 }
