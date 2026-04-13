@@ -3,11 +3,12 @@ name: Mirror to submission repo
 on:
   push:
     branches:
-      - main  
-      -origin/Network
-      -origin/UI
-      -MapBuild
-      -ItemCreate
+      - main
+      - ItemCreate
+      - MapBuild
+      - UI
+      - Network
+      
 
 jobs:
   mirror:
