@@ -1,0 +1,24 @@
+name: Mirror to submission repo
+
+on:
+  push:
+    branches:
+      - main  
+      -origin/Network
+      -origin/UI
+      -MapBuild
+      -ItemCreate
+
+jobs:
+  mirror:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 전체 히스토리 가져오기
+
+      - name: Push to submission repo
+        run: |
+          git remote add submit https://x-access-token:${{ secrets.SUBMIT_REPO_TOKEN }}@github.com/kookmin-sw/2026-capstone-2026-29-5.git
+          git push submit --all --force
