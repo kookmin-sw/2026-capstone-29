@@ -10,6 +10,7 @@ public class NetworkGameManger : NetworkBehaviour
 {
     public static NetworkGameManger instance; 
     public static event Action OnGameOverEvent; // 게임 오버시 발생하는 이벤트
+    private InGameUIManger uiManager;
 
     [Header("UI 연결")]
     public Text timerText; // 중앙 타이머 텍스트
@@ -41,6 +42,11 @@ public class NetworkGameManger : NetworkBehaviour
     private NetworkCharacterModel player2;
 
     public bool _isLeavingVoluntarily = false; // 클라이언트 자발적 종료시 UI 등장 방지
+
+    private void Start()
+    {
+        uiManager = FindObjectOfType<InGameUIManger>(); // ui 매니저 찾아서 등록
+    }
 
     private void Awake()
     {
@@ -222,17 +228,21 @@ public class NetworkGameManger : NetworkBehaviour
     // 캐릭터 스폰시 UI와 연결 - NetworkCharacterModel 내부의 체력
     public void RegisterPlayer(NetworkCharacterModel model)
     {
+        // uiManager 재탐색 과정
+        if(uiManager == null) uiManager = FindObjectOfType<InGameUIManger>();
+
+        // 플레이어 등록
         if(player1 == null)
         {
             player1 = model;
-            player1.OnHealthChanged += (health) => p1HealthBar.fillAmount = health / 100f; // 이벤트 연결
-            p1HealthBar.fillAmount = player1.currentHealth / 100f; // 초기값 설정
+            uiManager?.RegisterHealthBar(1, model.currentHealth); // ui 매니저를 통해 체력바 등록
+            player1.OnHealthChanged += uiManager.OnP1HealthChanged; // 체력바 변경 관리
         }
         else if(player2 == null)
         {
             player2 = model;
-            player2.OnHealthChanged += (health) => p2HealthBar.fillAmount = health / 100f; // 이벤트 연결
-            p2HealthBar.fillAmount = player2.currentHealth / 100f; // 초기값 설정
+            uiManager?.RegisterHealthBar(2, model.currentHealth);
+            player2.OnHealthChanged += uiManager.OnP2HealthChanged;
         }
     }
 
