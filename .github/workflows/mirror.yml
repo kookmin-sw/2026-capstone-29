@@ -21,5 +21,5 @@ jobs:
 
       - name: Push to submission repo
         run: |
-          git remote add submit https://x-access-token:${{ secrets.SUBMIT_REPO_TOKEN }}@github.com/kookmin-sw/2026-capstone-2026-29-5.git
+          git remote add submit https://x-access-token:${{ secrets.CapStoneMirroring }}@github.com/kookmin-sw/2026-capstone-2026-29-5.git
           git push submit --all --force
