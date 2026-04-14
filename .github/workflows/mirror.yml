@@ -25,4 +25,3 @@ jobs:
           ssh -T git@github.com || true
           git remote add submit git@github.com:kookmin-sw/2026-capstone-2026-29-5.git
           git push submit --all --force
-          
