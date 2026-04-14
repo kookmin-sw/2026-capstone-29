@@ -20,6 +20,9 @@ jobs:
           echo "${{ secrets.CAPSTONEMIRRORSSH}}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan github.com >> ~/.ssh/known_hosts
+          eval $(ssh-agent -s)
+          ssh-add ~/.ssh/id_rsa
+          ssh -T git@github.com || true
           git remote add submit git@github.com:kookmin-sw/2026-capstone-2026-29-5.git
           git push submit --all --force
           
