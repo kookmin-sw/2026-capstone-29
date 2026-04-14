@@ -3,12 +3,7 @@ name: Mirror to submission repo
 on:
   push:
     branches:
-      - main
-      - ItemCreate
-      - MapBuild
-      - UI
-      - Network
-      
+      - '**'
 
 jobs:
   mirror:
@@ -17,9 +12,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 전체 히스토리 가져오기
+          fetch-depth: 0
 
       - name: Push to submission repo
         run: |
-          git remote add submit https://x-access-token:${{ secrets.CapStoneMirroring }}@github.com/kookmin-sw/2026-capstone-2026-29-5.git
+          mkdir -p ~/.ssh
+          echo "${{ secrets.CAPSTONEMIRRORSSH}}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git remote add submit git@github.com:kookmin-sw/2026-capstone-2026-29-5.git
           git push submit --all --force
