@@ -58,6 +58,6 @@ public class SetItem : NetworkBehaviour, IEquip
     [ClientRpc]
     void RpcOnWeaponEquipped(GameObject user)
     {
-        Debug.Log("아이템 장착!");
+        Debug.Log("아이템 장착 성공!");
     }
 }
