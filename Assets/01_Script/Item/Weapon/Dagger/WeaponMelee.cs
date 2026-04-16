@@ -1,13 +1,13 @@
 ﻿using Mirror;
 using UnityEngine;
 
-public class WeaponDagger : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
+public class WeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
 {
     [Header("아이템 정보")]
     [SerializeField] public ItemStatus itemStat;
 
     [Header("히트박스")]
-    [Tooltip("단검의 히트박스. 비워두면 자신에서 자동 탐색.")]
+    [Tooltip("근접 무기의 히트박스. 비워두면 자신에서 자동 탐색.")]
     [SerializeField] private CharacterHitBox weaponHitbox;
 
     [Header("던지기 설정")]
@@ -17,6 +17,7 @@ public class WeaponDagger : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
     [SyncVar] private bool isThrown;
     [SyncVar] private Vector3 flyDirection;
     [SyncVar] private float flySpeed;
+    [SyncVar] private float rollSpeed;
 
     private float lifeTimer;
 
@@ -70,6 +71,7 @@ public class WeaponDagger : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
         if (isThrown)
         {
             transform.position += flyDirection * flySpeed * Time.deltaTime;
+            transform.Rotate(Vector3.right, rollSpeed * Time.deltaTime, Space.Self);
         }
 
         if (isServer)
@@ -96,7 +98,7 @@ public class WeaponDagger : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
                 ? owner.transform.forward
                 : transform.forward;
 
-            CmdThrowDagger(direction);
+            CmdThrowWeapon(direction);
         }
     }
 
@@ -110,12 +112,12 @@ public class WeaponDagger : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
                 ? owner.transform.forward
                 : transform.forward;
 
-            CmdThrowDagger(direction);
+            CmdThrowWeapon(direction);
         }
     }
 
     [Command(requiresAuthority = true)]
-    private void CmdThrowDagger(Vector3 direction)
+    private void CmdThrowWeapon(Vector3 direction)
     {
         if (isThrown) return; // 이미 던진 상태면 무시
 
@@ -128,6 +130,7 @@ public class WeaponDagger : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
         isThrown = true;
         flyDirection = direction.normalized;
         flySpeed = itemStat.speed;
+        rollSpeed = itemStat.rollSpeed;
         lifeTimer = 0f; // 던진 시점부터 수명 재시작
 
         // 던진 방향을 바라보도록 회전
