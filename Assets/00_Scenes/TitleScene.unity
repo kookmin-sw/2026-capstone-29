@@ -2647,7 +2647,7 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
-  gameSceneName: TPSTestScene
+  gameSceneName: GameScene
   sceneChangeDelay: 3
 --- !u!114 &488677368
 MonoBehaviour:
