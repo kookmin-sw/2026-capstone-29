@@ -92,7 +92,7 @@ public class WeaponTazorGun : NetworkBehaviour, IPlayerWeapon
                     var model = owner.GetComponent<NetworkCharacterModel>();
                     if (model != null)
                     {
-                        model.ServerSetHasBow(false);
+                        //model.ServerSetHasBow(false); // 활 모션 다루는 것과 동일
                     }
                 }
                 //모든 클라이언트에서 복원
@@ -154,6 +154,10 @@ public class WeaponTazorGun : NetworkBehaviour, IPlayerWeapon
             NetworkServer.Destroy(bulletObj);
             return;
         }
+
+        // 이 두 줄이 빠져있었음
+        loadedBullet.SetNocked(true);
+        loadedBullet.SetOwner(owner);
     }
 
 
@@ -163,8 +167,11 @@ public class WeaponTazorGun : NetworkBehaviour, IPlayerWeapon
     [Command(requiresAuthority = true)]
     private void CmdShot()
     {
+        Debug.Log($"[CmdShot] loadedBullet: {loadedBullet}, loadedBulletObj: {loadedBulletObj}");
+
         if (loadedBullet == null)
         {
+            Debug.LogWarning("[CmdShot] loadedBullet이 null!");
             CancelShot();
             return;
         }
@@ -173,6 +180,13 @@ public class WeaponTazorGun : NetworkBehaviour, IPlayerWeapon
         Transform spawnPoint = (nockPoint != null ? nockPoint : transform);
         Quaternion adjusted = spawnPoint.rotation * Quaternion.Euler(followRotationOffset);
         Vector3 direction = adjusted * Vector3.forward;
+
+        Debug.Log($"[CmdShot] Launch 호출. direction: {direction}, flySpeed: {loadedBullet.itemStat.speed}");
+        loadedBullet.Launch(direction);
+
+        // 발사 후 참조 해제
+        loadedBullet = null;
+        loadedBulletObj = null;
 
         usedChance++;
 

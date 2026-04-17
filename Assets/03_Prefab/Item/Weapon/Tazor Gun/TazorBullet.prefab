@@ -2413,6 +2413,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8df8a0a2ed585c44dbb8902bd1bbb3eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  itemStat: {fileID: 11400000, guid: 47cbb397a8bc1bd45a1bd1f015116bdd, type: 2}
+  hitBox: {fileID: 1885731295909789490}
 --- !u!114 &1214805024823595677
 MonoBehaviour:
   m_ObjectHideFlags: 0
