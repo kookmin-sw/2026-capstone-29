@@ -4,8 +4,8 @@ using System;
 using Mirror.Examples.Common;
 using StarterAssets;
 
-public class NetworkCharacterModel : NetworkBehaviour
-{   
+public class NetworkCharacterModel : NetworkBehaviour, ICharacterModel
+{
     // 콤보 카운트 훅
     [SyncVar(hook = nameof(OnComboChangedHook))]
     private int comboCount = 0;
@@ -53,6 +53,7 @@ public class NetworkCharacterModel : NetworkBehaviour
     public int ComboCount => comboCount;
     public bool IsCharging => isCharging;
     public float CurrentHealth => currentHealth;
+    public int RemainingLives => remaingLives;
     public bool IsDead => isDead;
     public bool HasBow => hasBow;
     public bool IsChargeReady => isChargeReady;
@@ -268,4 +269,26 @@ public class NetworkCharacterModel : NetworkBehaviour
         if(input != null && uiManager != null)
             uiManager.RegisterInput(input);
     }
+
+    // ============================================================
+    // ICharacterModel 구현 (기존 Cmd* 메서드로 위임)
+    // Unified 체계와의 호환을 위해 추가됨. 기존 동작은 변하지 않음.
+    // ============================================================
+    public void RequestNextCombo() => CmdNextCombo();
+    public void RequestResetCombo() => CmdResetCombo();
+    public void RequestSetCharging(bool state) => CmdSetCharging(state);
+    public void RequestSetChargeReady(bool state) => CmdSetChargeReady(state);
+    public void RequestStrongAttack() => CmdStrongAttack();
+    public void RequestSetBowDraw(bool state) => CmdSetBowDraw(state);
+    public void RequestBowRelease() => CmdBowRelease();
+    public void RequestSelfHarm(float damage) => CmdSelfHarm(damage);
+    public void RequestTakeDamage(float damage) => CmdTakeDamage(damage);
+    public void RequestFallDamage(float damage) => CmdFallDamage(damage);
+    public void RequestSetHasBow(bool state)
+    {
+        if (isServer) ServerSetHasBow(state);
+        // 클라에서 호출된 경우 기존 API가 Server 전용이므로 무시 (기존 동작 유지)
+    }
+    public void RequestSpawnHitEffect(Vector3 hitPoint, Vector3 hitNormal, int effectIndex)
+        => CmdSpawnHitEffect(hitPoint, hitNormal, effectIndex);
 }
