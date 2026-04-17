@@ -64,6 +64,11 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
 
     private void Awake()
     {
+        if (weaponHitbox != null)
+        {
+            weaponHitbox.damage = itemStat.damage;
+            weaponHitbox.DisableHitbox();
+        }
     }
 
     public void SetUser(GameObject user)

@@ -17,6 +17,7 @@ public class ItemStatus : ScriptableObject
     [SerializeField] public float speed; // 탄속
 
     [SerializeField] public float range; // 거리. 이는 원거리 발사체에 대해 적용
+    [SerializeField] public float rollSpeed; // 회전 속도. 원거리 발사체가 회전하는 경우 적용.
     [SerializeField] public float projectileDrop; // 낙차
     [SerializeField] public float startUpDelay; // 선딜
 
