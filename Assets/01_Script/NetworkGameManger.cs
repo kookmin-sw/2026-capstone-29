@@ -10,6 +10,7 @@ public class NetworkGameManger : NetworkBehaviour
 {
     public static NetworkGameManger instance; 
     public static event Action OnGameOverEvent; // 게임 오버시 발생하는 이벤트
+    private InGameUIManger uiManager;
 
     [Header("UI 연결")]
     public Text timerText; // 중앙 타이머 텍스트
@@ -20,7 +21,7 @@ public class NetworkGameManger : NetworkBehaviour
     public Button TitleButton; // 타이틀로 돌아가는 버튼
 
     [Header("Scene Setting")]
-    public string titleSceneName = "TitleMirror";
+    public string titleSceneName = "TitleScene";
 
     [Header("Game Settting")]
     [SyncVar(hook = nameof(OnTimerChanged))] // 시간 변경시 변경 함수 호출
@@ -37,10 +38,16 @@ public class NetworkGameManger : NetworkBehaviour
     [SyncVar(hook = nameof(OnWinnerIndexChanged))]
     private int gameOverWinnerIndex = -1; // 1 = P1 승, 2 = P2 승, 0 = 무승부
 
-    private NetworkCharacterModel player1;
-    private NetworkCharacterModel player2;
+    // ICharacterModel 기반으로 변경. NetworkCharacterModel / UnifiedCharacterModel 모두 허용.
+    private ICharacterModel player1;
+    private ICharacterModel player2;
 
     public bool _isLeavingVoluntarily = false; // 클라이언트 자발적 종료시 UI 등장 방지
+
+    private void Start()
+    {
+        uiManager = FindObjectOfType<InGameUIManger>(); // ui 매니저 찾아서 등록
+    }
 
     private void Awake()
     {
@@ -80,20 +87,20 @@ public class NetworkGameManger : NetworkBehaviour
             return;
         }
 
-        if (player1.remaingLives > player2.remaingLives)
+        if (player1.RemainingLives > player2.RemainingLives)
             TriggerGameOver(1);
-        else if (player2.remaingLives > player1.remaingLives)
+        else if (player2.RemainingLives > player1.RemainingLives)
             TriggerGameOver(2);
-        else if(player1.currentHealth > player2.currentHealth)
+        else if(player1.CurrentHealth > player2.CurrentHealth)
             TriggerGameOver(1);
-        else if(player2.currentHealth > player1.currentHealth)
+        else if(player2.CurrentHealth > player1.CurrentHealth)
             TriggerGameOver(2);
         else
             TriggerGameOver(0); // 동점 무승부
     }
 
-    // NetworkCharacterModel에서 호출됨
-    public void OnPlayerGameOver(NetworkCharacterModel deadPlayer)
+    // NetworkCharacterModel / UnifiedCharacterModel 에서 호출됨
+    public void OnPlayerGameOver(ICharacterModel deadPlayer)
     {
         if (!isServer || isGameOver) return;
  
@@ -219,20 +226,24 @@ public class NetworkGameManger : NetworkBehaviour
             gameOverText.text = "호스트와 연결이 끊켰습니다.";
     }   
 
-    // 캐릭터 스폰시 UI와 연결 - NetworkCharacterModel 내부의 체력
-    public void RegisterPlayer(NetworkCharacterModel model)
+    // 캐릭터 스폰시 UI와 연결 - ICharacterModel의 체력 이벤트 사용
+    public void RegisterPlayer(ICharacterModel model)
     {
+        // uiManager 재탐색 과정
+        if(uiManager == null) uiManager = FindObjectOfType<InGameUIManger>();
+
+        // 플레이어 등록
         if(player1 == null)
         {
             player1 = model;
-            player1.OnHealthChanged += (health) => p1HealthBar.fillAmount = health / 100f; // 이벤트 연결
-            p1HealthBar.fillAmount = player1.currentHealth / 100f; // 초기값 설정
+            uiManager?.RegisterHealthBar(1, model.CurrentHealth); // ui 매니저를 통해 체력바 등록
+            player1.OnHealthChanged += uiManager.OnP1HealthChanged; // 체력바 변경 관리
         }
         else if(player2 == null)
         {
             player2 = model;
-            player2.OnHealthChanged += (health) => p2HealthBar.fillAmount = health / 100f; // 이벤트 연결
-            p2HealthBar.fillAmount = player2.currentHealth / 100f; // 초기값 설정
+            uiManager?.RegisterHealthBar(2, model.CurrentHealth);
+            player2.OnHealthChanged += uiManager.OnP2HealthChanged;
         }
     }
 
@@ -245,20 +256,24 @@ public class NetworkGameManger : NetworkBehaviour
 
     // 플레이어 리스폰(서버에서)
     [Server]
-    public void RespawnPlayer(NetworkCharacterModel character)
+    public void RespawnPlayer(ICharacterModel character)
     {
         // 스폰포인트 미설정시
         if(spawnPoints == null || spawnPoints.Length == 0) return;
-        
+
+        // ICharacterModel에서 NetworkIdentity 추출 (구현체는 NetworkBehaviour 기반).
+        NetworkBehaviour nb = character as NetworkBehaviour;
+        if(nb == null) return;
+
         // 플레이어 1은 0번, 플레이어 2는 1번 스폰위치에
         int spawnIndex = 0;
         if(character == player1 && spawnPoints.Length > 1)
-            spawnIndex =1;
-        
+            spawnIndex = 1;
+
         Transform spawnPoint = spawnPoints[spawnIndex];
 
         // 모든 클라이언트에서 위치 이동
-        RpcTeleportPlayer(character.netIdentity, spawnPoint.position, spawnPoint.rotation);
+        RpcTeleportPlayer(nb.netIdentity, spawnPoint.position, spawnPoint.rotation);
     }
 
     // 모든 클라이언트에서 위치 이동 - 리스폰

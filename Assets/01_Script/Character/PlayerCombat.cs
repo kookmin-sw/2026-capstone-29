@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerCombat : NetworkBehaviour
 {
     private StarterAssetsInputs _input;
-    private NetworkCharacterModel _model;
+    private ICharacterModel _model;
     private CharacterView _view;
     private PlayerInput _playerInput;
     private InputAction _chargeAction;
@@ -25,7 +25,7 @@ public class PlayerCombat : NetworkBehaviour
     private void Awake()
     {
         _input = GetComponent<StarterAssetsInputs>();
-        _model = GetComponent<NetworkCharacterModel>();
+        _model = GetComponent<ICharacterModel>();
         _view = GetComponent<CharacterView>();
 
         _playerInput = GetComponent<PlayerInput>();
@@ -66,7 +66,7 @@ public class PlayerCombat : NetworkBehaviour
         if (_input.punch && !_model.IsCharging && !IsStrongAttacking)
         {
             _lastAttackTime = Time.time;
-            _model.CmdNextCombo(); // 서버에 콤보 증가 요청
+            _model.RequestNextCombo(); // 서버에 콤보 증가 요청 (오프라인이면 로컬 변이)
             _input.punch = false;  // 입력 소비
         }
     }
@@ -75,7 +75,7 @@ public class PlayerCombat : NetworkBehaviour
     {
         if (_input.selfHarm)
         {
-            _model.CmdSelfHarm(20f);
+            _model.RequestSelfHarm(20f);
             _input.selfHarm = false;
         }
     }
@@ -93,7 +93,7 @@ public class PlayerCombat : NetworkBehaviour
 
         // 누르기 시작: 기 모으기 이펙트(1단계) 켜기
         _chargeStarted = true;
-        _model.CmdSetCharging(true);
+        _model.RequestSetCharging(true);
         _view.UpdateChargeEffect(true, false);
     }
 
@@ -114,12 +114,12 @@ public class PlayerCombat : NetworkBehaviour
         // 에디터에서 Hold Time을 1.5로 했으니, duration이 1.5 이상이면 강공격 발동
         if (context.duration >= 1.5f)
         {
-            _model.CmdStrongAttack();
+            _model.RequestStrongAttack();
         }
 
         // 차징 상태 해제 및 이펙트 끄기
         _chargeStarted = false;
-        _model.CmdSetCharging(false);
+        _model.RequestSetCharging(false);
         _view.UpdateChargeEffect(false, false);
     }
 
@@ -128,7 +128,7 @@ public class PlayerCombat : NetworkBehaviour
     {
         if (_model.ComboCount > 0 && Time.time > _lastAttackTime + comboResetTime)
         {
-            _model.CmdResetCombo();
+            _model.RequestResetCombo();
         }
     }
 }

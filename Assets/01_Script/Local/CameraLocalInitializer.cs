@@ -8,6 +8,7 @@ public class CameraLocalInitializer : MonoBehaviour
     private void Start()
     {
         // --- 입력 강제 페어링/스킴 전환 ---
+        if (!AuthorityGuard.IsLocallyControlled(gameObject)) return;
         var pi = GetComponent<PlayerInput>();
         if (pi != null)
         {
