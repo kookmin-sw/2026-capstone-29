@@ -21,7 +21,7 @@ public class NetworkGameManger : NetworkBehaviour
     public Button TitleButton; // 타이틀로 돌아가는 버튼
 
     [Header("Scene Setting")]
-    public string titleSceneName = "TitleMirror";
+    public string titleSceneName = "TitleScene";
 
     [Header("Game Settting")]
     [SyncVar(hook = nameof(OnTimerChanged))] // 시간 변경시 변경 함수 호출

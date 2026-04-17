@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class MatchManager : NetworkManager
 {
     [Header("Match Settings")]
-    public string gameSceneName = "TPSTestScene"; 
+    public string gameSceneName = "GameScene"; 
     public float sceneChangeDelay = 1.5f; // 매칭 성공 후 대기 시간
     private bool isMatchStarted = false;
 
@@ -96,6 +96,6 @@ public class MatchManager : NetworkManager
         DestroyImmediate(gameObject); // 게임 신 매니저 파괴
         // yield return null;
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene("TitleMirror");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("TitleScene");
     }
 }
