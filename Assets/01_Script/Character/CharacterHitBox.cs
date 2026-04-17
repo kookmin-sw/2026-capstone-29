@@ -37,24 +37,26 @@ public class CharacterHitBox : MonoBehaviour
         //소유자 obj
         GameObject ownerObj = GetOwnerRoot();
         Debug.Log($"[HitBox] other: {other.gameObject}, ownerObj: {ownerObj}, same: {other.gameObject == ownerObj}");
-        NetworkCharacterModel target = other.GetComponent<NetworkCharacterModel>();
 
-        if (target != null && other.gameObject != ownerObj)
+        // 1순위: ICharacterModel 구현체 (NetworkCharacterModel / UnifiedCharacterModel 모두 해당)
+        ICharacterModel iTarget = other.GetComponent<ICharacterModel>();
+        if (iTarget != null && other.transform.root.gameObject != ownerObj)
         {
-            if (_hitTargets.Contains(target.gameObject)) return;
-            _hitTargets.Add(target.gameObject);
+            Component iTargetComp = iTarget as Component;
+            if (iTargetComp != null && _hitTargets.Contains(iTargetComp.gameObject)) return;
+            if (iTargetComp != null) _hitTargets.Add(iTargetComp.gameObject);
 
             Vector3 hitPoint  = other.ClosestPoint(hitboxCollider.transform.position);
             Vector3 hitNormal = (hitPoint - other.transform.position).normalized;
             if (hitNormal == Vector3.zero) hitNormal = Vector3.up;
 
-            target.CmdTakeDamage(damage);
-            target.CmdSpawnHitEffect(hitPoint, hitNormal, effectIndex); // 인덱스 전달
+            iTarget.RequestTakeDamage(damage);
+            iTarget.RequestSpawnHitEffect(hitPoint, hitNormal, effectIndex);
             hitboxCollider.enabled = false;
             return;
         }
 
-        // 로컬용
+        // 2순위: 레거시 로컬 전용 CharacterModel (Local/CharacterModel.cs) — ICharacterModel 미구현
         CharacterModel localTarget = other.GetComponent<CharacterModel>();
         if (localTarget != null && other.transform.root.gameObject != ownerObj)
         {

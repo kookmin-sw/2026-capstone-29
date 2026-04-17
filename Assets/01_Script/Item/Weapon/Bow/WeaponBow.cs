@@ -69,8 +69,8 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
     public void SetUser(GameObject user)
     {
         owner = user;
-        var model = user.GetComponent<NetworkCharacterModel>();
-        if (model != null) model.ServerSetHasBow(true);
+        var model = user.GetComponent<ICharacterModel>();
+        if (model != null) model.RequestSetHasBow(true);
         // 서버에서 호출되면 모든 클라이언트에 전파
         RpcSetUser(user, "CombatGirls_Sword_Shield/root/add_weapon_l");
     }
@@ -112,10 +112,10 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
             {
                 if (owner != null)
                 {
-                    var model = owner.GetComponent<NetworkCharacterModel>();
-                    if (model != null) 
+                    var model = owner.GetComponent<ICharacterModel>();
+                    if (model != null)
                     {
-                        model.ServerSetHasBow(false);
+                        model.RequestSetHasBow(false);
                     }
                 }
                 //모든 클라이언트에서 복원
@@ -156,8 +156,8 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
             CmdBeginCharge();
 
             // 활 당기기 애니메이션
-            var model = owner.GetComponent<NetworkCharacterModel>();
-            if (model != null) model.CmdSetBowDraw(true);
+            var model = owner.GetComponent<ICharacterModel>();
+            if (model != null) model.RequestSetBowDraw(true);
         }
         
 
@@ -177,8 +177,8 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
             CmdReleaseArrow(ratio);
 
             // 발사 애니메이션
-            var model = owner.GetComponent<NetworkCharacterModel>();
-            if (model != null) model.CmdBowRelease();
+            var model = owner.GetComponent<ICharacterModel>();
+            if (model != null) model.RequestBowRelease();
         }
     }
     [ClientRpc]

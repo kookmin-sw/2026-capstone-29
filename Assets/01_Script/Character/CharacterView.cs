@@ -3,7 +3,7 @@
 public class CharacterView : MonoBehaviour
 {
     private Animator anim;
-    private NetworkCharacterModel model;
+    private ICharacterModel model;
 
     [Header("이펙트")]
     public GameObject chargingEffect;
@@ -28,7 +28,7 @@ public class CharacterView : MonoBehaviour
     private void Awake()
     {
         anim = GetComponent<Animator>();
-        model = GetComponent<NetworkCharacterModel>();
+        model = GetComponent<ICharacterModel>();
     }
 
     private void OnEnable()
