@@ -31,6 +31,8 @@ public class CharacterHitBox : MonoBehaviour
     // 트리거(주먹)가 무언가에 닿았을 때 실행됨
     private void OnTriggerEnter(Collider other)
     {
+        if (hitboxCollider == null) return;
+
         if (!IsAllowedState()) return;
 
 

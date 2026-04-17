@@ -33,7 +33,7 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 4635022862090887126}
-    m_Position: {x: 466.34384, y: 291.67072, z: 0}
+    m_Position: {x: 470, y: 120, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -52,7 +52,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Scene
-  m_Speed: 144
+  m_Speed: 7
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []

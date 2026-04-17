@@ -12717,6 +12717,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1902911985}
   m_CullTransparentMesh: 1
+--- !u!1001 &1905486646
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1207070841525655400, guid: 83f26de1319f6804f99aa433cef9f6c8, type: 3}
+      propertyPath: sceneId
+      value: 655640023
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518272906952762049, guid: 83f26de1319f6804f99aa433cef9f6c8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -12.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518272906952762049, guid: 83f26de1319f6804f99aa433cef9f6c8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 34.71
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518272906952762049, guid: 83f26de1319f6804f99aa433cef9f6c8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 25.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518272906952762049, guid: 83f26de1319f6804f99aa433cef9f6c8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518272906952762049, guid: 83f26de1319f6804f99aa433cef9f6c8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518272906952762049, guid: 83f26de1319f6804f99aa433cef9f6c8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518272906952762049, guid: 83f26de1319f6804f99aa433cef9f6c8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518272906952762049, guid: 83f26de1319f6804f99aa433cef9f6c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518272906952762049, guid: 83f26de1319f6804f99aa433cef9f6c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518272906952762049, guid: 83f26de1319f6804f99aa433cef9f6c8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4791159468792778913, guid: 83f26de1319f6804f99aa433cef9f6c8, type: 3}
+      propertyPath: m_Name
+      value: TazorGun_Field
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 83f26de1319f6804f99aa433cef9f6c8, type: 3}
 --- !u!1 &1908051858
 GameObject:
   m_ObjectHideFlags: 0
@@ -14632,3 +14693,4 @@ SceneRoots:
   - {fileID: 94517723}
   - {fileID: 943237119}
   - {fileID: 732118912}
+  - {fileID: 1905486646}
