@@ -1,5 +1,7 @@
 using Mirror;
 using UnityEngine;
+// HardenOfflineObject: 오프라인에서 Instantiate된 오브젝트가 Mirror NetworkIdentity에 의해
+// 비활성화되거나 SetParent가 막히는 것을 우회하기 위한 헬퍼.
 
 /// <summary>
 /// 각 필드 아이템에 부착되어, 픽업 시 ItemManager(또는 UnifiedItemManager)에
@@ -68,6 +70,7 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
             if (im.weapon != null)
             {
                 GameObject weaponObj = im.weapon.SummonWeapon(user.transform.position, Quaternion.identity);
+                HardenOfflineObject(weaponObj);
                 IPlayerWeapon ipw = weaponObj != null ? weaponObj.GetComponent<IPlayerWeapon>() : null;
                 if (ipw != null) ipw.SetUser(user);
                 im.weaponAvailable = im.weapon.AvailableTime();
@@ -101,6 +104,7 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
             if (im.weapon != null)
             {
                 GameObject weaponObj = im.weapon.SummonWeapon(user.transform.position, Quaternion.identity);
+                HardenOfflineObject(weaponObj);
                 IPlayerWeapon ipw = weaponObj != null ? weaponObj.GetComponent<IPlayerWeapon>() : null;
                 if (ipw != null) ipw.SetUser(user);
                 im.weaponAvailable = im.weapon.AvailableTime();
@@ -176,5 +180,19 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
     private void RpcOnWeaponEquipped(GameObject user)
     {
         Debug.Log("아이템 장착!");
+    }
+
+    // -----------------------------
+    // 오프라인 하드닝 헬퍼
+    // -----------------------------
+    private static void HardenOfflineObject(GameObject obj)
+    {
+        if (obj == null) return;
+        if (!AuthorityGuard.IsOffline) return; // 온라인에선 Mirror가 관리
+
+        if (obj.TryGetComponent(out NetworkIdentity nid))
+            nid.enabled = false;
+
+        if (!obj.activeSelf) obj.SetActive(true);
     }
 }
