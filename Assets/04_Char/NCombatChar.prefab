@@ -205,9 +205,11 @@ MonoBehaviour:
   sprint: 0
   punch: 0
   charge: 0
+  interaction: 0
   selfHarm: 0
   crouch: 0
   shift: 0
+  pause: 0
   analogMovement: 0
   cursorLocked: 1
   cursorInputForLook: 1

@@ -1,4 +1,4 @@
-using Mirror;
+﻿using Mirror;
 using UnityEngine;
 
 /// <summary>
@@ -77,7 +77,7 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
         {
             im.active = itemAsset as IActive;
             im.GetActive();
-            if (im.active != null) im.activeAvailable = im.active.AvailableTime();
+            if (im.active != null) im.activeAvailable = im.active.AvailableTime;
         }
         else if (item.CompareTag("Passive"))
         {
@@ -110,7 +110,7 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
         {
             im.active = itemAsset as IActive;
             im.GetActive();
-            if (im.active != null) im.activeAvailable = im.active.AvailableTime();
+            if (im.active != null) im.activeAvailable = im.active.AvailableTime;
         }
         else if (item.CompareTag("Passive"))
         {
@@ -154,8 +154,8 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
         else if (item.CompareTag("Active"))
         {
             IActive activeAsset = itemAsset as IActive;
-            if (unified != null) { unified.active = activeAsset; unified.GetActive(); if (activeAsset != null) unified.activeAvailable = activeAsset.AvailableTime(); }
-            else                 { legacy.active  = activeAsset; legacy.GetActive();  if (activeAsset != null) legacy.activeAvailable  = activeAsset.AvailableTime(); }
+            if (unified != null) { unified.active = activeAsset; unified.GetActive(); if (activeAsset != null) unified.activeAvailable = activeAsset.AvailableTime; }
+            else                 { legacy.active  = activeAsset; legacy.GetActive();  if (activeAsset != null) legacy.activeAvailable  = activeAsset.AvailableTime; }
         }
         else if (item.CompareTag("Passive"))
         {

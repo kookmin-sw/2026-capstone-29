@@ -37,9 +37,10 @@ public class SetItem : NetworkBehaviour, IEquip
         }
         if (item.CompareTag("Active"))
         {
-            im.active = itemAsset as IActive;
+            IActive activeAsset = itemAsset as IActive;
+            im.active = activeAsset;
             im.GetActive();
-            im.activeAvailable = im.active.AvailableTime();
+            im.activeAvailable = activeAsset.AvailableTime;  // 에셋에서 duration 읽어와 세팅
         }
         if (item.CompareTag("Passive"))
         {

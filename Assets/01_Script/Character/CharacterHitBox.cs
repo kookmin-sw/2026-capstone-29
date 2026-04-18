@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class CharacterHitBox : MonoBehaviour
 {
+    private float multipleDMG = 1; // 공격력 배율 조정. ICharacterModel에 달아둘 예정(아직 미구현)
     public float damage = 10f; // 주먹 한 방의 대미지
     public Collider hitboxCollider; // 주먹에 달린 콜라이더
 
@@ -52,7 +53,7 @@ public class CharacterHitBox : MonoBehaviour
             Vector3 hitNormal = (hitPoint - other.transform.position).normalized;
             if (hitNormal == Vector3.zero) hitNormal = Vector3.up;
 
-            iTarget.RequestTakeDamage(damage);
+            iTarget.RequestTakeDamage(damage * multipleDMG); // 무기에 설정된 / 기본으로 설정된 대미지에 공격력 계수 적용한 대미지를 준다.
             iTarget.RequestSpawnHitEffect(hitPoint, hitNormal, effectIndex);
             hitboxCollider.enabled = false;
             return;
