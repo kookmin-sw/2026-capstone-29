@@ -16,14 +16,18 @@ public class ItemManager : NetworkBehaviour
     [SyncVar] private bool hasActive = false;
     [SyncVar] private bool activeUsed = false;
     [SyncVar] private bool hasPassive = false;
+    [SyncVar] private bool passiveUsed = false;
 
     [SyncVar] public float weaponAvailable;
     [SyncVar] public float activeAvailable;
+    [SyncVar] public float passiveAvailable;
 
     [SerializeField] float weaponTimer;
     [SerializeField] float activeTimer;
+    [SerializeField] float passiveTimer;
 
     private Coroutine activeRoutine;
+    private Coroutine passiveRoutine;
 
     void Update()
     {
@@ -71,59 +75,56 @@ public class ItemManager : NetworkBehaviour
                 RpcOnActiveRemoved();
             }
         }
-        if (hasPassive)
+        // ── 패시브 ──
+        // 장착 즉시 자동 발동: hasPassive가 되면 다음 프레임에 자동으로 코루틴 시작
+        if (hasPassive && !passiveUsed && passive != null)
         {
-            //패시브는 얻는 즉시 효과를 발동한 후, 제거해버린다.
-            passive.Apply();
-            hasPassive = false;
-            passive = null;
-
-            //클라이언트에 전달.
-            RpcOnPassiveUsed();
+            passiveUsed = true;
+            passiveTimer = 0f;
+            passiveRoutine = StartCoroutine(PassiveRoutineWrapper(passive.Activate(gameObject)));
+            RpcOnPassiveActivated();
         }
-        
+
+        if (passiveUsed)
+        {
+            passiveTimer += Time.deltaTime;
+            if (passiveAvailable <= passiveTimer)
+            {
+                if (passiveRoutine != null)
+                {
+                    StopCoroutine(passiveRoutine);
+                    passiveRoutine = null;
+                    passive?.OnDeactivate(gameObject);
+                }
+
+                passiveUsed = false;
+                hasPassive = false;
+                passive = null;
+                passiveTimer = 0;
+                passiveAvailable = 0;
+                RpcOnPassiveRemoved();
+            }
+        }
 
     }
 
-    public void ApplyWeaponTimer(float available)
-    {
-        weaponAvailable = available;
-    }
-    public void ApplyActiveTimer(float available)
-    {
-        activeAvailable = available;
-    }
-
-    public bool HasWeapon()
-    {
-        return hasWeapon;
-    }
-
-    public void GetWeapon()
-    {
-        hasWeapon = true;
-    }
-
-    public bool HasActive() 
-    {
-        return activeUsed;
-    }
-    public void GetActive()
-    {
-        hasActive = true;
-    }
+    public void ApplyWeaponTimer(float available) { weaponAvailable = available; }
+    public void ApplyActiveTimer(float available) { activeAvailable = available; }
+    public void ApplyPassiveTimer(float available) { passiveAvailable = available; }
 
 
+    public bool HasWeapon() => hasWeapon;
+    public void GetWeapon() { hasWeapon = true; }
+
+    public bool HasActive() => hasActive;
+    public bool IsActiveRunning() => activeUsed;
+    public void GetActive() { hasActive = true; }
+
+    public bool HasPassive() => hasPassive;
+    public bool IsPassiveRunning() => passiveUsed;
+    public void GetPassive() { hasPassive = true; }
 
 
-    public bool HasPassive()
-    {
-        return hasPassive;
-    }
-    public void GetPassive()
-    {
-        hasPassive = true;
-    }
     public void RequestUseActive()
     {
         // 보유하지 않았거나 이미 사용 중이면 무시
@@ -157,6 +158,12 @@ public class ItemManager : NetworkBehaviour
         activeRoutine = null;
     }
 
+    private IEnumerator PassiveRoutineWrapper(IEnumerator inner)
+    {
+        yield return inner;
+        passiveRoutine = null;
+    }
+
     [ClientRpc]
     void RpcOnWeaponRemoved()
     {
@@ -175,15 +182,17 @@ public class ItemManager : NetworkBehaviour
     {
         Debug.Log("액티브 아이템 해제됨.");
     }
-
-    [ClientRpc]
-    void RpcOnPassiveUsed()
-    {
-        Debug.Log("패시브 아이템 사용됨.");
-        // TODO: UI 갱신, 이펙트 재생 등 작업 추가
+    
+    [ClientRpc] 
+    void RpcOnPassiveActivated() 
+    { 
+        Debug.Log("패시브 아이템 발동.");
     }
-
-
-
+    
+    [ClientRpc] 
+    void RpcOnPassiveRemoved() 
+    { 
+        Debug.Log("패시브 아이템 해제됨."); 
+    }
 
 }

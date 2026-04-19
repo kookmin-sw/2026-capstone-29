@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
-
+/*
 [CreateAssetMenu(menuName = "Item/Passive/Battery/Effect")]
+
 
 public class Effect_Battery : ScriptableObject, IPassive
 {
@@ -9,3 +10,4 @@ public class Effect_Battery : ScriptableObject, IPassive
         Debug.Log("배터리 효과 적용!");
     }
 }
+*/
