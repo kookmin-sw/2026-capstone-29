@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 8
   initialDamage: 10
-  moveSpeedMultiplier: 5
-  animSpeedMultiplier: 5
+  moveSpeedMultiplier: 1.8
+  animSpeedMultiplier: 1.8
