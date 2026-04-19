@@ -46,7 +46,7 @@ public class StemPack_Effect : ScriptableObject, IActive
         if (animator != null)
         {
             originalAnimSpeed = animator.speed;
-            animator.speed = originalAnimSpeed * animSpeedMultiplier;
+            controller.RequestSetAnimatorSpeed(originalAnimSpeed * animSpeedMultiplier);
             animApplied = true;
         }
 
@@ -59,7 +59,7 @@ public class StemPack_Effect : ScriptableObject, IActive
         }
         if (animApplied && animator != null)
         {
-            animator.speed = originalAnimSpeed;
+            controller.RequestSetAnimatorSpeed(originalAnimSpeed);
         }
 
         Debug.Log("[StemPack] 활성화 종료");
@@ -82,9 +82,9 @@ public class StemPack_Effect : ScriptableObject, IActive
         }
 
         Animator animator = owner.GetComponentInChildren<Animator>();
-        if (animator != null && animSpeedMultiplier > 0f)
+        if (controller != null && animator != null && animSpeedMultiplier > 0f)
         {
-            animator.speed /= animSpeedMultiplier;
+            controller.RequestSetAnimatorSpeed(animator.speed / animSpeedMultiplier);
         }
     }
 }
