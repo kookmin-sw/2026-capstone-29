@@ -2637,6 +2637,7 @@ MonoBehaviour:
   - {fileID: 4791159468792778913, guid: 83f26de1319f6804f99aa433cef9f6c8, type: 3}
   - {fileID: 767801876555011700, guid: fd7f6277f5fe7f948bc820e263601e02, type: 3}
   - {fileID: 8374523908837229509, guid: 23dc559ac6d03264f8f4dca1a2552229, type: 3}
+  - {fileID: 8252889642667195719, guid: ff6b477fdff248049a43fca4d2e7154c, type: 3}
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2
@@ -2653,7 +2654,12 @@ MonoBehaviour:
   evaluationInterval: 3
   timeInterpolationGui: 0
   gameSceneName: GameScene
+  charSelectSceneName: CharSelectScene
   sceneChangeDelay: 3
+  charSelectManagerPrefab: {fileID: 8252889642667195719, guid: ff6b477fdff248049a43fca4d2e7154c, type: 3}
+  p1CharacterIndex: 0
+  p2CharacterIndex: 0
+  characterPrefabs: []
 --- !u!114 &488677368
 MonoBehaviour:
   m_ObjectHideFlags: 0
