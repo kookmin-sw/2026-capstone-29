@@ -40,7 +40,9 @@ public class CharSelectUI : MonoBehaviour
     private bool isLocalConfirmed = false;
     private int localPlayerIndex = -1;
     private bool isInitialized = false;
-    private bool isNetworkReady = false; 
+
+    // OnNetworkReady 또는 SetLocalPlayerIndex 중 하나라도 호출되면 true
+    private bool isNetworkReady = false;
 
     private void Awake()
     {
@@ -51,55 +53,30 @@ public class CharSelectUI : MonoBehaviour
     private void Start()
     {
         Debug.Log("[CharSelectUI] Start - CharSelectManager 대기 시작");
-        StartCoroutine(WaitAndInit());
     }
 
-    // CharSelectManager.OnStartClient에서 호출됨
+    // CharSelectManager.OnStartClient에서 호출
     public void OnNetworkReady()
     {
         Debug.Log($"[CharSelectUI] OnNetworkReady - netId:{CharSelectManager.instance?.netId}");
         isNetworkReady = true;
-        
-        // InitUI가 아직 안 됐으면 여기서 처리
+
         if (!isInitialized && CharSelectManager.instance != null)
             InitUI(CharSelectManager.instance);
-    }
 
-    private IEnumerator WaitAndInit()
-    {
-        float timeout = 5f;
-        while (!isNetworkReady && !isInitialized && timeout > 0f)
-        {
-            timeout -= Time.deltaTime;
-            yield return null;
-        }
-
-        if (!isInitialized && CharSelectManager.instance == null)
-        {
-            Debug.LogError("[CharSelectUI] CharSelectManager 초기화 실패");
-            yield break;
-        }
-
-        Debug.Log($"[CharSelectUI] WaitAndInit 통과");
-
-        if (!isInitialized)
-            InitUI(CharSelectManager.instance);
-
+        // WaitAndInit이 이미 진행 중일 수 있으므로 localPlayerIndex도 여기서 처리
         if (localPlayerIndex < 0)
             ResolveLocalPlayerIndex();
-        else
-            Debug.Log($"[CharSelectUI] localPlayerIndex 이미 설정됨({localPlayerIndex}), 스킵");
+
     }
 
     private void ResolveLocalPlayerIndex()
     {
-        // 호스트 = 서버이면서 클라이언트 → 항상 P1
         if (NetworkServer.active)
         {
             localPlayerIndex = 0;
             Debug.Log("[CharSelectUI] 호스트 → localPlayerIndex = 0");
         }
-        // 순수 클라이언트 → 항상 P2
         else if (NetworkClient.active)
         {
             localPlayerIndex = 1;
@@ -111,7 +88,25 @@ public class CharSelectUI : MonoBehaviour
         }
     }
 
-    // CharSelectManager.OnStartClient()에서 직접 호출
+    // CharSelectManager.TargetSetPlayerIndex에서 호출
+    public void SetLocalPlayerIndex(int index)
+    {
+        localPlayerIndex = index;
+        isNetworkReady = true;
+        Debug.Log($"[CharSelectUI] SetLocalPlayerIndex = {index}, " +
+                $"instance={CharSelectManager.instance != null}, " +
+                $"isInit={isInitialized}, " +
+                $"characters={(CharSelectManager.instance?.characters?.Length ?? -1)}");
+
+        if (!isInitialized && CharSelectManager.instance != null)
+        {
+            Debug.Log("[CharSelectUI] SetLocalPlayerIndex → InitUI 재시도");
+            InitUI(CharSelectManager.instance);
+        }
+    }
+
+    // ── UI 초기화 ─────────────────────────────────────────────────
+
     public void InitUI(CharSelectManager mgr)
     {
         if (isInitialized) return;
@@ -127,7 +122,6 @@ public class CharSelectUI : MonoBehaviour
         }
 
         BuildThumbnails();
-
         StartCoroutine(InitCursorsNextFrame(mgr));
 
         if (p1ReadyBadge) p1ReadyBadge.SetActive(false);
@@ -135,7 +129,6 @@ public class CharSelectUI : MonoBehaviour
         if (countdownPanel) countdownPanel.SetActive(false);
     }
 
-    // 썸네일 레이아웃 계산 후 커서 초기화 (2프레임 대기)
     private IEnumerator InitCursorsNextFrame(CharSelectManager mgr)
     {
         yield return null;
@@ -148,93 +141,98 @@ public class CharSelectUI : MonoBehaviour
         Debug.Log("[CharSelectUI] 커서 초기화 완료");
     }
 
-    public void SetLocalPlayerIndex(int index)
-    {
-        localPlayerIndex = index;
-        isNetworkReady = true;  // ← 이 줄 추가
-        Debug.Log($"[CharSelectUI] localPlayerIndex = {index}");
+    // ── 입력 처리 ─────────────────────────────────────────────────
 
-        // ★ 추가: index가 설정될 때 InitUI가 아직 안 끝났으면 여기서 시도
-        if (!isInitialized && CharSelectManager.instance != null)
+    private void Update() 
+    { 
+        if (!isInitialized)
         {
-            Debug.Log("[CharSelectUI] SetLocalPlayerIndex → 아직 미초기화, InitUI 재시도");
-            InitUI(CharSelectManager.instance);
-        }
+            TryInit();
+            return;
+        }    
+
+        HandleInput(); 
+        
     }
 
-    private void Update() { HandleInput(); }
+    private void TryInit()
+    {
+        var mgr = CharSelectManager.instance;
+        if (mgr == null) return;
+
+        // SyncVar Hook에서 instance가 등록된 이후에만 통과
+        // instance가 null이 아니면 netId도 유효한 상태
+        if (!isNetworkReady)
+        {
+            if (NetworkServer.active || NetworkClient.isConnected)
+                isNetworkReady = true;
+            else
+                return;
+        }
+
+        Debug.Log($"[CharSelectUI] TryInit 통과");
+        InitUI(mgr);
+
+        if (localPlayerIndex < 0)
+            ResolveLocalPlayerIndex();
+    }
 
     private void HandleInput()
     {
-        // 임시 진단 로그 (매 프레임 출력되므로 나중에 삭제)
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow) ||
-            Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            var mgr2 = CharSelectManager.instance;
-            Debug.Log($"[Input진단] isInit={isInitialized} mgr={mgr2 != null} " +
-                    $"localIdx={localPlayerIndex} netId={mgr2?.netId}");
-        }
-
         if (!isInitialized) return;
-        if (!isNetworkReady) return;
-        var mgr = CharSelectManager.instance;
-        if (mgr == null) return;
         if (localPlayerIndex < 0) return;
-        // if (mgr.netId == 0) return;
+        // netId 체크 완전 제거 — 메시지 방식은 netId 불필요
 
         if (!isLocalConfirmed)
         {
             bool canMove = Time.time - lastInputTime > inputCooldown;
             bool moveLeft  = Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)
-                          || (canMove && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)));
+                        || (canMove && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)));
             bool moveRight = Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)
-                          || (canMove && (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)));
+                        || (canMove && (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)));
 
             if (moveLeft)
             {
-                mgr.CmdMoveCursor(0);
+                NetworkClient.Send(new CharSelectInputMessage { action = 0 });
                 lastInputTime = Time.time;
-                int cur = (localPlayerIndex == 0) ? mgr.p1CursorIndex : mgr.p2CursorIndex;
-                RefreshLocalInfo(Mathf.Max(0, cur - 1));
             }
             else if (moveRight)
             {
-                mgr.CmdMoveCursor(1);
+                NetworkClient.Send(new CharSelectInputMessage { action = 1 });
                 lastInputTime = Time.time;
-                int cur = (localPlayerIndex == 0) ? mgr.p1CursorIndex : mgr.p2CursorIndex;
-                RefreshLocalInfo(Mathf.Min(characters.Length - 1, cur + 1));
             }
         }
 
         if (!isLocalConfirmed && (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)))
         {
-            mgr.CmdConfirmSelection();
+            NetworkClient.Send(new CharSelectInputMessage { action = 2 });
             isLocalConfirmed = true;
         }
 
         if (isLocalConfirmed && Input.GetKeyDown(KeyCode.Escape))
         {
-            mgr.CmdCancelSelection();
+            NetworkClient.Send(new CharSelectInputMessage { action = 3 });
             isLocalConfirmed = false;
         }
-    }
-
-    public void UpdateCursor(int playerIndex, int cursorIndex, bool isLocked)
-    {
-        if (characters == null || cursorIndex < 0 || cursorIndex >= characters.Length) return;
-        var indicator = (playerIndex == 0) ? p1CursorIndicator : p2CursorIndicator;
-        MoveCursorIndicator(indicator, cursorIndex);
-        if (!isLocked)
-        {
-            var portrait = (playerIndex == 0) ? p1Portrait : p2Portrait;
-            if (portrait != null && characters[cursorIndex].portrait != null)
-                portrait.sprite = characters[cursorIndex].portrait;
         }
+        // ── UI 업데이트 ───────────────────────────────────────────────
+
+        public void UpdateCursor(int playerIndex, int cursorIndex, bool isLocked)
+        {
+            if (characters == null || cursorIndex < 0 || cursorIndex >= characters.Length) return;
+            var indicator = (playerIndex == 0) ? p1CursorIndicator : p2CursorIndicator;
+            MoveCursorIndicator(indicator, cursorIndex);
+            if (!isLocked)
+            {
+                var portrait = (playerIndex == 0) ? p1Portrait : p2Portrait;
+                if (portrait != null && characters[cursorIndex].portrait != null)
+                    portrait.sprite = characters[cursorIndex].portrait;
+            }
     }
 
     public void UpdateSelection(int playerIndex, int selectedIndex)
     {
-        bool isReady = selectedIndex >= 0;
+        bool isReady   = selectedIndex >= 0;
         var readyBadge = (playerIndex == 0) ? p1ReadyBadge : p2ReadyBadge;
         var portrait   = (playerIndex == 0) ? p1Portrait   : p2Portrait;
         if (readyBadge != null) readyBadge.SetActive(isReady);
@@ -254,6 +252,8 @@ public class CharSelectUI : MonoBehaviour
         StartCoroutine(CountdownRoutine());
     }
 
+    // ── 썸네일 빌드 ───────────────────────────────────────────────
+
     private void BuildThumbnails()
     {
         if (thumbnailContainer == null || thumbnailSlotPrefab == null)
@@ -264,7 +264,7 @@ public class CharSelectUI : MonoBehaviour
         thumbnailSlots = new RectTransform[characters.Length];
         for (int i = 0; i < characters.Length; i++)
         {
-            var go = Instantiate(thumbnailSlotPrefab, thumbnailContainer);
+            var go  = Instantiate(thumbnailSlotPrefab, thumbnailContainer);
             go.name = $"Slot_{i}";
             var img = go.GetComponentInChildren<Image>();
             if (img != null && characters[i].thumbnail != null)
