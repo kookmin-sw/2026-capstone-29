@@ -219,6 +219,17 @@ public class ArenaBuilderD : MonoBehaviour
         {
             target.transform.localPosition = new Vector3(3f, 0.5f, 3f);
         }
+
+        // NPCMovementAgentBC 의 target / arenaCenter 를 명시적으로 주입.
+        // Initialize() 의 자동 탐색은 TrainingTarget 컴포넌트 의존이라 Level 3(정적 타겟)에서 실패함.
+        // 여기서 직접 할당해 둬야 OnActionReceived의 null-guard를 통과해 이동/점프가 동작함.
+        if (agent != null)
+        {
+            var agentSO2 = new SerializedObject(agent);
+            agentSO2.FindProperty("target").objectReferenceValue = target.transform;
+            agentSO2.FindProperty("arenaCenter").objectReferenceValue = arena;
+            agentSO2.ApplyModifiedPropertiesWithoutUndo();
+        }
     }
 
     private void BuildSolidFloor(Transform arena)

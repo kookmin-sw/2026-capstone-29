@@ -1,0 +1,58 @@
+# ML-Agents Phase 1-D: Complex Map (Holes + Platforms) Training Config
+#
+# Keep this file OUTSIDE of Unity's Assets folder (e.g. D:\WorkSpace\2026Capstone\AI_Config\).
+#
+# First run (curriculum from Phase 1-BC):
+#   conda activate mlagents
+#   mlagents-learn AI_Config/movement_phase1d.yaml --run-id=phase1d_run01 --initialize-from=phase1bc_run01
+#   -> Then press Play in Unity Editor to start training.
+#
+# Resume:
+#   mlagents-learn AI_Config/movement_phase1d.yaml --run-id=phase1d_run01 --resume
+#
+# From scratch (if curriculum fails):
+#   mlagents-learn AI_Config/movement_phase1d.yaml --run-id=phase1d_run01
+#
+# Monitor:
+#   tensorboard --logdir results
+#
+# Notes:
+#   - Reuses MovementAgentBC behavior (same prefab, same observation/action space).
+#   - Arena built by ArenaBuilderD.cs: Level 2 (Floor holes) + Level 3 (Platforms) mix.
+#   - Expected: BC knowledge speeds up convergence - jumping onto platforms is the new skill.
+
+behaviors:
+  # MUST match Behavior Name on the NPCAgent prefab's BehaviorParameters.
+  MovementAgentBC:
+    trainer_type: ppo
+
+    hyperparameters:
+      batch_size: 1024
+      buffer_size: 10240
+      learning_rate: 3.0e-4
+      beta: 5.0e-3
+      epsilon: 0.2
+      lambd: 0.95
+      num_epoch: 3
+      learning_rate_schedule: linear
+
+    network_settings:
+      normalize: true
+      # Same as Phase 1-BC (256/3) - must match for --initialize-from to load weights.
+      hidden_units: 256
+      num_layers: 3
+      vis_encode_type: simple
+
+    reward_signals:
+      extrinsic:
+        gamma: 0.99
+        strength: 1.0
+
+    keep_checkpoints: 10
+    checkpoint_interval: 500000
+
+    # Phase 1-D expected to converge faster than 1-BC thanks to curriculum init.
+    max_steps: 3000000
+
+    time_horizon: 64
+    summary_freq: 10000
