@@ -75,8 +75,8 @@ public class ItemManager : NetworkBehaviour
                 RpcOnActiveRemoved();
             }
         }
-        // ── 패시브 ──
-        // 장착 즉시 자동 발동: hasPassive가 되면 다음 프레임에 자동으로 코루틴 시작
+        
+        // 패시브는 장착 즉시 자동 발동: hasPassive가 되면 다음 프레임에 자동으로 코루틴 시작
         if (hasPassive && !passiveUsed && passive != null)
         {
             passiveUsed = true;

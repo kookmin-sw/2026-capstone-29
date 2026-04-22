@@ -509,8 +509,10 @@ MonoBehaviour:
   syncInterval: 0
   weaponAvailable: 0
   activeAvailable: 0
+  passiveAvailable: 0
   weaponTimer: 0
   activeTimer: 0
+  passiveTimer: 0
 --- !u!114 &-8216246856662497947
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1088,7 +1090,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9033012237371238264, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9066586585157275512, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
       propertyPath: m_Layer
