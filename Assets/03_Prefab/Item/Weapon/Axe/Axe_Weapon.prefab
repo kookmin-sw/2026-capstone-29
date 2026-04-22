@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4423294779588574505}
   - component: {fileID: 2325574204050606820}
   - component: {fileID: 7164254258300415035}
+  - component: {fileID: -1701792125307641099}
   m_Layer: 6
   m_Name: Axe_Weapon
   m_TagString: Untagged
@@ -142,6 +143,7 @@ MonoBehaviour:
   syncInterval: 0
   itemStat: {fileID: 11400000, guid: b38472332ee4cad4c962257e989b16c5, type: 2}
   weaponHitbox: {fileID: 0}
+  atkSpeed: {fileID: 0}
 --- !u!114 &2325574204050606820
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,3 +179,20 @@ MonoBehaviour:
   hitEffectPrefab: {fileID: 0}
   effectDuration: 2
   allowedStates: []
+--- !u!114 &-1701792125307641099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6002728932858688444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a402be3fad1c7340b87526da12f5cc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  animSpeedMultiplier: 0.7
+  duration: 10

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -17248998166217478}
   - component: {fileID: -7982550842155263552}
   - component: {fileID: 8353839105436413119}
+  - component: {fileID: -7865045614432741403}
   m_Layer: 0
   m_Name: Bat_Weapon
   m_TagString: Weapon
@@ -126,6 +127,24 @@ MonoBehaviour:
   syncInterval: 0
   itemStat: {fileID: 11400000, guid: 0091d237cc08e944f8b4e1c4f9d375cb, type: 2}
   weaponHitbox: {fileID: 0}
+  atkSpeed: {fileID: 0}
+--- !u!114 &-7865045614432741403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5009524815537857370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a402be3fad1c7340b87526da12f5cc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  animSpeedMultiplier: 0.9
+  duration: 10
 --- !u!1001 &4818018671245571898
 PrefabInstance:
   m_ObjectHideFlags: 0
