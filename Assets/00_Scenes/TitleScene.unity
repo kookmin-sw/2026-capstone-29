@@ -2663,7 +2663,7 @@ MonoBehaviour:
   gameSceneName: GameScene
   charSelectSceneName: CharSelectScene
   sceneChangeDelay: 3
-  charSelectManagerPrefab: {fileID: 0}
+  charSelectManagerPrefab: {fileID: 8252889642667195719, guid: ff6b477fdff248049a43fca4d2e7154c, type: 3}
   p1CharacterIndex: 0
   p2CharacterIndex: 0
   characterPrefabs: []
