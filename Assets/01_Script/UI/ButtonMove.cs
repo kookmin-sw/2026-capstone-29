@@ -27,6 +27,17 @@ public class ButtonMove : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         rectTransform.anchoredPosition = Vector2.Lerp(rectTransform.anchoredPosition, targetPosition, Time.deltaTime * moveSpeed);
     }
 
+    // 비활성화용
+    private void OnDisable()
+    {
+        // 비활성화 시 원래 위치에 고정
+        if(rectTransform != null)
+        {
+            targetPosition = originalPosition;
+            rectTransform.anchoredPosition = originalPosition;
+        }
+    }
+
     // 마우스를 올리면 해당 위치로 변경
     public void OnPointerEnter(PointerEventData eventData)
     {
