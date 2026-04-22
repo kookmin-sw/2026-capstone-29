@@ -1,0 +1,47 @@
+{
+    "MovementAgentBC": {
+        "checkpoints": [
+            {
+                "steps": 201578,
+                "file_path": "results\\phase1d_run01\\MovementAgentBC\\MovementAgentBC-201578.onnx",
+                "reward": 12.102809899772694,
+                "creation_time": 1776643369.759713,
+                "auxillary_file_paths": [
+                    "results\\phase1d_run01\\MovementAgentBC\\MovementAgentBC-201578.pt"
+                ]
+            },
+            {
+                "steps": 499997,
+                "file_path": "results\\phase1d_run01\\MovementAgentBC\\MovementAgentBC-499997.onnx",
+                "reward": 11.4153883673928,
+                "creation_time": 1776643618.6878617,
+                "auxillary_file_paths": [
+                    "results\\phase1d_run01\\MovementAgentBC\\MovementAgentBC-499997.pt"
+                ]
+            },
+            {
+                "steps": 661879,
+                "file_path": "results\\phase1d_run01\\MovementAgentBC\\MovementAgentBC-661879.onnx",
+                "reward": 11.447937484161095,
+                "creation_time": 1776643796.7369719,
+                "auxillary_file_paths": [
+                    "results\\phase1d_run01\\MovementAgentBC\\MovementAgentBC-661879.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 661879,
+            "file_path": "results\\phase1d_run01\\MovementAgentBC.onnx",
+            "reward": 11.447937484161095,
+            "creation_time": 1776643796.7369719,
+            "auxillary_file_paths": [
+                "results\\phase1d_run01\\MovementAgentBC\\MovementAgentBC-661879.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.13.1+cu117"
+    }
+}

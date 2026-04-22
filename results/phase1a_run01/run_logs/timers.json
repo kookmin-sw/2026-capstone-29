@@ -1,0 +1,42 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1776600495",
+        "python_version": "3.9.23 | packaged by conda-forge | (main, Jun  4 2025, 17:49:16) [MSC v.1929 64 bit (AMD64)]",
+        "command_line_arguments": "C:\\Users\\3ghks\\miniconda3\\envs\\mlagents\\Scripts\\mlagents-learn AI_Config/movement_phase1a.yaml --run-id=phase1a_run01",
+        "mlagents_version": "0.30.0",
+        "mlagents_envs_version": "0.30.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.13.1+cu117",
+        "numpy_version": "1.21.2",
+        "end_time_seconds": "1776600556"
+    },
+    "total": 61.3741755,
+    "count": 1,
+    "self": 0.003340999999998928,
+    "children": {
+        "run_training.setup": {
+            "total": 0.07532009999999989,
+            "count": 1,
+            "self": 0.07532009999999989
+        },
+        "TrainerController.start_learning": {
+            "total": 61.2955144,
+            "count": 1,
+            "self": 0.00011949999999671945,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 61.2953824,
+                    "count": 1,
+                    "self": 61.2953824
+                },
+                "TrainerController._save_models": {
+                    "total": 1.250000000396767e-05,
+                    "count": 1,
+                    "self": 1.250000000396767e-05
+                }
+            }
+        }
+    }
+}
