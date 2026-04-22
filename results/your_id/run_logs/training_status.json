@@ -1,0 +1,47 @@
+{
+    "MovementAgent": {
+        "checkpoints": [
+            {
+                "steps": 199973,
+                "file_path": "results\\your_id\\MovementAgent\\MovementAgent-199973.onnx",
+                "reward": 13.903798089027404,
+                "creation_time": 1776601263.327258,
+                "auxillary_file_paths": [
+                    "results\\your_id\\MovementAgent\\MovementAgent-199973.pt"
+                ]
+            },
+            {
+                "steps": 399980,
+                "file_path": "results\\your_id\\MovementAgent\\MovementAgent-399980.onnx",
+                "reward": 13.892151055015121,
+                "creation_time": 1776601388.3626523,
+                "auxillary_file_paths": [
+                    "results\\your_id\\MovementAgent\\MovementAgent-399980.pt"
+                ]
+            },
+            {
+                "steps": 405837,
+                "file_path": "results\\your_id\\MovementAgent\\MovementAgent-405837.onnx",
+                "reward": 13.77682827223284,
+                "creation_time": 1776601454.1974273,
+                "auxillary_file_paths": [
+                    "results\\your_id\\MovementAgent\\MovementAgent-405837.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 405837,
+            "file_path": "results\\your_id\\MovementAgent.onnx",
+            "reward": 13.77682827223284,
+            "creation_time": 1776601454.1974273,
+            "auxillary_file_paths": [
+                "results\\your_id\\MovementAgent\\MovementAgent-405837.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "1.13.1+cu117"
+    }
+}

@@ -101,6 +101,30 @@ namespace StarterAssets
         private bool _isDashing = false;
         private Vector3 _dashDirection;
 
+        // 에임 모드: 활 등 원거리 무기 장착 시 UnifiedWeaponBow가 켬/끔.
+        // 이동 입력이 없어도 캐릭터 yaw를 카메라 yaw로 정렬.
+        private bool _isAiming = false;
+        // 에임 모드 진입 직후 첫 프레임: SmoothDamp 지연 없이 즉시 카메라 방향으로 스냅.
+        private bool _aimModeJustActivated = false;
+        // 에임 애니메이션이 측면 스탠스일 때 무기 쪽에서 세팅하는 보정각(도).
+        // target yaw = camera_yaw - _aimYawOffset.
+        private float _aimYawOffset = 0f;
+
+        /// <summary>
+        /// 에임 모드 토글. 활/원거리 무기 장착·해제 시 외부에서 호출.
+        /// </summary>
+        /// <param name="isAiming">에임 모드 on/off</param>
+        /// <param name="yawOffset">
+        /// 측면 스탠스 애니메이션 보정각(도). 애니메이션이 캐릭터 오른쪽(+X)으로 발사하면 양수, 왼쪽이면 음수.
+        /// target yaw = camera_yaw - yawOffset 로 적용.
+        /// </param>
+        public void SetAimMode(bool isAiming, float yawOffset = 0f)
+        {
+            if (isAiming && !_isAiming) _aimModeJustActivated = true;
+            _isAiming = isAiming;
+            _aimYawOffset = yawOffset;
+        }
+
 #if ENABLE_INPUT_SYSTEM
         private PlayerInput _playerInput;
 #endif
@@ -327,6 +351,37 @@ namespace StarterAssets
                 _targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + referenceYaw;
                 float rotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
                 transform.rotation = Quaternion.Euler(0.0f, rotation, 0.0f);
+            }
+            else if (_isAiming)
+            {
+                // 에임 모드: 이동 입력이 없어도 카메라 정면으로 몸을 정렬.
+                // 활 조준 중 카메라만 돌려도 캐릭터가 따라오게 해서 발사 방향과 몸 방향을 맞춘다.
+                float aimReferenceYaw;
+                if (rotationMode == CharacterRotationMode.CameraYaw)
+                {
+                    aimReferenceYaw = _mainCamera.transform.eulerAngles.y;
+                }
+                else
+                {
+                    Vector3 cameraToPlayer = (transform.position - _mainCamera.transform.position).normalized;
+                    aimReferenceYaw = Mathf.Atan2(cameraToPlayer.x, cameraToPlayer.z) * Mathf.Rad2Deg;
+                }
+
+                // 측면 스탠스 애니메이션 보정: 몸을 카메라 yaw에서 보정각만큼 빼서 정렬.
+                _targetRotation = aimReferenceYaw - _aimYawOffset;
+
+                if (_aimModeJustActivated)
+                {
+                    // 에임 진입 첫 프레임: SmoothDamp 지연 없이 즉시 스냅.
+                    _rotationVelocity = 0f;
+                    transform.rotation = Quaternion.Euler(0.0f, _targetRotation, 0.0f);
+                    _aimModeJustActivated = false;
+                }
+                else
+                {
+                    float aimRotation = Mathf.SmoothDampAngle(transform.eulerAngles.y, _targetRotation, ref _rotationVelocity, RotationSmoothTime);
+                    transform.rotation = Quaternion.Euler(0.0f, aimRotation, 0.0f);
+                }
             }
 
             Vector3 targetDirection = Quaternion.Euler(0.0f, _targetRotation, 0.0f) * Vector3.forward;
