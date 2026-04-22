@@ -9,8 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3f167aa618b3f140902acb658d1ca74, type: 3}
-  m_Name: SummonBomb
+  m_Script: {fileID: 11500000, guid: 494991009480bff4c9a6cb3778b231a8, type: 3}
+  m_Name: Stat_Axe
   m_EditorClassIdentifier: 
-  weapon: {fileID: 4364718306547159485, guid: 18bdb20ca6b7fd54bb0199ab11734774, type: 3}
   availableTime: 10
+  useableTime: 1000
+  damage: 25
+  speed: 8
+  range: 0
+  rollSpeed: 270
+  projectileDrop: 0
+  startUpDelay: 0
+  RecoveryDelay: 0
+  Stun: 0
+  knockBack: 0
+  stop: 0
