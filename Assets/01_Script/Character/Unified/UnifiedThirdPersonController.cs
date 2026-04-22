@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Mirror;
 using System.Collections;
 #if ENABLE_INPUT_SYSTEM
@@ -84,7 +84,7 @@ namespace StarterAssets
         private float _verticalVelocity;
         private float _terminalVelocity = 53.0f;
 
-        private float _speedMultiplier = 1f; // 아이템용
+        [SyncVar] private float _speedMultiplier = 1f; // 아이템용
 
         // timeout
         private float _jumpTimeoutDelta;
@@ -506,5 +506,32 @@ namespace StarterAssets
         // 아이템에서 호출하는 속도 배율
         public float GetSpeedMultiplier() => _speedMultiplier;
         public void SetSpeedMultiplier(float value) => _speedMultiplier = value;
+
+        //애니메이션 속도 조절용 스크립트 추가.
+        public void RequestSetAnimatorSpeed(float speed)
+        {
+            if (AuthorityGuard.IsOffline)
+            {
+                ApplyAnimatorSpeed(speed);
+            }
+            else
+            {
+                // 네트워크 모드에선 서버에서만 RPC를 쏠 수 있음
+                RpcSetAnimatorSpeed(speed);
+            }
+        }
+
+        [ClientRpc]
+        private void RpcSetAnimatorSpeed(float speed)
+        {
+            ApplyAnimatorSpeed(speed);
+        }
+
+        private void ApplyAnimatorSpeed(float speed)
+        {
+            if (_animator == null) _animator = GetComponent<Animator>();
+            if (_animator != null) _animator.speed = speed;
+        }
+
     }
 }

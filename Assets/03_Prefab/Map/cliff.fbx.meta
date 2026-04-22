@@ -3,7 +3,12 @@ guid: ed059b2df8f26f841812adb31e042d3a
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: needle_june2524_1_sec2_u1_v1
+    second: {fileID: 2100000, guid: 29b49c27a74f145918356859bd7af511, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

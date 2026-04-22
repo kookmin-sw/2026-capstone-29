@@ -227,6 +227,7 @@ GameObject:
   - component: {fileID: -3718772317914960602}
   - component: {fileID: 8586348739183877419}
   - component: {fileID: 8825080925093275364}
+  - component: {fileID: 5196735692050927090}
   m_Layer: 0
   m_Name: Dagger_Weapon
   m_TagString: Untagged
@@ -289,6 +290,7 @@ MonoBehaviour:
   syncInterval: 0
   itemStat: {fileID: 11400000, guid: 16a00e49dfd06f240aae189702c8827f, type: 2}
   weaponHitbox: {fileID: 0}
+  atkSpeed: {fileID: 0}
 --- !u!114 &-3718772317914960602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,3 +342,20 @@ MonoBehaviour:
   hitEffectPrefab: {fileID: 0}
   effectDuration: 2
   allowedStates: []
+--- !u!114 &5196735692050927090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6873630758949736316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a402be3fad1c7340b87526da12f5cc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  animSpeedMultiplier: 1.2
+  duration: 10

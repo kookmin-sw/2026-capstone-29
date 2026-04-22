@@ -37,16 +37,19 @@ public class SetItem : NetworkBehaviour, IEquip
         }
         if (item.CompareTag("Active"))
         {
-            im.active = itemAsset as IActive;
+            IActive activeAsset = itemAsset as IActive;
+            im.active = activeAsset;
             im.GetActive();
-            im.activeAvailable = im.active.AvailableTime();
+            im.activeAvailable = activeAsset.AvailableTime;  // 에셋에서 duration 읽어와 세팅
         }
         if (item.CompareTag("Passive"))
         {
-            im.passive = itemAsset as IPassive;
-            im.GetPassive();
+            IPassive passiveAsset = itemAsset as IPassive;
+            im.passive = passiveAsset;
+            im.passiveAvailable = passiveAsset.AvailableTime; // 지속 시간 세팅
+            im.GetPassive();                                  // 플래그는 마지막에 세팅 (Update에서 자동 발동 트리거)
         }
-        if (item.CompareTag("Field"))
+        if (item.CompareTag("Field"))   
         {
             // 필드 아이템 처리
         }

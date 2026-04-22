@@ -71,7 +71,7 @@ public class LocalDagger : MonoBehaviour, IWeaponHitBox, IPlayerWeapon
         WeaponEquipHandler handler = GetComponent<WeaponEquipHandler>();
         if (handler != null)
         {
-            handler.Equip(user, "CombatGirls_Sword_Shield/root/add_weapon_r");
+            handler.Equip(user);
         }
     }
     public void ThrowWeapon()

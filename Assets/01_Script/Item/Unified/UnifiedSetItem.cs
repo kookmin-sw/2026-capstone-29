@@ -1,4 +1,4 @@
-using Mirror;
+﻿using Mirror;
 using UnityEngine;
 // HardenOfflineObject: 오프라인에서 Instantiate된 오브젝트가 Mirror NetworkIdentity에 의해
 // 비활성화되거나 SetParent가 막히는 것을 우회하기 위한 헬퍼.
@@ -80,7 +80,7 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
         {
             im.active = itemAsset as IActive;
             im.GetActive();
-            if (im.active != null) im.activeAvailable = im.active.AvailableTime();
+            if (im.active != null) im.activeAvailable = im.active.AvailableTime;
         }
         else if (item.CompareTag("Passive"))
         {
@@ -114,7 +114,7 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
         {
             im.active = itemAsset as IActive;
             im.GetActive();
-            if (im.active != null) im.activeAvailable = im.active.AvailableTime();
+            if (im.active != null) im.activeAvailable = im.active.AvailableTime;
         }
         else if (item.CompareTag("Passive"))
         {
@@ -158,8 +158,8 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
         else if (item.CompareTag("Active"))
         {
             IActive activeAsset = itemAsset as IActive;
-            if (unified != null) { unified.active = activeAsset; unified.GetActive(); if (activeAsset != null) unified.activeAvailable = activeAsset.AvailableTime(); }
-            else                 { legacy.active  = activeAsset; legacy.GetActive();  if (activeAsset != null) legacy.activeAvailable  = activeAsset.AvailableTime(); }
+            if (unified != null) { unified.active = activeAsset; unified.GetActive(); if (activeAsset != null) unified.activeAvailable = activeAsset.AvailableTime; }
+            else                 { legacy.active  = activeAsset; legacy.GetActive();  if (activeAsset != null) legacy.activeAvailable  = activeAsset.AvailableTime; }
         }
         else if (item.CompareTag("Passive"))
         {

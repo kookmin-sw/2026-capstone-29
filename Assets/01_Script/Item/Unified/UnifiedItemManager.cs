@@ -1,4 +1,4 @@
-using Mirror;
+﻿using Mirror;
 using UnityEngine;
 
 /// <summary>
@@ -63,12 +63,19 @@ public class UnifiedItemManager : NetworkBehaviour
 
         if (hasPassive)
         {
-            // 패시브는 얻는 즉시 효과 발동 후 제거
-            if (passive != null) passive.Apply();
-            hasPassive = false;
-            passive = null;
+            // 패시브는 얻는 즉시 효과 발동 후 제거. 패시브 구조 변화로 호출부 수정 필요
 
-            NotifyPassiveUsed();
+            if (passive != null) 
+            
+            {
+                /*
+                passive.Apply();
+                hasPassive = false;
+                passive = null;
+
+                NotifyPassiveUsed();
+            */
+            }
         }
     }
 

@@ -1,119 +1,109 @@
 ﻿using UnityEngine;
-/*  
-    1. LateUpdate에서 플레이어 소켓의 위치/회전을 추적 (SetParent 없이)
-    2. 장착 시 CharacterView의 히트박스를 무기의 것으로 교체, 기존 무기 비활성화
-    3. 해제 시 원래 히트박스 복원, 기존 무기 재활성화
-*/
+
 public class WeaponEquipHandler : MonoBehaviour
 {
-    [Header("추적 설정")]
-    [Tooltip("소켓 기준 위치 오프셋")]
-    public Vector3 positionOffset = new Vector3(-0.084f, 0.053f, 0.058f);
+    [Header("장착 슬롯")]
+    [SerializeField] private WeaponSlot attachSlot = WeaponSlot.RightHand;
 
-    [Tooltip("소켓 기준 회전 오프셋 (Euler)")]
+    [Tooltip("장착 중 해당 슬롯의 기본 무기를 비활성화할지")]
+    [SerializeField] private bool hideDefaultOnAttachSlot = true;
+
+    [Header("추적 오프셋")]
+    public Vector3 positionOffset = new Vector3(-0.084f, 0.053f, 0.058f);
     public Vector3 rotationOffset = Vector3.zero;
 
     [Header("히트박스")]
-    [Tooltip("이 무기의 히트박스. 비워두면 자식에서 자동 탐색.")]
     [SerializeField] private CharacterHitBox weaponHitbox;
 
-    // 추적 대상-오브젝트의 포지션
-    [SerializeField] private Transform followTarget;
-
-    // 백업
-    private CharacterView cachedView;
+    private Transform followTarget;
+    private UnifiedCharacterView cachedView;
     private CharacterHitBox originalRightHitbox;
-    private GameObject originalWeaponObj;
+    private GameObject hiddenWeaponObj;
     private bool isEquipped;
 
-    // 무기 장착. 소켓 추적 시작 + 히트박스 교체 + 기존 무기 비활성화.
-    public void Equip(GameObject owner, string socketPath)
+    public void Equip(GameObject owner)
     {
         if (owner == null) return;
 
-        //소켓 탐색
-        followTarget = owner.transform.Find(socketPath);
-
-        Debug.Log($"{followTarget.name}에 장착 시도!");
-        if (followTarget == null)
+        // 소켓 탐색
+        var attacher = owner.GetComponent<WeaponAttacher>();
+        if (attacher == null)
+            attacher = owner.GetComponentInChildren<WeaponAttacher>();
+        if (attacher == null)
         {
-            Debug.LogWarning($"[WeaponEquipHandler] 소켓을 찾을 수 없습니다: {socketPath}");
+            Debug.LogWarning($"[{name}] WeaponAttacher 를 찾지 못함.");
             return;
         }
-        Debug.Log($"{followTarget.name}에 장착!");
 
-        
-        //CharacterView 참조
-        cachedView = owner.GetComponent<CharacterView>();
-        if (cachedView == null) return;
-
-        //히트박스 교체
-        originalRightHitbox = cachedView.rightHandHitbox;
-
-        if (weaponHitbox == null)
-            weaponHitbox = GetComponentInChildren<CharacterHitBox>();
-
-        if (weaponHitbox != null)
+        // 부착 소켓
+        followTarget = attacher.GetSocket(attachSlot);
+        if (followTarget == null)
         {
-            cachedView.rightHandHitbox = weaponHitbox;
-            weaponHitbox.DisableHitbox();
+            Debug.LogWarning($"[{name}] 슬롯 {attachSlot} 의 본이 세팅되지 않음.");
+            return;
+        }
+        Debug.Log($"[{name}] {followTarget.name} 에 장착!");
+
+        // 캐릭터 뷰 참조
+        cachedView = owner.GetComponent<UnifiedCharacterView>();
+        if (cachedView == null)
+            cachedView = owner.GetComponentInChildren<UnifiedCharacterView>();
+
+        // 히트박스 교체
+        if (cachedView != null)
+        {
+            originalRightHitbox = cachedView.rightHandHitbox;
+            if (weaponHitbox == null)
+                weaponHitbox = GetComponentInChildren<CharacterHitBox>(true);
+
+            if (weaponHitbox != null)
+            {
+                cachedView.rightHandHitbox = weaponHitbox;
+                weaponHitbox.DisableHitbox();
+            }
         }
 
-        //기존 무기 비활성화
-        // 소켓 하위에서 자신이 아닌 활성 오브젝트를 찾아 비활성화
-        foreach (Transform child in followTarget)
+        // 기본 무기 숨김
+        if (hideDefaultOnAttachSlot)
         {
-            if (child.gameObject != gameObject && child.gameObject.activeSelf)
-            {
-                originalWeaponObj = child.gameObject;
-                originalWeaponObj.SetActive(false);
-                break;
-            }
+            hiddenWeaponObj = attacher.GetDefaultWeapon(attachSlot);
+            if (hiddenWeaponObj != null && hiddenWeaponObj != gameObject)
+                hiddenWeaponObj.SetActive(false);
+            else
+                hiddenWeaponObj = null;
         }
 
         isEquipped = true;
     }
 
-    // 무기 해제. 히트박스 복원 + 기존 무기 재활성화 + 추적 해제.
     public void Unequip()
     {
         if (!isEquipped) return;
 
-        //히트박스 복원
         if (cachedView != null && originalRightHitbox != null)
-        {
             cachedView.rightHandHitbox = originalRightHitbox;
-        }
 
-        //기존 무기 복원
-        if (originalWeaponObj != null)
-        {
-            originalWeaponObj.SetActive(true);
-        }
+        if (hiddenWeaponObj != null)
+            hiddenWeaponObj.SetActive(true);
 
-        // 참조 정리
         followTarget = null;
         cachedView = null;
         originalRightHitbox = null;
-        originalWeaponObj = null;
+        hiddenWeaponObj = null;
         isEquipped = false;
     }
 
-    // Animator 적용 이후에 소켓 위치를 추적한다.
     private void LateUpdate()
     {
         if (followTarget == null) return;
-
         transform.position = followTarget.position
             + followTarget.TransformDirection(positionOffset);
         transform.rotation = followTarget.rotation
             * Quaternion.Euler(rotationOffset);
     }
 
-    // 예외 상황(씬 전환 등)에서도 복원을 보장한다.
     private void OnDestroy()
     {
-        if (isEquipped)
-            Unequip();
+        if (isEquipped) Unequip();
     }
 }

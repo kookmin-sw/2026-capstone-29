@@ -7,7 +7,6 @@ public class ItemPickUp : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("트리거 이상 없음");
         // 로컬 플레이어만 아이템 감지
         if (!isLocalPlayer) return;
 

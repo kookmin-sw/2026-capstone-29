@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class CharacterHitBox : MonoBehaviour
 {
+    private float multipleDMG = 1; // 공격력 배율 조정. ICharacterModel에 달아두는 대신 플레이어에 부착하는 스크립트 DamageAmplifier에서 대미지 증폭치를 적용시켜준다.
     public float damage = 10f; // 주먹 한 방의 대미지
     public Collider hitboxCollider; // 주먹에 달린 콜라이더
 
@@ -18,6 +19,7 @@ public class CharacterHitBox : MonoBehaviour
 
     private Animator _anim;
     private HashSet<GameObject> _hitTargets = new HashSet<GameObject>();
+
 
     private void Awake()
     {
@@ -38,7 +40,7 @@ public class CharacterHitBox : MonoBehaviour
 
         //소유자 obj
         GameObject ownerObj = GetOwnerRoot();
-        Debug.Log($"[HitBox] other: {other.gameObject}, ownerObj: {ownerObj}, same: {other.gameObject == ownerObj}");
+        //Debug.Log($"[HitBox] other: {other.gameObject}, ownerObj: {ownerObj}, same: {other.gameObject == ownerObj}");
 
         // 1순위: ICharacterModel 구현체 (NetworkCharacterModel / UnifiedCharacterModel 모두 해당)
         ICharacterModel iTarget = other.GetComponent<ICharacterModel>();
@@ -48,11 +50,13 @@ public class CharacterHitBox : MonoBehaviour
             if (iTargetComp != null && _hitTargets.Contains(iTargetComp.gameObject)) return;
             if (iTargetComp != null) _hitTargets.Add(iTargetComp.gameObject);
 
-            Vector3 hitPoint  = other.ClosestPoint(hitboxCollider.transform.position);
+            Vector3 hitPoint = other.ClosestPoint(hitboxCollider.transform.position);
             Vector3 hitNormal = (hitPoint - other.transform.position).normalized;
             if (hitNormal == Vector3.zero) hitNormal = Vector3.up;
 
-            iTarget.RequestTakeDamage(damage);
+            float finalDamage = damage * multipleDMG;
+            iTarget.RequestTakeDamage(finalDamage);
+
             iTarget.RequestSpawnHitEffect(hitPoint, hitNormal, effectIndex);
             hitboxCollider.enabled = false;
             return;
@@ -67,7 +71,10 @@ public class CharacterHitBox : MonoBehaviour
 
             Debug.Log($"{_anim}! {damage} 대미지");
             SpawnHitEffect(other);
-            localTarget.TakeDamage(damage);
+
+            float finalDamage = damage * multipleDMG;
+            localTarget.TakeDamage(finalDamage);
+
             hitboxCollider.enabled = false;
             return;
         }
@@ -120,17 +127,34 @@ public class CharacterHitBox : MonoBehaviour
     public void EnableHitbox()
     {
         hitboxCollider.enabled = true;
+
+        GameObject ownerObj = GetOwnerRoot();
+
+        //히트박스가 켜지면 DamageAmplifier에서 쌓아둔 대미지 증폭 스택이 사용된다. null이 반환되는 경우 기본값 1을 사용한다.
+        DamageAmplifier amp = ownerObj != null ? ownerObj.GetComponent<DamageAmplifier>() : null;
+        if (amp != null)
+        {
+            multipleDMG = amp.Multiplier;
+            amp.ConsumeOneAttempt();
+        }
+        else
+        {
+            multipleDMG = 1f;
+        }
+        //Debug.Log($"multipleDMG : {multipleDMG}");
     }
 
     // 공격 애니메이션이 끝날 때 꺼주는 함수
     public void DisableHitbox()
     {
         hitboxCollider.enabled = false;
+        multipleDMG = 1f; // 스냅샷 초기화
     }
-    
+
     public void ResetHitbox()
     {
         hitboxCollider.enabled = false;
         _hitTargets.Clear();
+        multipleDMG = 1f; // 스냅샷 초기화
     }
 }

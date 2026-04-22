@@ -14,13 +14,20 @@ public class ItemManager : NetworkBehaviour
     // bool 상태는 SyncVar로 클라이언트에 동기화 (UI 표시 등에 활용)
     [SyncVar] private bool hasWeapon = false;
     [SyncVar] private bool hasActive = false;
+    [SyncVar] private bool activeUsed = false;
     [SyncVar] private bool hasPassive = false;
+    [SyncVar] private bool passiveUsed = false;
 
     [SyncVar] public float weaponAvailable;
     [SyncVar] public float activeAvailable;
+    [SyncVar] public float passiveAvailable;
 
     [SerializeField] float weaponTimer;
     [SerializeField] float activeTimer;
+    [SerializeField] float passiveTimer;
+
+    private Coroutine activeRoutine;
+    private Coroutine passiveRoutine;
 
     void Update()
     {
@@ -47,90 +54,145 @@ public class ItemManager : NetworkBehaviour
                 //Debug.Log(weapon != null);
             }
         }
-        if (hasActive) 
+        if (activeUsed)
         {
             activeTimer += Time.deltaTime;
             if (activeAvailable <= activeTimer)
             {
+                // 코루틴이 아직 돌고 있으면 멈추고 원복 호출
+                if (activeRoutine != null)
+                {
+                    StopCoroutine(activeRoutine);
+                    activeRoutine = null;
+                    active?.OnDeactivate(gameObject);
+                }
+
+                activeUsed = false;
                 hasActive = false;
                 active = null;
                 activeTimer = 0;
                 activeAvailable = 0;
-
-                //클라이언트에 전달
                 RpcOnActiveRemoved();
             }
         }
-        if (hasPassive)
-        {
-            //패시브는 얻는 즉시 효과를 발동한 후, 제거해버린다.
-            passive.Apply();
-            hasPassive = false;
-            passive = null;
-
-            //클라이언트에 전달.
-            RpcOnPassiveUsed();
-        }
         
+        // 패시브는 장착 즉시 자동 발동: hasPassive가 되면 다음 프레임에 자동으로 코루틴 시작
+        if (hasPassive && !passiveUsed && passive != null)
+        {
+            passiveUsed = true;
+            passiveTimer = 0f;
+            passiveRoutine = StartCoroutine(PassiveRoutineWrapper(passive.Activate(gameObject)));
+            RpcOnPassiveActivated();
+        }
+
+        if (passiveUsed)
+        {
+            passiveTimer += Time.deltaTime;
+            if (passiveAvailable <= passiveTimer)
+            {
+                if (passiveRoutine != null)
+                {
+                    StopCoroutine(passiveRoutine);
+                    passiveRoutine = null;
+                    passive?.OnDeactivate(gameObject);
+                }
+
+                passiveUsed = false;
+                hasPassive = false;
+                passive = null;
+                passiveTimer = 0;
+                passiveAvailable = 0;
+                RpcOnPassiveRemoved();
+            }
+        }
 
     }
 
-    public void ApplyWeaponTimer(float available)
+    public void ApplyWeaponTimer(float available) { weaponAvailable = available; }
+    public void ApplyActiveTimer(float available) { activeAvailable = available; }
+    public void ApplyPassiveTimer(float available) { passiveAvailable = available; }
+
+
+    public bool HasWeapon() => hasWeapon;
+    public void GetWeapon() { hasWeapon = true; }
+
+    public bool HasActive() => hasActive;
+    public bool IsActiveRunning() => activeUsed;
+    public void GetActive() { hasActive = true; }
+
+    public bool HasPassive() => hasPassive;
+    public bool IsPassiveRunning() => passiveUsed;
+    public void GetPassive() { hasPassive = true; }
+
+
+    public void RequestUseActive()
     {
-        weaponAvailable = available;
-    }
-    public void ApplyActiveTimer(float available)
-    {
-        activeAvailable = available;
+        // 보유하지 않았거나 이미 사용 중이면 무시
+        if (!hasActive || activeUsed) return;
+        CmdUseActive();
     }
 
-    public bool HasWeapon()
+    [Command]
+    private void CmdUseActive()
     {
-        return hasWeapon;
+        UseActive();
     }
 
-    public void GetWeapon()
+    [Server]
+    public void UseActive()
     {
-        hasWeapon = true;
+        if (!hasActive || activeUsed || active == null) return;
+
+        activeUsed = true;
+        activeTimer = 0f;
+
+        // IActive는 인터페이스라 StartCoroutine을 직접 못 가짐 → ItemManager가 대신 실행
+        activeRoutine = StartCoroutine(active.Activate(gameObject));
+
+        RpcOnActiveUsed();
     }
 
-    public bool HasActive() 
+    private IEnumerator ActiveRoutineWrapper(IEnumerator inner)
     {
-        return hasActive;
-    }
-    public void GetActive()
-    {
-        hasActive = true;
+        yield return inner;
+        activeRoutine = null;
     }
 
-    public bool HasPassive()
+    private IEnumerator PassiveRoutineWrapper(IEnumerator inner)
     {
-        return hasPassive;
-    }
-    public void GetPassive()
-    {
-        hasPassive = true;
+        yield return inner;
+        passiveRoutine = null;
     }
 
     [ClientRpc]
     void RpcOnWeaponRemoved()
     {
         Debug.Log("무기 아이템 해제됨.");
-        //  UI 갱신 (무기 아이콘 제거 등)등의 작업 추가
+    }
+
+    [ClientRpc]
+    void RpcOnActiveUsed()
+    {
+        Debug.Log("액티브 아이템 사용 시작.");
+        // UI: 지속시간 게이지 시작 등
     }
 
     [ClientRpc]
     void RpcOnActiveRemoved()
     {
         Debug.Log("액티브 아이템 해제됨.");
-        // UI 갱신 등의 작업 추가
     }
-
-    [ClientRpc]
-    void RpcOnPassiveUsed()
-    {
-        Debug.Log("패시브 아이템 사용됨.");
-        // TODO: UI 갱신, 이펙트 재생 등 작업 추가
+    
+    [ClientRpc] 
+    void RpcOnPassiveActivated() 
+    { 
+        Debug.Log("패시브 아이템 발동.");
+    }
+    
+    [ClientRpc] 
+    void RpcOnPassiveRemoved() 
+    { 
+        Debug.Log("패시브 아이템 해제됨."); 
     }
 
 }

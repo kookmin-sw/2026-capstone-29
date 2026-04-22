@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e513ab4acb0fcf45b4660c2ee8e25e6, type: 3}
   m_Name: Battery_Effect
   m_EditorClassIdentifier: 
+  duration: 3000
+  damageMultiplier: 2
+  hitCount: 2

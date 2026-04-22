@@ -10,6 +10,10 @@ public class WeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
     [Tooltip("근접 무기의 히트박스. 비워두면 자신에서 자동 탐색.")]
     [SerializeField] private CharacterHitBox weaponHitbox;
 
+    [Header("속도 버프 (옵션)")]
+    [Tooltip("같은 프리팹에 AttackSpeed 가 있으면 장착/해제에 맞춰 자동 제어. 비워두면 자동 탐색.")]
+    [SerializeField] private AttackSpeed atkSpeed;
+
     [Header("던지기 설정")]
     [Tooltip("던질 때 발사 속도")]
 
@@ -34,6 +38,12 @@ public class WeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
             weaponHitbox.DisableHitbox();
         }
 
+        // 버프 컴포넌트 자동 탐색 (없으면 null 로 놔두고 아래 호출부에서 null 체크)
+        if (atkSpeed == null)
+        {
+            atkSpeed = GetComponent<AttackSpeed>();
+            atkSpeed.duration = itemStat.availableTime;
+        }
     }
 
     public void SetUser(GameObject user)
@@ -44,11 +54,15 @@ public class WeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
         if (weaponHitbox != null)
             weaponHitbox.EnableHitbox();
 
-        RpcSetUser(user, "CombatGirls_Sword_Shield/root/add_weapon_r");
+        // 속도 버프 적용 (서버 → 모든 클라이언트로 RPC 전파)
+        if (atkSpeed != null)
+            atkSpeed.ApplyTo(user);
+
+        RpcSetUser(user);
     }
 
     [ClientRpc]
-    private void RpcSetUser(GameObject user, string socketPath)
+    private void RpcSetUser(GameObject user)
     {
         owner = user;
 
@@ -58,7 +72,7 @@ public class WeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
 
         WeaponEquipHandler handler = GetComponent<WeaponEquipHandler>();
         if (handler != null)
-            handler.Equip(user, socketPath);
+            handler.Equip(user);
     }
 
 
@@ -82,6 +96,10 @@ public class WeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
                 // 아직 장착 중이라면 해제
                 if (!isThrown)
                 {
+                    // 버프도 함께 해제 (중복 해제 방지는 WeaponSpeedBuff 내부에서 처리)
+                    if (atkSpeed != null)
+                        atkSpeed.Remove();
+
                     RpcUnequip();
                 }
 
@@ -121,6 +139,10 @@ public class WeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
     {
         if (isThrown) return; // 이미 던진 상태면 무시
 
+        // 속도 버프 해제 (던지는 순간 소유자에게서 떨어져 나감)
+        if (atkSpeed != null)
+            atkSpeed.Remove();
+
         // 소켓에서 분리
         WeaponEquipHandler handler = GetComponent<WeaponEquipHandler>();
         if (handler != null)
@@ -135,8 +157,6 @@ public class WeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
 
         // 던진 방향을 바라보도록 회전
         transform.rotation = Quaternion.LookRotation(flyDirection);
-
-
 
         // 클라이언트에 던짐 상태 알림 (SyncVar 외 추가 처리용)
         RpcOnThrown(flyDirection);
