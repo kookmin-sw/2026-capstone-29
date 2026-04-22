@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 
@@ -158,7 +158,7 @@ public class UnifiedWeaponBow : NetworkBehaviour, IPlayerWeapon
                 ? attacher.leftHandBoneName
                 : socketPath;
             var handler = GetComponent<WeaponEquipHandler>();
-            if (handler != null) handler.Equip(user, path);
+            if (handler != null) handler.Equip(user);
         }
 
         // 기본 무기(검·방패) 비활성화 — 모든 클라이언트에서 일관되게 적용
