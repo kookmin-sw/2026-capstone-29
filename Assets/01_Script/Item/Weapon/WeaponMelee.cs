@@ -58,11 +58,11 @@ public class WeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
         if (atkSpeed != null)
             atkSpeed.ApplyTo(user);
 
-        RpcSetUser(user, "CombatGirls_Sword_Shield/root/add_weapon_r");
+        RpcSetUser(user);
     }
 
     [ClientRpc]
-    private void RpcSetUser(GameObject user, string socketPath)
+    private void RpcSetUser(GameObject user)
     {
         owner = user;
 
@@ -72,7 +72,7 @@ public class WeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
 
         WeaponEquipHandler handler = GetComponent<WeaponEquipHandler>();
         if (handler != null)
-            handler.Equip(user, socketPath);
+            handler.Equip(user);
     }
 
 

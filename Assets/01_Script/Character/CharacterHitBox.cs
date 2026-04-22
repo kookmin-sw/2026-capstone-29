@@ -141,7 +141,7 @@ public class CharacterHitBox : MonoBehaviour
         {
             multipleDMG = 1f;
         }
-        Debug.Log($"multipleDMG : {multipleDMG}");
+        //Debug.Log($"multipleDMG : {multipleDMG}");
     }
 
     // 공격 애니메이션이 끝날 때 꺼주는 함수

@@ -57,16 +57,16 @@ public class WeaponTazorGun : NetworkBehaviour, IPlayerWeapon
         var model = user.GetComponent<NetworkCharacterModel>();
         //if (model != null) model.ServerSetHasBow(true);
         // 서버에서 호출되면 모든 클라이언트에 전파
-        RpcSetUser(user, "CombatGirls_Sword_Shield/root/add_weapon_r");
+        RpcSetUser(user);
     }
 
     [ClientRpc]
-    private void RpcSetUser(GameObject user, string socketPath)
+    private void RpcSetUser(GameObject user)
     {
         owner = user;
         WeaponEquipHandler handler = GetComponent<WeaponEquipHandler>();
         if (handler != null)
-            handler.Equip(user, socketPath);
+            handler.Equip(user);
     }
 
     private void Update()
