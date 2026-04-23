@@ -177,7 +177,7 @@ public class CharSelectManager : NetworkBehaviour
     [Server]
     private IEnumerator StartGameRoutine()
     {
-        yield return new WaitForSeconds(3.8f);
+        yield return new WaitForSeconds(4.5f);
         if (NetworkManager.singleton is MatchManager mm)
         {
             mm.p1CharacterIndex = p1SelectedIndex;
