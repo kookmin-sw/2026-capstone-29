@@ -154,6 +154,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1700280721418996430, guid: cb6e54e516e90d048980981c4ff4f137, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1cdc02abd663f08429087644e3a0ffd4, type: 2}
     - target: {fileID: 1859044265742696850, guid: cb6e54e516e90d048980981c4ff4f137, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -2481,6 +2485,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Weapon_Dagger_l
       objectReference: {fileID: 0}
+    - target: {fileID: 3873752212823095745, guid: cd21bd0bca936004a9948d76f2a37121, type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 3c93e924a1682604fade6b9fbfc3733c, type: 3}
     - target: {fileID: 4605839214997280112, guid: cd21bd0bca936004a9948d76f2a37121, type: 3}
       propertyPath: hitboxCollider
       value: 
