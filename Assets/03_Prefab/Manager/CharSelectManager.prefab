@@ -68,9 +68,11 @@ MonoBehaviour:
   characters:
   - {fileID: 11400000, guid: a45443c4c6c98334bad9571f98b02b13, type: 2}
   - {fileID: 11400000, guid: 163f27a8d44d2584390b10b5e8e65dcf, type: 2}
+  - {fileID: 11400000, guid: 01c3c235bd9fc014e8655e2c9a51a08e, type: 2}
   characterPrefabs:
   - {fileID: 7046033076753342609, guid: b71f2cc63d290a140b58d7d8a206636a, type: 3}
   - {fileID: 7046033076753342609, guid: 766f9af166076fe40ada827acd0ca6ce, type: 3}
+  - {fileID: 7046033076753342609, guid: cd21bd0bca936004a9948d76f2a37121, type: 3}
   gameSceneName: GameScene
   p1CursorIndex: 0
   p2CursorIndex: 0
