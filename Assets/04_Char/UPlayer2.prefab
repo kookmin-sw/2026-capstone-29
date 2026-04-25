@@ -90,7 +90,7 @@ Animator:
   m_GameObject: {fileID: 7046033076753342609}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: b02f7765ace5dff4a866b767512e4a05, type: 3}
-  m_Controller: {fileID: 9100000, guid: 16bd8606457462249a20d02dce8e6935, type: 2}
+  m_Controller: {fileID: 9100000, guid: 901783e946a52eb479f489d70645050c, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -496,8 +496,10 @@ MonoBehaviour:
   syncInterval: 0
   weaponAvailable: 0
   activeAvailable: 0
+  passiveAvailable: 0
   weaponTimer: 0
   activeTimer: 0
+  passiveTimer: 0
 --- !u!114 &-8513312982894621765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1136,7 +1138,6 @@ PrefabInstance:
     - {fileID: 986963292633152071, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
     - {fileID: 986963291912092741, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
     - {fileID: 986963292588963306, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
-    - {fileID: 986963292427936881, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5969132363413860385, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
