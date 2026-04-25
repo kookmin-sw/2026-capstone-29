@@ -504,7 +504,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7046033076753342609}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c0c222f3dfca04439dce283e3081b3e, type: 3}
   m_Name: 
@@ -554,7 +554,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7046033076753342609}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17ab91a284870104f9be4e322ca5e809, type: 3}
   m_Name: 
@@ -564,8 +564,10 @@ MonoBehaviour:
   syncInterval: 0
   weaponAvailable: 0
   activeAvailable: 0
+  passiveAvailable: 0
   weaponTimer: 0
   activeTimer: 0
+  passiveTimer: 0
 --- !u!1001 &5164279409534725719
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -690,6 +692,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 986963292820748983, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: serializeData.colliderCollisionConstraint.colliderList.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 986963292820748983, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: serializeData.colliderCollisionConstraint.colliderList.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 986963292857521095, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -697,6 +707,42 @@ PrefabInstance:
     - target: {fileID: 986963293093987306, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 986963293207451596, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: serializeData.colliderCollisionConstraint.colliderList.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 986963293207451596, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: serializeData.colliderCollisionConstraint.colliderList.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 986963293207451596, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: serializeData.colliderCollisionConstraint.colliderList.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 986963293207451596, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: serializeData.colliderCollisionConstraint.colliderList.Array.data[3]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 986963293207451596, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: serializeData.colliderCollisionConstraint.colliderList.Array.data[4]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 986963293207451596, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: serializeData.colliderCollisionConstraint.colliderList.Array.data[5]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 986963293207451596, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: serializeData.colliderCollisionConstraint.colliderList.Array.data[6]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 986963293207451596, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: serializeData.colliderCollisionConstraint.colliderList.Array.data[8]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 986963293207451596, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: serializeData.colliderCollisionConstraint.colliderList.Array.data[9]
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 986963293207451602, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
       propertyPath: m_Layer
@@ -1155,21 +1201,7 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 986963293207451596, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
-    - {fileID: 986963292820748983, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
-    - {fileID: 986963291992170496, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
-    - {fileID: 986963292040912894, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
-    - {fileID: 986963292857521089, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
-    - {fileID: 986963293093987301, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
-    - {fileID: 986963293602575045, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
-    - {fileID: 986963293942900436, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
-    - {fileID: 986963293788746089, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
-    - {fileID: 986963293383685958, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
-    - {fileID: 986963293729546090, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
-    - {fileID: 986963292633152071, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
-    - {fileID: 986963291912092741, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
-    - {fileID: 986963292588963306, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
-    - {fileID: 986963292427936881, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+    - {fileID: 0}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5969132363413860385, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
@@ -1227,7 +1259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   hitboxCollider: {fileID: 4645412204146245682}
-  effectIndex: 0
+  effectIndex: 1
   hitEffectPrefab: {fileID: 1226031520979461127, guid: 9c692d73cd82e0d409bec909e987a5b8, type: 3}
   effectDuration: 2
   allowedStates:
@@ -1347,7 +1379,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   hitboxCollider: {fileID: 6159838956049605345}
-  effectIndex: 0
+  effectIndex: 2
   hitEffectPrefab: {fileID: 1226031520979461127, guid: 9c692d73cd82e0d409bec909e987a5b8, type: 3}
   effectDuration: 1
   allowedStates:
