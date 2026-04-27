@@ -8,14 +8,14 @@
         _WaveSpeed ("Wave Speed", Float) = 1.0
         _WaveScale ("Wave Scale", Float) = 1.5
         _WaveHeight ("Wave Height", Float) = 0.15
-        _ToonSteps ("Toon Steps", Range(2, 6)) = 5
+        _ToonSteps ("Toon Steps", Range(2, 6)) = 3
         _SpecSize ("Specular Size", Range(1, 128)) = 32
-        _SpecSteps ("Specular Steps", Range(1, 4)) = 1.01
-        _FresnelPower ("Fresnel Power", Range(0.5, 5)) = 3.75
+        _SpecSteps ("Specular Steps", Range(1, 4)) = 2
+        _FresnelPower ("Fresnel Power", Range(0.5, 5)) = 2.5
         _FresnelColor ("Fresnel Tint", Color) = (0.6, 0.85, 0.95, 1)
 
         [Header(Wave Crest Foam)]
-        _CrestFoamThreshold ("Crest Foam Threshold", Range(0, 1)) = 0.75
+        _CrestFoamThreshold ("Crest Foam Threshold", Range(0, 1)) = 0.6
         _CrestFoamColor ("Crest Foam Color", Color) = (1, 1, 1, 1)
 
         [Header(Intersection Foam)]
@@ -90,8 +90,8 @@
                 float  _IntersectFoamNoiseSpeed;
                 float  _IntersectFoamSteps;
             CBUFFER_END
-
-            // --- 노이즈 ---
+            
+            //Noise
             float hash2D(float2 p)
             {
                 p = frac(p * float2(443.8975, 397.2973));
@@ -124,7 +124,7 @@
                 return v;
             }
 
-            // --- 파도 ---
+
             float waveFunction(float3 worldPos)
             {
                 float t = _Time.y * _WaveSpeed;
@@ -170,8 +170,7 @@
 
                 Light mainLight = GetMainLight();
                 float3 lightDir = normalize(mainLight.direction);
-
-                // === 디퓨즈: 툰 단계화 ===
+                //Diffuse
                 float NdotL = dot(normal, lightDir);
                 float toon  = floor(NdotL * _ToonSteps) / _ToonSteps;
                 toon = saturate(toon * 0.5 + 0.5);
@@ -179,19 +178,18 @@
                 float depthMix = saturate(IN.waveVal * 0.5 + 0.5);
                 float3 baseColor = lerp(_Color.rgb, _ShallowColor.rgb, depthMix);
                 float3 diffuse = lerp(baseColor * 0.6, baseColor, toon);
-
-                // === 스펙큘러: 툰 단계화 ===
+                //Specular
                 float3 halfDir = normalize(lightDir + viewDir);
                 float NdotH    = max(0, dot(normal, halfDir));
                 float spec     = pow(NdotH, _SpecSize);
                 float toonSpec = floor(spec * _SpecSteps) / _SpecSteps;
                 float3 specular = toonSpec * _SpecColor2.rgb;
-
-                // === 프레넬 ===
+                
+                //fresnel
                 float fresnel = pow(1.0 - saturate(dot(viewDir, normal)), _FresnelPower);
                 float3 fresnelCol = _FresnelColor.rgb * fresnel;
 
-                // === 파도 마루 거품 ===
+
                 float crestFoam = 0.0;
                 if (IN.waveVal > _CrestFoamThreshold)
                 {
@@ -200,47 +198,46 @@
                 }
                 float3 crestFoamCol = _CrestFoamColor.rgb * crestFoam;
 
-                // === 교차 거품 (뎁스 기반) ===
+
                 float2 screenUV = IN.screenPos.xy / IN.screenPos.w;
 
-                // 씬 뎁스 샘플링
+
                 float rawDepth = SampleSceneDepth(screenUV);
                 float sceneEyeDepth = LinearEyeDepth(rawDepth, _ZBufferParams);
 
-                // 물 표면의 eye depth
+
                 float waterEyeDepth = IN.screenPos.w;
 
-                // 씬과 물 표면의 깊이 차이
+
                 float depthDiff = sceneEyeDepth - waterEyeDepth;
 
-                // 음수(물 뒤에 아무것도 없음)이거나 최소 임계값 이하이면 무시
-                // → 카메라 회전 시 뎁스 지연으로 인한 오탐 방지
+
                 float minThreshold = 0.05;
                 float intersect = 0.0;
                 if (depthDiff > minThreshold)
                 {
-                    // smoothstep으로 부드러운 감쇠 (경계 번쩍임 방지)
+
                     intersect = 1.0 - smoothstep(minThreshold, _IntersectFoamWidth, depthDiff);
                 }
 
-                // 노이즈로 거품 가장자리를 불규칙하게
+
                 float2 foamNoiseUV = IN.worldPos.xz * _IntersectFoamNoiseScale
                                    + _Time.y * _IntersectFoamNoiseSpeed;
                 float foamNoise = fbm2D(foamNoiseUV);
 
-                // 노이즈를 교차 값에 곱해서 들쑥날쑥한 거품 형태
+
                 float foamMask = intersect * lerp(0.5, 1.0, foamNoise);
 
-                // 툰 단계화: 거품도 계단형으로 끊어짐
+
                 foamMask = floor(foamMask * _IntersectFoamSteps) / _IntersectFoamSteps;
 
                 float3 intersectFoamCol = _IntersectFoamColor.rgb * foamMask * _IntersectFoamColor.a;
 
-                // === 최종 합성 ===
+
                 float3 col = diffuse + specular + fresnelCol + crestFoamCol + intersectFoamCol;
                 float alpha = _Color.a;
 
-                // 거품이 있는 곳은 불투명하게
+
                 alpha = max(alpha, max(crestFoam, foamMask) * 0.95);
 
                 return half4(col, alpha);
