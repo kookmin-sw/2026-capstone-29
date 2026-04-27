@@ -1,4 +1,4 @@
-Shader "Custom/SmokeCloud"
+﻿Shader "Custom/SmokeCloud"
 {
     Properties
     {
@@ -238,5 +238,5 @@ Shader "Custom/SmokeCloud"
             ENDHLSL
         }
     }
-    FallBack "Universal Render Pipeline/Lit"
+    //FallBack "Universal Render Pipeline/Lit"
 }

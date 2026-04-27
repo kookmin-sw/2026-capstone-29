@@ -245,5 +245,5 @@
             ENDHLSL
         }
     }
-    FallBack "Universal Render Pipeline/Lit"
+   // FallBack "Universal Render Pipeline/Lit"
 }
