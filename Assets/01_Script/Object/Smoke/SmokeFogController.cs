@@ -32,6 +32,11 @@ public class SmokeFogController : MonoBehaviour
 
     public void EnterSmoke(SmokeGrenade smoke)
     {
+        if (smoke == null)
+        {
+            Debug.Log("연기 오브젝트 없음.");
+            return;
+        }
         overlappingSmokes.Add(smoke);
         isInsideSmoke = true;
         currentFogColor = smoke.smokeColor;

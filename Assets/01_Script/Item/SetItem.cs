@@ -54,7 +54,7 @@ public class SetItem : NetworkBehaviour, IEquip
             // 필드 아이템 처리
         }
 
-        // 필드 아이템 오브젝트 제거
+        // 필드의 아이템 오브젝트 제거
         NetworkServer.Destroy(item);
     }
 

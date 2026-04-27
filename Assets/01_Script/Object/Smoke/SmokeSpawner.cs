@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
-// 테스트용: 키를 누르면 연막 오브젝트 생성.
-
+//템플릿. 이게 아니여도 SmokeGrenade가 있다면 연기는 즉시 생성된다.
 public class SmokeSpawner : MonoBehaviour
 {
     [Header("Spawn Settings")]
