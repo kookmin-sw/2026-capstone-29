@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class NetworkGameManger : NetworkBehaviour
 {
@@ -123,12 +124,78 @@ public class NetworkGameManger : NetworkBehaviour
     void OnWinnerIndexChanged(int oldV, int newV)
     {
         if(isGameOver)
+            StartCoroutine(VictorySequence(newV));
+    }
+
+    // 게임 종료 시 승리모션 코루틴
+    private IEnumerator VictorySequence(int winnerIndex)
+    {
+        // 승자/패자 오브젝트 탐색
+        ICharacterModel winner = winnerIndex == 1 ? player1 : player2;
+        ICharacterModel loser = winnerIndex == 1 ? player2 : player1;
+
+        if(winner != null)
+        {
+            var winnerBehaviour = winner as NetworkBehaviour;
+
+            // 카메라 이동 - 로컬에서만
+            StartCoroutine(MoveCameraToWinner(winnerBehaviour.transform));
+
+            // 승/패 애니메이션 트리거
+            // RPC는 서버에서만 호출 가능함
+            if(isServer)
+                RpcTriggerVictoryAnim(winnerBehaviour.netIdentity, loser != null ? (loser as NetworkBehaviour).netIdentity : null);
+            
+            // 애니메이션 재생 대기
+            yield return new WaitForSeconds(3.5f);
+
+            // 게임 종료 UI 표시
             ShowGameOverUI();
+        }
+    }   
+
+    // 게임 종료시 승자 카메라 이동 - 로컬에서만
+    private GameObject victoryAnchor; // 나중에 Destroy용
+
+    private IEnumerator MoveCameraToWinner(Transform winner)
+    {
+        var vcam = UnityEngine.Object.FindAnyObjectByType<CinemachineVirtualCamera>();
+        if (vcam == null) yield break;
+
+        // 승자 정면 1.8m 앞, 눈높이 1.5m 위치에 앵커 생성
+        victoryAnchor = new GameObject("VictoryAnchor");
+        victoryAnchor.transform.position = winner.position
+                                        + winner.forward * 1.8f
+                                        + Vector3.up * 1.5f;
+        victoryAnchor.transform.LookAt(winner.position + Vector3.up * 1.4f);
+
+        // Cinemachine이 자동으로 부드럽게 블렌딩
+        vcam.Follow = victoryAnchor.transform;
+        vcam.LookAt = winner.Find("PlayerCameraRoot") ?? winner;
+
+        yield return new WaitForSeconds(1.5f); // 카메라 전환 시간
+    }
+
+    // 승리 애니메이션 RPC(서버 -> 모든 클라)
+    [ClientRpc]
+    private void RpcTriggerVictoryAnim(NetworkIdentity winnerIdentity, NetworkIdentity loserIdentity)
+    {
+        if (winnerIdentity != null)
+        {
+            var model  = winnerIdentity.GetComponent<UnifiedCharacterModel>();
+            if (model  != null) model .TriggerVictory();
+        }
     }
 
     // 게임 종료시 UI 등장
     private void ShowGameOverUI()
     {
+        if (victoryAnchor != null)
+        {
+            Destroy(victoryAnchor);
+            victoryAnchor = null;
+        }
+
         // 마우스 다시 컨트롤 할 수 있도록
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;

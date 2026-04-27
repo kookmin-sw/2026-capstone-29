@@ -71,6 +71,7 @@ public class NetworkCharacterModel : NetworkBehaviour, ICharacterModel
     public event Action<bool> OnBowDrawChanged;
     public event Action OnBowRelease;
     public event Action OnRespawn;
+    public event Action OnVictory;
 
     public override void OnStartServer()
     {
