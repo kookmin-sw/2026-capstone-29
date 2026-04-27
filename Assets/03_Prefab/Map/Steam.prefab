@@ -1,0 +1,1153 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &16797500004719421
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8369457073564088829}
+  - component: {fileID: 2676802397745935027}
+  m_Layer: 0
+  m_Name: SteamFromWaterfall (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8369457073564088829
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16797500004719421}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.016712766, y: 0.8164498, z: -0.023661153, w: 0.5766893}
+  m_LocalPosition: {x: 5, y: -1.24, z: 40.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1727489855901879241}
+  m_LocalEulerAnglesHint: {x: 3.32, y: 109.53, z: 0}
+--- !u!114 &2676802397745935027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16797500004719421}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4577fd1a3020b5f47b55da38ccae165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  smokeAlpha: 0.58
+  maxRadius: 2
+  expandDuration: 0
+  lifetime: 300
+  fadeDuration: 3
+  noiseScale: 0.7
+  noiseSpeed: 0.61
+  displacement: 1.12
+  toonSteps: 4
+--- !u!1 &1374017778465330456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8377030841955779804}
+  - component: {fileID: 5702267079731695323}
+  m_Layer: 0
+  m_Name: SteamFromWaterfall (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8377030841955779804
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374017778465330456}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.016712766, y: 0.8164498, z: -0.023661153, w: 0.5766893}
+  m_LocalPosition: {x: -27.7, y: -1.2399998, z: 8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1727489855901879241}
+  m_LocalEulerAnglesHint: {x: 3.32, y: 109.53, z: 0}
+--- !u!114 &5702267079731695323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374017778465330456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4577fd1a3020b5f47b55da38ccae165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  smokeAlpha: 0.58
+  maxRadius: 2
+  expandDuration: 0
+  lifetime: 300
+  fadeDuration: 3
+  noiseScale: 0.7
+  noiseSpeed: 0.61
+  displacement: 1.12
+  toonSteps: 4
+--- !u!1 &1804771798251095963
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4895558913932024328}
+  - component: {fileID: 4509567331480039758}
+  m_Layer: 0
+  m_Name: SteamFromWaterfall (9)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4895558913932024328
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804771798251095963}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.016712766, y: 0.8164498, z: -0.023661153, w: 0.5766893}
+  m_LocalPosition: {x: -31.76053, y: -1.2399998, z: 13.052422}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1727489855901879241}
+  m_LocalEulerAnglesHint: {x: 3.32, y: 109.53, z: 0}
+--- !u!114 &4509567331480039758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804771798251095963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4577fd1a3020b5f47b55da38ccae165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  smokeAlpha: 0.58
+  maxRadius: 2
+  expandDuration: 0
+  lifetime: 300
+  fadeDuration: 3
+  noiseScale: 0.7
+  noiseSpeed: 0.61
+  displacement: 1.12
+  toonSteps: 4
+--- !u!1 &1827211888544106171
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2153503002984761818}
+  - component: {fileID: 1028554549351487620}
+  m_Layer: 0
+  m_Name: SteamFromWaterfall (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2153503002984761818
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827211888544106171}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.010732346, y: -0.063233756, z: 0.011917927, w: 0.9978699}
+  m_LocalPosition: {x: -30.2, y: -1.2399998, z: 44.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1727489855901879241}
+  m_LocalEulerAnglesHint: {x: 1.314, y: -7.237, z: 1.285}
+--- !u!114 &1028554549351487620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827211888544106171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4577fd1a3020b5f47b55da38ccae165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  smokeAlpha: 0.58
+  maxRadius: 2
+  expandDuration: 0
+  lifetime: 300
+  fadeDuration: 3
+  noiseScale: 0.7
+  noiseSpeed: 0.61
+  displacement: 1.12
+  toonSteps: 4
+--- !u!1 &1982980778844929622
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6344487414485293504}
+  - component: {fileID: 7086920234083501684}
+  m_Layer: 0
+  m_Name: SteamFromWaterfall (10)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6344487414485293504
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982980778844929622}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.016712766, y: 0.8164498, z: -0.023661153, w: 0.5766893}
+  m_LocalPosition: {x: -28.480532, y: -1.2399998, z: 9.292419}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1727489855901879241}
+  m_LocalEulerAnglesHint: {x: 3.32, y: 109.53, z: 0}
+--- !u!114 &7086920234083501684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982980778844929622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4577fd1a3020b5f47b55da38ccae165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  smokeAlpha: 0.58
+  maxRadius: 2
+  expandDuration: 0
+  lifetime: 300
+  fadeDuration: 3
+  noiseScale: 0.7
+  noiseSpeed: 0.61
+  displacement: 1.12
+  toonSteps: 4
+--- !u!1 &2283094719617304716
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7543860454434252996}
+  - component: {fileID: 6599518079149496620}
+  m_Layer: 0
+  m_Name: SteamFromWaterfall (9)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7543860454434252996
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2283094719617304716}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.016712766, y: 0.8164498, z: -0.023661153, w: 0.5766893}
+  m_LocalPosition: {x: -0.7, y: -1.2399998, z: 45.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1727489855901879241}
+  m_LocalEulerAnglesHint: {x: 3.32, y: 109.53, z: 0}
+--- !u!114 &6599518079149496620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2283094719617304716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4577fd1a3020b5f47b55da38ccae165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  smokeAlpha: 0.58
+  maxRadius: 2
+  expandDuration: 0
+  lifetime: 300
+  fadeDuration: 3
+  noiseScale: 0.7
+  noiseSpeed: 0.61
+  displacement: 1.12
+  toonSteps: 4
+--- !u!1 &2594793000954735342
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1733113414938647481}
+  - component: {fileID: 6674573481473399959}
+  m_Layer: 0
+  m_Name: SteamFromWaterfall (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1733113414938647481
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2594793000954735342}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.016712766, y: 0.8164498, z: -0.023661153, w: 0.5766893}
+  m_LocalPosition: {x: -30.3, y: -1.2399998, z: 11.3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1727489855901879241}
+  m_LocalEulerAnglesHint: {x: 3.32, y: 109.53, z: 0}
+--- !u!114 &6674573481473399959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2594793000954735342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4577fd1a3020b5f47b55da38ccae165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  smokeAlpha: 0.58
+  maxRadius: 2
+  expandDuration: 0
+  lifetime: 300
+  fadeDuration: 3
+  noiseScale: 0.7
+  noiseSpeed: 0.61
+  displacement: 1.12
+  toonSteps: 4
+--- !u!1 &3245472445605800730
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7815692488216723361}
+  - component: {fileID: 6733362683581590304}
+  m_Layer: 0
+  m_Name: SteamFromWaterfall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7815692488216723361
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3245472445605800730}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.06, y: -1.2399998, z: 7.08}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1727489855901879241}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6733362683581590304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3245472445605800730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4577fd1a3020b5f47b55da38ccae165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  smokeAlpha: 0.58
+  maxRadius: 2
+  expandDuration: 0
+  lifetime: 300
+  fadeDuration: 3
+  noiseScale: 0.7
+  noiseSpeed: 0.61
+  displacement: 1.12
+  toonSteps: 4
+--- !u!1 &3461759305318494810
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3043187266362973882}
+  - component: {fileID: 1872597837938132744}
+  m_Layer: 0
+  m_Name: SteamFromWaterfall (8)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3043187266362973882
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3461759305318494810}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.016712766, y: 0.8164498, z: -0.023661153, w: 0.5766893}
+  m_LocalPosition: {x: -0.4, y: -1.2399998, z: 42.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1727489855901879241}
+  m_LocalEulerAnglesHint: {x: 3.32, y: 109.53, z: 0}
+--- !u!114 &1872597837938132744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3461759305318494810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4577fd1a3020b5f47b55da38ccae165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  smokeAlpha: 0.58
+  maxRadius: 2
+  expandDuration: 0
+  lifetime: 300
+  fadeDuration: 3
+  noiseScale: 0.7
+  noiseSpeed: 0.61
+  displacement: 1.12
+  toonSteps: 4
+--- !u!1 &3891442336778036543
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5483507619490063465}
+  - component: {fileID: 4149409738380860412}
+  m_Layer: 0
+  m_Name: SteamFromWaterfall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5483507619490063465
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3891442336778036543}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 2.82, y: -1.2399998, z: 12.46}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1727489855901879241}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4149409738380860412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3891442336778036543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4577fd1a3020b5f47b55da38ccae165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  smokeAlpha: 0.58
+  maxRadius: 2
+  expandDuration: 0
+  lifetime: 300
+  fadeDuration: 3
+  noiseScale: 0.7
+  noiseSpeed: 0.61
+  displacement: 1.12
+  toonSteps: 4
+--- !u!1 &4324083288912954109
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 319475683351193358}
+  - component: {fileID: 5907789002123609571}
+  m_Layer: 0
+  m_Name: SteamFromWaterfall (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &319475683351193358
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4324083288912954109}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.016712766, y: 0.8164498, z: -0.023661153, w: 0.5766893}
+  m_LocalPosition: {x: -26.3, y: -1.2399998, z: 7.2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1727489855901879241}
+  m_LocalEulerAnglesHint: {x: 3.32, y: 109.53, z: 0}
+--- !u!114 &5907789002123609571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4324083288912954109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4577fd1a3020b5f47b55da38ccae165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  smokeAlpha: 0.58
+  maxRadius: 2
+  expandDuration: 0
+  lifetime: 300
+  fadeDuration: 3
+  noiseScale: 0.7
+  noiseSpeed: 0.61
+  displacement: 1.12
+  toonSteps: 4
+--- !u!1 &4814450107296428716
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8102930017891517586}
+  - component: {fileID: 5526083266915657627}
+  m_Layer: 0
+  m_Name: SteamFromWaterfall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8102930017891517586
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4814450107296428716}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 1, y: -1.2399998, z: 11.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1727489855901879241}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5526083266915657627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4814450107296428716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4577fd1a3020b5f47b55da38ccae165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  smokeAlpha: 0.58
+  maxRadius: 2
+  expandDuration: 0
+  lifetime: 300
+  fadeDuration: 3
+  noiseScale: 0.7
+  noiseSpeed: 0.61
+  displacement: 1.12
+  toonSteps: 4
+--- !u!1 &4872240327418260110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3028668930816350208}
+  - component: {fileID: 4415573847650813305}
+  m_Layer: 0
+  m_Name: SteamFromWaterfall (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3028668930816350208
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4872240327418260110}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.010732346, y: -0.063233756, z: 0.011917927, w: 0.9978699}
+  m_LocalPosition: {x: -27.5, y: -1.24, z: 45.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1727489855901879241}
+  m_LocalEulerAnglesHint: {x: 1.314, y: -7.237, z: 1.285}
+--- !u!114 &4415573847650813305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4872240327418260110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4577fd1a3020b5f47b55da38ccae165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  smokeAlpha: 0.58
+  maxRadius: 2
+  expandDuration: 0
+  lifetime: 300
+  fadeDuration: 3
+  noiseScale: 0.7
+  noiseSpeed: 0.61
+  displacement: 1.12
+  toonSteps: 4
+--- !u!1 &5253408183381966226
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1976915876040562972}
+  - component: {fileID: 2917462475393703961}
+  m_Layer: 0
+  m_Name: SteamFromWaterfall (5)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1976915876040562972
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5253408183381966226}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.010732346, y: -0.063233756, z: 0.011917927, w: 0.9978699}
+  m_LocalPosition: {x: -31.53, y: -1.2399998, z: 42.810005}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1727489855901879241}
+  m_LocalEulerAnglesHint: {x: 1.314, y: -7.237, z: 1.285}
+--- !u!114 &2917462475393703961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5253408183381966226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4577fd1a3020b5f47b55da38ccae165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  smokeAlpha: 0.58
+  maxRadius: 2
+  expandDuration: 0
+  lifetime: 300
+  fadeDuration: 3
+  noiseScale: 0.7
+  noiseSpeed: 0.61
+  displacement: 1.12
+  toonSteps: 4
+--- !u!1 &5276796245103044875
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9076861867321688115}
+  - component: {fileID: 8271446431161587927}
+  m_Layer: 0
+  m_Name: SteamFromWaterfall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9076861867321688115
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5276796245103044875}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.28, y: -1.2399998, z: 8.72}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1727489855901879241}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8271446431161587927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5276796245103044875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4577fd1a3020b5f47b55da38ccae165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  smokeAlpha: 0.58
+  maxRadius: 2
+  expandDuration: 0
+  lifetime: 300
+  fadeDuration: 3
+  noiseScale: 0.7
+  noiseSpeed: 0.61
+  displacement: 1.12
+  toonSteps: 4
+--- !u!1 &5287376626309886952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1970631591889914922}
+  - component: {fileID: 4370545133880350699}
+  m_Layer: 0
+  m_Name: SteamFromWaterfall (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1970631591889914922
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5287376626309886952}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.010732346, y: -0.063233756, z: 0.011917927, w: 0.9978699}
+  m_LocalPosition: {x: -34.63, y: -1.2399998, z: 38.27}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1727489855901879241}
+  m_LocalEulerAnglesHint: {x: 1.314, y: -7.237, z: 1.285}
+--- !u!114 &4370545133880350699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5287376626309886952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4577fd1a3020b5f47b55da38ccae165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  smokeAlpha: 0.58
+  maxRadius: 2
+  expandDuration: 0
+  lifetime: 300
+  fadeDuration: 3
+  noiseScale: 0.7
+  noiseSpeed: 0.61
+  displacement: 1.12
+  toonSteps: 4
+--- !u!1 &5566801514347642015
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5162752991911172511}
+  - component: {fileID: 7383237357372340183}
+  m_Layer: 0
+  m_Name: SteamFromWaterfall (10)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5162752991911172511
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5566801514347642015}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.016712766, y: 0.8164498, z: -0.023661153, w: 0.5766893}
+  m_LocalPosition: {x: 2.58, y: -1.2399998, z: 41.739998}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1727489855901879241}
+  m_LocalEulerAnglesHint: {x: 3.32, y: 109.53, z: 0}
+--- !u!114 &7383237357372340183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5566801514347642015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4577fd1a3020b5f47b55da38ccae165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  smokeAlpha: 0.58
+  maxRadius: 2
+  expandDuration: 0
+  lifetime: 300
+  fadeDuration: 3
+  noiseScale: 0.7
+  noiseSpeed: 0.61
+  displacement: 1.12
+  toonSteps: 4
+--- !u!1 &6013778080918366191
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1727489855901879241}
+  m_Layer: 0
+  m_Name: Steam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1727489855901879241
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6013778080918366191}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.439467, y: 32.90319, z: -5.852419}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3263082264124033892}
+  - {fileID: 5483507619490063465}
+  - {fileID: 7815692488216723361}
+  - {fileID: 9076861867321688115}
+  - {fileID: 8102930017891517586}
+  - {fileID: 8369457073564088829}
+  - {fileID: 5764762565319223131}
+  - {fileID: 3043187266362973882}
+  - {fileID: 7543860454434252996}
+  - {fileID: 5162752991911172511}
+  - {fileID: 3028668930816350208}
+  - {fileID: 2153503002984761818}
+  - {fileID: 1970631591889914922}
+  - {fileID: 1244577898553770893}
+  - {fileID: 1976915876040562972}
+  - {fileID: 6344487414485293504}
+  - {fileID: 4895558913932024328}
+  - {fileID: 1733113414938647481}
+  - {fileID: 319475683351193358}
+  - {fileID: 8377030841955779804}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8105656413922603561
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1244577898553770893}
+  - component: {fileID: 3053713080012120258}
+  m_Layer: 0
+  m_Name: SteamFromWaterfall (4)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1244577898553770893
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8105656413922603561}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.010732346, y: -0.063233756, z: 0.011917927, w: 0.9978699}
+  m_LocalPosition: {x: -33.17, y: -1.2399998, z: 40.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1727489855901879241}
+  m_LocalEulerAnglesHint: {x: 1.314, y: -7.237, z: 1.285}
+--- !u!114 &3053713080012120258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8105656413922603561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4577fd1a3020b5f47b55da38ccae165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  smokeAlpha: 0.58
+  maxRadius: 2
+  expandDuration: 0
+  lifetime: 300
+  fadeDuration: 3
+  noiseScale: 0.7
+  noiseSpeed: 0.61
+  displacement: 1.12
+  toonSteps: 4
+--- !u!1 &8415739052604175229
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3263082264124033892}
+  - component: {fileID: 8693913591432280427}
+  m_Layer: 0
+  m_Name: SteamFromWaterfall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3263082264124033892
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8415739052604175229}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.43, y: -1.24, z: 14.69}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1727489855901879241}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8693913591432280427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8415739052604175229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4577fd1a3020b5f47b55da38ccae165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  smokeAlpha: 0.58
+  maxRadius: 2
+  expandDuration: 0
+  lifetime: 300
+  fadeDuration: 3
+  noiseScale: 0.7
+  noiseSpeed: 0.61
+  displacement: 1.12
+  toonSteps: 4
+--- !u!1 &8478506507458301670
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5764762565319223131}
+  - component: {fileID: 2334611331064679094}
+  m_Layer: 0
+  m_Name: SteamFromWaterfall (7)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5764762565319223131
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8478506507458301670}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.016712766, y: 0.8164498, z: -0.023661153, w: 0.5766893}
+  m_LocalPosition: {x: 4.7, y: -1.2399998, z: 39.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1727489855901879241}
+  m_LocalEulerAnglesHint: {x: 3.32, y: 109.53, z: 0}
+--- !u!114 &2334611331064679094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8478506507458301670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4577fd1a3020b5f47b55da38ccae165f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  smokeColor: {r: 1, g: 1, b: 1, a: 1}
+  shadowColor: {r: 0.6, g: 0.6, b: 0.65, a: 1}
+  smokeAlpha: 0.58
+  maxRadius: 2
+  expandDuration: 0
+  lifetime: 300
+  fadeDuration: 3
+  noiseScale: 0.7
+  noiseSpeed: 0.61
+  displacement: 1.12
+  toonSteps: 4
