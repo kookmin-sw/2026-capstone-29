@@ -50,6 +50,7 @@ public class UnifiedCharacterView : MonoBehaviour
         model.OnHealthChanged += HandleHealthChange;
         model.OnDie += HandleDie;
         model.OnRespawn += HandleRespawn;
+        model.OnVictory  += HandleVictory;
     }
 
     private void OnDisable()
@@ -63,6 +64,7 @@ public class UnifiedCharacterView : MonoBehaviour
         model.OnHealthChanged -= HandleHealthChange;
         model.OnDie -= HandleDie;
         model.OnRespawn -= HandleRespawn;
+        model.OnVictory  -= HandleVictory;
     }
 
     private void Update()
@@ -101,6 +103,12 @@ public class UnifiedCharacterView : MonoBehaviour
 
     private void HandleDie() => anim.SetBool("Die", true);
     private void HandleRespawn() => anim.SetBool("Die", false);
+
+    private void HandleVictory()
+    {
+        anim.SetFloat("Speed", 0f); // 이동 정지
+        anim.SetTrigger("Victory");
+    }
 
     private void HandleCombo(int step)
     {

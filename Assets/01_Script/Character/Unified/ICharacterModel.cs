@@ -45,4 +45,5 @@ public interface ICharacterModel
     event Action<bool> OnHasBowChanged;
     event Action<bool> OnBowDrawChanged;
     event Action OnBowRelease;
+    event Action OnVictory;
 }
