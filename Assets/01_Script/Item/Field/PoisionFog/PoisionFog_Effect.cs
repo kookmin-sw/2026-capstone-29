@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-
 public class PoisonFog_Effect : FieldEffect
 {
     [Header("독안개 설정")]
@@ -12,20 +11,18 @@ public class PoisonFog_Effect : FieldEffect
     [Tooltip("데미지 적용 주기(초)")]
     [SerializeField] private float damageTakeCycle = 1f;
 
-    // 플레이어별 "다음 데미지 적용 가능 시각" 기록.
-    // 여러 명이 안개 안에 있어도 각자의 타이머로 독립 동작.
+    // 모든 플레이어에 대해 다음 데미지 적용 시기 기록. 서버에서만 활용함.
     private readonly Dictionary<ICharacterModel, float> _nextTickTime = new Dictionary<ICharacterModel, float>();
+
+    // 서버에서는 대미지 처리
 
     protected override void OnPlayerEnter(ICharacterModel player)
     {
-        // 진입 즉시 1회 데미지 + 다음 
-        //player.RequestTakeDamage(damagePerTick);
         _nextTickTime[player] = Time.time + damageTakeCycle;
     }
 
     protected override void OnPlayerStay(ICharacterModel player)
     {
-        // 키가 없으면 OnPlayerEnter가 누락된 케이스
         if (!_nextTickTime.TryGetValue(player, out float nextTime))
         {
             player.RequestTakeDamage(damagePerTick);
@@ -43,5 +40,32 @@ public class PoisonFog_Effect : FieldEffect
     protected override void OnPlayerExit(ICharacterModel player)
     {
         _nextTickTime.Remove(player);
+    }
+
+    // 로컬에서는 안개 효과 연출을 카메라에 적용.
+
+    protected override void OnLocalPlayerEnter(ICharacterModel player)
+    {
+
+        if (MistFogController.Instance != null)
+        {
+            MistFogController.Instance.ActivateMist();
+        }
+    }
+
+    protected override void OnLocalPlayerExit(ICharacterModel player)
+    {
+        if (MistFogController.Instance != null)
+        {
+            MistFogController.Instance.DeactivateMist();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (MistFogController.Instance != null)
+        {
+            MistFogController.Instance.DeactivateMist();
+        }
     }
 }

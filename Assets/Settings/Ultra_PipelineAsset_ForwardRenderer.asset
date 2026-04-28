@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5888812470714222830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2edb855f02ab6b740a2d31f0c34a24b9, type: 3}
+  m_Name: MistFogRendererFeature
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    renderPassEvent: 600
+    fogShader: {fileID: 4800000, guid: 840549ee58bf7e9439a5ba43ad31bef1, type: 3}
 --- !u!114 &-5562632650488358318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34,7 +50,8 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: 8462872920420087324}
   - {fileID: -5562632650488358318}
-  m_RendererFeatureMap: 1c76e938152a727552daa693138fcdb2
+  - {fileID: -5888812470714222830}
+  m_RendererFeatureMap: 1c76e938152a727552daa693138fcdb21237301642bc46ae
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
