@@ -565,9 +565,11 @@ MonoBehaviour:
   weaponAvailable: 0
   activeAvailable: 0
   passiveAvailable: 0
+  fieldAvailable: 0
   weaponTimer: 0
   activeTimer: 0
   passiveTimer: 0
+  fieldTimer: 0
 --- !u!1001 &5164279409534725719
 PrefabInstance:
   m_ObjectHideFlags: 0

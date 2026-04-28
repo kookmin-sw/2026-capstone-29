@@ -498,9 +498,11 @@ MonoBehaviour:
   weaponAvailable: 0
   activeAvailable: 0
   passiveAvailable: 0
+  fieldAvailable: 0
   weaponTimer: 0
   activeTimer: 0
   passiveTimer: 0
+  fieldTimer: 0
 --- !u!114 &-8513312982894621765
 MonoBehaviour:
   m_ObjectHideFlags: 0
