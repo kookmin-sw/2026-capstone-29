@@ -10,6 +10,7 @@ public class ItemManager : NetworkBehaviour
     [HideInInspector] public IWeapon weapon;
     [HideInInspector] public IActive active;
     [HideInInspector] public IPassive passive;
+    [HideInInspector] public IField field;
 
     // bool 상태는 SyncVar로 클라이언트에 동기화 (UI 표시 등에 활용)
     [SyncVar] private bool hasWeapon = false;
@@ -17,17 +18,22 @@ public class ItemManager : NetworkBehaviour
     [SyncVar] private bool activeUsed = false;
     [SyncVar] private bool hasPassive = false;
     [SyncVar] private bool passiveUsed = false;
+    [SyncVar] private bool hasField = false;     
+    [SyncVar] private bool fieldUsed = false;
 
     [SyncVar] public float weaponAvailable;
     [SyncVar] public float activeAvailable;
     [SyncVar] public float passiveAvailable;
+    [SyncVar] public float fieldAvailable;
 
     [SerializeField] float weaponTimer;
     [SerializeField] float activeTimer;
     [SerializeField] float passiveTimer;
+    [SerializeField] float fieldTimer;
 
     private Coroutine activeRoutine;
     private Coroutine passiveRoutine;
+    private Coroutine fieldRoutine;
 
     void Update()
     {
@@ -106,11 +112,42 @@ public class ItemManager : NetworkBehaviour
             }
         }
 
+        if (hasField && !fieldUsed && field != null)
+        {
+            fieldUsed = true;
+            fieldTimer = 0f;
+            fieldRoutine = StartCoroutine(FieldRoutineWrapper(field.Activate()));
+            RpcOnFieldActivated();
+        }
+
+        if (fieldUsed)
+        {
+            fieldTimer += Time.deltaTime;
+            if (fieldAvailable <= fieldTimer)
+            {
+                if (fieldRoutine != null)
+                {
+                    StopCoroutine(fieldRoutine);
+                    fieldRoutine = null;
+                    field?.OnDeactivate();
+                }
+
+                fieldUsed = false;
+                hasField = false;
+                field = null;
+                fieldTimer = 0;
+                fieldAvailable = 0;
+                RpcOnFieldRemoved();
+            }
+        }
+
+
     }
 
     public void ApplyWeaponTimer(float available) { weaponAvailable = available; }
     public void ApplyActiveTimer(float available) { activeAvailable = available; }
     public void ApplyPassiveTimer(float available) { passiveAvailable = available; }
+    public void ApplyFieldTimer(float available) { fieldAvailable = available; }
 
 
     public bool HasWeapon() => hasWeapon;
@@ -124,6 +161,9 @@ public class ItemManager : NetworkBehaviour
     public bool IsPassiveRunning() => passiveUsed;
     public void GetPassive() { hasPassive = true; }
 
+    public bool HasField() => hasField;
+    public bool IsFieldRunning() => fieldUsed;
+    public void GetField() { hasField = true; }
 
     public void RequestUseActive()
     {
@@ -164,6 +204,12 @@ public class ItemManager : NetworkBehaviour
         passiveRoutine = null;
     }
 
+    private IEnumerator FieldRoutineWrapper(IEnumerator inner)
+    {
+        yield return inner;
+        fieldRoutine = null;
+    }
+
     [ClientRpc]
     void RpcOnWeaponRemoved()
     {
@@ -195,4 +241,15 @@ public class ItemManager : NetworkBehaviour
         Debug.Log("패시브 아이템 해제됨."); 
     }
 
+    [ClientRpc]
+    void RpcOnFieldActivated()
+    {
+        Debug.Log("필드 아이템 발동 (장판 스폰).");
+    }
+
+    [ClientRpc]
+    void RpcOnFieldRemoved()
+    {
+        Debug.Log("필드 아이템 해제됨.");
+    }
 }

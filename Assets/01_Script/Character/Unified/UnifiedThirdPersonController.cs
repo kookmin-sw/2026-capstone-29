@@ -197,7 +197,7 @@ namespace StarterAssets
                 if (TryGetComponent(out PlayerInput pInput)) pInput.enabled = false;
 #endif
                 if (TryGetComponent(out StarterAssetsInputs sInput)) sInput.enabled = false;
-                if (TryGetComponent(out CharacterController cc)) cc.enabled = false;
+                //if (TryGetComponent(out CharacterController cc)) cc.enabled = false;
                 return;
             }
             // 네트워크 + 로컬 플레이어일 땐 OnStartLocalPlayer에서 초기화

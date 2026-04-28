@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 5859942328418509146}
   - component: {fileID: -5210242892223330799}
   - component: {fileID: -8513312982894621765}
+  - component: {fileID: -7494658424174731650}
   m_Layer: 6
   m_Name: UPlayer2
   m_TagString: Player
@@ -497,9 +498,11 @@ MonoBehaviour:
   weaponAvailable: 0
   activeAvailable: 0
   passiveAvailable: 0
+  fieldAvailable: 0
   weaponTimer: 0
   activeTimer: 0
   passiveTimer: 0
+  fieldTimer: 0
 --- !u!114 &-8513312982894621765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -515,6 +518,22 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+--- !u!114 &-7494658424174731650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7046033076753342609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e8dfe4659b9c5f4d8c48275fa7580d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  useActiveKey: 113
 --- !u!1001 &5164279409534725719
 PrefabInstance:
   m_ObjectHideFlags: 0

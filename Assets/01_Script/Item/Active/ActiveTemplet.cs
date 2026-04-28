@@ -27,13 +27,13 @@ public class ActiveItemTemplate : ScriptableObject, IActive
     // 효과 본체. ItemManager에서 StartCoroutine으로 실행한다.
     public virtual IEnumerator Activate(GameObject owner)
     {
-        Debug.Log($"패시브 활성화 시작");
+        Debug.Log($"액티브 활성화 시작");
 
         ApplyEffect(owner);
         yield return new WaitForSeconds(duration);
         OnDeactivate(owner);
 
-        Debug.Log($"패시브 활성화 종료");
+        Debug.Log($"액티브 활성화 종료");
     }
 
 
