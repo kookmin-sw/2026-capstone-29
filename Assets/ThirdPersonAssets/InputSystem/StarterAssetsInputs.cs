@@ -92,6 +92,7 @@ namespace StarterAssets
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
 
+
 		public void PunchInput(bool newPunchState) { punch = newPunchState; }
 		public void ChargeInput(bool newChargeState) { charge = newChargeState; }
         public void InteractionInput(bool newInteractionState) { interaction = newInteractionState; }

@@ -28,8 +28,10 @@ GameObject:
   - component: {fileID: 1771822819322337452}
   - component: {fileID: 4460593995818492583}
   - component: {fileID: 1045878203879467819}
+  - component: {fileID: 5019255412562647810}
+  - component: {fileID: 7450401156638195215}
   m_Layer: 6
-  m_Name: UPlayer 4
+  m_Name: TestPlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,7 +125,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 1.7
-  m_Radius: 0.25
+  m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
@@ -276,7 +278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneId: 0
-  _assetId: 1244147625
+  _assetId: 3157078398
   serverOnly: 0
   visibility: 0
   hasSpawned: 0
@@ -409,8 +411,8 @@ MonoBehaviour:
   JumpTimeout: 0.5
   FallTimeout: 0.15
   Grounded: 1
-  GroundedOffset: -0.1
-  GroundedRadius: 0.25
+  GroundedOffset: -0.14
+  GroundedRadius: 0.28
   GroundLayers:
     serializedVersion: 2
     m_Bits: 1
@@ -502,11 +504,9 @@ MonoBehaviour:
   weaponAvailable: 0
   activeAvailable: 0
   passiveAvailable: 0
-  fieldAvailable: 0
   weaponTimer: 0
   activeTimer: 0
   passiveTimer: 0
-  fieldTimer: 0
 --- !u!114 &4460593995818492583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -539,6 +539,37 @@ MonoBehaviour:
     m_Bits: 64
   canPush: 1
   strength: 1.1
+--- !u!114 &5019255412562647810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3354428030682575210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90417c76b9de2bf45b8a005409b448de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7450401156638195215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3354428030682575210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf2c384d313205140ba5c15fc5a99e53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 0}
+  target: {fileID: 0}
+  mainCamera: {fileID: 0}
+  motionSteps: []
+  introSlowMotionScale: 0.15
+  introDuration: 0.4
+  defaultFOV: 60
 --- !u!1 &4598386284585742397
 GameObject:
   m_ObjectHideFlags: 0

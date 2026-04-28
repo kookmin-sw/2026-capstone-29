@@ -190,6 +190,8 @@ public class NetworkGameManger : NetworkBehaviour
     // 게임 종료시 UI 등장
     private void ShowGameOverUI()
     {
+        Debug.Log($"[ShowGameOverUI] 실행됨. isClient={isClient}, isServer={isServer}");
+    
         if (victoryAnchor != null)
         {
             Destroy(victoryAnchor);
@@ -339,8 +341,25 @@ public class NetworkGameManger : NetworkBehaviour
 
         Transform spawnPoint = spawnPoints[spawnIndex];
 
+        RpcResetAnimatorState(nb.netIdentity);
+
         // 모든 클라이언트에서 위치 이동
         RpcTeleportPlayer(nb.netIdentity, spawnPoint.position, spawnPoint.rotation);
+    }
+
+    [ClientRpc]
+    void RpcResetAnimatorState(NetworkIdentity targetIdentity)
+    {
+        if(targetIdentity == null) return;
+        Animator animator = targetIdentity.GetComponentInChildren<Animator>();
+        if(animator == null) return;
+
+        // 필요한 다른 트리거가 있다면 함께 리셋
+        animator.Rebind();
+
+        // 강제로 Idle 상태로 복귀시키고 싶다면
+        animator.Play("Movement", 0, 0f);
+        animator.Update(0f);
     }
 
     // 모든 클라이언트에서 위치 이동 - 리스폰

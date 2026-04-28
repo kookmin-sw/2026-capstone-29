@@ -5,6 +5,30 @@ using UnityEngine.InputSystem.Users;
 
 public class CameraLocalInitializer : MonoBehaviour
 {
+
+    private bool _isGameOver = false;
+
+    private void OnEnable()
+    {
+        NetworkGameManger.OnGameOverEvent += HandleGameOver;
+        Application.focusChanged += OnAppFocusChanged;
+    }
+
+    private void OnDisable()
+    {
+        NetworkGameManger.OnGameOverEvent -= HandleGameOver;
+        Application.focusChanged -= OnAppFocusChanged;
+    }
+
+    private void Update()
+    {
+        if (_isGameOver)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
+
     private void Start()
     {
         // --- 입력 강제 페어링/스킴 전환 ---
@@ -54,4 +78,36 @@ public class CameraLocalInitializer : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
+
+    private void HandleGameOver()
+{
+    if (!AuthorityGuard.IsLocallyControlled(gameObject)) return;
+
+    _isGameOver = true;
+
+    var allInputs = FindObjectsByType<StarterAssets.StarterAssetsInputs>(FindObjectsSortMode.None);
+    foreach (var sai in allInputs)
+    {
+        sai.cursorLocked = false;
+        sai.enabled = false;
+    }
+
+    var allPlayerInputs = FindObjectsByType<UnityEngine.InputSystem.PlayerInput>(FindObjectsSortMode.None);
+    foreach (var pi in allPlayerInputs)
+    {
+        pi.enabled = false;
+    }
+
+    Cursor.lockState = CursorLockMode.None;
+    Cursor.visible = true;
+}
+
+private void OnAppFocusChanged(bool hasFocus)
+{
+    if (hasFocus && _isGameOver)
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+}
 }
