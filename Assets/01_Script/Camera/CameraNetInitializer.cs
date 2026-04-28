@@ -17,6 +17,7 @@ public class CameraNetInitializer : NetworkBehaviour
 
     private void OnDisable()
     {
+        Debug.Log($"[OnDisable] 호출됨. obj={gameObject.name}");
         NetworkGameManger.OnGameOverEvent -= HandleGameOver;
         Application.focusChanged -= OnAppFocusChanged;
     }
@@ -33,10 +34,24 @@ public class CameraNetInitializer : NetworkBehaviour
     // 게임오버 시 PlayerInput 비활성화 + 커서 해제
     private void HandleGameOver()
     {
+        Debug.Log($"[HandleGameOver] 실행됨. isLocalPlayer={isLocalPlayer}, isClient={isClient}, isServer={isServer}");
+
         _isGameOver = true;
 
-        // PlayerInput을 꺼야 포커스 복귀 시 Input System이 커서를 재잠금하지 않음
-        if (_playerInput != null) _playerInput.enabled = false;
+        var allInputs = FindObjectsByType<StarterAssets.StarterAssetsInputs>(FindObjectsSortMode.None);
+        Debug.Log($"[HandleGameOver] 찾은 SAI 개수: {allInputs.Length}");
+        foreach (var sai in allInputs)
+        {
+            sai.cursorLocked = false;
+            sai.enabled = false;
+        }
+
+        var allPlayerInputs = FindObjectsByType<PlayerInput>(FindObjectsSortMode.None);
+        Debug.Log($"[HandleGameOver] 찾은 PlayerInput 개수: {allPlayerInputs.Length}");
+        foreach (var pi in allPlayerInputs)
+        {
+            pi.enabled = false;
+        }
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -54,8 +69,12 @@ public class CameraNetInitializer : NetworkBehaviour
 
     public override void OnStartLocalPlayer()
     {
+        Debug.Log($"[OnStartLocalPlayer] 실행. obj={gameObject.name}, isClient={isClient}, isServer={isServer}");
+
         NetworkGameManger.OnGameOverEvent += HandleGameOver;
         Application.focusChanged += OnAppFocusChanged;
+
+        Debug.Log("[OnStartLocalPlayer] 이벤트 구독 완료");
 
         // --- 입력 강제 페어링/스킴 전환 ---
         _playerInput = GetComponent<PlayerInput>();
@@ -85,4 +104,5 @@ public class CameraNetInitializer : NetworkBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
+    
 }

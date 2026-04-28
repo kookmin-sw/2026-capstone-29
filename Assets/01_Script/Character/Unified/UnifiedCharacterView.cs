@@ -106,9 +106,6 @@ public class UnifiedCharacterView : MonoBehaviour
 
     private void HandleVictory()
     {
-        // Base Layer(0) 제외 모든 레이어 끄기
-        for (int i = 1; i < anim.layerCount; i++)
-            anim.SetLayerWeight(i, 0f);
         
         anim.SetFloat("Speed", 0f); // 이동 정지
         anim.SetTrigger("Victory");
