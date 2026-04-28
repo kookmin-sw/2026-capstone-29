@@ -85,6 +85,7 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
     public event Action<bool> OnHasBowChanged;
     public event Action<bool> OnBowDrawChanged;
     public event Action OnBowRelease;
+    public event Action OnVictory;
 
     // ============================================================
     // 라이프사이클
@@ -177,6 +178,11 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
     {
         if (AuthorityGuard.IsOffline) OnStrongAttack?.Invoke();
         else CmdStrongAttack();
+    }
+
+    public void TriggerVictory()
+    {
+        OnVictory?.Invoke();
     }
 
     public void RequestSetBowDraw(bool state)

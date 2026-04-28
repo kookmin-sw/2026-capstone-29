@@ -12,21 +12,38 @@ public class TitleUIHandler : MonoBehaviour
     public GameObject keySettingPanel; // 키설정 패널
     public GameObject ExitPanel; // 게임 종료 패널
 
+    [Header("Match UI Setting")]
     public Text matchingText; // "매칭 중..." 텍스트
     public Text timeText; // 매칭 시간 텍스트
     public GameObject successText;  // "매칭 성공!" 텍스트
     public GameObject matchCancelButton; // 매칭 종료 버튼
+    public Button matchMakingButton; // 매치 메이킹 버튼 - 비활성화 제어용
+    public Text matchMakingButtonText; // 버튼 안에 텍스트 - 비활성화 제어용
+    public Text matchMakingButtonUnderText; 
+    public GameObject matchIcon;
+    public GameObject SuccesIcon; // 매칭 성공 후 아이콘
+    public GameObject matchLoadingIcon; // 매칭 중 로딩 아이콘
+
+    [Header("Match Animation")]
+    public RectTransform matchPanelRect; // 늘어날 매칭 패널 rect
+    public GameObject loadingIcon; // 회전할 로딩 이미지
+    public Vector2 panelNormalSize = new Vector2(300f, 50f);   // 평소 크기
+    public Vector2 panelExpandedSize = new Vector2(300f, 80f); // 늘어날 크기
+    public float panelExpandSpeed = 5f;
+
+    private bool isExpandingPanel = false;
+
+    private readonly Color textNormalColor = new Color32(255, 209, 136, 255); // 텍스트 색상
+    private readonly Color underTextNormalColor = new Color32(204, 165, 103, 255); // 언더 텍스트 색상
+    private readonly Color textDisabledColor = new Color(0f, 0f, 0f, 0.3f); // 비활성 회색
 
     // 애니메이션 및 타이머를 위한 상태 변수
     private bool isMatching = false;
     private float matchTimer = 0f;
-    private float dotTimer = 0f;
-    private int dotCount = 0;
-    private readonly string baseMatchingText = "매칭 중"; // 변하지 않는 문자
 
     private void RegisterMessageHandler()
     {
-        NetworkClient.RegisterHandler<MatchSuccessMessage>(OnMatchSuccess);
+        NetworkClient.ReplaceHandler<MatchSuccessMessage>(OnMatchSuccess);
     }
 
     private void OnDestroy()
@@ -49,19 +66,16 @@ public class TitleUIHandler : MonoBehaviour
                 timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
             }
 
-            // ... 애니메이션 업데이트
-            dotTimer += Time.deltaTime;
-            if(dotTimer >= 0.5f)
-            {
-                dotTimer = 0f;
-                dotCount = (dotCount + 1) % 4; // 0, 1, 2, 3 반복
+        }
 
-                if(matchingText != null)
-                {
-                    string dots = new string('.', dotCount);
-                    matchingText.text = baseMatchingText + dots;
-                }
-            }
+        // 매칭 성공 시 패널 확장
+        if(isExpandingPanel && matchPanelRect != null)
+        {
+            matchPanelRect.sizeDelta = Vector2.Lerp(
+                matchPanelRect.sizeDelta, 
+                panelExpandedSize, 
+                Time.deltaTime * panelExpandSpeed
+            );
         }
     }
 
@@ -75,14 +89,15 @@ public class TitleUIHandler : MonoBehaviour
         if (timeText != null) timeText.gameObject.SetActive(true);
         if (matchCancelButton != null) matchCancelButton.SetActive(true);
         if (successText != null) successText.SetActive(false);
+
+        // 매칭 버튼 비활성화
+        SetMatchmakingButtonInteractable(false);
         
         RegisterMessageHandler(); // 매칭버튼을 누를 때마다 핸들러 등록
 
         // 매칭 시 변수 초기화
         isMatching = true;
         matchTimer = 0f;
-        dotTimer = 0f;
-        dotCount = 0;
 
         networkDiscovery.StopDiscovery(); // 타이틀 복귀 후 이전 상태가 남아있으면 초기화 후 시작
 
@@ -97,7 +112,7 @@ public class TitleUIHandler : MonoBehaviour
         // [조건 추가] 이미 내가 호스트(서버)이거나 클라이언트로 접속 중이라면 무시합니다.
         if (NetworkServer.active || NetworkClient.active) 
         {
-            return; 
+            return;
         }
         
         // 위 조건이 통과되어야만 아래 코드가 실행됩니다.
@@ -125,12 +140,18 @@ public class TitleUIHandler : MonoBehaviour
         }   
 
         isMatching = false; // 매칭 성공 시 정지
+        isExpandingPanel = true; // 패널 확장 시작하도록 설정
 
-        // matchPanel.SetActive(true);
+        // UI 활성화/비활성화
         matchingText.gameObject.SetActive(false);
         timeText.gameObject.SetActive(false);
-        successText.SetActive(true);
         matchCancelButton.SetActive(false);
+        matchIcon.SetActive(false);
+        matchLoadingIcon.SetActive(false);
+        
+        successText.SetActive(true);
+        SuccesIcon.SetActive(true);
+        loadingIcon.SetActive(true);
     }
 
     // 매칭 종료 버튼 클릭시 - 매칭 UI 비활성화 및 네트워크 탐색 중지
@@ -148,13 +169,39 @@ public class TitleUIHandler : MonoBehaviour
             NetworkManager.singleton.StopHost();
         }
 
+        // 매칭 버튼 다시 활성화
+        SetMatchmakingButtonInteractable(true);
+
         // UI 닫기
         isMatching = false;
         if(matchPanel != null) matchPanel.SetActive(false);
         if(matchingText != null) matchingText.gameObject.SetActive(false);
         if(timeText != null) timeText.gameObject.SetActive(false);
         if(matchCancelButton != null) matchCancelButton.SetActive(false);
+
+        // 패널 상태 초기화 
+        isExpandingPanel = false;
+        if (matchPanelRect != null) matchPanelRect.sizeDelta = panelNormalSize;
+        if (loadingIcon != null) loadingIcon.SetActive(false);
     }
+
+    // 매칭 버튼 활성화/비활성화
+    private void SetMatchmakingButtonInteractable(bool interactable)
+    {   
+        // 에디터 미설정 방지
+        if(matchMakingButton == null) return;
+
+        matchMakingButton.interactable = interactable;
+
+        // 버튼 안 텍스트 색 변경
+        matchMakingButtonText.color = interactable ? textNormalColor : textDisabledColor;
+        matchMakingButtonUnderText.color = interactable ? underTextNormalColor : textDisabledColor;
+        
+        // 버튼 무브도 끄기
+        var buttonMove = matchMakingButton.GetComponent<ButtonMove>();
+        if(buttonMove != null) buttonMove.enabled = interactable;
+    }
+
 
     // 키설정 버튼 클릭시
     public void ClickKeySetting()
