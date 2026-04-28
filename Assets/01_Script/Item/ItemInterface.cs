@@ -59,8 +59,12 @@ public interface IPassive // 패시브 아이템
     void OnDeactivate(GameObject owner);
 }
 
-public interface IField // 필드 아이템
+public interface IField
 {
+    float AvailableTime { get; }
 
+    IEnumerator Activate();
+
+    void OnDeactivate();
 }
 

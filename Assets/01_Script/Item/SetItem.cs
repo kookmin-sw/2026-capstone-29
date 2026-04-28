@@ -1,5 +1,6 @@
-﻿using UnityEngine;
-using Mirror;
+﻿using Mirror;
+using Unity.VisualScripting;
+using UnityEngine;
 
 
 //각 아이템에 부착되어있어야 하는 스크립트. ItemPickUp에서 아이템을 감지하여 SetItem을 통해 플레이어에게 달려있는 ItemManager에 부착한다.
@@ -49,9 +50,21 @@ public class SetItem : NetworkBehaviour, IEquip
             im.passiveAvailable = passiveAsset.AvailableTime; // 지속 시간 세팅
             im.GetPassive();                                  // 플래그는 마지막에 세팅 (Update에서 자동 발동 트리거)
         }
-        if (item.CompareTag("Field"))   
+        if (item.CompareTag("Field"))
         {
-            // 필드 아이템 처리
+            // ===== [추가] 필드 아이템 처리. 패시브와 동일 패턴이지만 IFieldItem 사용. =====
+            IField fieldAsset = itemAsset as IField;
+            if (fieldAsset == null)
+            {
+                Debug.LogError("[SetItem] Field 태그인데 itemAsset이 IFieldItem이 아님.");
+            }
+            else
+            {
+                im.field = fieldAsset;
+                im.fieldAvailable = fieldAsset.AvailableTime;
+                im.GetField();  // 마지막에 플래그 세팅 → ItemManager.Update가 자동 발동
+            }
+            // ===== [추가 끝] =====
         }
 
         // 필드의 아이템 오브젝트 제거
