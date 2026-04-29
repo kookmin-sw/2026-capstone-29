@@ -66,29 +66,6 @@ public class CharSelectManager : NetworkBehaviour
             CharSelectUI.instance.OnNetworkReady();
     }
 
-    private void CheckLocalPlayerIndex()
-    {
-        if (!NetworkClient.active) return;
-
-        // 클라이언트의 connectionId는 NetworkClient.connection.remoteTimeStamp 대신
-        // 서버가 알고 있는 connId를 직접 비교할 수 없으므로
-        // 호스트(서버)는 connId=0, 클라이언트는 그 외 값
-        bool isHost = NetworkServer.active;
-
-        if (isHost)
-        {
-            // 호스트는 항상 P1
-            instance = this;
-            CharSelectUI.instance?.SetLocalPlayerIndex(0);
-        }
-        else
-        {
-            // 순수 클라이언트는 항상 P2
-            instance = this;
-            CharSelectUI.instance?.SetLocalPlayerIndex(1);
-        }
-    }
-
     void OnReadyToAssignChanged(bool _, bool v)
     {
         if (!v) return;
@@ -105,11 +82,13 @@ public class CharSelectManager : NetworkBehaviour
     [Server]
     public void RegisterConnection(NetworkConnectionToClient conn)
     {
-        int index = connIndexMap.Count; // 0번째 = P1, 1번째 = P2
+        // connectionId == 0 은 호스트로 항상 P1
+        int index = (conn.connectionId == 0) ? 0 : 1;
+
+        if (connIndexMap.ContainsKey(conn)) return; // 중복 등록 방지
         connIndexMap[conn] = index;
         Debug.Log($"[CharSel] P{index + 1} 등록 - connId:{conn.connectionId}");
 
-        // 두 conn 모두 등록 완료 시 SyncVar trigger
         if (connIndexMap.Count >= 2)
             isReadyToAssign = true;
     }
