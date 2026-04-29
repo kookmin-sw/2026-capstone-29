@@ -118,41 +118,88 @@ public class NetworkGameManger : NetworkBehaviour
         isGameOver = true;
         gameOverWinnerIndex = winnerIndex;
         Debug.Log($"Game Over! Winner Index: {winnerIndex}");
+
+        // 슬로우 모션 연출
+        ICharacterModel winner = winnerIndex == 1 ? player1 : (winnerIndex == 2 ? player2 : null);
+        ICharacterModel loser  = winnerIndex == 1 ? player2 : (winnerIndex == 2 ? player1 : null);
+
+        NetworkBehaviour winnerNB = winner as NetworkBehaviour;
+        NetworkBehaviour loserNB  = loser  as NetworkBehaviour;
+
+        if (winnerNB != null)
+        {
+            // 슬로우모션 + 승리연출 RPC (서버에서 한 번만 호출)
+            RpcStartSlowMotionAndVictory(winnerNB.netIdentity, loserNB != null ? loserNB.netIdentity : null);
+        }
     }
 
     // WinnerIndex hook
     void OnWinnerIndexChanged(int oldV, int newV)
     {
-        if(isGameOver)
-            StartCoroutine(VictorySequence(newV));
+        // RpcStartSlowMotionAndVictory에서 처리하게됨
+    }
+
+    // 슬로우 모션 -> 승리 모션 전체 연출
+    [ClientRpc]
+    private void RpcStartSlowMotionAndVictory(NetworkIdentity winnerIdentity, NetworkIdentity loserIdentity)
+    {
+        StartCoroutine(SlowMotionVictorySequence(winnerIdentity, loserIdentity));
     }
 
     // 게임 종료 시 승리모션 코루틴
-    private IEnumerator VictorySequence(int winnerIndex)
+    private IEnumerator SlowMotionVictorySequence(NetworkIdentity winnerIdentity, NetworkIdentity loserIdentity)
     {
-        // 승자/패자 오브젝트 탐색
-        ICharacterModel winner = winnerIndex == 1 ? player1 : player2;
-        ICharacterModel loser = winnerIndex == 1 ? player2 : player1;
+        // 플레이어와 애니메이터 탐색
+        var winnerModel = winnerIdentity?.GetComponent<UnifiedCharacterModel>();
+        var winnerAnim  = winnerIdentity?.GetComponent<Animator>();
 
-        if(winner != null)
-        {
-            var winnerBehaviour = winner as NetworkBehaviour;
+        // 1단계: 슬로우모션 시작 - 애니메이터 속도 변경
+        float slowSpeed = 0.15f;
+        if (winnerAnim != null) winnerAnim.speed = slowSpeed;
 
-            // 카메라 이동 - 로컬에서만
-            StartCoroutine(MoveCameraToWinner(winnerBehaviour.transform));
+        // 카메라: 패자 줌인
+        Transform slowTarget = loserIdentity != null ? loserIdentity.transform : winnerIdentity?.transform;
+        if (slowTarget != null)
+            StartCoroutine(SlowMotionCamera(slowTarget));
 
-            // 승/패 애니메이션 트리거
-            // RPC는 서버에서만 호출 가능함
-            if(isServer)
-                RpcTriggerVictoryAnim(winnerBehaviour.netIdentity, loser != null ? (loser as NetworkBehaviour).netIdentity : null);
-            
-            // 애니메이션 재생 대기
-            yield return new WaitForSeconds(3.5f);
+        // 슬로우모션 감상 시간 (realtime 기준)
+        yield return new WaitForSecondsRealtime(3.0f);
 
-            // 게임 종료 UI 표시
-            ShowGameOverUI();
-        }
+        // 2단계: Animator 속도 복구 + 승리/패배 모션 
+        if (winnerAnim != null) winnerAnim.speed = 1f;
+
+        winnerModel?.TriggerVictory();
+
+        // 카메라: 승자 정면으로 전환
+        if (winnerIdentity != null)
+            yield return StartCoroutine(MoveCameraToWinner(winnerIdentity.transform));
+        
+        // 애니메이션 재생 대기
+        yield return new WaitForSeconds(3.5f);
+
+        // 게임 종료 UI 표시
+        ShowGameOverUI();
     }   
+
+    // 슬로우 모션 연출 카메라 - 패자 줌인
+    private IEnumerator SlowMotionCamera(Transform target)
+    {
+        var vcam = UnityEngine.Object.FindAnyObjectByType<CinemachineVirtualCamera>();
+        if (vcam == null) yield break;
+
+        // 패자 쪽으로 가까이 줌인 (1.0m 앞, 눈높이)
+        if (victoryAnchor != null) Destroy(victoryAnchor);
+        victoryAnchor = new GameObject("SlowMoAnchor");
+        victoryAnchor.transform.position = target.position
+                                        + target.forward * 1.0f
+                                        + Vector3.up * 1.6f;
+        victoryAnchor.transform.LookAt(target.position + Vector3.up * 1.4f);
+
+        vcam.Follow = victoryAnchor.transform;
+        vcam.LookAt = target.Find("PlayerCameraRoot") ?? target;
+
+        yield return new WaitForSecondsRealtime(2.0f);
+    }
 
     // 게임 종료시 승자 카메라 이동 - 로컬에서만
     private GameObject victoryAnchor; // 나중에 Destroy용
@@ -162,29 +209,36 @@ public class NetworkGameManger : NetworkBehaviour
         var vcam = UnityEngine.Object.FindAnyObjectByType<CinemachineVirtualCamera>();
         if (vcam == null) yield break;
 
-        // 승자 정면 1.8m 앞, 눈높이 1.5m 위치에 앵커 생성
-        victoryAnchor = new GameObject("VictoryAnchor");
-        victoryAnchor.transform.position = winner.position
-                                        + winner.forward * 1.8f
-                                        + Vector3.up * 1.5f;
-        victoryAnchor.transform.LookAt(winner.position + Vector3.up * 1.4f);
+        // 카메라 위치/회전 계산
+        Vector3 targetPos = winner.position + winner.forward * 1.6f + Vector3.up * 1.5f;
+        Vector3 lookTarget = winner.position + Vector3.up * 1.4f;
 
-        // Cinemachine이 자동으로 부드럽게 블렌딩
+        // LookAt 타겟 설정 - 승자 정면 위치로
+        Transform camRoot = winner.Find("PlayerCmeraroot") ?? winner;
         vcam.Follow = victoryAnchor.transform;
-        vcam.LookAt = winner.Find("PlayerCameraRoot") ?? winner;
+        vcam.LookAt = camRoot;
 
-        yield return new WaitForSeconds(1.5f); // 카메라 전환 시간
-    }
+        // 카메라 부드럽게 이동
+        float duration = 1.5f;
+        float elapsed = 0f;
 
-    // 승리 애니메이션 RPC(서버 -> 모든 클라)
-    [ClientRpc]
-    private void RpcTriggerVictoryAnim(NetworkIdentity winnerIdentity, NetworkIdentity loserIdentity)
-    {
-        if (winnerIdentity != null)
+        Vector3 startPos = victoryAnchor.transform.position;
+
+        while (elapsed < duration)
         {
-            var model  = winnerIdentity.GetComponent<UnifiedCharacterModel>();
-            if (model  != null) model .TriggerVictory();
+            elapsed += Time.unscaledDeltaTime;
+            float t = elapsed / duration;
+
+            // EaseInOut 커브 적용 (자연스러운 가감속)
+            float smoothT = t * t * (3f - 2f * t);
+
+            victoryAnchor.transform.position = Vector3.Lerp(startPos, targetPos, smoothT);
+            victoryAnchor.transform.LookAt(lookTarget);
+
+            yield return null;
         }
+
+        victoryAnchor.transform.position = targetPos;
     }
 
     // 게임 종료시 UI 등장
