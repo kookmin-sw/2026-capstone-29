@@ -153,7 +153,7 @@ public class NetworkGameManger : NetworkBehaviour
         var winnerModel = winnerIdentity?.GetComponent<UnifiedCharacterModel>();
         var winnerAnim  = winnerIdentity?.GetComponent<Animator>();
 
-        // 슬로우모션 시작 - 애니메이터 속도 변경
+        // 1단계: 슬로우모션 시작 - 애니메이터 속도 변경
         float slowSpeed = 0.15f;
         if (winnerAnim != null) winnerAnim.speed = slowSpeed;
 
@@ -165,7 +165,7 @@ public class NetworkGameManger : NetworkBehaviour
         // 슬로우모션 감상 시간 (realtime 기준)
         yield return new WaitForSecondsRealtime(3.0f);
 
-        // ── 2단계: Animator 속도 복구 + 승리/패배 모션 ──────
+        // 2단계: Animator 속도 복구 + 승리/패배 모션 
         if (winnerAnim != null) winnerAnim.speed = 1f;
 
         winnerModel?.TriggerVictory();
@@ -239,17 +239,6 @@ public class NetworkGameManger : NetworkBehaviour
         }
 
         victoryAnchor.transform.position = targetPos;
-    }
-
-    // 승리 애니메이션 RPC(서버 -> 모든 클라)
-    [ClientRpc]
-    private void RpcTriggerVictoryAnim(NetworkIdentity winnerIdentity, NetworkIdentity loserIdentity)
-    {
-        if (winnerIdentity != null)
-        {
-            var model  = winnerIdentity.GetComponent<UnifiedCharacterModel>();
-            if (model  != null) model .TriggerVictory();
-        }
     }
 
     // 게임 종료시 UI 등장
