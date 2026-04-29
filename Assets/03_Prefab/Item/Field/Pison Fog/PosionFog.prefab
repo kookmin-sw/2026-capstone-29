@@ -180,6 +180,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bomb
       objectReference: {fileID: 0}
+    - target: {fileID: 2549214001730062753, guid: 5816699089b7f6c489b237bfcfba85c6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2894530383685276443, guid: 5816699089b7f6c489b237bfcfba85c6, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.35
