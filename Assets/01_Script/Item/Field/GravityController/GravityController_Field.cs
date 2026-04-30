@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "Item/Field/GravityController/")]
+[CreateAssetMenu(menuName = "Item/Field/GravityController")]
 public class GravityController_Field : FieldItem_Field
 {
     // 전역 효과이므로 스폰 위치 커스텀 불필요.

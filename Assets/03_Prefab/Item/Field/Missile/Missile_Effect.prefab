@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4217736536222534024
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1365696873646793176}
+  - component: {fileID: 6462046352133024031}
+  - component: {fileID: 4652327010948909844}
+  m_Layer: 0
+  m_Name: Missile_Effect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1365696873646793176
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4217736536222534024}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -30.076937, y: 38.123337, z: 14.106201}
+  m_LocalScale: {x: 9.07, y: 9.07, z: 9.07}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6462046352133024031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4217736536222534024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  _assetId: 2573909158
+  serverOnly: 0
+  visibility: 0
+  hasSpawned: 0
+--- !u!114 &4652327010948909844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4217736536222534024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 542492c11eb729949ab5053ab56f95e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  missileCount: 15
+  spawnInterval: 3
+  warningDuration: 2
+  damage: 100
+  explosionRadius: 10
+  cornerA: {x: -40, y: 0}
+  cornerB: {x: 4, y: 42}
+  raycastHeight: 100
+  raycastDistance: 200
+  groundLayerMask:
+    serializedVersion: 2
+    m_Bits: 23
+  warningDecalPrefab: {fileID: 4428390792654938517, guid: ec28069f62d76e0439fc1cf0e8267115, type: 3}
+  explosionEffectPrefab: {fileID: 4438388044275851841, guid: 91cf2aba1a3dd61419861eaf069a74f7, type: 3}
+  explosionLifetime: 0.2

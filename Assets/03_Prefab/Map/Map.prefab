@@ -13192,6 +13192,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mystischer Steinkreis (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8697726407863984751, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.2

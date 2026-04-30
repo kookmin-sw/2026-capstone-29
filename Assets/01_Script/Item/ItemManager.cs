@@ -85,6 +85,7 @@ public class ItemManager : NetworkBehaviour
         // 패시브는 장착 즉시 자동 발동: hasPassive가 되면 다음 프레임에 자동으로 코루틴 시작
         if (hasPassive && !passiveUsed && passive != null)
         {
+            Debug.Log($"[서버] Passive 발동 대기 중 - passive null? {passive == null}, available={passiveAvailable}");
             passiveUsed = true;
             passiveTimer = 0f;
             passiveRoutine = StartCoroutine(PassiveRoutineWrapper(passive.Activate(gameObject)));
