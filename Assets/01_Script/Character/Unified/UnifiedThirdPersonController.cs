@@ -400,7 +400,13 @@ namespace StarterAssets
                                     || _animator.GetCurrentAnimatorStateInfo(0).IsName("Combo Attack 4");
                     if (_input.move != Vector2.zero && !isAttacking)
                     {
+                        // 로컬은 즉시 반응(입력 지연 방지), 네트워크 모드면 추가로 Cmd 호출해
+                        // 다른 클라이언트들의 Animator에도 Shift 트리거를 동기화한다.
                         _animator.SetTrigger(_animIDShift);
+                        if (!AuthorityGuard.IsOffline)
+                        {
+                            CmdPlayDashAnim();
+                        }
                         _shiftCooldownDelta = ShiftCooldown;
                         _dashDirection = Quaternion.Euler(0f, _targetRotation, 0f) * Vector3.forward;
                         StartCoroutine(DashCoroutine());
@@ -531,6 +537,30 @@ namespace StarterAssets
         {
             if (_animator == null) _animator = GetComponent<Animator>();
             if (_animator != null) _animator.speed = speed;
+        }
+
+        // ============================================================
+        // 대시 애니메이션 네트워크 동기화
+        // - 로컬 플레이어가 Shift 대시 시 자기 Animator에 즉시 트리거를 발동하지만,
+        //   원격 클라이언트들의 Animator에는 트리거가 전달되지 않아
+        //   "애니메이션 없이 빠르게 이동하는 것처럼" 보이는 문제가 있다.
+        //   이를 해결하기 위해 Cmd → Rpc 패턴으로 모든 원격 클라이언트에도
+        //   Shift 트리거를 발동시킨다. 로컬(owner)은 이미 위에서 즉시 트리거를
+        //   발동했으므로 includeOwner=false 로 중복을 막는다.
+        // ============================================================
+        [Command]
+        private void CmdPlayDashAnim()
+        {
+            RpcPlayDashAnim();
+        }
+
+        [ClientRpc(includeOwner = false)]
+        private void RpcPlayDashAnim()
+        {
+            // 원격 클라이언트는 InitializeLocalControl()을 거치지 않아
+            // _animator 가 null 일 수 있으므로 안전하게 fetch.
+            if (_animator == null) TryGetComponent(out _animator);
+            if (_animator != null) _animator.SetTrigger("Shift");
         }
 
     }
