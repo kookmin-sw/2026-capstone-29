@@ -270,6 +270,7 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
 
         if (currentHealth <= 0 && !isDead)
         {
+
             bool oldDie = isDead;
             isDead = true;
             OnDieHook(oldDie, true);
