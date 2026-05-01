@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2240084681631754468
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2152121964978702036}
+  - component: {fileID: 9181787236314588825}
+  m_Layer: 0
+  m_Name: ItemSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2152121964978702036
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2240084681631754468}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -7.4395695, y: 33.5334, z: 13.447541}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9181787236314588825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2240084681631754468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccafea400a7d55045851b355a63cb828, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  areas:
+  - name: Area
+    center: {x: 0, y: 0, z: 0}
+    size: {x: 2, y: 1, z: 2}
+    weight: 1
+    yOffset: 0
+  groups:
+  - groupName: Passive
+    prefabs:
+    - {fileID: 1395818713058702729, guid: b511a04cffa4a7d4abc375846205882b, type: 3}
+    - {fileID: 2902114970343045663, guid: 2e653b59a7ac2664fa49cd1dcd671a74, type: 3}
+    - {fileID: 5738594806650731305, guid: a84e6e50491352b49af695f2030e9444, type: 3}
+    maxConcurrent: 1
+    respawnDelay: 5
+    fillOnStart: 1
+  - groupName: Active
+    prefabs:
+    - {fileID: 2167918261752081878, guid: a5faea058fe6b8f428fe904936ab40cc, type: 3}
+    - {fileID: 2667290322979706119, guid: 02247eb06f9aca54d8cc900cc08c0523, type: 3}
+    maxConcurrent: 1
+    respawnDelay: 5
+    fillOnStart: 1
+  - groupName: Field
+    prefabs:
+    - {fileID: 2464827901036963092, guid: 71cb38aef35412745b7633fcd373cbf3, type: 3}
+    - {fileID: 4114549932321689632, guid: 88235781471683c408e17f0d1be6014c, type: 3}
+    - {fileID: 2339528841912398717, guid: 508d0b5eb0d420646ae3d1fcb55858a7, type: 3}
+    maxConcurrent: 1
+    respawnDelay: 3
+    fillOnStart: 1
+  - groupName: Weapon
+    prefabs:
+    - {fileID: 8888579313979457346, guid: f2063e7ad1bc3484a975ed26028464f4, type: 3}
+    - {fileID: 4656205910049893236, guid: f5ae6365615f5c244ae8f788570a832c, type: 3}
+    - {fileID: 6630323124785233130, guid: aa2ac35d5ba26d041bc55a4bd7de132c, type: 3}
+    - {fileID: 8826999024464848779, guid: 33835b0015ef8e44ba01c8d81cbea382, type: 3}
+    maxConcurrent: 1
+    respawnDelay: 7
+    fillOnStart: 1
+  checkOverlap: 0
+  overlapCheckRadius: 0.5
+  overlapMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  maxPlacementAttempts: 8

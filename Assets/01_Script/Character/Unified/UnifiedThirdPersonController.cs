@@ -55,6 +55,11 @@ namespace StarterAssets
         public float JumpHeight = 1.2f;
         public float Gravity = -15.0f;
 
+        //중력 Scale 변환 시, 기존의 중력 스케일 및 점프 높이를 저장하는 변수
+        private float _originalJumpHeight;
+        private float _originalGravity;
+        private bool _gravityOverridden = false;
+
         [Space(10)]
         public float JumpTimeout = 0.50f;
         public float FallTimeout = 0.15f;
@@ -533,5 +538,30 @@ namespace StarterAssets
             if (_animator != null) _animator.speed = speed;
         }
 
+
+        //
+        public void SetGravityMultiplier(float jumpMultiplier, float gravityMultiplier)
+        {
+            if (!_gravityOverridden)
+            {
+                _originalJumpHeight = JumpHeight;
+                _originalGravity = Gravity;
+                _gravityOverridden = true;
+            }
+
+            JumpHeight = _originalJumpHeight * jumpMultiplier;
+            Gravity = _originalGravity * gravityMultiplier;
+        }
+
+        public void ResetGravity()
+        {
+            if (_gravityOverridden)
+            {
+                JumpHeight = _originalJumpHeight;
+                Gravity = _originalGravity;
+                _gravityOverridden = false;
+            }
+        }
+        //
     }
 }

@@ -57,8 +57,8 @@ GameObject:
   - component: {fileID: 7078996212245662366}
   - component: {fileID: 2705796300425117}
   - component: {fileID: 4921478634336158035}
-  - component: {fileID: 7874642000278926239}
-  - component: {fileID: -5899842000631575848}
+  - component: {fileID: -9165402719035322624}
+  - component: {fileID: -3919388257179207740}
   m_Layer: 6
   m_Name: UPlayer
   m_TagString: Player
@@ -514,8 +514,12 @@ MonoBehaviour:
   syncInterval: 0
   weaponAvailable: 0
   activeAvailable: 0
+  passiveAvailable: 0
+  fieldAvailable: 0
   weaponTimer: 0
   activeTimer: 0
+  passiveTimer: 0
+  fieldTimer: 0
 --- !u!114 &4921478634336158035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -532,7 +536,7 @@ MonoBehaviour:
   leftHandBoneName: hand_l
   addWeaponR: {fileID: 1777516416661648381}
   addWeaponL: {fileID: 4218140458038681260}
---- !u!114 &7874642000278926239
+--- !u!114 &-9165402719035322624
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -541,35 +545,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 7046033076753342609}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 359f56ae58f914f4fb8fd35ee69d8a80, type: 3}
+  m_Script: {fileID: 11500000, guid: 2da6ba53e2e698b45911e5c784072fa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
---- !u!114 &-5899842000631575848
+  useActiveKey: 113
+  pickUpKey: 101
+--- !u!114 &-3919388257179207740
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7046033076753342609}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17ab91a284870104f9be4e322ca5e809, type: 3}
+  m_Script: {fileID: 11500000, guid: a0138b45ed2faf24899aead013987edf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  weaponAvailable: 0
-  activeAvailable: 0
-  passiveAvailable: 0
-  fieldAvailable: 0
-  weaponTimer: 0
-  activeTimer: 0
-  passiveTimer: 0
-  fieldTimer: 0
 --- !u!1001 &5164279409534725719
 PrefabInstance:
   m_ObjectHideFlags: 0
