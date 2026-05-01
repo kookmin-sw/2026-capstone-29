@@ -28,6 +28,7 @@ GameObject:
   - component: {fileID: 1771822819322337452}
   - component: {fileID: 4460593995818492583}
   - component: {fileID: 1045878203879467819}
+  - component: {fileID: -3166349934330344734}
   m_Layer: 6
   m_Name: UPlayer 4
   m_TagString: Player
@@ -466,8 +467,12 @@ MonoBehaviour:
   syncInterval: 0
   weaponAvailable: 0
   activeAvailable: 0
+  passiveAvailable: 0
+  fieldAvailable: 0
   weaponTimer: 0
   activeTimer: 0
+  passiveTimer: 0
+  fieldTimer: 0
 --- !u!114 &4751666820031181241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -539,6 +544,22 @@ MonoBehaviour:
     m_Bits: 64
   canPush: 1
   strength: 1.1
+--- !u!114 &-3166349934330344734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3354428030682575210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da6ba53e2e698b45911e5c784072fa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  useActiveKey: 113
 --- !u!1 &4598386284585742397
 GameObject:
   m_ObjectHideFlags: 0

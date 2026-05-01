@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f167aa618b3f140902acb658d1ca74, type: 3}
   m_Name: SummonDagger
   m_EditorClassIdentifier: 
-  weapon: {fileID: 6873630758949736316, guid: 3f5a35d7be2e7244da313317177b8009, type: 3}
+  weapon: {fileID: 7531056829834334673, guid: 88fd3d503961150438afb4c9da9b30e1, type: 3}
   availableTime: 10

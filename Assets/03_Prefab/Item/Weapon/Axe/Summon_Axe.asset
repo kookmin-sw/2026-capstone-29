@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3f167aa618b3f140902acb658d1ca74, type: 3}
   m_Name: Summon_Axe
   m_EditorClassIdentifier: 
-  weapon: {fileID: 6002728932858688444, guid: eefde31f1aa767249a707c56c782cfdc, type: 3}
-  availableTime: 10
+  weapon: {fileID: 5544994200035857809, guid: c8f9dd236567ce6449e1f3a0cea8d630, type: 3}
+  availableTime: 100

@@ -1,4 +1,4 @@
-using Mirror;
+﻿using Mirror;
 using UnityEngine;
 
 /// <summary>
@@ -14,6 +14,11 @@ using UnityEngine;
 ///
 /// 온라인(NetworkIdentity 활성) → Mirror가 Transform을 관리하므로 SetParent 대신
 /// LateUpdate 매 프레임 GripPoint가 손 본 위치/회전을 유지하도록 월드 트랜스폼 갱신.
+///
+/// 기본 무기 숨김:
+/// <see cref="WeaponAttacher"/>가 있을 때 양손(LeftHand/RightHand) 슬롯의
+/// 기본 무기 오브젝트(addWeaponR/addWeaponL)를 Equip 시 비활성, Unequip 시 복원.
+/// WeaponAttacher의 슬롯은 enum 두 개(RightHand/LeftHand)뿐이므로 두 슬롯만 검사하면 충분.
 /// </summary>
 public class UnifiedWeaponEquipHandler : MonoBehaviour
 {
@@ -42,6 +47,10 @@ public class UnifiedWeaponEquipHandler : MonoBehaviour
     [Tooltip("Idle ↔ Charge 전환 시 보간 시간(초). 0이면 즉시 전환.")]
     [SerializeField] private float chargeBlendDuration = 0.1f;
 
+    [Header("기본 무기 숨김")]
+    [Tooltip("장착 중 양손(R/L) 슬롯의 기본 무기를 비활성화할지 (WeaponAttacher 필요).")]
+    [SerializeField] private bool hideDefaultOnEquip = true;
+
     // 추적 대상 본/소켓
     [SerializeField] private Transform followTarget;
 
@@ -64,6 +73,10 @@ public class UnifiedWeaponEquipHandler : MonoBehaviour
     // Charge 상태 및 보간 블렌드값 (0=Idle, 1=Charge)
     private bool _isCharging;
     private float _chargeBlend;
+
+    // 숨긴 기본 무기 핸들 (양손) — Unequip 시 복원
+    private GameObject _hiddenLeftDefault;
+    private GameObject _hiddenRightDefault;
 
     /// <summary>
     /// Charge 상태 설정. UnifiedBowAnimationController.ApplyPull에서 호출됨.
@@ -157,10 +170,11 @@ public class UnifiedWeaponEquipHandler : MonoBehaviour
             }
         }
 
-        // ※ followTarget이 손 본일 경우 자식에 손가락 본이 있을 수 있어
-        //    여기서 형제 자동 비활성화는 하지 않는다.
-        //    기본 무기(검·방패) 비활성화는 무기 측 스크립트(UnifiedWeaponBow 등)가
-        //    WeaponAttacher 참조를 통해 정확히 두 개만 처리한다.
+        // 기본 무기 숨김 (양손) — WeaponAttacher가 있을 때만
+        if (hideDefaultOnEquip)
+        {
+            HideDefaultWeapons(owner);
+        }
 
         // GripPoint 로컬 오프셋 캐싱 (무기 루트 기준)
         if (gripPoint != null)
@@ -190,6 +204,38 @@ public class UnifiedWeaponEquipHandler : MonoBehaviour
     }
 
     /// <summary>
+    /// WeaponAttacher를 찾아 양손(LeftHand/RightHand) 슬롯의 기본 무기를 비활성화.
+    /// WeaponAttacher의 GetDefaultWeapon은 addWeaponR/addWeaponL.gameObject를 반환하므로
+    /// 슬롯에 기본 무기 Transform이 할당된 슬롯만 끄게 된다.
+    /// </summary>
+    private void HideDefaultWeapons(GameObject owner)
+    {
+        WeaponAttacher attacher = owner.GetComponent<WeaponAttacher>();
+        if (attacher == null) attacher = owner.GetComponentInChildren<WeaponAttacher>();
+        if (attacher == null) return;
+
+        _hiddenRightDefault = TryHideSlot(attacher, WeaponSlot.RightHand);
+        _hiddenLeftDefault = TryHideSlot(attacher, WeaponSlot.LeftHand);
+    }
+
+    private GameObject TryHideSlot(WeaponAttacher attacher, WeaponSlot slot)
+    {
+        GameObject defaultObj = attacher.GetDefaultWeapon(slot);
+        if (defaultObj == null) return null;
+
+        // 자기 자신(또는 자기 자신의 부모/조상)이 default로 잡힌 경우 끄지 않는다.
+        // 새 무기 자체를 끄면 즉시 사라져 장착 자체가 무의미해진다.
+        if (defaultObj == gameObject) return null;
+        if (transform.IsChildOf(defaultObj.transform)) return null;
+
+        // 이미 비활성이면 우리가 켜버리는 사고를 막기 위해 복원 대상에서 제외.
+        if (!defaultObj.activeSelf) return null;
+
+        defaultObj.SetActive(false);
+        return defaultObj;
+    }
+
+    /// <summary>
     /// 현재 followTarget의 자식으로 있다는 가정 하에
     /// GripPoint가 followTarget 원점에 오도록 localPosition/localRotation을 설정.
     /// attachPositionOffset/attachRotationOffset + Charge 블렌드된 델타가 추가 적용된다.
@@ -215,6 +261,18 @@ public class UnifiedWeaponEquipHandler : MonoBehaviour
 
         if (cachedView != null && originalRightHitbox != null)
             cachedView.rightHandHitbox = originalRightHitbox;
+
+        // 양손 기본 무기 복원 (한쪽만 비어있어도 안전)
+        if (_hiddenRightDefault != null)
+        {
+            _hiddenRightDefault.SetActive(true);
+            _hiddenRightDefault = null;
+        }
+        if (_hiddenLeftDefault != null)
+        {
+            _hiddenLeftDefault.SetActive(true);
+            _hiddenLeftDefault = null;
+        }
 
         if (_useSetParent && transform != null)
             transform.SetParent(_originalParent, worldPositionStays: true);

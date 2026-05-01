@@ -78,18 +78,31 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
         }
         else if (item.CompareTag("Active"))
         {
-            im.active = itemAsset as IActive;
+            IActive activeAsset = itemAsset as IActive;
+            im.active = activeAsset;
+            if (activeAsset != null) im.activeAvailable = activeAsset.AvailableTime;
             im.GetActive();
-            if (im.active != null) im.activeAvailable = im.active.AvailableTime;
         }
         else if (item.CompareTag("Passive"))
         {
-            im.passive = itemAsset as IPassive;
-            im.GetPassive();
+            IPassive passiveAsset = itemAsset as IPassive;
+            im.passive = passiveAsset;
+            if (passiveAsset != null) im.passiveAvailable = passiveAsset.AvailableTime;
+            im.GetPassive();  // 플래그는 마지막에 세팅 (Update에서 자동 발동 트리거)
         }
         else if (item.CompareTag("Field"))
         {
-            // 필드 아이템 처리 (후속 작업)
+            IField fieldAsset = itemAsset as IField;
+            if (fieldAsset == null)
+            {
+                Debug.LogError("[UnifiedSetItem] Field 태그인데 itemAsset이 IField가 아님.");
+            }
+            else
+            {
+                im.field = fieldAsset;
+                im.fieldAvailable = fieldAsset.AvailableTime;
+                im.GetField();  // 마지막에 플래그 세팅 → Update가 자동 발동
+            }
         }
     }
 
@@ -112,14 +125,31 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
         }
         else if (item.CompareTag("Active"))
         {
-            im.active = itemAsset as IActive;
+            IActive activeAsset = itemAsset as IActive;
+            im.active = activeAsset;
+            if (activeAsset != null) im.activeAvailable = activeAsset.AvailableTime;
             im.GetActive();
-            if (im.active != null) im.activeAvailable = im.active.AvailableTime;
         }
         else if (item.CompareTag("Passive"))
         {
-            im.passive = itemAsset as IPassive;
+            IPassive passiveAsset = itemAsset as IPassive;
+            im.passive = passiveAsset;
+            if (passiveAsset != null) im.passiveAvailable = passiveAsset.AvailableTime;
             im.GetPassive();
+        }
+        else if (item.CompareTag("Field"))
+        {
+            IField fieldAsset = itemAsset as IField;
+            if (fieldAsset == null)
+            {
+                Debug.LogError("[UnifiedSetItem] Field 태그인데 itemAsset이 IField가 아님.");
+            }
+            else
+            {
+                im.field = fieldAsset;
+                im.fieldAvailable = fieldAsset.AvailableTime;
+                im.GetField();
+            }
         }
     }
 
@@ -140,7 +170,7 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
             Debug.Log("무기 감지.");
             IWeapon weaponAsset = itemAsset as IWeapon;
             if (unified != null) { unified.weapon = weaponAsset; unified.GetWeapon(); }
-            else                 { legacy.weapon  = weaponAsset; legacy.GetWeapon();  }
+            else { legacy.weapon = weaponAsset; legacy.GetWeapon(); }
 
             if (weaponAsset != null)
             {
@@ -150,7 +180,7 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
                 if (ipw != null) ipw.SetUser(user);
 
                 if (unified != null) unified.weaponAvailable = weaponAsset.AvailableTime();
-                else                 legacy.weaponAvailable  = weaponAsset.AvailableTime();
+                else legacy.weaponAvailable = weaponAsset.AvailableTime();
             }
 
             RpcOnWeaponEquipped(user);
@@ -158,18 +188,57 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
         else if (item.CompareTag("Active"))
         {
             IActive activeAsset = itemAsset as IActive;
-            if (unified != null) { unified.active = activeAsset; unified.GetActive(); if (activeAsset != null) unified.activeAvailable = activeAsset.AvailableTime; }
-            else                 { legacy.active  = activeAsset; legacy.GetActive();  if (activeAsset != null) legacy.activeAvailable  = activeAsset.AvailableTime; }
+            if (unified != null)
+            {
+                unified.active = activeAsset;
+                if (activeAsset != null) unified.activeAvailable = activeAsset.AvailableTime;
+                unified.GetActive();
+            }
+            else
+            {
+                legacy.active = activeAsset;
+                if (activeAsset != null) legacy.activeAvailable = activeAsset.AvailableTime;
+                legacy.GetActive();
+            }
         }
         else if (item.CompareTag("Passive"))
         {
             IPassive passiveAsset = itemAsset as IPassive;
-            if (unified != null) { unified.passive = passiveAsset; unified.GetPassive(); }
-            else                 { legacy.passive  = passiveAsset; legacy.GetPassive();  }
+            if (unified != null)
+            {
+                unified.passive = passiveAsset;
+                if (passiveAsset != null) unified.passiveAvailable = passiveAsset.AvailableTime;
+                unified.GetPassive();  // 플래그는 마지막에 (Update에서 자동 발동 트리거)
+            }
+            else
+            {
+                legacy.passive = passiveAsset;
+                if (passiveAsset != null) legacy.passiveAvailable = passiveAsset.AvailableTime;
+                legacy.GetPassive();
+            }
         }
         else if (item.CompareTag("Field"))
         {
-            // 필드 아이템 처리
+            IField fieldAsset = itemAsset as IField;
+            if (fieldAsset == null)
+            {
+                Debug.LogError("[UnifiedSetItem] Field 태그인데 itemAsset이 IField가 아님.");
+            }
+            else
+            {
+                if (unified != null)
+                {
+                    unified.field = fieldAsset;
+                    unified.fieldAvailable = fieldAsset.AvailableTime;
+                    unified.GetField();
+                }
+                else
+                {
+                    legacy.field = fieldAsset;
+                    legacy.fieldAvailable = fieldAsset.AvailableTime;
+                    legacy.GetField();
+                }
+            }
         }
 
         // 필드 아이템 오브젝트 제거
