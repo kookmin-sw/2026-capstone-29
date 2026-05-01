@@ -21,6 +21,12 @@ public class InGameUIManger : MonoBehaviour
     public Image p2CurrentBar;
     public Image p2DelayBar;
 
+    [Header("Lives UI Setting")]
+    public Image[] p1LifeIcons;
+    public Image[] p2LifeIcons;
+    public Sprite lifeActiveSprite; // 남은 목숨
+    public Sprite lifeDeadSprite; // 죽은 목숨
+
     [Header("HealthBar Anim")]
     public float delayTime = 0.5f; // 닳기 시작까지 대기 시간
     public float drainSpeed = 1.0f; // 닳는 속도
@@ -48,6 +54,15 @@ public class InGameUIManger : MonoBehaviour
         }
     }
 
+    // 각 플레이어 목숨 초기 등록
+    public void RegisterLives(int playerIndex, int maxLives, int currentLives)
+    {
+        Image[] icons = playerIndex == 1 ? p1LifeIcons : p2LifeIcons;
+        if(icons == null) return;
+        UpdateLivesUI(icons, currentLives);
+    }
+
+
     // 게임 매니저 OnHealhChanged에 연결해 이용 - 체력 변경
     public void OnP1HealthChanged(float newHealth)
     {
@@ -66,6 +81,31 @@ public class InGameUIManger : MonoBehaviour
         if (p2DrainCoroutine != null) StopCoroutine(p2DrainCoroutine);
         p2DrainCoroutine = StartCoroutine(DrainDelayed(p2DelayBar, fill));
     }
+
+    // 목숨 변경 시 콜백 함수
+    public void OnP1LivesChanged(int newLives)
+    {
+        UpdateLivesUI(p1LifeIcons, newLives);
+    }
+
+    public void OnP2LivesChanged(int newLives)
+    {
+        UpdateLivesUI(p2LifeIcons, newLives);
+    }
+
+    // 목숨 변경 시 UI 반영
+    private void UpdateLivesUI(Image[] icons, int remainingLives)
+    {
+        if (icons == null) return;
+        
+        for (int i = 0; i < icons.Length; i++)
+        {
+            if (icons[i] == null) continue;
+            // 인덱스가 남은 목숨 수보다 작으면 활성(살아있는 하트), 아니면 소진
+            icons[i].sprite = i < remainingLives ? lifeActiveSprite : lifeDeadSprite;
+        }
+    }
+
 
     // 닳는 효과 코루틴
     private IEnumerator DrainDelayed(Image bar, float targetFill) 

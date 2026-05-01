@@ -360,13 +360,19 @@ public class NetworkGameManger : NetworkBehaviour
         {
             player1 = model;
             uiManager?.RegisterHealthBar(1, model.CurrentHealth); // ui 매니저를 통해 체력바 등록
+            uiManager?.RegisterLives(1, (model as UnifiedCharacterModel)?.maxLives ?? 1, model.RemainingLives);
+
             player1.OnHealthChanged += uiManager.OnP1HealthChanged; // 체력바 변경 관리
+            player1.OnLivesChanged += uiManager.OnP1LivesChanged; // 목숨 변경 이벤트 구독
         }
         else if(player2 == null)
         {
             player2 = model;
             uiManager?.RegisterHealthBar(2, model.CurrentHealth);
+            uiManager?.RegisterLives(2, (model as UnifiedCharacterModel)?.maxLives ?? 1, model.RemainingLives);
+
             player2.OnHealthChanged += uiManager.OnP2HealthChanged;
+            player2.OnLivesChanged += uiManager.OnP2LivesChanged; // 목숨 변경 이벤트 구독
         }
     }
 
