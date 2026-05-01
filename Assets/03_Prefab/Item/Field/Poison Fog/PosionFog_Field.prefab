@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8591959946894287926}
-  - component: {fileID: 3640795114441215275}
   - component: {fileID: 8728744114424484992}
   - component: {fileID: 8400015361815401627}
+  - component: {fileID: -9131747313509832101}
   m_Layer: 0
-  m_Name: PosionFog
+  m_Name: PosionFog_Field
   m_TagString: Field
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 2339528841912398717}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -32.659946, y: 48.426624, z: 2.3696532}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -36,22 +36,6 @@ Transform:
   - {fileID: 4050341553381315428}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3640795114441215275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2339528841912398717}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea4638f2ea7504d4aad15dc3c64c3f14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  itemAsset: {fileID: 11400000, guid: 3d0ff58f56ead3a4da1494453998119f, type: 2}
 --- !u!135 &8728744114424484992
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -90,6 +74,22 @@ MonoBehaviour:
   serverOnly: 0
   visibility: 0
   hasSpawned: 0
+--- !u!114 &-9131747313509832101
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2339528841912398717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3647a30c2bdaae409775dc292c8dbbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  itemAsset: {fileID: 11400000, guid: 3d0ff58f56ead3a4da1494453998119f, type: 2}
 --- !u!1001 &2899597767181395868
 PrefabInstance:
   m_ObjectHideFlags: 0

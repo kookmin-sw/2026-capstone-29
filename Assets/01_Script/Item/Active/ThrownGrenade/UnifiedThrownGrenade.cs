@@ -3,11 +3,11 @@ using UnityEngine;
 
 /// <summary>
 /// 연막탄(연막 구체) 본체.
-/// - 온라인: 기존 <see cref="ThrownGrenade"/>과 동일. SyncVar로 파라미터 동기화, 서버에서만 NetworkServer.Destroy.
+/// - 온라인: SyncVar로 파라미터 동기화, 서버에서만 NetworkServer.Destroy.
 /// - 오프라인: SyncVar는 단순 필드처럼 동작. OnStartClient/OnStartServer가 호출되지 않으므로 Awake에서 초기화.
 ///   파괴는 본인이 Destroy.
 ///
-/// 분기는 (1) 초기화 진입점, (2) 수명 만료 시 Destroy 채널 두 군데에서만.
+/// 분기는 (1) 초기화 진입점, (2) 수명 만료 시 Destroy 채널 두 군데에서만 처리.
 /// </summary>
 public class UnifiedThrownGrenade : NetworkBehaviour
 {
@@ -42,9 +42,8 @@ public class UnifiedThrownGrenade : NetworkBehaviour
 
     private bool _initialized;
 
-    // -----------------------------
+
     // 초기화 진입점
-    // -----------------------------
     private void Awake()
     {
         // 오프라인: NetworkBehaviour의 OnStart 콜백이 호출되지 않으므로 여기서 초기화
@@ -128,7 +127,7 @@ public class UnifiedThrownGrenade : NetworkBehaviour
             transform.localScale = Vector3.one * maxRadius * 2f;
         }
 
-        // === 소멸 단계 ===
+        // 소멸 단계
         float fadeStart = lifetime - fadeDuration;
         if (elapsedTime >= fadeStart && elapsedTime < lifetime)
         {
@@ -157,7 +156,7 @@ public class UnifiedThrownGrenade : NetworkBehaviour
             return;
         }
 
-        // === 카메라 내부 감지 (클라이언트 로컬) ===
+        // 카메라 내부 감지 (클라이언트 로컬)
         if (mainCam != null && SmokeFogController.Instance != null)
         {
             float dist = Vector3.Distance(mainCam.transform.position, transform.position);

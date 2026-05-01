@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8939377847693686623}
-  - component: {fileID: 2335146843816326578}
   - component: {fileID: 2911249116825023033}
   - component: {fileID: 6184491618255921969}
+  - component: {fileID: -612567035375950044}
   m_Layer: 0
-  m_Name: Gravity Controller
+  m_Name: Gravity Controller_Field
   m_TagString: Field
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,22 +36,6 @@ Transform:
   - {fileID: 6687812779956547762}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2335146843816326578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2464827901036963092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea4638f2ea7504d4aad15dc3c64c3f14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  itemAsset: {fileID: 11400000, guid: 28996c6f4b540a64da44a68dd7e5f817, type: 2}
 --- !u!114 &2911249116825023033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,6 +74,22 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-612567035375950044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2464827901036963092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3647a30c2bdaae409775dc292c8dbbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  itemAsset: {fileID: 11400000, guid: 28996c6f4b540a64da44a68dd7e5f817, type: 2}
 --- !u!1001 &4745301719246522307
 PrefabInstance:
   m_ObjectHideFlags: 0

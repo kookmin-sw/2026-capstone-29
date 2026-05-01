@@ -5,14 +5,6 @@ using UnityEngine;
 /// 근접 무기 본체.
 /// - 온라인: 기존 <see cref="WeaponMelee"/>와 동일. 서버 권위로 수명·던지기 처리, RPC로 클라이언트 동기화.
 /// - 오프라인: 서버/RPC 없이 본인이 모두 처리. SyncVar는 그냥 일반 필드처럼 동작.
-///
-/// SyncVar 자체는 오프라인에서 무해(단순 필드)이므로 그대로 둔다.
-/// 분기는 (1) 권위 판정(`hasAuthority`), (2) 입력 권한(`isOwned` vs 오프라인은 본인),
-/// (3) 동기화 채널(Cmd/Rpc vs 로컬 호출) 세 군데에서만 한다.
-///
-/// <see cref="UnifiedWeaponEquipHandler"/>와 호환:
-/// 새 Handler는 Equip(GameObject, Transform) 또는 Equip(GameObject, string)을 요구하므로
-/// 손 본을 결정해 넘겨준다. WeaponAttacher + WeaponSlot 우선, 실패 시 본 경로 fallback.
 /// </summary>
 public class UnifiedWeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
 {
@@ -70,9 +62,7 @@ public class UnifiedWeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
         }
     }
 
-    // -----------------------------
-    // IPlayerWeapon — 무기 사용자 지정 (UnifiedSetItem이 호출)
-    // -----------------------------
+   //무기 사용자 지정 - UnifiedSetItem이 호출한다.
     public void SetUser(GameObject user)
     {
         owner = user;
@@ -105,15 +95,14 @@ public class UnifiedWeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
         EquipHandler(user);
     }
 
-    // -----------------------------
+
     // 장착 호출: WeaponAttacher + WeaponSlot 우선, 실패 시 본 경로 fallback
-    // -----------------------------
     private void EquipHandler(GameObject user)
     {
         UnifiedWeaponEquipHandler handler = GetComponent<UnifiedWeaponEquipHandler>();
         if (handler == null) return;
 
-        // 1) WeaponAttacher 우선 시도
+        // WeaponAttacher 우선 시도
         WeaponAttacher attacher = user.GetComponent<WeaponAttacher>();
         if (attacher == null) attacher = user.GetComponentInChildren<WeaponAttacher>();
 
@@ -128,7 +117,7 @@ public class UnifiedWeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
             Debug.LogWarning($"[UnifiedWeaponMelee] WeaponAttacher가 슬롯 {attachSlot}에 본을 가지고 있지 않음 → fallback 시도.");
         }
 
-        // 2) 본 경로 fallback
+        // 본 경로 fallback
         if (!string.IsNullOrEmpty(boneFallbackPath))
         {
             handler.Equip(user, boneFallbackPath);
@@ -144,15 +133,13 @@ public class UnifiedWeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
         if (handler != null) handler.Unequip();
     }
 
-    // -----------------------------
+
     // IWeaponHitBox
-    // -----------------------------
     public void SetOwner(GameObject user) { owner = user; }
     public GameObject GetOwner() { return owner; }
-
-    // -----------------------------
-    // Update : 비행 이동 + 수명 타이머 + 입력
-    // -----------------------------
+    
+    
+    //던졌을 때 오브젝트 이동 처리, 라이프타이머 관리
     private void Update()
     {
         // 비행 이동은 SyncVar로 동기화되므로 모든 클라이언트가 동일하게 계산
@@ -190,7 +177,7 @@ public class UnifiedWeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
         }
     }
 
-    /// <summary>인터페이스 진입점. StarterAssetsInputs 등 외부에서 호출.</summary>
+    // StarterAssetsInputs 등 외부에서 호출.
     public void ThrowWeapon()
     {
         if (isThrown) return;
@@ -202,9 +189,7 @@ public class UnifiedWeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
         RequestThrow(direction);
     }
 
-    // -----------------------------
-    // 던지기 진입점 (오프라인 즉시 실행 / 온라인 Cmd)
-    // -----------------------------
+    // 던지기 (오프라인 즉시 실행 / 온라인 Cmd)
     private void RequestThrow(Vector3 direction)
     {
         if (AuthorityGuard.IsOffline)
@@ -258,7 +243,7 @@ public class UnifiedWeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
     [ClientRpc]
     private void RpcOnThrown(Vector3 direction) => OnThrownLocal(direction);
 
-    /// <summary>던진 직후 시각/히트박스 처리. 온라인은 RPC, 오프라인은 직접 호출.</summary>
+    // 던진 직후 시각/히트박스 처리. 온라인은 RPC, 오프라인은 직접 호출.
     private void OnThrownLocal(Vector3 direction)
     {
         isThrown = true;
@@ -269,10 +254,8 @@ public class UnifiedWeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
 
         transform.rotation = Quaternion.LookRotation(direction);
     }
-
-    // -----------------------------
+     
     // 수명 만료 시 장착 해제 알림
-    // -----------------------------
     private void NotifyUnequip()
     {
         if (AuthorityGuard.IsOffline)

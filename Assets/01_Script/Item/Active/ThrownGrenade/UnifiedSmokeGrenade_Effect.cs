@@ -3,9 +3,6 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// ScriptableObject 기반 액티브 아이템 (연막탄). <see cref="SmokeGrenade_Effect"/>의 Unified 버전.
-/// IActive를 구현하며, UnifiedItemManager가 StartCoroutine으로 Activate를 실행한다.
-///
 /// 동작 흐름:
 ///   1) Activate 호출 → owner 위치에 수류탄 비주얼 소환 + 포물선 투척
 ///   2) 착탄 시점 1차 연막 + secondaryDelay 후 정사면체 꼭짓점 4곳에 2차 연막 4개 소환
@@ -13,8 +10,7 @@ using UnityEngine;
 ///
 /// 온/오프라인 분기:
 ///   - 온라인: 기존 동작 유지. NetworkServer.Spawn으로 등록.
-///   - 오프라인: NetworkServer.active == false이므로 단순 Instantiate +
-///     NetworkIdentity 비활성(HardenOfflineObject)으로 Mirror 간섭 차단.
+///   - 오프라인: NetworkServer.active == false이므로 단순 Instantiate 적용 및 NetworkIdentity 비활성(HardenOfflineObject)으로 Mirror 간섭 차단.
 /// </summary>
 [CreateAssetMenu(menuName = "Item/Active/SmokeGrenade/UnifiedEffect")]
 public class UnifiedSmokeGrenade_Effect : ScriptableObject, IActive
@@ -46,9 +42,6 @@ public class UnifiedSmokeGrenade_Effect : ScriptableObject, IActive
     [Tooltip("연막 효과 프리팹 (UnifiedThrownGrenade 또는 ThrownGrenade 컴포넌트 보유)")]
     [SerializeField] private GameObject smokePrefab;
 
-    // ── 인스턴스별 런타임 상태 ──
-    // ScriptableObject는 공유 에셋이므로 동시 사용 시 충돌 가능.
-    // 멀티 플레이어 환경에서는 owner별 Dictionary로 관리하는 것을 권장.
     private GameObject thrownGrenadeInstance;
 
     public float AvailableTime => duration;
@@ -140,9 +133,7 @@ public class UnifiedSmokeGrenade_Effect : ScriptableObject, IActive
         }
     }
 
-    // -----------------------------
-    // 수류탄 비주얼 스폰 (오프/온라인 공용)
-    // -----------------------------
+    //수류탄 이펙트
     private GameObject SpawnThrownGrenade(GameObject owner)
     {
         Vector3 startPos = owner.transform.position + owner.transform.up * 1.5f;
@@ -216,9 +207,7 @@ public class UnifiedSmokeGrenade_Effect : ScriptableObject, IActive
         return grenadeObj;
     }
 
-    // -----------------------------
-    // 1차 소환 위치 계산
-    // -----------------------------
+    //1차 소환위치 
     private Vector3 CalculatePrimaryPosition(Transform ownerTransform)
     {
         return ownerTransform.position
@@ -227,9 +216,7 @@ public class UnifiedSmokeGrenade_Effect : ScriptableObject, IActive
              + ownerTransform.right * spawnOffset.x;
     }
 
-    // -----------------------------
-    // 연막 오브젝트 스폰 (오프/온라인 공용)
-    // -----------------------------
+    //연막 오브젝트
     private void SpawnSmoke(Vector3 position, GameObject owner)
     {
         if (AuthorityGuard.IsOffline)
@@ -253,8 +240,6 @@ public class UnifiedSmokeGrenade_Effect : ScriptableObject, IActive
         {
             smokeObj = new GameObject("UnifiedThrownGrenade_Runtime");
             smokeObj.transform.position = position;
-            // 오프라인에서는 UnifiedThrownGrenade가 NetworkBehaviour라서 NetworkIdentity 필요할 수 있음
-            // → HardenOfflineObject에서 NetworkIdentity 비활성화
             if (smokeObj.GetComponent<UnifiedThrownGrenade>() == null)
                 smokeObj.AddComponent<UnifiedThrownGrenade>();
         }
@@ -298,9 +283,7 @@ public class UnifiedSmokeGrenade_Effect : ScriptableObject, IActive
         NetworkServer.Spawn(smokeObj);
     }
 
-    /// <summary>
     /// UnifiedThrownGrenade 우선, 없으면 legacy ThrownGrenade에 파라미터 주입.
-    /// </summary>
     private void InjectSmokeParameters(GameObject smokeObj)
     {
         UnifiedThrownGrenade uSmoke = smokeObj.GetComponent<UnifiedThrownGrenade>();
@@ -320,10 +303,7 @@ public class UnifiedSmokeGrenade_Effect : ScriptableObject, IActive
             legacySmoke.lifetime = smokeLifetime;
         }
     }
-
-    // -----------------------------
-    // 정사면체 꼭짓점 계산
-    // -----------------------------
+    //정사면체 꼭짓점 계산
     private static Vector3[] GetTetrahedronVertices(Vector3 center, float edge)
     {
         // 외접구 반지름
@@ -349,9 +329,7 @@ public class UnifiedSmokeGrenade_Effect : ScriptableObject, IActive
         return verts;
     }
 
-    // -----------------------------
-    // 오프라인 하드닝 헬퍼 (UnifiedSetItem과 동일 패턴)
-    // -----------------------------
+    // 온라인과 오프라인 분기에서의 처리 관리
     private static void HardenOfflineObject(GameObject obj)
     {
         if (obj == null) return;

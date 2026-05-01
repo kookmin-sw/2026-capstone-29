@@ -2,8 +2,14 @@
 using Mirror;
 using StarterAssets;
 
-// 중력변환장치 효과.
-// 스폰 시 모든 플레이어의 중력 배율을 변경하고, 파괴 시 원래 값으로 복원한다.
+/// <summary>
+/// 중력변환장치 효과 처리 담당
+/// 스폰 시 모든 플레이어의 중력 배율을 변경하고, 파괴 시 원래 값으로 복원한다.
+
+/// - 권위 판정: isServer → AuthorityGuard.IsOffline || isServer
+/// - 오프라인은 RPC 없이 본인이 ApplyGravityLocal/RestoreGravityLocal 직접 호출
+/// - 온라인은 서버 적용 + RpcApplyGravity로 전파
+/// </summary>
 public class GravityController_Effect : FieldEffect
 {
     [Header("점프 배율 설정")]
@@ -16,12 +22,14 @@ public class GravityController_Effect : FieldEffect
 
     private bool _applied = false;
 
+    private bool HasAuthority => AuthorityGuard.IsOffline || isServer;
+
     public override void Initialize(float duration)
     {
-        Debug.Log("효과 발동!");
+        Debug.Log("[GravityController] 효과 발동!");
         base.Initialize(duration);
 
-        if (!isServer) return;
+        if (!HasAuthority) return;
 
         ApplyGravityToAll(jumpHeightMultiplier, gravityMultiplier);
         _applied = true;
@@ -33,19 +41,27 @@ public class GravityController_Effect : FieldEffect
         RestoreGravityLocal();
     }
 
-    // 서버에서 모든 플레이어를 찾아 중력 배율을 적용한다. ClientRpc로 각 클라이언트에도 동일하게 적용.
-    [Server]
     private void ApplyGravityToAll(float jumpHeightMultiplier, float gravityMultiplier)
     {
-        RpcApplyGravity(jumpHeightMultiplier, gravityMultiplier);
+        if (AuthorityGuard.IsOffline)
+        {
+            ApplyGravityLocal(jumpHeightMultiplier, gravityMultiplier);
+            return;
+        }
 
+        RpcApplyGravity(jumpHeightMultiplier, gravityMultiplier);
         // 서버 자신도 호스트 플레이어가 있을 수 있으므로 로컬 적용
         ApplyGravityLocal(jumpHeightMultiplier, gravityMultiplier);
     }
 
-    [Server]
     private void RestoreGravityOnAll()
     {
+        if (AuthorityGuard.IsOffline)
+        {
+            RestoreGravityLocal();
+            return;
+        }
+
         RpcRestoreGravity();
         RestoreGravityLocal();
     }

@@ -2,8 +2,6 @@
 using UnityEngine;
 
 /// <summary>
-/// 화살 중력 통합판. <see cref="ScaleArrow"/>를 기반으로, 온/오프라인 모두 중력 적용.
-///
 /// - 온라인: 서버에서만 물리 처리 (NetworkTransform이 클라이언트에 동기화).
 /// - 오프라인: 본인이 물리 처리.
 /// </summary>

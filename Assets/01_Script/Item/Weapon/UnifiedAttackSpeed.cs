@@ -5,7 +5,7 @@ using UnityEngine;
 
 /// <summary>
 /// 근접 무기 등 아이템이 활성화된 동안 소유자의 애니메이션 속도를 조절.
-/// - 온라인: 기존 <see cref="AttackSpeed"/>와 동일. 서버에서 적용 → RPC 전파.
+/// - 온라인: 서버에서 적용 → RPC 전파.
 /// - 오프라인: 서버/RPC 없이 본인만 바로 적용/해제.
 ///
 /// duration 을 안전장치로 두어 외부 호출이 누락돼도 자동 해제.
@@ -62,10 +62,9 @@ public class UnifiedAttackSpeed : NetworkBehaviour
 
         RemoveServer();
     }
+     
 
-    // -----------------------------
     // 온라인 (서버 권위)
-    // -----------------------------
     [Server]
     private void ApplyToServer(GameObject owner)
     {
@@ -117,9 +116,7 @@ public class UnifiedAttackSpeed : NetworkBehaviour
         _buffedOwner = null;
     }
 
-    // -----------------------------
     // 오프라인 경로
-    // -----------------------------
     private void ApplyToLocal(GameObject owner)
     {
         _applied = true;
@@ -147,10 +144,8 @@ public class UnifiedAttackSpeed : NetworkBehaviour
         }
         _buffedOwner = null;
     }
-
-    // -----------------------------
+     
     // 안전장치 (온라인은 서버에서, 오프라인은 본인이 실행)
-    // -----------------------------
     private IEnumerator DurationSafeguard()
     {
         yield return new WaitForSeconds(duration);
@@ -162,9 +157,7 @@ public class UnifiedAttackSpeed : NetworkBehaviour
         }
     }
 
-    // -----------------------------
     // RPC (온라인 전용)
-    // -----------------------------
     [ClientRpc]
     private void RpcApply(NetworkIdentity ownerIdentity)
     {
@@ -181,9 +174,8 @@ public class UnifiedAttackSpeed : NetworkBehaviour
         RemoveLocally(ownerIdentity.gameObject);
     }
 
-    // -----------------------------
+
     // 실제 값 적용/복원 (온/오프라인 공용)
-    // -----------------------------
     private void ApplyLocally(GameObject owner)
     {
         if (owner == null) return;

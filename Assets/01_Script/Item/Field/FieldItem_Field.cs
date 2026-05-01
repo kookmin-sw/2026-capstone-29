@@ -3,9 +3,8 @@ using Mirror;
 using UnityEngine;
 
 /*
-    ScriptableObject 기반 필드 아이템 템플릿.
-    "장판 프리팹을 일정 시간 동안 맵에 띄워둔다"가 공통 동작.
-    실제 효과(플레이어 감지, 데미지/버프 적용 등)는 장판 프리팹 자체(NetworkBehaviour)가 책임진다.
+    "오브젝트를 일정 시간 동안 맵에 띄워둔다"가 공통 동작.
+    실제 효과(플레이어 감지, 데미지/버프 적용 등)는 생성 오브젝트가 책임진다.
 
     라이프사이클:
     1) 필드의 픽업 오브젝트 SetItem이 이 에셋을 ItemManager.field에 주입
@@ -13,11 +12,6 @@ using UnityEngine;
     3) Activate가 fieldPrefab을 NetworkServer.Spawn
     4) duration 경과 → 장판 Destroy → 코루틴 종료
        또는 ItemManager 타이머 만료 → OnDeactivate에서 장판 강제 정리
-
-    실제 아이템을 만들 때:
-    - 이 클래스를 상속하거나 그대로 사용
-    - 인스펙터에서 fieldPrefab(NetworkServer.Spawn 가능한 NetworkIdentity 가진 프리팹) 지정
-    - 장판 프리팹 자체에 FieldEffectBase 상속 컴포넌트를 붙여 효과 정의
 */
 [CreateAssetMenu(menuName = "Item/Field/Templete")]
 public class FieldItem_Field : ScriptableObject, IField
@@ -26,7 +20,7 @@ public class FieldItem_Field : ScriptableObject, IField
     [SerializeField] private float duration = 10f;
 
     [Header("장판 프리팹 (NetworkIdentity 필수)")]
-    [Tooltip("Mirror 등록된 스폰 가능 프리팹. FieldEffectBase 상속 컴포넌트가 효과를 담당.")]
+    [Tooltip("Mirror 등록된 스폰 가능 프리팹. FieldEffect 상속 컴포넌트가 효과를 담당.")]
     [SerializeField] private GameObject fieldPrefab;
 
     [Header("스폰 위치 설정")]
@@ -36,7 +30,6 @@ public class FieldItem_Field : ScriptableObject, IField
     public float AvailableTime => duration;
 
     // 현재 활성화된 장판 인스턴스 (OnDeactivate에서 회수용)
-    // 같은 SO 에셋이 동시에 여러 번 발동될 가능성은 낮지만, 그래도 단일 참조로 관리.
     private GameObject _spawnedField;
 
     public virtual IEnumerator Activate()
@@ -49,23 +42,38 @@ public class FieldItem_Field : ScriptableObject, IField
             yield break;
         }
 
-        // 장판 스폰 (서버 권위)
+        // 권위가 있을 때만 스폰: 온라인은 서버, 오프라인은 본인
+        bool canSpawn = AuthorityGuard.IsOffline || NetworkServer.active;
+        if (!canSpawn)
+        {
+            Debug.LogWarning($"[FieldItem] {name}: 서버가 아니거나 오프라인 모드가 아님. 스폰 스킵.");
+            yield break;
+        }
+
         Vector3 pos = GetSpawnPosition();
         _spawnedField = Instantiate(fieldPrefab, pos, Quaternion.identity);
 
-        // NetworkIdentity 있으면 서버 스폰. 없으면 일반 인스턴스 (싱글플레이 폴백).
-        if (_spawnedField.GetComponent<NetworkIdentity>() != null && NetworkServer.active)
+        if (AuthorityGuard.IsOffline)
         {
-            Debug.Log("스폰!");
+            HardenOfflineObject(_spawnedField);
+        }
+        else if (_spawnedField.GetComponent<NetworkIdentity>() != null && NetworkServer.active)
+        {
+            Debug.Log("[FieldItem] 스폰!");
             NetworkServer.Spawn(_spawnedField);
         }
 
-            // 장판이 자기 수명을 알 수 있도록 duration 알려주기 (선택적)
+        yield return null;
+
+        if (_spawnedField != null)
+        {
             FieldEffect effect = _spawnedField.GetComponent<FieldEffect>();
-        if (effect != null) effect.Initialize(duration);
+            if (effect != null) effect.Initialize(duration);
+        }
 
         // duration 동안 살아있음
-        yield return new WaitForSeconds(duration);
+        float remaining = Mathf.Max(0f, duration - Time.deltaTime);
+        yield return new WaitForSeconds(remaining);
 
         // 자연 종료 → 정리
         DespawnField();
@@ -82,18 +90,38 @@ public class FieldItem_Field : ScriptableObject, IField
         }
     }
 
-    //위치를 동적으로 정하여 아이템 오브젝트를 스폰화려면 해당 항목을 오버라이드.
+    // 위치를 동적으로 정하여 아이템 오브젝트를 스폰하려면 오버라이드.
     protected virtual Vector3 GetSpawnPosition() => spawnPosition;
 
     private void DespawnField()
     {
         if (_spawnedField == null) return;
 
-        if (_spawnedField.GetComponent<NetworkIdentity>() != null && NetworkServer.active)
-            NetworkServer.Destroy(_spawnedField);
-        else
+        if (AuthorityGuard.IsOffline)
+        {
             Destroy(_spawnedField);
+        }
+        else if (_spawnedField.GetComponent<NetworkIdentity>() != null && NetworkServer.active)
+        {
+            NetworkServer.Destroy(_spawnedField);
+        }
+        else
+        {
+            Destroy(_spawnedField);
+        }
 
         _spawnedField = null;
+    }
+
+    // 오프라인에서 Instantiate된 오브젝트가 Mirror NetworkIdentity에 의해 비활성화되거나 SetParent가 막히는 것을 우회.
+    private static void HardenOfflineObject(GameObject obj)
+    {
+        if (obj == null) return;
+        if (!AuthorityGuard.IsOffline) return;
+
+        if (obj.TryGetComponent(out NetworkIdentity nid))
+            nid.enabled = false;
+
+        if (!obj.activeSelf) obj.SetActive(true);
     }
 }

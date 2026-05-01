@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7749737047137199975}
-  - component: {fileID: 2461383953131103903}
   - component: {fileID: 1836472802585025823}
   - component: {fileID: 5425811453541634093}
+  - component: {fileID: 7529535631385424956}
   m_Layer: 0
   m_Name: Missile_Field
   m_TagString: Field
@@ -36,22 +36,6 @@ Transform:
   - {fileID: 7023749600825186819}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2461383953131103903
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4114549932321689632}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea4638f2ea7504d4aad15dc3c64c3f14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  itemAsset: {fileID: 11400000, guid: ab2f8d706ad7392428be32c2d08ad035, type: 2}
 --- !u!114 &1836472802585025823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,6 +74,22 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.98
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7529535631385424956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4114549932321689632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3647a30c2bdaae409775dc292c8dbbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  itemAsset: {fileID: 11400000, guid: ab2f8d706ad7392428be32c2d08ad035, type: 2}
 --- !u!1001 &8174486240602287867
 PrefabInstance:
   m_ObjectHideFlags: 0

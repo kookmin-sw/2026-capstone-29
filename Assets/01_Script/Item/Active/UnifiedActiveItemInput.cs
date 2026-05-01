@@ -3,7 +3,7 @@ using Mirror;
 
 /// <summary>
 /// 액티브 아이템 사용 입력 컴포넌트.
-/// - 온라인: 기존 <see cref="ActiveItemInput"/>과 동일하게 isLocalPlayer만 입력 처리.
+/// - 온라인: isLocalPlayer만 입력 처리.
 /// - 오프라인: 본인이 무조건 입력 처리.
 ///
 /// UnifiedItemManager 우선, 없으면 legacy ItemManager fallback.
