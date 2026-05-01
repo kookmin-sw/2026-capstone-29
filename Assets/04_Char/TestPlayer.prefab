@@ -468,8 +468,12 @@ MonoBehaviour:
   syncInterval: 0
   weaponAvailable: 0
   activeAvailable: 0
+  passiveAvailable: 0
+  fieldAvailable: 0
   weaponTimer: 0
   activeTimer: 0
+  passiveTimer: 0
+  fieldTimer: 0
 --- !u!114 &4751666820031181241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,9 +508,11 @@ MonoBehaviour:
   weaponAvailable: 0
   activeAvailable: 0
   passiveAvailable: 0
+  fieldAvailable: 0
   weaponTimer: 0
   activeTimer: 0
   passiveTimer: 0
+  fieldTimer: 0
 --- !u!114 &4460593995818492583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,6 +557,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90417c76b9de2bf45b8a005409b448de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controller: {fileID: 0}
+  target: {fileID: 0}
+  autoFindTag: Enemy
+  autoFindRange: 0
+  triggerKey: 113
 --- !u!114 &7450401156638195215
 MonoBehaviour:
   m_ObjectHideFlags: 0

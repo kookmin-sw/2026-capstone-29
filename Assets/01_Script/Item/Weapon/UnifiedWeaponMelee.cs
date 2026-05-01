@@ -28,7 +28,7 @@ public class UnifiedWeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
 
     [Header("던지기 입력")]
     [Tooltip("던지기 키 (오프라인 단일 플레이어 입력)")]
-    [SerializeField] private KeyCode throwKey = KeyCode.E;
+    [SerializeField] private KeyCode throwKey = KeyCode.F;
 
     [SyncVar] private GameObject owner;
     [SyncVar] private bool isThrown;

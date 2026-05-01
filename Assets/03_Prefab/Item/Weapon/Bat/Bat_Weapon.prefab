@@ -300,7 +300,7 @@ MonoBehaviour:
   atkSpeed: {fileID: 0}
   attachSlot: 0
   boneFallbackPath: 
-  throwKey: 101
+  throwKey: 102
 --- !u!1 &9127595424520697315
 GameObject:
   m_ObjectHideFlags: 0

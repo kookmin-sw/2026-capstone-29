@@ -214,7 +214,7 @@ MonoBehaviour:
   atkSpeed: {fileID: 0}
   attachSlot: 0
   boneFallbackPath: 
-  throwKey: 101
+  throwKey: 102
 --- !u!114 &8763191542840037091
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -234,4 +234,5 @@ MonoBehaviour:
   chargePositionDelta: {x: 0, y: 0, z: 0}
   chargeRotationDelta: {x: 0, y: 0, z: 0}
   chargeBlendDuration: 0.1
+  hideDefaultOnEquip: 1
   followTarget: {fileID: 0}
