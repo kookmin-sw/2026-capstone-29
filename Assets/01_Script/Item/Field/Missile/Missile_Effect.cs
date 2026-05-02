@@ -101,7 +101,7 @@ public class Missile_Effect : FieldEffect
         if (warningDecalPrefab != null)
         {
             Vector3 decalPos = position + Vector3.up * 0.5f;
-            decal = Instantiate(warningDecalPrefab, decalPos, Quaternion.identity);
+            decal = Instantiate(warningDecalPrefab, decalPos, Quaternion.Euler(90f, 0f, 0f));
 
             SpawnNetworkObject(decal);
             _activeDecals.Add(decal);

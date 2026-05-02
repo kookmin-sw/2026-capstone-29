@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerTag: Player
-  JumpHeight: 5
+  JumpHeight: 15
   HorizontalBoost: 6
   ReactivationCooldown: 0.3
   LaunchSound: {fileID: 0}
