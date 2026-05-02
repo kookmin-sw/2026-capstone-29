@@ -596,5 +596,26 @@ namespace StarterAssets
         {
             _jumpTimeoutDelta = 0f;
         }
+
+        public void ApplyJumpByHeight(float jumpHeight, Vector3 horizontalVelocity)
+        {
+            // 기존 JumpAndGravity()와 동일한 공식: v = sqrt(h * -2 * g)
+            float v = Mathf.Sqrt(jumpHeight * -2f * Gravity);
+            ApplyLaunch(v, horizontalVelocity);
+        }
+
+        public void ApplyLaunch(float verticalVelocity, Vector3 horizontalVelocity)
+        {
+            _verticalVelocity = verticalVelocity;
+
+            // 수평 추진이 있으면 한 프레임 분량을 즉시 적용
+            if (horizontalVelocity.sqrMagnitude > 0.001f)
+            {
+                _controller.Move(horizontalVelocity * Time.deltaTime);
+            }
+
+            // 점프 발동 시 Grounded 애니메이션 해제
+            if (_hasAnimator) _animator.SetBool(_animIDGrounded, false);
+        }
     }
 }
