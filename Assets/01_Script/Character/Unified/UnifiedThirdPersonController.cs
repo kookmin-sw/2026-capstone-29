@@ -56,9 +56,12 @@ namespace StarterAssets
         public float Gravity = -15.0f;
 
         //중력 Scale 변환 시, 기존의 중력 스케일 및 점프 높이를 저장하는 변수
-        private float _originalJumpHeight;
-        private float _originalGravity;
-        private bool _gravityOverridden = false;
+        private float _baseJumpHeight;       // 인스펙터에서 설정한 원본 값 (Awake 시 캐시)
+        private float _baseGravity;
+        private bool _baseValuesCached = false;
+
+        //Dictionary로 관리하여 원본 중력의 오염을 방지
+        private readonly System.Collections.Generic.Dictionary<object, (float jumpMul, float gravityMul)> _gravityModifiers = new System.Collections.Generic.Dictionary<object, (float, float)>();
 
         [Space(10)]
         public float JumpTimeout = 0.50f;
@@ -538,30 +541,60 @@ namespace StarterAssets
             if (_animator != null) _animator.speed = speed;
         }
 
+        private void CacheBaseGravityIfNeeded()
+        {
+            if (!_baseValuesCached)
+            {
+                _baseJumpHeight = JumpHeight;
+                _baseGravity = Gravity;
+                _baseValuesCached = true;
+            }
+        }
 
-        //
+        public void AddGravityModifier(object source, float jumpMultiplier, float gravityMultiplier)
+        {
+            if (source == null) return;
+            CacheBaseGravityIfNeeded();
+            _gravityModifiers[source] = (jumpMultiplier, gravityMultiplier);
+            RecalculateGravity();
+        }
+
+        public void RemoveGravityModifier(object source)
+        {
+            if (source == null) return;
+            if (_gravityModifiers.Remove(source))
+            {
+                RecalculateGravity();
+            }
+        }
+
+        private void RecalculateGravity()
+        {
+            float jumpMul = 1f;
+            float gravityMul = 1f;
+            foreach (var kv in _gravityModifiers.Values)
+            {
+                jumpMul *= kv.jumpMul;
+                gravityMul *= kv.gravityMul;
+            }
+            JumpHeight = _baseJumpHeight * jumpMul;
+            Gravity = _baseGravity * gravityMul;
+        }
+
         public void SetGravityMultiplier(float jumpMultiplier, float gravityMultiplier)
         {
-            if (!_gravityOverridden)
-            {
-                _originalJumpHeight = JumpHeight;
-                _originalGravity = Gravity;
-                _gravityOverridden = true;
-            }
-
-            JumpHeight = _originalJumpHeight * jumpMultiplier;
-            Gravity = _originalGravity * gravityMultiplier;
+            AddGravityModifier(this, jumpMultiplier, gravityMultiplier);
         }
 
         public void ResetGravity()
         {
-            if (_gravityOverridden)
-            {
-                JumpHeight = _originalJumpHeight;
-                Gravity = _originalGravity;
-                _gravityOverridden = false;
-            }
+            RemoveGravityModifier(this);
         }
-        //
+
+        //점프 쿨타임을 즉시 0으로 만들어준다. 폭포에서 사용을 해야 해서 만들어 둠. 
+        public void ResetJumpTimeout()
+        {
+            _jumpTimeoutDelta = 0f;
+        }
     }
 }

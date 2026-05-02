@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 275211508449912074}
   - component: {fileID: 2844906284523859837}
   - component: {fileID: 5978230952016836545}
-  - component: {fileID: 444081054682013474}
+  - component: {fileID: 357512361575506574}
+  - component: {fileID: 1917237279110813718}
   m_Layer: 0
   m_Name: FlowWater
   m_TagString: Untagged
@@ -84,8 +85,26 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &444081054682013474
-CapsuleCollider:
+--- !u!114 &357512361575506574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5456516101276009065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60a12129dce5fe74ba50fb026a4ef23a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerTag: Player
+  WaterfallJumpHeight: 1.5
+  JumpCooldown: 0.2
+  WaterGravityMultiplier: 2
+  WaterJumpMultiplier: 1
+  DebugLog: 1
+--- !u!64 &1917237279110813718
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -99,11 +118,10 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5000001
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}

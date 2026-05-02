@@ -9215,15 +9215,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9181787236314588825, guid: 5a9833d6defba2c4785cc3ce773c0103, type: 3}
       propertyPath: areas.Array.data[0].size.x
-      value: 15
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9181787236314588825, guid: 5a9833d6defba2c4785cc3ce773c0103, type: 3}
       propertyPath: areas.Array.data[0].size.z
-      value: 15
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 9181787236314588825, guid: 5a9833d6defba2c4785cc3ce773c0103, type: 3}
+      propertyPath: areas.Array.data[0].center.x
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 9181787236314588825, guid: 5a9833d6defba2c4785cc3ce773c0103, type: 3}
       propertyPath: areas.Array.data[0].center.y
-      value: 2.27
+      value: 4.65
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
