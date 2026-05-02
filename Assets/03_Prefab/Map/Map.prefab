@@ -9663,12 +9663,20 @@ PrefabInstance:
       value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -9678,6 +9686,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -9901,6 +9913,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -9925,6 +9941,10 @@ PrefabInstance:
       value: stone (2)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -9932,6 +9952,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -10099,12 +10123,20 @@ PrefabInstance:
       value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -10114,6 +10146,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -10261,6 +10297,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
       propertyPath: m_Name
       value: cliff (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
       propertyPath: m_IsActive
@@ -10447,12 +10487,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -10462,6 +10510,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -10629,12 +10681,20 @@ PrefabInstance:
       value: -272.039
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -10644,6 +10704,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -10781,12 +10845,20 @@ PrefabInstance:
       value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -10796,6 +10868,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -10939,6 +11015,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
       propertyPath: m_Name
       value: pile (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -11086,6 +11166,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
       propertyPath: m_Name
       value: cliff (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
       propertyPath: m_IsActive
@@ -11256,6 +11340,10 @@ PrefabInstance:
       value: cliff (16)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -11346,6 +11434,10 @@ PrefabInstance:
       value: cliff (17)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -11371,6 +11463,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5481776663104062108}
     m_Modifications:
+    - target: {fileID: 1402677134230398868, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7565947084119709952, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -11378,6 +11474,10 @@ PrefabInstance:
     - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Name
       value: Mystischer Steinkreis (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8697726407863984751, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_LocalScale.x
@@ -11536,12 +11636,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -11551,6 +11659,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -11718,12 +11830,20 @@ PrefabInstance:
       value: 185.902
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -11733,6 +11853,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -11817,6 +11941,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5481776663104062108}
     m_Modifications:
+    - target: {fileID: 1402677134230398868, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7565947084119709952, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -11824,6 +11952,10 @@ PrefabInstance:
     - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Name
       value: Mystischer Steinkreis (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8697726407863984751, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_LocalScale.x
@@ -11982,12 +12114,20 @@ PrefabInstance:
       value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -11997,6 +12137,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -12232,12 +12376,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -12247,6 +12399,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -12361,6 +12517,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5481776663104062108}
     m_Modifications:
+    - target: {fileID: 1402677134230398868, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7565947084119709952, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -12368,6 +12528,10 @@ PrefabInstance:
     - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Name
       value: Mystischer Steinkreis (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8697726407863984751, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_LocalScale.x
@@ -12473,6 +12637,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5481776663104062108}
     m_Modifications:
+    - target: {fileID: 1402677134230398868, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7565947084119709952, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -12480,6 +12648,10 @@ PrefabInstance:
     - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Name
       value: Mystischer Steinkreis (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8697726407863984751, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_LocalScale.x
@@ -12644,6 +12816,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
       propertyPath: m_Name
       value: pile (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -12859,12 +13035,20 @@ PrefabInstance:
       value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -12874,6 +13058,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -13089,12 +13277,20 @@ PrefabInstance:
       value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -13104,6 +13300,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -13188,6 +13388,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5481776663104062108}
     m_Modifications:
+    - target: {fileID: 1402677134230398868, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7565947084119709952, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -13195,6 +13399,10 @@ PrefabInstance:
     - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Name
       value: Mystischer Steinkreis (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_IsActive
@@ -13357,12 +13565,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -13372,6 +13588,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -13585,9 +13805,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5481776663104062108}
     m_Modifications:
+    - target: {fileID: 1402677134230398868, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Name
       value: Mystischer Steinkreis
+      objectReference: {fileID: 0}
+    - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_IsActive
@@ -13918,12 +14146,20 @@ PrefabInstance:
       value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -13933,6 +14169,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -14080,6 +14320,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
       propertyPath: m_Name
       value: cliff (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
       propertyPath: m_IsActive
@@ -14344,6 +14588,10 @@ PrefabInstance:
       value: pile (4)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -14497,6 +14745,10 @@ PrefabInstance:
       value: cliff (5)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -14585,6 +14837,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
       propertyPath: m_Name
       value: cliff (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
       propertyPath: m_IsActive
@@ -14739,6 +14995,10 @@ PrefabInstance:
       value: cliff (13)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -14817,12 +15077,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -5336662140956844997, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5336662140956844997, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: -4089003069229147603, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4089003069229147603, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -2596369630847065556, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2596369630847065556, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -14831,6 +15103,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_Name
       value: Bridge (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -14844,6 +15120,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 8eb2c39a0108f28418d96aed59e651b5, type: 2}
+    - target: {fileID: 8747855207139096144, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8747855207139096144, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -14951,12 +15231,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -14966,6 +15254,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -15317,6 +15609,10 @@ PrefabInstance:
       value: pile (2)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -15568,6 +15864,10 @@ PrefabInstance:
       value: cliff (2)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -15736,6 +16036,10 @@ PrefabInstance:
       value: cliff (3)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -15814,12 +16118,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -5336662140956844997, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5336662140956844997, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: -4089003069229147603, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4089003069229147603, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -2596369630847065556, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2596369630847065556, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -15830,8 +16146,16 @@ PrefabInstance:
       value: Bridge (2)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8747855207139096144, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8747855207139096144, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -15887,6 +16211,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5481776663104062108}
     m_Modifications:
+    - target: {fileID: 1402677134230398868, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7565947084119709952, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -15894,6 +16222,10 @@ PrefabInstance:
     - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Name
       value: Mystischer Steinkreis (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8697726407863984751, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_LocalScale.x
@@ -16060,6 +16392,10 @@ PrefabInstance:
       value: pile
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -16220,6 +16556,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5481776663104062108}
     m_Modifications:
+    - target: {fileID: 1402677134230398868, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7565947084119709952, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -16227,6 +16567,10 @@ PrefabInstance:
     - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Name
       value: Mystischer Steinkreis (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8697726407863984751, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_LocalScale.x
@@ -16397,6 +16741,10 @@ PrefabInstance:
       value: cliff (11)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -16422,6 +16770,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5481776663104062108}
     m_Modifications:
+    - target: {fileID: 1402677134230398868, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7565947084119709952, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -16429,6 +16781,10 @@ PrefabInstance:
     - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Name
       value: Mystischer Steinkreis (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8697726407863984751, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_LocalScale.x
@@ -16587,12 +16943,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -16602,6 +16966,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -16769,6 +17137,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -5336662140956844997, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5336662140956844997, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -16777,8 +17149,16 @@ PrefabInstance:
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: -4089003069229147603, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4089003069229147603, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -2596369630847065556, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2596369630847065556, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -16789,12 +17169,20 @@ PrefabInstance:
       value: Bridge
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 8747855207139096144, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8747855207139096144, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -16903,12 +17291,20 @@ PrefabInstance:
       value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -17032,6 +17428,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
       propertyPath: m_Name
       value: pile (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -17181,12 +17581,20 @@ PrefabInstance:
       value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -17196,6 +17604,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -17333,12 +17745,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -5336662140956844997, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5336662140956844997, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: -4089003069229147603, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -4089003069229147603, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -2596369630847065556, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -2596369630847065556, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -17347,6 +17771,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_Name
       value: Bridge (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -17360,6 +17788,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: e431a07e7d00e264d9bbb7af8fbdabb1, type: 2}
+    - target: {fileID: 8747855207139096144, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8747855207139096144, guid: 6021de7d324f6f04cadf0266f76f52f8, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -17557,6 +17989,10 @@ PrefabInstance:
       value: cliff (15)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -17635,12 +18071,20 @@ PrefabInstance:
       value: 280.39398
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -17650,6 +18094,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -17787,12 +18235,20 @@ PrefabInstance:
       value: -105.654
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -17802,6 +18258,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -17939,6 +18399,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -17963,6 +18427,10 @@ PrefabInstance:
       value: stone (2)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -17970,6 +18438,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -18107,12 +18579,20 @@ PrefabInstance:
       value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -18122,6 +18602,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -18259,6 +18743,10 @@ PrefabInstance:
       value: -25.916
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -18311,6 +18799,10 @@ PrefabInstance:
       value: stone (4)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -18318,6 +18810,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -18402,6 +18898,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5481776663104062108}
     m_Modifications:
+    - target: {fileID: 1402677134230398868, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7565947084119709952, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -18409,6 +18909,10 @@ PrefabInstance:
     - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Name
       value: Mystischer Steinkreis (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8697726407863984751, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_LocalScale.x
@@ -18567,12 +19071,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -18582,6 +19094,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -18749,12 +19265,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -18764,6 +19288,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -18931,12 +19459,20 @@ PrefabInstance:
       value: -136.161
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -18946,6 +19482,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -19112,6 +19652,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -19136,6 +19680,10 @@ PrefabInstance:
       value: stone (8)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -19143,6 +19691,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -19322,6 +19874,10 @@ PrefabInstance:
       value: cliff (8)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -19486,6 +20042,10 @@ PrefabInstance:
       value: pile (6)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -19630,6 +20190,10 @@ PrefabInstance:
       value: cliff (7)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -19655,6 +20219,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5481776663104062108}
     m_Modifications:
+    - target: {fileID: 1402677134230398868, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7565947084119709952, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -19662,6 +20230,10 @@ PrefabInstance:
     - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Name
       value: Mystischer Steinkreis (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8697726407863984751, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_LocalScale.x
@@ -19906,6 +20478,10 @@ PrefabInstance:
       value: pile (8)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -20100,6 +20676,10 @@ PrefabInstance:
       value: cliff (1)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed059b2df8f26f841812adb31e042d3a, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -20178,12 +20758,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone (11)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -20193,6 +20781,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -20360,6 +20952,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -20384,6 +20980,10 @@ PrefabInstance:
       value: stone (3)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -20391,6 +20991,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -20566,6 +21170,10 @@ PrefabInstance:
       value: pile (3)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -20704,12 +21312,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -20719,6 +21335,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -20894,6 +21514,10 @@ PrefabInstance:
       value: pile (8)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9426881e30ddc9c41b828714006af500, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -21001,12 +21625,20 @@ PrefabInstance:
       value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -21016,6 +21648,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -21153,12 +21789,20 @@ PrefabInstance:
       value: 170.037
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -21168,6 +21812,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
@@ -21252,6 +21900,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5481776663104062108}
     m_Modifications:
+    - target: {fileID: 1402677134230398868, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7565947084119709952, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -21259,6 +21911,10 @@ PrefabInstance:
     - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Name
       value: Mystischer Steinkreis (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8697726407863984751, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_LocalScale.x
@@ -21364,6 +22020,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5481776663104062108}
     m_Modifications:
+    - target: {fileID: 1402677134230398868, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7565947084119709952, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -21371,6 +22031,10 @@ PrefabInstance:
     - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_Name
       value: Mystischer Steinkreis (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8358496986171979989, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8697726407863984751, guid: b32e7fa8a03a0964ebf1e6d15312d99f, type: 3}
       propertyPath: m_LocalScale.x
@@ -21529,12 +22193,20 @@ PrefabInstance:
       value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3766422551509775932, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_Name
       value: stone (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -21544,6 +22216,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 13c2513de07da4d4cb2feffface60f95, type: 2}
+    - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8087020765061341100, guid: dc59c53cb8a81b34c86647c6fd382cc2, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647

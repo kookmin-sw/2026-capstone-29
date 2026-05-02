@@ -80,6 +80,7 @@ MonoBehaviour:
     - {fileID: 4656205910049893236, guid: f5ae6365615f5c244ae8f788570a832c, type: 3}
     - {fileID: 6630323124785233130, guid: aa2ac35d5ba26d041bc55a4bd7de132c, type: 3}
     - {fileID: 8826999024464848779, guid: 33835b0015ef8e44ba01c8d81cbea382, type: 3}
+    - {fileID: 5100206813629255630, guid: ee9bd38872534064da0dd1cddfed57a4, type: 3}
     maxConcurrent: 1
     respawnDelay: 7
     fillOnStart: 1

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3765074302700507244}
   - component: {fileID: 3611403881234305434}
   - component: {fileID: 8376365580287946306}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ExplosionEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 2374959112084444983}
   - component: {fileID: 1831996703767713185}
   - component: {fileID: 4169787894912254108}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,9 +185,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3765074302700507244}
     m_Modifications:
+    - target: {fileID: 4089402023540314250, guid: 935c429b5bfe15b4ba62aa81c0a31074, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5034437884645601869, guid: 935c429b5bfe15b4ba62aa81c0a31074, type: 3}
       propertyPath: m_Name
       value: Explosion
+      objectReference: {fileID: 0}
+    - target: {fileID: 5034437884645601869, guid: 935c429b5bfe15b4ba62aa81c0a31074, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5662777600177711351, guid: 935c429b5bfe15b4ba62aa81c0a31074, type: 3}
       propertyPath: m_LocalScale.x
@@ -244,6 +252,10 @@ PrefabInstance:
     - target: {fileID: 5662777600177711351, guid: 935c429b5bfe15b4ba62aa81c0a31074, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8207464676723657342, guid: 935c429b5bfe15b4ba62aa81c0a31074, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6942148895204701156}
   - component: {fileID: 507647812417359299}
   - component: {fileID: -59822842429412649}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TargetDecal
   m_TagString: Untagged
   m_Icon: {fileID: 0}

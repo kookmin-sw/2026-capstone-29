@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2043717953302197361}
   - component: {fileID: 4841905537964888659}
   - component: {fileID: 8376365580287946306}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PoisonFogSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,7 +144,7 @@ GameObject:
   - component: {fileID: 2374959112084444983}
   - component: {fileID: 1831996703767713185}
   - component: {fileID: 4169787894912254108}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}

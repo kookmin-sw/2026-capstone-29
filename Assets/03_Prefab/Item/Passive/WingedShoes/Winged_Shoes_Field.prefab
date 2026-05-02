@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 259992156117492388}
   - component: {fileID: 4584042155487433410}
   - component: {fileID: 5156679700913241801}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Item_WingedShoe_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4713833053425575845}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Item_WingedShoe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 7336040961671342022}
   - component: {fileID: 808025193537265223}
   - component: {fileID: 8454405645291454687}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Winged_Shoes_Field
   m_TagString: Passive
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneId: 0
-  _assetId: 1955838675
+  _assetId: 1641460418
   serverOnly: 0
   visibility: 0
   hasSpawned: 0
@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 2003821131484325365}
   - component: {fileID: 2989811618523154992}
   - component: {fileID: 7548535961189203286}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Particle Green
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4354754786169273356}
   - component: {fileID: 3236150776013976577}
   - component: {fileID: 7373243688753183627}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Smoke_Grenade_Field
   m_TagString: Active
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 3478906191914119519}
   - component: {fileID: 4850552653400258755}
   - component: {fileID: 5944320233690647707}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: M18_Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 2422080906141257212}
   - component: {fileID: 2587756621428811386}
   - component: {fileID: 1123991576202261952}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Particle Purple
   m_TagString: Untagged
   m_Icon: {fileID: 0}

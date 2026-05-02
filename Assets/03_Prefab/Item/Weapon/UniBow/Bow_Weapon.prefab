@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -6915122779227817680}
   - component: {fileID: -4145357826106297874}
   - component: {fileID: -5961632437099188521}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bow_Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 6265599069748926321}
   - component: {fileID: 3604819647238036836}
   - component: {fileID: 936501660860678738}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bow_Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,7 +246,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5392753231624806521}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Arm_Low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -277,7 +277,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7965159272271740186}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: String
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -308,7 +308,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9063041453670020194}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -343,7 +343,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5994223683538030611}
   - component: {fileID: 2576942226317479264}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bow_Newbie_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -431,7 +431,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4695420889901644736}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Arm_Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
