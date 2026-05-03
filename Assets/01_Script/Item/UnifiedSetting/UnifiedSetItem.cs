@@ -26,15 +26,6 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
             return;
         }
 
-        // 서버에서 직접 호출되는 경우(예: UnifiedItemPickUp.CmdPickUp 내부) Command를 다시 타지 않고
-        // 곧바로 서버 권한 로직을 실행한다. 그렇지 않으면 dedicated server에선 NetworkClient.active=false 라
-        // 내부 CmdSave 호출이 무시되어 아이템 획득이 실패한다.
-        if (NetworkServer.active)
-        {
-            ApplyOnServer(user, item);
-            return;
-        }
-
         CmdSave(user, item);
     }
 
@@ -179,18 +170,6 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
     [Command(requiresAuthority = false)]
     private void CmdSave(GameObject user, GameObject item)
     {
-        // 실제 서버 권한 로직은 ApplyOnServer로 분리. (서버에서 직접 호출 가능하도록)
-        ApplyOnServer(user, item);
-    }
-
-    // -----------------------------
-    // 서버 권한 본체 (Command 또는 서버 직접 호출 양쪽에서 사용)
-    // -----------------------------
-    [Server]
-    private void ApplyOnServer(GameObject user, GameObject item)
-    {
-        if (user == null || item == null) return;
-
         // 서버에서는 UnifiedItemManager 또는 ItemManager 둘 다 지원
         var unified = user.GetComponent<UnifiedItemManager>();
         var legacy = unified == null ? user.GetComponent<ItemManager>() : null;
