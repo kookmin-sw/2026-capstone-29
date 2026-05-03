@@ -403,7 +403,7 @@ MonoBehaviour:
   leftHandHitbox: {fileID: 1344337710141032076}
   leftFootHitbox: {fileID: 1077588120744126995}
   audioSource: {fileID: 0}
-  punchSounds: {fileID: 0}
+  punchSounds: {fileID: 8300000, guid: 81ff5a48a8891db449eea71985570f52, type: 3}
   hitSounds: {fileID: 0}
   chargeSounds: {fileID: 0}
   readySounds: {fileID: 0}
@@ -551,7 +551,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  useActiveKey: 113
+  useActiveKey: 102
   pickUpKey: 101
 --- !u!114 &-3919388257179207740
 MonoBehaviour:

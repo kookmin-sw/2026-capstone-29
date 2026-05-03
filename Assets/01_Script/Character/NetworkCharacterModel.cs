@@ -216,8 +216,7 @@ public class NetworkCharacterModel : NetworkBehaviour, ICharacterModel
         }
     }
 
-    // 이펙트 연결 
-    [Command]
+    [Command(requiresAuthority = false)]
     public void CmdSpawnHitEffect(Vector3 hitPoint, Vector3 hitNormal, int effectIndex)
     {
         RpcSpawnHitEffect(hitPoint, hitNormal, effectIndex);

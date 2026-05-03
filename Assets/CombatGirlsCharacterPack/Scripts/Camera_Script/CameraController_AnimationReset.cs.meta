@@ -9,3 +9,10 @@ MonoImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 322644
+  packageName: CombatGirls_KatanaCharacterPack
+  packageVersion: 1.0
+  assetPath: Assets/CombatGirlsCharacterPack/Scripts/Camera_Script/CameraController_AnimationReset.cs
+  uploadId: 762429

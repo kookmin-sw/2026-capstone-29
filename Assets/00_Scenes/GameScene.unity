@@ -2077,7 +2077,6 @@ MonoBehaviour:
   weaponItemIcon: {fileID: 640560480}
   weaponItemTimerFill: {fileID: 1691375412}
   defaultWeaponSprite: {fileID: 21300000, guid: 583dc46493018604599daea46b98b9c8, type: 3}
-  weaponItemPanel: {fileID: 0}
   delayTime: 0.5
   drainSpeed: 1
 --- !u!1 &390583542
@@ -8911,6 +8910,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1078576610552994484, guid: cb6e54e516e90d048980981c4ff4f137, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1120341728227253698, guid: cb6e54e516e90d048980981c4ff4f137, type: 3}
       propertyPath: m_LocalPosition.x
       value: 75.600006
@@ -9134,6 +9137,10 @@ PrefabInstance:
     - target: {fileID: 5854796890498164842, guid: cb6e54e516e90d048980981c4ff4f137, type: 3}
       propertyPath: m_VersionIndex
       value: 395
+      objectReference: {fileID: 0}
+    - target: {fileID: 6113113787503750703, guid: cb6e54e516e90d048980981c4ff4f137, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6231952802913252403, guid: cb6e54e516e90d048980981c4ff4f137, type: 3}
       propertyPath: m_Mesh

@@ -1684,6 +1684,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2892899113997363521, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
+      propertyPath: m_Size.x
+      value: 0.14368045
+      objectReference: {fileID: 0}
+    - target: {fileID: 2892899113997363521, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
+      propertyPath: m_Size.z
+      value: 0.84533966
+      objectReference: {fileID: 0}
+    - target: {fileID: 2892899113997363521, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
+      propertyPath: m_Center.x
+      value: 0.000000041498687
+      objectReference: {fileID: 0}
+    - target: {fileID: 2892899113997363521, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
+      propertyPath: m_Center.y
+      value: -0.00000065173117
+      objectReference: {fileID: 0}
+    - target: {fileID: 2892899113997363521, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
+      propertyPath: m_Center.z
+      value: 0.27266735
+      objectReference: {fileID: 0}
     - target: {fileID: 3354428030682575210, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
       propertyPath: m_Name
       value: UPlayer 4 (1)
@@ -2593,6 +2613,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4645412204146245682, guid: b71f2cc63d290a140b58d7d8a206636a, type: 3}
+      propertyPath: m_Size.y
+      value: 0.14130488
+      objectReference: {fileID: 0}
+    - target: {fileID: 4645412204146245682, guid: b71f2cc63d290a140b58d7d8a206636a, type: 3}
+      propertyPath: m_Center.x
+      value: 0.0000021047542
+      objectReference: {fileID: 0}
+    - target: {fileID: 4645412204146245682, guid: b71f2cc63d290a140b58d7d8a206636a, type: 3}
+      propertyPath: m_Center.y
+      value: -0.034607783
+      objectReference: {fileID: 0}
+    - target: {fileID: 4645412204146245682, guid: b71f2cc63d290a140b58d7d8a206636a, type: 3}
+      propertyPath: m_Center.z
+      value: 0.104481645
+      objectReference: {fileID: 0}
     - target: {fileID: 5339388031440685187, guid: b71f2cc63d290a140b58d7d8a206636a, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -3358,9 +3394,12 @@ SceneRoots:
   - {fileID: 1074192584}
   - {fileID: 132949501}
   - {fileID: 1829376357}
+  - {fileID: 1193419987}
   - {fileID: 2108037250}
   - {fileID: 2056716520}
+  - {fileID: 1829376357}
   - {fileID: 749039859}
+  - {fileID: 7921884542382882495}
   - {fileID: 1664867886}
   - {fileID: 5850713319798439663}
   - {fileID: 3708806223119666148}

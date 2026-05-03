@@ -270,6 +270,7 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
 
         if (currentHealth <= 0 && !isDead)
         {
+
             bool oldDie = isDead;
             isDead = true;
             OnDieHook(oldDie, true);
@@ -327,8 +328,7 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
     [ClientRpc]
     private void RpcPlayStrongAttack() { OnStrongAttack?.Invoke(); }
 
-    // 이펙트 스폰 (기존 API 유지)
-    [Command]
+    [Command(requiresAuthority = false)]
     public void CmdSpawnHitEffect(Vector3 hitPoint, Vector3 hitNormal, int effectIndex)
     {
         RpcSpawnHitEffect(hitPoint, hitNormal, effectIndex);
