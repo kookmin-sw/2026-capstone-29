@@ -486,7 +486,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rightHandBoneName: hand_r
   leftHandBoneName: hand_l
-  addWeaponR: {fileID: 0}
+  addWeaponR: {fileID: 7005717812763532228}
   addWeaponL: {fileID: 4274105256217829687}
 --- !u!114 &6827458486095781320
 MonoBehaviour:
@@ -1535,5 +1535,10 @@ Transform:
 --- !u!4 &5033116525560365614 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8269001631454303563, guid: c822ccc94298e6044a6191815437b7c4, type: 3}
+  m_PrefabInstance: {fileID: 3970026408488015717}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7005717812763532228 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6206262409963539617, guid: c822ccc94298e6044a6191815437b7c4, type: 3}
   m_PrefabInstance: {fileID: 3970026408488015717}
   m_PrefabAsset: {fileID: 0}
