@@ -26,8 +26,8 @@ GameObject:
   - component: {fileID: 5698747544444104953}
   - component: {fileID: 3327426458867769942}
   - component: {fileID: 6827458486095781320}
-  - component: {fileID: 1421601732267377933}
   - component: {fileID: 717422721000216962}
+  - component: {fileID: 6946938505356318488}
   m_Layer: 6
   m_Name: UPlayer 3
   m_TagString: Player
@@ -456,7 +456,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 444122467208145566}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c0c222f3dfca04439dce283e3081b3e, type: 3}
   m_Name: 
@@ -466,8 +466,12 @@ MonoBehaviour:
   syncInterval: 0
   weaponAvailable: 0
   activeAvailable: 0
+  passiveAvailable: 0
+  fieldAvailable: 0
   weaponTimer: 0
   activeTimer: 0
+  passiveTimer: 0
+  fieldTimer: 0
 --- !u!114 &3327426458867769942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,24 +506,11 @@ MonoBehaviour:
   weaponAvailable: 0
   activeAvailable: 0
   passiveAvailable: 0
+  fieldAvailable: 0
   weaponTimer: 0
   activeTimer: 0
   passiveTimer: 0
---- !u!114 &1421601732267377933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 444122467208145566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 359f56ae58f914f4fb8fd35ee69d8a80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
+  fieldTimer: 0
 --- !u!114 &717422721000216962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,6 +528,23 @@ MonoBehaviour:
     m_Bits: 64
   canPush: 1
   strength: 1.1
+--- !u!114 &6946938505356318488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 444122467208145566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2da6ba53e2e698b45911e5c784072fa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  useActiveKey: 113
+  pickUpKey: 101
 --- !u!1 &2316993326076443843
 GameObject:
   m_ObjectHideFlags: 0
