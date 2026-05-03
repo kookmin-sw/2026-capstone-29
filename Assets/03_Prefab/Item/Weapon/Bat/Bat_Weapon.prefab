@@ -162,6 +162,7 @@ GameObject:
   - component: {fileID: 4250761520136624318}
   - component: {fileID: 8809591098396734263}
   - component: {fileID: 1415084328226285584}
+  - component: {fileID: 6304984037909381312}
   m_Layer: 0
   m_Name: Bat_Weapon
   m_TagString: Weapon
@@ -301,6 +302,19 @@ MonoBehaviour:
   attachSlot: 0
   boneFallbackPath: 
   throwKey: 102
+--- !u!114 &6304984037909381312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8933538342458030111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15bc02fb6c2c37948940bdbf20b507d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponSprite: {fileID: 21300000, guid: 107dda0a32b7fd249acf76aa398cf3b8, type: 3}
 --- !u!1 &9127595424520697315
 GameObject:
   m_ObjectHideFlags: 0

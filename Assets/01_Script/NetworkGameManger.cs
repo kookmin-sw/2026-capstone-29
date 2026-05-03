@@ -119,6 +119,13 @@ public class NetworkGameManger : NetworkBehaviour
         gameOverWinnerIndex = winnerIndex;
         Debug.Log($"Game Over! Winner Index: {winnerIndex}");
 
+        // 무승부시 바로 UI 표시
+        if(winnerIndex == 0)
+        {
+            RpcShowDrawGameOver();
+            return;
+        }
+
         // 슬로우 모션 연출
         ICharacterModel winner = winnerIndex == 1 ? player1 : (winnerIndex == 2 ? player2 : null);
         ICharacterModel loser  = winnerIndex == 1 ? player2 : (winnerIndex == 2 ? player1 : null);
@@ -137,6 +144,13 @@ public class NetworkGameManger : NetworkBehaviour
     void OnWinnerIndexChanged(int oldV, int newV)
     {
         // RpcStartSlowMotionAndVictory에서 처리하게됨
+    }
+
+    // 무승부 시 호출
+    [ClientRpc]
+    private void RpcShowDrawGameOver()
+    {
+        ShowGameOverUI();
     }
 
     // 슬로우 모션 -> 승리 모션 전체 연출
