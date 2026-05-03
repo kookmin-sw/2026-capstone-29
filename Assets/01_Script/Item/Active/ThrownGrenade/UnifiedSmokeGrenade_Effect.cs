@@ -12,7 +12,7 @@ using UnityEngine;
 ///   - 온라인: 기존 동작 유지. NetworkServer.Spawn으로 등록.
 ///   - 오프라인: NetworkServer.active == false이므로 단순 Instantiate 적용 및 NetworkIdentity 비활성(HardenOfflineObject)으로 Mirror 간섭 차단.
 /// </summary>
-[CreateAssetMenu(menuName = "Item/Active/SmokeGrenade/UnifiedEffect")]
+[CreateAssetMenu(menuName = "Item/Active/SmokeGrenade/Effect")]
 public class UnifiedSmokeGrenade_Effect : ScriptableObject, IActive
 {
     [Header("아이템 설정")]
