@@ -113,6 +113,7 @@ public class UnifiedWeaponBow : NetworkBehaviour, IPlayerWeapon
         if (AuthorityGuard.IsOffline)
         {
             EquipLocal(user, bowSocketPath);
+            NotifyWeaponUI(user);
             return;
         }
 
@@ -125,6 +126,7 @@ public class UnifiedWeaponBow : NetworkBehaviour, IPlayerWeapon
     {
         owner = user;
         EquipLocal(user, socketPath);
+        NotifyWeaponUI(user);
     }
 
     public void ThrowWeapon()
@@ -534,5 +536,21 @@ public class UnifiedWeaponBow : NetworkBehaviour, IPlayerWeapon
         loadedArrow = null;
         chargeTimer = 0f;
         isCharging = false;
+    }
+
+    // 활 획득 시 UI 변경
+    private void NotifyWeaponUI(GameObject user)
+    {
+        if (user == null) return;
+
+        // 자기 캐릭터가 아니면 UI 건드리지 않음
+        var model = user.GetComponent<UnifiedCharacterModel>();
+        if (!AuthorityGuard.IsOffline && (model == null || !model.isLocalPlayer)) return;
+
+        var uiData = GetComponent<WeaponUIData>();
+        if (uiData == null) return;
+
+        var uiManager = FindObjectOfType<InGameUIManger>();
+        uiManager?.ShowWeaponItem(uiData.weaponSprite, itemStat.availableTime);
     }
 }
