@@ -21,6 +21,7 @@ public interface IWeapon //
 {
     public GameObject SummonWeapon(Vector3 pos, Quaternion qt);
     public float AvailableTime();
+    Sprite UISprite { get; }
 }
 
 public interface IPlayerWeapon

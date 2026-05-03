@@ -74,6 +74,17 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
                 IPlayerWeapon ipw = weaponObj != null ? weaponObj.GetComponent<IPlayerWeapon>() : null;
                 if (ipw != null) ipw.SetUser(user);
                 im.weaponAvailable = im.weapon.AvailableTime();
+
+                // ★ 아이템 UI 표시 — 로컬 플레이어만 자기 화면에 표시
+                if (user.GetComponent<UnifiedCharacterModel>()?.isLocalPlayer == true)
+                {
+                    var uiManager = FindObjectOfType<InGameUIManger>();
+                    if (uiManager != null)
+                    {
+                        Sprite itemSprite = im.weapon.UISprite;
+                        uiManager.ShowWeaponItem(itemSprite, im.weapon.AvailableTime());
+                    }
+                }
             }
         }
         else if (item.CompareTag("Active"))

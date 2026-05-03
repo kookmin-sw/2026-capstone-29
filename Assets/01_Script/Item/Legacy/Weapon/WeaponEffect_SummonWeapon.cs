@@ -6,6 +6,10 @@ public class WeaponEffect_SummonWeapon : ScriptableObject, IWeapon
     [SerializeField] GameObject weapon;
     public float availableTime = 100f;
 
+    [Header("UI")]
+    public Sprite uiSprite;
+
+
     public GameObject SummonWeapon(Vector3 pos, Quaternion qt)
     {
         // Instantiate만 하고 반환
@@ -16,4 +20,6 @@ public class WeaponEffect_SummonWeapon : ScriptableObject, IWeapon
     {
         return availableTime;
     }
+
+    public Sprite UISprite => uiSprite;
 }
