@@ -74,6 +74,7 @@ public class UnifiedWeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
             if (atkSpeed != null) atkSpeed.ApplyTo(user);
 
             EquipHandler(user);
+            NotifyWeaponUI(user); // 아이템 UI 표시 추가
             return;
         }
 
@@ -93,6 +94,7 @@ public class UnifiedWeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
         if (weaponHitbox != null) weaponHitbox.EnableHitbox();
 
         EquipHandler(user);
+        NotifyWeaponUI(user);
     }
 
 
@@ -274,5 +276,21 @@ public class UnifiedWeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
     {
         if (weaponHitbox != null) weaponHitbox.DisableHitbox();
         UnequipHandler();
+    }
+
+    // 아이템 UI 작용 메소드
+    private void NotifyWeaponUI(GameObject user)
+    {
+        if (user == null) return;
+        var model = user.GetComponent<UnifiedCharacterModel>();
+
+        // 자기 캐릭터가 아니면 UI 건드리지 않음
+        if (!AuthorityGuard.IsOffline && (model == null || !model.isLocalPlayer)) return;
+
+        var uiData = GetComponent<WeaponUIData>();
+        if (uiData == null) return;
+
+        var uiManager = FindObjectOfType<InGameUIManger>();
+        uiManager?.ShowWeaponItem(uiData.weaponSprite, itemStat.availableTime);
     }
 }

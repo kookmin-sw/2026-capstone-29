@@ -27,6 +27,11 @@ public class InGameUIManger : MonoBehaviour
     public Sprite lifeActiveSprite; // 남은 목숨
     public Sprite lifeDeadSprite; // 죽은 목숨
 
+    [Header("Object UI")]
+    public Image weaponItemIcon; // 무기 아이콘 - 계속 변경됨
+    public Image weaponItemTimerFill; // 지속시간 fill
+    public Sprite defaultWeaponSprite; // 기본 주무기 이미지
+
     [Header("HealthBar Anim")]
     public float delayTime = 0.5f; // 닳기 시작까지 대기 시간
     public float drainSpeed = 1.0f; // 닳는 속도
@@ -36,6 +41,7 @@ public class InGameUIManger : MonoBehaviour
 
     private StarterAssetsInputs inputs;
     private PlayerInput playerInput;
+    private Coroutine weaponItemCoroutine;
 
     // 게임 매니저에서 RegisterPlayer에서 호출 - p1, p2 구분하여 체력바 UI 등록
     public void RegisterHealthBar(int playerIndex, float initialHealth) 
@@ -157,6 +163,46 @@ public class InGameUIManger : MonoBehaviour
 
             inputs.pause = false; // 소비 처리
         }
+    }
+
+    // 아이템 무기를 획득했을 때 호출됨
+    public void ShowWeaponItem(Sprite itemSprite, float duration)
+    {
+        if(weaponItemCoroutine != null)
+            StopCoroutine(weaponItemCoroutine);
+
+        if(weaponItemIcon != null && itemSprite != null)
+            weaponItemIcon.sprite = itemSprite; 
+        
+        weaponItemCoroutine = StartCoroutine(WeaponItemTimerCoroutine(duration));
+    }
+
+    // 아이템 타이머 코루틴
+    private IEnumerator WeaponItemTimerCoroutine(float duration)
+    {
+        float elapsed = 0f;
+
+        // fill을 0에서 시작해서 1까지 채워나감
+        if (weaponItemTimerFill != null)
+            weaponItemTimerFill.fillAmount = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            if (weaponItemTimerFill != null)
+                weaponItemTimerFill.fillAmount = elapsed / duration;
+            yield return null;
+        }
+
+        // 지속시간 끝 → 원래 무기 아이콘으로 복귀
+        if (weaponItemTimerFill != null)
+            weaponItemTimerFill.fillAmount = 0f;
+
+        if (weaponItemIcon != null && defaultWeaponSprite != null)
+            weaponItemIcon.sprite = defaultWeaponSprite;
+
+
+        weaponItemCoroutine = null;
     }
 
     // 키세팅 버튼 클릭 시 - ui 등장
