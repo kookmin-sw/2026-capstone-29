@@ -40,7 +40,14 @@ public class CharacterHitBox : MonoBehaviour
 
         //소유자 obj
         GameObject ownerObj = GetOwnerRoot();
-        //Debug.Log($"[HitBox] other: {other.gameObject}, ownerObj: {ownerObj}, same: {other.gameObject == ownerObj}");
+        if (!AuthorityGuard.IsOffline)
+        {
+            NetworkIdentity ownerNi = ownerObj != null
+                ? ownerObj.GetComponentInParent<NetworkIdentity>()
+                : null;
+            if (ownerNi != null && !ownerNi.isLocalPlayer && !ownerNi.isOwned)
+                return;
+        }
 
         // 1순위: ICharacterModel 구현체 (NetworkCharacterModel / UnifiedCharacterModel 모두 해당)
         ICharacterModel iTarget = other.GetComponent<ICharacterModel>();

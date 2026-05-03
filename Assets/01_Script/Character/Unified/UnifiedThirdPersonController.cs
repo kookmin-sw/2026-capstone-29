@@ -190,14 +190,12 @@ namespace StarterAssets
                 return;
             }
 
-            // 네트워크 모드 + 원격 플레이어면 입력/물리 비활성
             if (!isLocalPlayer)
             {
 #if ENABLE_INPUT_SYSTEM
                 if (TryGetComponent(out PlayerInput pInput)) pInput.enabled = false;
 #endif
                 if (TryGetComponent(out StarterAssetsInputs sInput)) sInput.enabled = false;
-                if (TryGetComponent(out CharacterController cc)) cc.enabled = false;
                 return;
             }
             // 네트워크 + 로컬 플레이어일 땐 OnStartLocalPlayer에서 초기화
@@ -539,15 +537,6 @@ namespace StarterAssets
             if (_animator != null) _animator.speed = speed;
         }
 
-        // ============================================================
-        // 대시 애니메이션 네트워크 동기화
-        // - 로컬 플레이어가 Shift 대시 시 자기 Animator에 즉시 트리거를 발동하지만,
-        //   원격 클라이언트들의 Animator에는 트리거가 전달되지 않아
-        //   "애니메이션 없이 빠르게 이동하는 것처럼" 보이는 문제가 있다.
-        //   이를 해결하기 위해 Cmd → Rpc 패턴으로 모든 원격 클라이언트에도
-        //   Shift 트리거를 발동시킨다. 로컬(owner)은 이미 위에서 즉시 트리거를
-        //   발동했으므로 includeOwner=false 로 중복을 막는다.
-        // ============================================================
         [Command]
         private void CmdPlayDashAnim()
         {
