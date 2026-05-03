@@ -543,7 +543,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  useActiveKey: 113
+  useActiveKey: 102
   pickUpKey: 101
 --- !u!1 &2316993326076443843
 GameObject:
