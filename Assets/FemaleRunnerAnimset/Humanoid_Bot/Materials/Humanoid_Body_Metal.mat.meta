@@ -6,3 +6,10 @@ NativeFormatImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 322644
+  packageName: CombatGirls_KatanaCharacterPack
+  packageVersion: 1.0
+  assetPath: Assets/CombatGirlsCharacterPack/Humanoid_Bot/Materials/Humanoid_Body_Metal.mat
+  uploadId: 762429
