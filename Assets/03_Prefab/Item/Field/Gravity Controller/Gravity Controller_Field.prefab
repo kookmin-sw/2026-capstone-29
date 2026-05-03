@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2911249116825023033}
   - component: {fileID: 6184491618255921969}
   - component: {fileID: -612567035375950044}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Gravity Controller_Field
   m_TagString: Field
   m_Icon: {fileID: 0}
@@ -98,6 +98,58 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 8939377847693686623}
     m_Modifications:
+    - target: {fileID: 293138442823317107, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 312016288471535846, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 895054961386493686, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 920637551433048934, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630383120906459320, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3285202469796314552, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3292863899471801469, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4070673432717423329, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4743257161463269689, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5108082681258093116, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6733830881941246922, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7148062706454531496, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261617090921158090, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7415528094185269241, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -138,9 +190,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7490817420632148527, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7583864109501471997, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7756443489815746891, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 7900139684345937219, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
       propertyPath: m_Name
       value: Gravity Controller
+      objectReference: {fileID: 0}
+    - target: {fileID: 7900139684345937219, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8223350686152755403, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8985546325337999021, guid: cc747fe3ef7c9b74a9c7f80b5b49c3f3, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -219,6 +295,10 @@ PrefabInstance:
     - target: {fileID: 3779668083152709896, guid: 4ea837c5681ac4a4fa80af2bdc1e4ac7, type: 3}
       propertyPath: m_Name
       value: Particle Orange
+      objectReference: {fileID: 0}
+    - target: {fileID: 3779668083152709896, guid: 4ea837c5681ac4a4fa80af2bdc1e4ac7, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

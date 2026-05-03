@@ -40,7 +40,7 @@ public class CharacterHitBox : MonoBehaviour
 
         //소유자 obj
         GameObject ownerObj = GetOwnerRoot();
-        //Debug.Log($"[HitBox] other: {other.gameObject}, ownerObj: {ownerObj}, same: {other.gameObject == ownerObj}");
+        Debug.Log($"[HitBox] other: {other.gameObject}, ownerObj: {ownerObj}, same: {other.gameObject == ownerObj}");
 
         // 1순위: ICharacterModel 구현체 (NetworkCharacterModel / UnifiedCharacterModel 모두 해당)
         ICharacterModel iTarget = other.GetComponent<ICharacterModel>();
@@ -127,6 +127,7 @@ public class CharacterHitBox : MonoBehaviour
     public void EnableHitbox()
     {
         hitboxCollider.enabled = true;
+        _hitTargets.Clear();
 
         GameObject ownerObj = GetOwnerRoot();
 

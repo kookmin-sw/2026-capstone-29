@@ -58,7 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 7cd2a065e195a9644b3e09af81646603, type: 2}
     - target: {fileID: 919132149155446097, guid: 9661fbab99a282a4db18eaa4af3fbf58, type: 3}
       propertyPath: m_Name
-      value: rgb stylized nade
+      value: Bomb
       objectReference: {fileID: 0}
     - target: {fileID: 7071182760956848314, guid: 9661fbab99a282a4db18eaa4af3fbf58, type: 3}
       propertyPath: m_Materials.Array.data[0]

@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2240084681631754468}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.4395695, y: 33.5334, z: 13.447541}
+  m_LocalPosition: {x: -7.4395695, y: 34.92, z: 13.447541}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -63,6 +63,7 @@ MonoBehaviour:
     prefabs:
     - {fileID: 2167918261752081878, guid: a5faea058fe6b8f428fe904936ab40cc, type: 3}
     - {fileID: 2667290322979706119, guid: 02247eb06f9aca54d8cc900cc08c0523, type: 3}
+    - {fileID: 2451240541909540556, guid: 007f28bfecbb51942aaa841354e267d7, type: 3}
     maxConcurrent: 1
     respawnDelay: 5
     fillOnStart: 1
@@ -80,6 +81,7 @@ MonoBehaviour:
     - {fileID: 4656205910049893236, guid: f5ae6365615f5c244ae8f788570a832c, type: 3}
     - {fileID: 6630323124785233130, guid: aa2ac35d5ba26d041bc55a4bd7de132c, type: 3}
     - {fileID: 8826999024464848779, guid: 33835b0015ef8e44ba01c8d81cbea382, type: 3}
+    - {fileID: 5100206813629255630, guid: ee9bd38872534064da0dd1cddfed57a4, type: 3}
     maxConcurrent: 1
     respawnDelay: 7
     fillOnStart: 1

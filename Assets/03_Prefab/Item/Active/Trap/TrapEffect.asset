@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cda6e28384628624faaf796766bfc1b5, type: 3}
+  m_Name: TrapEffect
+  m_EditorClassIdentifier: 
+  duration: 3
+  spawnOffset: {x: 0, y: 0, z: 2}
+  trapLifetime: 30
+  trapRadius: 1.2
+  holdDuration: 3
+  trapColor: {r: 0.8, g: 0.2, b: 0.2, a: 0.6}
+  consumeOnTrigger: 1
+  trapPrefab: {fileID: 2426771138486844728, guid: 07a0bb4e82bb93a4f9831dee5fef6e6d, type: 3}

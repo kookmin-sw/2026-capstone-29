@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 222710400966823282}
   - component: {fileID: 4539156563713950851}
   - component: {fileID: 6516454835068345607}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bottom Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 4857308528710223716}
   - component: {fileID: 7421850853896644701}
   - component: {fileID: 7790197201989204308}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Knuckles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 1615501050177247395}
   - component: {fileID: 1690793954672409645}
   - component: {fileID: 957863597585928727}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Stem_Pack_Field
   m_TagString: Active
   m_Icon: {fileID: 0}
@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneId: 0
-  _assetId: 3580819011
+  _assetId: 2564698365
   serverOnly: 0
   visibility: 0
   hasSpawned: 0
@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 5110410755520497233}
   - component: {fileID: 8914029657682785019}
   - component: {fileID: 2816167373551830003}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: MidBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -350,7 +350,7 @@ GameObject:
   - component: {fileID: 930423471408623595}
   - component: {fileID: 4688238574725777267}
   - component: {fileID: 3801239165032351717}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TopBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -433,7 +433,7 @@ GameObject:
   - component: {fileID: 9100123637480571758}
   - component: {fileID: 9161960845784259709}
   - component: {fileID: 8392078421601925647}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Particle Purple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5263,7 +5263,7 @@ GameObject:
   - component: {fileID: 226778087346205590}
   - component: {fileID: 4442343857106927062}
   - component: {fileID: 4224108566232160474}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TopPunch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5346,7 +5346,7 @@ GameObject:
   - component: {fileID: 3005354865725381522}
   - component: {fileID: 431814296321333382}
   - component: {fileID: 958242811880802290}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WireHold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5429,7 +5429,7 @@ GameObject:
   - component: {fileID: 7798946858760046393}
   - component: {fileID: 1613761549453333503}
   - component: {fileID: 8373153646042847248}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Computer Chip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5510,7 +5510,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4897101819545145835}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Stem Pack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5557,7 +5557,7 @@ GameObject:
   - component: {fileID: 8581905456654724794}
   - component: {fileID: 3700947878633271018}
   - component: {fileID: 676059951230002841}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5640,7 +5640,7 @@ GameObject:
   - component: {fileID: 8477417333952488880}
   - component: {fileID: 2211194828921584275}
   - component: {fileID: 1784199724105376063}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: cable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5723,7 +5723,7 @@ GameObject:
   - component: {fileID: 919840743534137650}
   - component: {fileID: 1967599836429202823}
   - component: {fileID: 5573382311488878646}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5806,7 +5806,7 @@ GameObject:
   - component: {fileID: 7289266685391385518}
   - component: {fileID: 8994830174600829926}
   - component: {fileID: 4354847612441397300}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: WireHold2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5889,7 +5889,7 @@ GameObject:
   - component: {fileID: 130859091118385652}
   - component: {fileID: 3980744843993595430}
   - component: {fileID: 4134167713669660471}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Needle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5972,7 +5972,7 @@ GameObject:
   - component: {fileID: 1000382601130863896}
   - component: {fileID: 263647800815290369}
   - component: {fileID: 3747708416252193095}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Grip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6055,7 +6055,7 @@ GameObject:
   - component: {fileID: 2637745855195473602}
   - component: {fileID: 2323833601368676116}
   - component: {fileID: 6587596427668176085}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TopArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}

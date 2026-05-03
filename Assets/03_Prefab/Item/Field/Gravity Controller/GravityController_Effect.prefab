@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1713764070474207802}
   - component: {fileID: 8585977490575871353}
   - component: {fileID: 809736317304951186}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: GravityController_Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}

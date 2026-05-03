@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5350557442048303328}
   - component: {fileID: 946642071835129300}
   - component: {fileID: 2944301938411400536}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Particle Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4841,7 +4841,7 @@ GameObject:
   - component: {fileID: 3350353546436313836}
   - component: {fileID: 179720418927292444}
   - component: {fileID: 714852197760303226}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Handle_MSH
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4925,7 +4925,7 @@ GameObject:
   - component: {fileID: 2194721147163561609}
   - component: {fileID: 730071089149718368}
   - component: {fileID: 3347806401281561582}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Bat_Field
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -5014,7 +5014,7 @@ GameObject:
   - component: {fileID: 6613728731250273148}
   - component: {fileID: 8134115846076883977}
   - component: {fileID: 7054340822179116689}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Baseball_Stick_MSH
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5095,7 +5095,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3751851805716189473}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BASEBALL STICK
   m_TagString: Untagged
   m_Icon: {fileID: 0}

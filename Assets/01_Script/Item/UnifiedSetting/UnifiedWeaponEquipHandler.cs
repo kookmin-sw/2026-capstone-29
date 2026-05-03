@@ -58,6 +58,7 @@ public class UnifiedWeaponEquipHandler : MonoBehaviour
     public Transform FollowTarget => followTarget;
 
     // 백업
+    private UnifiedCharacterView cachedUnifiedView;
     private CharacterView cachedView;
     private CharacterHitBox originalRightHitbox;
     private bool isEquipped;
@@ -170,6 +171,23 @@ public class UnifiedWeaponEquipHandler : MonoBehaviour
             }
         }
 
+        else
+        {
+            // CharacterView가 null이 나온다면 UnifiedCharacterView 시도
+            cachedUnifiedView = owner.GetComponent<UnifiedCharacterView>();
+            if (cachedUnifiedView != null)
+            {
+                originalRightHitbox = cachedUnifiedView.rightHandHitbox;
+                if (weaponHitbox == null)
+                    weaponHitbox = GetComponentInChildren<CharacterHitBox>();
+                if (weaponHitbox != null)
+                {
+                    cachedUnifiedView.rightHandHitbox = weaponHitbox;
+                    weaponHitbox.DisableHitbox();
+                }
+            }
+        }
+
         // 기본 무기 숨김 (양손) — WeaponAttacher가 있을 때만
         if (hideDefaultOnEquip)
         {
@@ -261,6 +279,8 @@ public class UnifiedWeaponEquipHandler : MonoBehaviour
 
         if (cachedView != null && originalRightHitbox != null)
             cachedView.rightHandHitbox = originalRightHitbox;
+        else if (cachedUnifiedView != null && originalRightHitbox != null)
+            cachedUnifiedView.rightHandHitbox = originalRightHitbox;
 
         // 양손 기본 무기 복원 (한쪽만 비어있어도 안전)
         if (_hiddenRightDefault != null)
@@ -284,6 +304,7 @@ public class UnifiedWeaponEquipHandler : MonoBehaviour
         _useSetParent = false;
         _gripCached = false;
         isEquipped = false;
+        cachedUnifiedView = null;
     }
 
     // ------------------------------------------------------------
