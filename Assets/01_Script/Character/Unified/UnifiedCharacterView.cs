@@ -31,6 +31,9 @@ public class UnifiedCharacterView : MonoBehaviour
     // 히트박스 리셋용 스테이트 감시
     private int _prevStateHash;
 
+    // 데미지 판정용 직전 HP (회복/리스폰 시 GetHit 트리거 오발 방지)
+    private float _prevHealth = float.MaxValue;
+
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -42,6 +45,7 @@ public class UnifiedCharacterView : MonoBehaviour
     private void OnEnable()
     {
         if (model == null) return;
+        _prevHealth = model.CurrentHealth;   // 직전 HP 초기값 동기화
         model.OnComboChanged += HandleCombo;
         model.OnStrongAttack += PlayStrongAttackEffect;
         model.OnHasBowChanged += HandleHasBow;
@@ -70,7 +74,10 @@ public class UnifiedCharacterView : MonoBehaviour
     private void Update()
     {
         var stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-        bool useRootMotion = stateInfo.IsName("Combo Attack 4") || stateInfo.IsName("Crouch");
+        bool useRootMotion = stateInfo.IsName("Combo Attack 4")
+                        || stateInfo.IsTag("Stun")
+                        || stateInfo.IsTag("Hit")
+                        || stateInfo.IsTag("Die");
         anim.applyRootMotion = useRootMotion;
 
         if (stateInfo.fullPathHash != _prevStateHash)
@@ -88,9 +95,15 @@ public class UnifiedCharacterView : MonoBehaviour
     }
 
     // -------- 이벤트 핸들러 --------
+
     private void HandleHealthChange(float hp)
     {
-        if (hp > 0)
+        // HP가 감소했고, 살아있을 때만 데미지로 판정.
+        // → 리스폰/회복 시 GetHit 오발 방지, 사망 중 추가 GetHit 방지.
+        bool tookDamage = hp < _prevHealth && hp > 0;
+        _prevHealth = hp;
+
+        if (tookDamage && !model.IsDead)
         {
             anim.SetTrigger("GetHit");
             if (audioSource != null)
@@ -102,11 +115,17 @@ public class UnifiedCharacterView : MonoBehaviour
     }
 
     private void HandleDie() => anim.SetBool("Die", true);
-    private void HandleRespawn() => anim.SetBool("Die", false);
+    private void HandleRespawn()
+    {
+        anim.ResetTrigger("GetHit");
+        anim.ResetTrigger("SelfHarm");
+        anim.SetBool("Die", false);
+        anim.Play("Movement");
+    }
 
     private void HandleVictory()
     {
-        
+
         anim.SetFloat("Speed", 0f); // 이동 정지
         anim.SetTrigger("Victory");
     }

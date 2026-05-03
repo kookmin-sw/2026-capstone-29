@@ -198,7 +198,6 @@ namespace StarterAssets
                 return;
             }
 
-            // 네트워크 모드 + 원격 플레이어면 입력/물리 비활성
             if (!isLocalPlayer)
             {
 #if ENABLE_INPUT_SYSTEM
@@ -408,7 +407,13 @@ namespace StarterAssets
                                     || _animator.GetCurrentAnimatorStateInfo(0).IsName("Combo Attack 4");
                     if (_input.move != Vector2.zero && !isAttacking)
                     {
+                        // 로컬은 즉시 반응(입력 지연 방지), 네트워크 모드면 추가로 Cmd 호출해
+                        // 다른 클라이언트들의 Animator에도 Shift 트리거를 동기화한다.
                         _animator.SetTrigger(_animIDShift);
+                        if (!AuthorityGuard.IsOffline)
+                        {
+                            CmdPlayDashAnim();
+                        }
                         _shiftCooldownDelta = ShiftCooldown;
                         _dashDirection = Quaternion.Euler(0f, _targetRotation, 0f) * Vector3.forward;
                         StartCoroutine(DashCoroutine());
@@ -617,5 +622,20 @@ namespace StarterAssets
             // 점프 발동 시 Grounded 애니메이션 해제
             if (_hasAnimator) _animator.SetBool(_animIDGrounded, false);
         }
+        [Command]
+        private void CmdPlayDashAnim()
+        {
+            RpcPlayDashAnim();
+        }
+
+        [ClientRpc(includeOwner = false)]
+        private void RpcPlayDashAnim()
+        {
+            // 원격 클라이언트는 InitializeLocalControl()을 거치지 않아
+            // _animator 가 null 일 수 있으므로 안전하게 fetch.
+            if (_animator == null) TryGetComponent(out _animator);
+            if (_animator != null) _animator.SetTrigger("Shift");
+        }
+
     }
 }
