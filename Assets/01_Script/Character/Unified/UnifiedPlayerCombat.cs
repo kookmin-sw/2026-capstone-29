@@ -16,6 +16,7 @@ public class UnifiedPlayerCombat : MonoBehaviour
     private PlayerInput _playerInput;
     private InputAction _chargeAction;
     private Animator _animator;
+    private UnifiedThirdPersonController _controller;
 
     [Header("공격 설정")]
     [SerializeField] private float comboResetTime = 1.0f;
@@ -32,6 +33,7 @@ public class UnifiedPlayerCombat : MonoBehaviour
         _view = GetComponent<UnifiedCharacterView>();
         _playerInput = GetComponent<PlayerInput>();
         _animator = GetComponent<Animator>();
+        _controller = GetComponent<UnifiedThirdPersonController>();
 
         if (_playerInput != null && _playerInput.actions != null)
             _chargeAction = _playerInput.actions["Charge"];
@@ -76,12 +78,23 @@ public class UnifiedPlayerCombat : MonoBehaviour
         // 활 장착 중이면 펀치 금지 (양쪽 모드 공통 적용)
         if (_animator.GetBool("HasBow")) return;
 
-        if (_input.punch && !_model.IsCharging && !IsStrongAttacking)
+        if (!_input.punch) return;
+
+        // 공격 가능 조건: 차지/강공/점프/피격/대쉬 중이 아닐 때
+        bool canPunch = !_model.IsCharging
+                     && !IsStrongAttacking
+                     && !IsJumping
+                     && !IsGettingHit
+                     && !IsDashing;
+
+        if (canPunch)
         {
             _lastAttackTime = Time.time;
             _model.RequestNextCombo();
-            _input.punch = false;
         }
+
+        // 가드에 걸렸든 아니든 입력은 소비 — 다음 프레임에 자동 큐잉되는 것 방지
+        _input.punch = false;
     }
 
     private void HandleSelfHarm()
@@ -98,6 +111,18 @@ public class UnifiedPlayerCombat : MonoBehaviour
 
     private bool IsStrongAttacking =>
         _animator != null && _animator.GetCurrentAnimatorStateInfo(0).IsTag("StrongAttack");
+
+    // 점프 중: 컨트롤러가 매 프레임 갱신하는 Grounded 파라미터 사용
+    private bool IsJumping =>
+        _animator != null && !_animator.GetBool("Grounded");
+
+    // 피격 중: Animator 상태에 "Hit" 태그 부여 필요
+    private bool IsGettingHit =>
+        _animator != null && _animator.GetCurrentAnimatorStateInfo(0).IsTag("Hit");
+
+    // 대쉬 중: 컨트롤러 코루틴 플래그를 직접 참조
+    private bool IsDashing =>
+        _controller != null && _controller.IsDashing;
 
     private void OnChargeStarted(InputAction.CallbackContext context)
     {

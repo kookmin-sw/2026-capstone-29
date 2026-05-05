@@ -107,6 +107,7 @@ namespace StarterAssets
         private int _animIDShift;
 
         private bool _isDashing = false;
+        public bool IsDashing => _isDashing;
         private Vector3 _dashDirection;
 
         // 에임 모드: 활 등 원거리 무기 장착 시 UnifiedWeaponBow가 켬/끔.
