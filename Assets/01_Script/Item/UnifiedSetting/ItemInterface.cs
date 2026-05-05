@@ -41,6 +41,7 @@ public interface IWeaponHitBox
 public interface IActive // 액티브 아이템
 {  //아이템의 유효 시간. ItemManager 타이머가 이 값을 사용
     float AvailableTime { get; }
+    Sprite UISprite { get; }
     
     //액티브 효과 본체. ItemManager가 MonoBehaviour의 StartCoroutine으로 실행. 이 코루틴이 끝나거나 중간에 중단되면 효과 종료.
     IEnumerator Activate(GameObject owner);

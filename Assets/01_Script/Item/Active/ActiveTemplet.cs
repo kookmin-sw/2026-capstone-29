@@ -21,6 +21,9 @@ public class ActiveItemTemplate : ScriptableObject, IActive
     [Header("아이템 설정")]
     [SerializeField] private float duration = 5f;
 
+    [SerializeField] private Sprite uiSprite;
+    public Sprite UISprite => uiSprite;
+
     public float AvailableTime => duration;
 
 

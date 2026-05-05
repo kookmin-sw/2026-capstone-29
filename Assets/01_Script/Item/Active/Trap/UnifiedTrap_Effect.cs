@@ -18,6 +18,9 @@ public class UnifiedTrap_Effect : ScriptableObject, IActive
     [Header("아이템 설정")]
     [SerializeField] private float duration = 3f;
 
+    [SerializeField] private Sprite uiSprite;
+    public Sprite UISprite => uiSprite;
+
     [Header("덫 생성")]
     [Tooltip("owner 기준 덫 소환 오프셋 (x: 우측, y: 위, z: 전방)")]
     [SerializeField] private Vector3 spawnOffset = new Vector3(0f, 0f, 2f);

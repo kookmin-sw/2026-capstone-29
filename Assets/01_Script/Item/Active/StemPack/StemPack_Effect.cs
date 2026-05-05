@@ -12,6 +12,9 @@ public class StemPack_Effect : ScriptableObject, IActive
     [SerializeField] private float moveSpeedMultiplier = 1.2f;   // 이동 속도 배율
     [SerializeField] private float animSpeedMultiplier = 1.2f; // 애니메이션 배율
 
+    [SerializeField] private Sprite uiSprite;
+    public Sprite UISprite => uiSprite;
+
     public float AvailableTime => duration;
 
     public virtual IEnumerator Activate(GameObject owner)

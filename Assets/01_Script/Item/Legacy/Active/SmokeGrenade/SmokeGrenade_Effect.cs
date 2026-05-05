@@ -27,6 +27,9 @@ public class SmokeGrenade_Effect : ScriptableObject, IActive
     [Header("아이템 설정")]
     [SerializeField] private float duration = 12f;
 
+    [SerializeField] private Sprite uiSprite;
+    public Sprite UISprite => uiSprite;
+
     [Header("연막탄 생성")]
     [SerializeField] private Vector3 spawnOffset = new Vector3(0f, 0f, 3f);
     [Tooltip("투척 비주얼의 비행 시간 (초)")]
