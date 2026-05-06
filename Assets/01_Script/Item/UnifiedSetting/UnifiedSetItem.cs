@@ -103,6 +103,11 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
         }
         else if (item.CompareTag("Field"))
         {
+            Debug.Log("필드 아이템 인식");
+            IField field = itemAsset as IField;
+            field.SummonObj();
+            //필드 아이템 아키텍처 수정중. 수정 완료 후 삭제
+            /*
             IField fieldAsset = itemAsset as IField;
             if (fieldAsset == null)
             {
@@ -114,6 +119,7 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
                 im.fieldAvailable = fieldAsset.AvailableTime;
                 im.GetField();  // 마지막에 플래그 세팅 → Update가 자동 발동
             }
+            */
         }
     }
 
@@ -150,6 +156,12 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
         }
         else if (item.CompareTag("Field"))
         {
+            Debug.Log("필드 아이템 인식");
+            IField field = itemAsset as IField;
+            field.SummonObj();
+
+            //필드 아이템 수정중. 수정 성공시 제거.
+            /*
             IField fieldAsset = itemAsset as IField;
             if (fieldAsset == null)
             {
@@ -161,6 +173,7 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
                 im.fieldAvailable = fieldAsset.AvailableTime;
                 im.GetField();
             }
+            */
         }
     }
 
@@ -252,6 +265,12 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
         }
         else if (item.CompareTag("Field"))
         {
+
+            Debug.Log("필드 아이템 인식");
+            IField field = itemAsset as IField;
+            field.SummonObj();
+            //필드 아이템 레거시. 삭제
+            /*
             IField fieldAsset = itemAsset as IField;
             if (fieldAsset == null)
             {
@@ -272,6 +291,7 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
                     legacy.GetField();
                 }
             }
+            */
         }
 
         // 필드 아이템 오브젝트 제거

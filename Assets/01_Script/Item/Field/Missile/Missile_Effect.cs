@@ -58,6 +58,7 @@ public class Missile_Effect : FieldEffect
 
     public override void Initialize(float duration)
     {
+        Debug.Log($"[Missile] Initialize 호출됨 - HasAuthority: {HasAuthority}, isServer: {isServer}, IsOffline: {AuthorityGuard.IsOffline}");
         base.Initialize(duration);
 
         if (!HasAuthority) return;

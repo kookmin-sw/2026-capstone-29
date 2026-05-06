@@ -68,5 +68,7 @@ public interface IField
     IEnumerator Activate();
 
     void OnDeactivate();
+
+    public void SummonObj();
 }
 

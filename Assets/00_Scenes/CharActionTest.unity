@@ -286,6 +286,10 @@ PrefabInstance:
       propertyPath: m_VersionIndex
       value: 362
       objectReference: {fileID: 0}
+    - target: {fileID: 6113113787503750703, guid: cb6e54e516e90d048980981c4ff4f137, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6231952802913252403, guid: cb6e54e516e90d048980981c4ff4f137, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -681,28 +685,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1a802ecaf6775746bb2a929fb554ad8, type: 3}
---- !u!1 &226067506 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3466501473340111757, guid: 35a5296dbb7c39f45ac9a1f1879a3338, type: 3}
+--- !u!4 &226067507 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4274105256217829687, guid: 35a5296dbb7c39f45ac9a1f1879a3338, type: 3}
   m_PrefabInstance: {fileID: 1369599357}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &226067508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 226067506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 493f3a4820b4d614b8645458c976ca2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attacher: {fileID: 0}
-  followSlot: 1
-  positionOffset: {x: 0, y: 0, z: 0}
-  rotationOffset: {x: 0, y: 0, z: 0}
-  drawDebugGizmo: 0
 --- !u!43 &228728129
 Mesh:
   m_ObjectHideFlags: 0
@@ -1737,11 +1724,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4274105256798088984, guid: 35a5296dbb7c39f45ac9a1f1879a3338, type: 3}
   m_PrefabInstance: {fileID: 1369599357}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &842710076 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7689959792770135954, guid: 35a5296dbb7c39f45ac9a1f1879a3338, type: 3}
-  m_PrefabInstance: {fileID: 1369599357}
-  m_PrefabAsset: {fileID: 0}
 --- !u!43 &914083926
 Mesh:
   m_ObjectHideFlags: 0
@@ -2628,7 +2610,7 @@ PrefabInstance:
     - target: {fileID: 3327426458867769942, guid: 35a5296dbb7c39f45ac9a1f1879a3338, type: 3}
       propertyPath: addWeaponL
       value: 
-      objectReference: {fileID: 842710076}
+      objectReference: {fileID: 226067507}
     - target: {fileID: 3327426458867769942, guid: 35a5296dbb7c39f45ac9a1f1879a3338, type: 3}
       propertyPath: addWeaponR
       value: 
@@ -3171,7 +3153,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7058241350233877800, guid: 35a5296dbb7c39f45ac9a1f1879a3338, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7207301092686183816, guid: 35a5296dbb7c39f45ac9a1f1879a3338, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3544,10 +3526,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3466501473340111757, guid: 35a5296dbb7c39f45ac9a1f1879a3338, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 226067508}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35a5296dbb7c39f45ac9a1f1879a3338, type: 3}
 --- !u!114 &1464523967 stripped
 MonoBehaviour:

@@ -124,7 +124,10 @@ public class UnifiedItemManager : NetworkBehaviour
 
         // -----------------------------
         // 필드: 장착 즉시 자동 발동
+        // 필드 아키텍처 수정중. 수정 완료 후 삭제 요망
         // -----------------------------
+        
+        /*
         if (hasField && !fieldUsed && field != null)
         {
             fieldUsed = true;
@@ -153,6 +156,7 @@ public class UnifiedItemManager : NetworkBehaviour
                 NotifyFieldRemoved();
             }
         }
+        */
     }
 
     // -----------------------------
