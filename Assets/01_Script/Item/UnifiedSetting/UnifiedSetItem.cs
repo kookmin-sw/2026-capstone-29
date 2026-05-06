@@ -96,33 +96,27 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
         }
         else if (item.CompareTag("Passive"))
         {
+
             IPassive passiveAsset = itemAsset as IPassive;
+            //레거시 코드. 수정 후 삭제 요망.
+            /*
             im.passive = passiveAsset;
             if (passiveAsset != null) im.passiveAvailable = passiveAsset.AvailableTime;
             im.GetPassive();  // 플래그는 마지막에 세팅 (Update에서 자동 발동 트리거)
+            */
+            im.GetPassive(passiveAsset, passiveAsset.AvailableTime);
         }
         else if (item.CompareTag("Field"))
         {
             Debug.Log("필드 아이템 인식");
             IField field = itemAsset as IField;
+
+            //오브젝트 소환만 하는 것으로 변경. 그 이후 생명주기 관리는 오브젝트에서 전담.
             field.SummonObj();
-            //필드 아이템 아키텍처 수정중. 수정 완료 후 삭제
-            /*
-            IField fieldAsset = itemAsset as IField;
-            if (fieldAsset == null)
-            {
-                Debug.LogError("[UnifiedSetItem] Field 태그인데 itemAsset이 IField가 아님.");
-            }
-            else
-            {
-                im.field = fieldAsset;
-                im.fieldAvailable = fieldAsset.AvailableTime;
-                im.GetField();  // 마지막에 플래그 세팅 → Update가 자동 발동
-            }
-            */
         }
     }
 
+    //이전 스크립트르 적용. 더 이상 건드리지 않기에 수정 안하는 편이 좋음.
     private void ApplyToLegacy(GameObject user, GameObject item, ItemManager im)
     {
         if (item.CompareTag("Weapon"))
@@ -246,8 +240,10 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
         else if (item.CompareTag("Passive"))
         {
             IPassive passiveAsset = itemAsset as IPassive;
+            
             if (unified != null)
             {
+                /*
                 // ★ 이전 패시브 강제 해제 추가
                 if (unified.HasPassive() || unified.IsPassiveRunning())
                     unified.ForceExpirePassive();
@@ -255,6 +251,10 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
                 unified.passive = passiveAsset;
                 if (passiveAsset != null) unified.passiveAvailable = passiveAsset.AvailableTime;
                 unified.GetPassive();
+                */
+
+                unified.GetPassive(passiveAsset, passiveAsset.AvailableTime);
+
             }
             else
             {
@@ -265,33 +265,10 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
         }
         else if (item.CompareTag("Field"))
         {
-
-            Debug.Log("필드 아이템 인식");
             IField field = itemAsset as IField;
+
+            //오브젝트 소환만 하는 것으로 변경. 그 이후 생명주기 관리는 오브젝트에서 전담.
             field.SummonObj();
-            //필드 아이템 레거시. 삭제
-            /*
-            IField fieldAsset = itemAsset as IField;
-            if (fieldAsset == null)
-            {
-                Debug.LogError("[UnifiedSetItem] Field 태그인데 itemAsset이 IField가 아님.");
-            }
-            else
-            {
-                if (unified != null)
-                {
-                    unified.field = fieldAsset;
-                    unified.fieldAvailable = fieldAsset.AvailableTime;
-                    unified.GetField();
-                }
-                else
-                {
-                    legacy.field = fieldAsset;
-                    legacy.fieldAvailable = fieldAsset.AvailableTime;
-                    legacy.GetField();
-                }
-            }
-            */
         }
 
         // 필드 아이템 오브젝트 제거
