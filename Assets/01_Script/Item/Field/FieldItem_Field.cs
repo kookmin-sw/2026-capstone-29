@@ -32,6 +32,37 @@ public class FieldItem_Field : ScriptableObject, IField
     // 현재 활성화된 장판 인스턴스 (OnDeactivate에서 회수용)
     private GameObject _spawnedField;
 
+    //필드 아이템 구조 변화. 필드 아이템의 라이프사이클 관리를 더 이상 플레이어가 주관하지 않는 대신, 오브젝트가 자체적으로 코루틴을 활용하여 관리.
+    //따라서 IField는 그저 소환만 해 주는 역할로 축소된다.
+    public virtual void SummonObj()
+    {
+        Debug.Log($"[FieldItem] {name} 장판 스폰 시작");
+        // 권위가 있을 때만 스폰: 온라인은 서버, 오프라인은 본인
+        bool canSpawn = AuthorityGuard.IsOffline || NetworkServer.active;
+
+        if (!canSpawn)
+        {
+            Debug.LogWarning($"[FieldItem] {name}: 서버가 아니거나 오프라인 모드가 아님. 스폰 스킵.");
+        }
+
+        Vector3 pos = GetSpawnPosition();
+        _spawnedField = Instantiate(fieldPrefab, pos, Quaternion.identity);
+
+        if (AuthorityGuard.IsOffline)
+        {
+            HardenOfflineObject(_spawnedField);
+        }
+        else if (_spawnedField.GetComponent<NetworkIdentity>() != null && NetworkServer.active)
+        {
+            Debug.Log("[FieldItem] 스폰!");
+            NetworkServer.Spawn(_spawnedField);
+        }
+
+        FieldEffect effect = _spawnedField.GetComponent<FieldEffect>();
+        if (effect != null) effect.Initialize(duration);
+    }
+
+    //Legacy
     public virtual IEnumerator Activate()
     {
         Debug.Log($"[FieldItem] {name} 장판 스폰 시작");

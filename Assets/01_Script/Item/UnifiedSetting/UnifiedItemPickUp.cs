@@ -9,7 +9,6 @@ using UnityEngine;
 /// - 온라인: 기존 ItemPickUp 과 동일하게 Command 경유.
 /// - 오프라인: Command 없이 IEquip.Save 를 직접 호출.
 ///
-/// 추가:
 ///   픽업이 성공적으로 처리될 때, 해당 아이템이 ItemSpawner 가 만들었던 것이라면
 ///   SpawnedItemOrigin 마커를 통해 스포너에 NotifyItemConsumed 를 호출한다.
 ///   (서버/오프라인에서만 실제 처리되므로 클라이언트 중복 호출은 안전하게 무시됨)

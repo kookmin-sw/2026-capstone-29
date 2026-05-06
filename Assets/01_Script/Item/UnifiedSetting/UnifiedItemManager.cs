@@ -1,6 +1,8 @@
 ﻿using Mirror;
 using System.Collections;
 using UnityEngine;
+using System.Linq;
+using System.Collections.Generic;
 
 /// <summary>
 /// 플레이어가 들고 있는 아이템(무기/액티브/패시브/필드)의 상태·유효시간을 관리하는 통합 컴포넌트.
@@ -15,31 +17,32 @@ public class UnifiedItemManager : NetworkBehaviour
     // 인터페이스는 SyncVar 불가 → 런타임에서만 참조
     [HideInInspector] public IWeapon weapon;
     [HideInInspector] public IActive active;
-    [HideInInspector] public IPassive passive;
-    [HideInInspector] public IField field;
+
+    //패시브는 각각의 코루틴으로 라이프사이클 관리를 하여야 한다.
+    private class Passive
+    {
+        public IPassive passive;
+        public Coroutine routine;
+        public float timer;
+        public float available; // duration
+    }
+
+    private List<Passive> passiveEntries = new();
 
     // bool 상태는 온라인에선 클라이언트에 동기화, 오프라인에선 로컬 필드처럼 사용
     [SyncVar] private bool hasWeapon = false;
     [SyncVar] private bool hasActive = false;
     [SyncVar] private bool activeUsed = false;
-    [SyncVar] private bool hasPassive = false;
-    [SyncVar] private bool passiveUsed = false;
-    [SyncVar] private bool hasField = false;
-    [SyncVar] private bool fieldUsed = false;
+
+    [SyncVar] private int passiveCount = 0; // 클라이언트 동기화용
 
     [SyncVar] public float weaponAvailable;
     [SyncVar] public float activeAvailable;
-    [SyncVar] public float passiveAvailable;
-    [SyncVar] public float fieldAvailable;
 
     [SerializeField] private float weaponTimer;
     [SerializeField] private float activeTimer;
-    [SerializeField] private float passiveTimer;
-    [SerializeField] private float fieldTimer;
 
     private Coroutine activeRoutine;
-    private Coroutine passiveRoutine;
-    private Coroutine fieldRoutine;
 
     private void Update()
     {
@@ -47,9 +50,7 @@ public class UnifiedItemManager : NetworkBehaviour
         bool canTick = AuthorityGuard.IsOffline || isServer;
         if (!canTick) return;
 
-        // -----------------------------
         // 무기 타이머
-        // -----------------------------
         if (hasWeapon)
         {
             weaponTimer += Time.deltaTime;
@@ -65,9 +66,7 @@ public class UnifiedItemManager : NetworkBehaviour
             }
         }
 
-        // -----------------------------
-        // 액티브: 사용 중이면 타이머 진행 → 만료 시 코루틴 정지 + 원복
-        // -----------------------------
+        // 액티브: 사용 중이면 타이머 진행 → 만료 시 코루틴 정지 + 원상 복구
         if (activeUsed)
         {
             activeTimer += Time.deltaTime;
@@ -89,141 +88,129 @@ public class UnifiedItemManager : NetworkBehaviour
             }
         }
 
-        // -----------------------------
-        // 패시브: 장착 즉시 자동 발동
-        // -----------------------------
-        if (hasPassive && !passiveUsed && passive != null)
+        // 패시브 리스트 역순 순회
+        for (int i = passiveEntries.Count - 1; i >= 0; i--)
         {
-            Debug.Log($"[UnifiedItemManager] Passive 발동 - available={passiveAvailable}");
-            passiveUsed = true;
-            passiveTimer = 0f;
-            passiveRoutine = StartCoroutine(PassiveRoutineWrapper(passive.Activate(gameObject)));
-            NotifyPassiveActivated();
-        }
+            var entry = passiveEntries[i];
 
-        if (passiveUsed)
-        {
-            passiveTimer += Time.deltaTime;
-            if (passiveAvailable <= passiveTimer)
+            // 아직 코루틴이 시작되지 않은 아이템에 대해 발동을 적용
+            if (entry.routine == null && entry.passive != null)
             {
-                if (passiveRoutine != null)
-                {
-                    StopCoroutine(passiveRoutine);
-                    passiveRoutine = null;
-                    passive?.OnDeactivate(gameObject);
-                }
-
-                passiveUsed = false;
-                hasPassive = false;
-                passive = null;
-                passiveTimer = 0;
-                passiveAvailable = 0;
-                NotifyPassiveRemoved();
+                Debug.Log($"[UnifiedItemManager] Passive 발동 - available={entry.available}");
+                entry.timer = 0f;
+                entry.routine = StartCoroutine(
+                    PassiveRoutineWrapper(entry, entry.passive.Activate(gameObject)));
+                NotifyPassiveActivated();
             }
-        }
 
-        // -----------------------------
-        // 필드: 장착 즉시 자동 발동
-        // -----------------------------
-        if (hasField && !fieldUsed && field != null)
-        {
-            fieldUsed = true;
-            fieldTimer = 0f;
-            fieldRoutine = StartCoroutine(FieldRoutineWrapper(field.Activate()));
-            NotifyFieldActivated();
-        }
-
-        if (fieldUsed)
-        {
-            fieldTimer += Time.deltaTime;
-            if (fieldAvailable <= fieldTimer)
+            // 타이머 진행
+            if (entry.routine != null)
             {
-                if (fieldRoutine != null)
+                entry.timer += Time.deltaTime;
+                if (entry.available <= entry.timer)
                 {
-                    StopCoroutine(fieldRoutine);
-                    fieldRoutine = null;
-                    field?.OnDeactivate();
+                    ExpirePassiveEntry(entry);
+                    passiveEntries.RemoveAt(i);
+                    SyncPassiveCount();
+                    NotifyPassiveRemoved();
                 }
-
-                fieldUsed = false;
-                hasField = false;
-                field = null;
-                fieldTimer = 0;
-                fieldAvailable = 0;
-                NotifyFieldRemoved();
             }
         }
     }
+
+        // ──────────────────────────────
+        // 패시브 내부 헬퍼
+        // ──────────────────────────────
+    private void ExpirePassiveEntry(Passive entry)
+    {
+        if (entry.routine != null)
+        {
+            StopCoroutine(entry.routine);
+            entry.routine = null;
+            entry.passive?.OnDeactivate(gameObject);
+        }
+        // DamageAmplifier 콜백 해제
+        var amp = GetComponent<DamageAmplifier>();
+        if (amp != null)
+            amp.OnAllStacksConsumed -= () => OnPassiveEarlyExpired(entry);
+    }
+
+    private void RemoveDuplicatePassive(IPassive newPassive)
+    {
+        for (int i = passiveEntries.Count - 1; i >= 0; i--)
+        {
+            // SO 기준으로, 같은 에셋이면 같은 참조
+            if (passiveEntries[i].passive == newPassive)
+            {
+                ExpirePassiveEntry(passiveEntries[i]);
+                passiveEntries.RemoveAt(i);
+            }
+        }
+    }
+
+    private void SyncPassiveCount()
+    {
+        passiveCount = passiveEntries.Count;
+    }
+
+
 
     // -----------------------------
     // 조회/세터 (SetItem / UnifiedSetItem에서 호출)
     // -----------------------------
     public void ApplyWeaponTimer(float available) => weaponAvailable = available;
     public void ApplyActiveTimer(float available) => activeAvailable = available;
-    public void ApplyPassiveTimer(float available) => passiveAvailable = available;
-    public void ApplyFieldTimer(float available) => fieldAvailable = available;
+
+    public void ApplyPassiveTimer(float available)
+    {
+        if (passiveEntries.Count > 0)
+            passiveEntries[^1].available = available;
+    }
 
     public bool HasWeapon() => hasWeapon;
     public bool HasActive() => hasActive;
     public bool IsActiveRunning() => activeUsed;
-    public bool HasPassive() => hasPassive;
-    public bool IsPassiveRunning() => passiveUsed;
-    public bool HasField() => hasField;
-    public bool IsFieldRunning() => fieldUsed;
+    public bool HasPassive() => passiveEntries.Count > 0;
+    public bool IsPassiveRunning() => passiveEntries.Any(e => e.routine != null);
 
     public void GetWeapon() => hasWeapon = true;
     public void GetActive() => hasActive = true;
-    public void GetPassive()
+    public void GetPassive(IPassive newPassive, float available)
     {
-        // 기존 패시브가 있으면 먼저 정리
-        if (hasPassive || passiveUsed)
+        // 같은 타입 중복 제거
+        RemoveDuplicatePassive(newPassive);
+
+        var entry = new Passive
         {
-            var amp = GetComponent<DamageAmplifier>();
-            if (amp != null)
-                amp.OnAllStacksConsumed -= OnPassiveEarlyExpired;
+            passive = newPassive,
+            routine = null,
+            timer = 0f,
+            available = available
+        };
+        passiveEntries.Add(entry);
+        SyncPassiveCount();
 
-            if (passiveRoutine != null)
-            {
-                StopCoroutine(passiveRoutine);
-                passiveRoutine = null;
-            }
-        }
-
-        hasPassive = true;
-
-        var ampNew = GetComponent<DamageAmplifier>();
-        if (ampNew != null)
-            ampNew.OnAllStacksConsumed += OnPassiveEarlyExpired;
-
-    }
-    public void GetField() => hasField = true;
-
-    private void OnPassiveEarlyExpired()
-    {
-        // 콜백 해제 (중복 방지)
+        // DamageAmplifier 조기 만료 콜백
         var amp = GetComponent<DamageAmplifier>();
         if (amp != null)
-            amp.OnAllStacksConsumed -= OnPassiveEarlyExpired;
+            amp.OnAllStacksConsumed += () => OnPassiveEarlyExpired(entry);
+    }
 
-        if (!passiveUsed) return;
+    private void OnPassiveEarlyExpired(Passive entry)
+    {
+        var amp = GetComponent<DamageAmplifier>();
+        if (amp != null)
+            amp.OnAllStacksConsumed -= () => OnPassiveEarlyExpired(entry);
 
-        // 타이머 만료와 동일한 처리
-        if (passiveRoutine != null)
-        {
-            StopCoroutine(passiveRoutine);
-            passiveRoutine = null;
-            passive?.OnDeactivate(gameObject);
-        }
+        if (!passiveEntries.Contains(entry)) return;
 
-        passiveUsed = false;
-        hasPassive = false;
-        passive = null;
-        passiveTimer = 0;
-        passiveAvailable = 0;
+        ExpirePassiveEntry(entry);
+        passiveEntries.Remove(entry);
+        SyncPassiveCount();
         NotifyPassiveRemoved();
     }
 
-    public void ForceExpirePassive()
+/*public void ForceExpirePassive()
     {
         var amp = GetComponent<DamageAmplifier>();
         if (amp != null)
@@ -243,11 +230,35 @@ public class UnifiedItemManager : NetworkBehaviour
         passiveAvailable = 0;
         // passive 필드는 호출부에서 새 값으로 교체
     }
-    
-    // -----------------------------
-    // 액티브 사용 요청 (입력 → 실행)
-    // -----------------------------
-    public void RequestUseActive()
+*/
+
+    public void ForceExpireAllPassives()
+    {
+        for (int i = passiveEntries.Count - 1; i >= 0; i--)
+        {
+            ExpirePassiveEntry(passiveEntries[i]);
+        }
+        passiveEntries.Clear();
+        SyncPassiveCount();
+    }
+
+    public void ForceExpirePassive<T>() where T : IPassive
+    {
+        for (int i = passiveEntries.Count - 1; i >= 0; i--)
+        {
+            if (passiveEntries[i].passive is T)
+            {
+                ExpirePassiveEntry(passiveEntries[i]);
+                passiveEntries.RemoveAt(i);
+            }
+        }
+        SyncPassiveCount();
+    }
+
+// -----------------------------
+// 액티브 사용 요청 (입력 → 실행)
+// -----------------------------
+public void RequestUseActive()
     {
         // 보유하지 않았거나 이미 사용 중이면 무시
         if (!hasActive || activeUsed) return;
@@ -296,16 +307,15 @@ public class UnifiedItemManager : NetworkBehaviour
         activeRoutine = null;
     }
 
-    private IEnumerator PassiveRoutineWrapper(IEnumerator inner)
+    private IEnumerator PassiveRoutineWrapper(Passive entry, IEnumerator inner)
     {
         yield return inner;
-        passiveRoutine = null;
+        entry.routine = null;
     }
 
     private IEnumerator FieldRoutineWrapper(IEnumerator inner)
     {
         yield return inner;
-        fieldRoutine = null;
     }
 
     // -----------------------------
@@ -335,25 +345,11 @@ public class UnifiedItemManager : NetworkBehaviour
         else if (NetworkServer.active) RpcOnPassiveRemoved();
     }
 
-    private void NotifyFieldActivated()
-    {
-        if (AuthorityGuard.IsOffline) OnFieldActivatedLocal();
-        else if (NetworkServer.active) RpcOnFieldActivated();
-    }
-
-    private void NotifyFieldRemoved()
-    {
-        if (AuthorityGuard.IsOffline) OnFieldRemovedLocal();
-        else if (NetworkServer.active) RpcOnFieldRemoved();
-    }
-
     [ClientRpc] void RpcOnWeaponRemoved() => OnWeaponRemovedLocal();
     [ClientRpc] void RpcOnActiveUsed() => OnActiveUsedLocal();
     [ClientRpc] void RpcOnActiveRemoved() => OnActiveRemovedLocal();
     [ClientRpc] void RpcOnPassiveActivated() => OnPassiveActivatedLocal();
     [ClientRpc] void RpcOnPassiveRemoved() => OnPassiveRemovedLocal();
-    [ClientRpc] void RpcOnFieldActivated() => OnFieldActivatedLocal();
-    [ClientRpc] void RpcOnFieldRemoved() => OnFieldRemovedLocal();
 
     private void OnWeaponRemovedLocal() => Debug.Log("무기 아이템 해제됨.");
     
@@ -369,9 +365,7 @@ public class UnifiedItemManager : NetworkBehaviour
     }
 
     }
-    private void OnActiveRemovedLocal() => Debug.Log("액티브 아이템 해제됨.");
+    private void OnActiveRemovedLocal() => Debug.Log("액티브 아이템 해제됨."); 
     private void OnPassiveActivatedLocal() => Debug.Log("패시브 아이템 발동.");
     private void OnPassiveRemovedLocal() => Debug.Log("패시브 아이템 해제됨.");
-    private void OnFieldActivatedLocal() => Debug.Log("필드 아이템 발동 (장판 스폰).");
-    private void OnFieldRemovedLocal() => Debug.Log("필드 아이템 해제됨.");
 }

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Battery_Effect
   m_EditorClassIdentifier: 
   duration: 3000
-  damageMultiplier: 2
-  hitCount: 2
+  damageMultiplier: 3
+  hitCount: 1

@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 /*
  플레이어가 '주는 데미지'에 대한 배율을 일시적으로 증폭시키는 컴포넌트.
  배터리 같은 패시브 아이템이 AddStack()으로 스택을 쌓고,
  CharacterHitBox가 히트박스를 활성화하는 순간(=공격 시도) ConsumeOneAttempt()를 호출해 CharacterHitbox의 multipleDMG에 반영하고, 스택을 소모한다.
  이 구조를 활용하여 디버프도 구현할 수 있겠다.
 */
-public class DamageAmplifier : MonoBehaviour
+public class DamageAmplifier : NetworkBehaviour
 {
     public event System.Action OnAllStacksConsumed;
 
@@ -26,32 +27,68 @@ public class DamageAmplifier : MonoBehaviour
 
     private readonly List<Stack> _stacks = new List<Stack>();
 
+    [SyncVar] private float _syncedMultiplier = 1f;
+    [SyncVar] private int _syncedStackCount = 0;
+
+
+    // 오프라인이면 항상 true, 온라인이면 Mirror의 isServer 사용
+    private bool CanMutate => AuthorityGuard.IsOffline || isServer;
+
     //현재 다음 공격에 적용될 곱연산 배율. 활성 스택이 없으면 1f의 배율을 가지게 된다.
     public float Multiplier
     {
         get
         {
-            float m = 1f;
-            for (int i = 0; i < _stacks.Count; i++)
-                m *= _stacks[i].Multiplier;
-            return m;
+            // 오프라인: SyncVar 동기화 안 되므로 직접 계산
+            // 서버: 직접 계산 (SyncVar 쓰기 주체)
+            // 클라이언트: SyncVar 값 읽기
+            if (AuthorityGuard.IsOffline || isServer)
+                return CalcMultiplier();
+            return _syncedMultiplier;
         }
     }
 
     // 현재 보유한 스택 개수. UI 표시 등에 유용
-    public int StackCount => _stacks.Count;
+    public int StackCount
+    {
+        get
+        {
+            if (AuthorityGuard.IsOffline || isServer)
+                return _stacks.Count;
+            return _syncedStackCount;
+        }
+    }
 
+    private float CalcMultiplier()
+    {
+        float m = 1f;
+        for (int i = 0; i < _stacks.Count; i++)
+            m *= _stacks[i].Multiplier;
+        return m;
+    }
+
+    // SyncVar 갱신. 온라인 서버에서만 의미 있음. 오프라인에선 no-op.
+    private void RefreshSyncVars()
+    {
+        if (!CanMutate) return;
+        if (!AuthorityGuard.IsOffline)
+        {
+            _syncedMultiplier = CalcMultiplier();
+            _syncedStackCount = _stacks.Count;
+        }
+    }
 
     // 새 배율 스택을 추가
     public void AddStack(object owner, float multiplier, int hits)
     {
         if (hits <= 0 || multiplier <= 0f) return;
         _stacks.Add(new Stack(owner, multiplier, hits));
+        RefreshSyncVars();
     }
 
 
     // owner가 소유한 스택을 하나 선입선출로 제거. 없으면 false.
-    
+
     public bool RemoveStack(object owner)
     {
         for (int i = 0; i < _stacks.Count; i++)
@@ -59,6 +96,7 @@ public class DamageAmplifier : MonoBehaviour
             if (ReferenceEquals(_stacks[i].Owner, owner))
             {
                 _stacks.RemoveAt(i);
+                RefreshSyncVars();
                 return true;
             }
         }
@@ -68,13 +106,38 @@ public class DamageAmplifier : MonoBehaviour
     // DamageAmplifier에 추가. 동일 프레임에서 발생하는 EnableHitbox
     private int _lastAttemptFrame = -1;
 
-    // 모든 활성 스택의 RemainingHits를 1 감소시키고 0이 된 스택은 제거. CharacterHitBox.EnableHitbox에서 호출.
+
     public void ConsumeOneAttempt()
     {
-        if (_lastAttemptFrame == Time.frameCount) return; // 같은 프레임 중복 무시
+        // 오프라인: 바로 실행
+        if (AuthorityGuard.IsOffline)
+        {
+            ConsumeLocal();
+            return;
+        }
+
+        // 온라인 서버: 바로 실행
+        if (isServer)
+        {
+            ConsumeLocal();
+            return;
+        }
+
+        // 온라인 클라이언트: 서버에 위임
+        CmdConsumeOneAttempt();
+    }
+
+    [Command]
+    private void CmdConsumeOneAttempt()
+    {
+        ConsumeLocal();
+    }
+
+    private void ConsumeLocal()
+    {
+        if (_lastAttemptFrame == Time.frameCount) return;
         _lastAttemptFrame = Time.frameCount;
 
-        // 기존 소모 로직
         for (int i = _stacks.Count - 1; i >= 0; i--)
         {
             _stacks[i].RemainingHits--;
@@ -82,7 +145,8 @@ public class DamageAmplifier : MonoBehaviour
                 _stacks.RemoveAt(i);
         }
 
-        // 스택 전부 소모시 알림
+        RefreshSyncVars();
+
         if (_stacks.Count == 0)
             OnAllStacksConsumed?.Invoke();
     }
