@@ -60,6 +60,7 @@ GameObject:
   - component: {fileID: -9165402719035322624}
   - component: {fileID: -3919388257179207740}
   - component: {fileID: 543628534653413141}
+  - component: {fileID: 8933606834556428448}
   m_Layer: 6
   m_Name: UPlayer
   m_TagString: Player
@@ -402,6 +403,7 @@ MonoBehaviour:
   chargeReadyEffect: {fileID: 3890617964109313627}
   rightHandHitbox: {fileID: 6716766317581853125}
   leftHandHitbox: {fileID: 1344337710141032076}
+  rightFootHitbox: {fileID: 8028383408365553793}
   leftFootHitbox: {fileID: 1077588120744126995}
   audioSource: {fileID: 0}
   punchSounds: {fileID: 8300000, guid: 81ff5a48a8891db449eea71985570f52, type: 3}
@@ -580,6 +582,42 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+--- !u!114 &8933606834556428448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7046033076753342609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aaaeb0270423e0469384dbc1b6e867c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  triggerKey: 114
+  hpThreshold: 0.5
+  oneShotPerMatch: 1
+  resetOnRespawn: 1
+  requireTarget: 1
+  enemyTag: Player
+  autoFindRange: 0
+  requireAlive: 1
+  blockDuringActions: 1
+  slowMotionAnimSpeed: 0.15
+  slowMotionDuration: 1.6
+  slowTargetAnim: 1
+  blockTargetInput: 1
+  zeroTargetVelocity: 1
+  lateralOffset: 2.5
+  heightOffset: 1.6
+  lookAtHeightOffset: 1.4
+  distanceBackoff: 0.4
+  ultimateAnimTrigger: Ultimate
+  selfModel: {fileID: -8163085030667433099}
+  selfAnimator: {fileID: 3873752212823095745}
 --- !u!1001 &5164279409534725719
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1253,7 +1291,57 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1044973271961734481, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1077588120744126995}
+    - targetCorrespondingSourceObject: {fileID: 5445993650259096781, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 526816742532397590}
+    - targetCorrespondingSourceObject: {fileID: 5445993650259096781, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8028383408365553793}
   m_SourcePrefab: {fileID: 100100000, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+--- !u!1 &882488493720705690 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5445993650259096781, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+  m_PrefabInstance: {fileID: 5164279409534725719}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &526816742532397590
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 882488493720705690}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.6514212, y: 0.12407906, z: 0.11952831}
+  m_Center: {x: 0.17428942, y: 8.592962e-10, z: -0.000000025690861}
+--- !u!114 &8028383408365553793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 882488493720705690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 066a24dbb03a7f542a83b2d831bed8a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  hitboxCollider: {fileID: 526816742532397590}
+  effectIndex: 3
+  hitEffectPrefab: {fileID: 1226031520979461127, guid: 9c692d73cd82e0d409bec909e987a5b8, type: 3}
+  effectDuration: 1
+  allowedStates: []
 --- !u!4 &1548581317186969206 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5969132363413860385, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
@@ -1288,6 +1376,7 @@ MonoBehaviour:
   effectDuration: 2
   allowedStates:
   - Strong Attack
+  - Ultimate
 --- !u!65 &4645412204146245682
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1336,12 +1425,7 @@ MonoBehaviour:
   effectIndex: 0
   hitEffectPrefab: {fileID: 7775297073632181632, guid: 7eefe271218ab3e4f816adc8b0c7278c, type: 3}
   effectDuration: 1
-  allowedStates:
-  - Combo Attack 1
-  - Combo Attack 2
-  - Combo Attack 3
-  - Combo Attack 4
-  - Strong Attack
+  allowedStates: []
 --- !u!65 &9029192443860563999
 BoxCollider:
   m_ObjectHideFlags: 0

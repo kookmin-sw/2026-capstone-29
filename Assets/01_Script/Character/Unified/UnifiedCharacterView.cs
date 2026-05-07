@@ -19,6 +19,7 @@ public class UnifiedCharacterView : MonoBehaviour
     [Header("전투 히트박스")]
     public CharacterHitBox rightHandHitbox;
     public CharacterHitBox leftHandHitbox;
+    public CharacterHitBox rightFootHitbox;
     public CharacterHitBox leftFootHitbox;
 
     [Header("Sound Settings")]
@@ -203,6 +204,8 @@ public class UnifiedCharacterView : MonoBehaviour
     public void DisableRightHandHitbox() { if (rightHandHitbox != null) rightHandHitbox.DisableHitbox(); }
     public void EnableLeftHandHitbox() { if (leftHandHitbox != null) leftHandHitbox.EnableHitbox(); }
     public void DisableLeftHandHitbox() { if (leftHandHitbox != null) leftHandHitbox.DisableHitbox(); }
+    public void EnableRightFootHitbox() { if (leftFootHitbox != null) rightFootHitbox.EnableHitbox(); }
+    public void DisableRightFootHitbox() { if (leftFootHitbox != null) rightFootHitbox.DisableHitbox(); }
     public void EnableLeftFootHitbox() { if (leftFootHitbox != null) leftFootHitbox.EnableHitbox(); }
     public void DisableLeftFootHitbox() { if (leftFootHitbox != null) leftFootHitbox.DisableHitbox(); }
 }
