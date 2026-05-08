@@ -34,6 +34,12 @@ public class InGameUIManger : MonoBehaviour
     public Image activeItemIcon;
     public Sprite defaultActiveSprite; // 빈 슬롯 이미지
 
+    [Header("Passive UI")]
+    [SerializeField] private Transform passiveItemRoot;
+    [SerializeField] private PassiveItemUISlot passiveItemSlotPrefab;
+
+    private readonly Dictionary<int, PassiveItemUISlot> passiveItemSlots = new Dictionary<int, PassiveItemUISlot>();
+
     [Header("HealthBar Anim")]
     public float delayTime = 0.5f; // 닳기 시작까지 대기 시간
     public float drainSpeed = 1.0f; // 닳는 속도
@@ -188,11 +194,46 @@ public class InGameUIManger : MonoBehaviour
         activeItemIcon.sprite = itemSprite != null ? itemSprite : defaultActiveSprite;
     }
 
+    // 패시브 아이템 획득 시 호출
+    public void ShowPassiveItem(int uiId, Sprite sprite, PassiveUIType uiType)
+    {
+        if (passiveItemRoot == null || passiveItemSlotPrefab == null) return;
+
+        if (passiveItemSlots.TryGetValue(uiId, out PassiveItemUISlot oldSlot) && oldSlot != null)
+            Destroy(oldSlot.gameObject);
+
+        PassiveItemUISlot slot = Instantiate(passiveItemSlotPrefab, passiveItemRoot);
+        bool useTimer = uiType == PassiveUIType.TimedSpeed;
+
+        slot.Initialize(sprite, useTimer);
+        slot.transform.SetAsLastSibling();
+
+        passiveItemSlots[uiId] = slot;
+    }
+
+    public void UpdatePassiveItemTimer(int uiId, float normalized)
+    {
+        if (!passiveItemSlots.TryGetValue(uiId, out PassiveItemUISlot slot)) return;
+        if (slot == null) return;
+
+        slot.SetTimer(normalized);
+    }
+
     // 액티브 아이템 사용 시 호출
     public void HideActiveItem()
     {
         if (activeItemIcon == null) return;
         activeItemIcon.sprite = defaultActiveSprite;
+    }
+
+    public void HidePassiveItem(int uiId)
+    {
+        if (!passiveItemSlots.TryGetValue(uiId, out PassiveItemUISlot slot)) return;
+
+        if (slot != null)
+            Destroy(slot.gameObject);
+
+        passiveItemSlots.Remove(uiId);
     }
 
     // 아이템 타이머 코루틴
