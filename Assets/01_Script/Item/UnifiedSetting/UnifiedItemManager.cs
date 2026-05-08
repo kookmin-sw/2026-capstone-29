@@ -25,8 +25,11 @@ public class UnifiedItemManager : NetworkBehaviour
         public Coroutine routine;
         public float timer;
         public float available; // duration
+        public int uiId;
+        public System.Action consumedHandler;
     }
 
+    private int nextPassiveUiId = 1;
     private List<Passive> passiveEntries = new();
 
     // bool 상태는 온라인에선 클라이언트에 동기화, 오프라인에선 로컬 필드처럼 사용
@@ -100,19 +103,21 @@ public class UnifiedItemManager : NetworkBehaviour
                 entry.timer = 0f;
                 entry.routine = StartCoroutine(
                     PassiveRoutineWrapper(entry, entry.passive.Activate(gameObject)));
-                NotifyPassiveActivated();
+                NotifyPassiveActivated(entry);
             }
 
             // 타이머 진행
             if (entry.routine != null)
             {
                 entry.timer += Time.deltaTime;
+                UpdatePassiveUILocal(entry);
+
                 if (entry.available <= entry.timer)
                 {
+                    NotifyPassiveRemoved(entry);
                     ExpirePassiveEntry(entry);
                     passiveEntries.RemoveAt(i);
                     SyncPassiveCount();
-                    NotifyPassiveRemoved();
                 }
             }
         }
@@ -131,8 +136,11 @@ public class UnifiedItemManager : NetworkBehaviour
         }
         // DamageAmplifier 콜백 해제
         var amp = GetComponent<DamageAmplifier>();
-        if (amp != null)
-            amp.OnAllStacksConsumed -= () => OnPassiveEarlyExpired(entry);
+        if (amp != null && entry.consumedHandler != null)
+        {
+            amp.OnAllStacksConsumed -= entry.consumedHandler;
+            entry.consumedHandler = null;
+        }
     }
 
     private void RemoveDuplicatePassive(IPassive newPassive)
@@ -142,6 +150,7 @@ public class UnifiedItemManager : NetworkBehaviour
             // SO 기준으로, 같은 에셋이면 같은 참조
             if (passiveEntries[i].passive == newPassive)
             {
+                HidePassiveUILocal(passiveEntries[i]); // 중복 UI 제거
                 ExpirePassiveEntry(passiveEntries[i]);
                 passiveEntries.RemoveAt(i);
             }
@@ -153,7 +162,46 @@ public class UnifiedItemManager : NetworkBehaviour
         passiveCount = passiveEntries.Count;
     }
 
+    private bool ShouldControlLocalUI()
+    {
+        return AuthorityGuard.IsOffline || isLocalPlayer;
+    }
 
+    private void ShowPassiveUILocal(Passive entry)
+    {
+        if (!ShouldControlLocalUI()) return;
+        if (entry == null || entry.passive == null) return;
+
+        var uiManager = FindObjectOfType<InGameUIManger>();
+        if (uiManager == null) return;
+
+        uiManager.ShowPassiveItem(entry.uiId, entry.passive.UISprite, entry.passive.UIType, entry.available);
+    }
+
+    private void UpdatePassiveUILocal(Passive entry)
+    {
+        if (!ShouldControlLocalUI()) return;
+        if (entry == null || entry.passive == null) return;
+        if (entry.passive.UIType != PassiveUIType.TimedSpeed) return;
+        if (entry.available <= 0f) return;
+
+        var uiManager = FindObjectOfType<InGameUIManger>();
+        if (uiManager == null) return;
+
+        float normalized = 1f - entry.timer / entry.available;
+        uiManager.UpdatePassiveItemTimer(entry.uiId, normalized);
+    }
+
+    private void HidePassiveUILocal(Passive entry)
+    {
+        if (!ShouldControlLocalUI()) return;
+        if (entry == null) return;
+
+        var uiManager = FindObjectOfType<InGameUIManger>();
+        if (uiManager == null) return;
+
+        uiManager.HidePassiveItem(entry.uiId);
+    }
 
     // -----------------------------
     // 조회/세터 (SetItem / UnifiedSetItem에서 호출)
@@ -185,57 +233,36 @@ public class UnifiedItemManager : NetworkBehaviour
             passive = newPassive,
             routine = null,
             timer = 0f,
-            available = available
+            available = available,
+            uiId = nextPassiveUiId++
         };
         passiveEntries.Add(entry);
         SyncPassiveCount();
 
         // DamageAmplifier 조기 만료 콜백
         var amp = GetComponent<DamageAmplifier>();
-        if (amp != null)
-            amp.OnAllStacksConsumed += () => OnPassiveEarlyExpired(entry);
+        if (amp != null && newPassive.UIType == PassiveUIType.Battery)
+        {
+            entry.consumedHandler = () => OnPassiveEarlyExpired(entry);
+            amp.OnAllStacksConsumed += entry.consumedHandler;
+        }
     }
 
     private void OnPassiveEarlyExpired(Passive entry)
     {
-        var amp = GetComponent<DamageAmplifier>();
-        if (amp != null)
-            amp.OnAllStacksConsumed -= () => OnPassiveEarlyExpired(entry);
-
         if (!passiveEntries.Contains(entry)) return;
-
+        
+        NotifyPassiveRemoved(entry);
         ExpirePassiveEntry(entry);
         passiveEntries.Remove(entry);
         SyncPassiveCount();
-        NotifyPassiveRemoved();
     }
-
-/*public void ForceExpirePassive()
-    {
-        var amp = GetComponent<DamageAmplifier>();
-        if (amp != null)
-            amp.OnAllStacksConsumed -= OnPassiveEarlyExpired;
-
-        if (passiveRoutine != null)
-        {
-            StopCoroutine(passiveRoutine);
-            passiveRoutine = null;
-        }
-
-        passive?.OnDeactivate(gameObject); // ★ 이전 패시브 정리 (이속 원복 등)
-
-        passiveUsed = false;
-        hasPassive = false;
-        passiveTimer = 0;
-        passiveAvailable = 0;
-        // passive 필드는 호출부에서 새 값으로 교체
-    }
-*/
 
     public void ForceExpireAllPassives()
     {
         for (int i = passiveEntries.Count - 1; i >= 0; i--)
         {
+            HidePassiveUILocal(passiveEntries[i]);
             ExpirePassiveEntry(passiveEntries[i]);
         }
         passiveEntries.Clear();
@@ -248,6 +275,7 @@ public class UnifiedItemManager : NetworkBehaviour
         {
             if (passiveEntries[i].passive is T)
             {
+                HidePassiveUILocal(passiveEntries[i]);
                 ExpirePassiveEntry(passiveEntries[i]);
                 passiveEntries.RemoveAt(i);
             }
@@ -333,16 +361,35 @@ public void RequestUseActive()
         else if (NetworkServer.active) RpcOnActiveRemoved();
     }
 
-    private void NotifyPassiveActivated()
+    private void NotifyPassiveActivated(Passive entry)
     {
-        if (AuthorityGuard.IsOffline) OnPassiveActivatedLocal();
-        else if (NetworkServer.active) RpcOnPassiveActivated();
+        if (AuthorityGuard.IsOffline)
+        {
+            ShowPassiveUILocal(entry);
+            OnPassiveActivatedLocal();
+            return;
+        }
+
+        if (!NetworkServer.active) return;
+
+        string itemName = (entry.passive as ScriptableObject)?.name;
+        if (string.IsNullOrEmpty(itemName)) return;
+
+        TargetOnPassiveActivated(connectionToClient, entry.uiId, itemName, entry.available, entry.passive.UIType);
     }
 
-    private void NotifyPassiveRemoved()
+    private void NotifyPassiveRemoved(Passive entry)
     {
-        if (AuthorityGuard.IsOffline) OnPassiveRemovedLocal();
-        else if (NetworkServer.active) RpcOnPassiveRemoved();
+        if (AuthorityGuard.IsOffline)
+        {
+            HidePassiveUILocal(entry);
+            OnPassiveRemovedLocal();
+            return;
+        }
+
+        if (!NetworkServer.active) return;
+
+        TargetOnPassiveRemoved(connectionToClient, entry.uiId);
     }
 
     [ClientRpc] void RpcOnWeaponRemoved() => OnWeaponRemovedLocal();
@@ -368,4 +415,25 @@ public void RequestUseActive()
     private void OnActiveRemovedLocal() => Debug.Log("액티브 아이템 해제됨."); 
     private void OnPassiveActivatedLocal() => Debug.Log("패시브 아이템 발동.");
     private void OnPassiveRemovedLocal() => Debug.Log("패시브 아이템 해제됨.");
+
+    [TargetRpc]
+    private void TargetOnPassiveActivated(NetworkConnection target, int uiId, string itemName, float duration, PassiveUIType uiType)
+    {
+        var passiveAsset = Resources.Load<ScriptableObject>($"Items/{itemName}") as IPassive;
+        Sprite sprite = passiveAsset?.UISprite;
+
+        var uiManager = FindObjectOfType<InGameUIManger>();
+        uiManager?.ShowPassiveItem(uiId, sprite, uiType, duration);
+
+        OnPassiveActivatedLocal();
+    }
+
+    [TargetRpc]
+    private void TargetOnPassiveRemoved(NetworkConnection target, int uiId)
+    {
+        var uiManager = FindObjectOfType<InGameUIManger>();
+        uiManager?.HidePassiveItem(uiId);
+
+        OnPassiveRemovedLocal();
+    }
 }

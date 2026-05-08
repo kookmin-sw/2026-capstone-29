@@ -11,9 +11,13 @@ public class ConvertSpeed : ScriptableObject, IPassive
     [Header("아이템 설정")]
     [SerializeField] private float duration = 10f;
     [SerializeField] private float moveSpeedMultiplier = 1.3f; // 1.0 미만이면 감속
+    [SerializeField] private Sprite uiSprite;
+    [SerializeField] private PassiveUIType uiType;
 
     public float AvailableTime => duration;
-
+    public Sprite UISprite => uiSprite;
+    public PassiveUIType UIType => uiType;
+    
     // 효과 본체. ItemManager가 StartCoroutine으로 실행한다.
     // 패시브이므로 플레이어 입력 없이 장착 즉시 호출됨.
     public virtual IEnumerator Activate(GameObject owner)

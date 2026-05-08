@@ -17,8 +17,12 @@ public class PassiveTemplate : ScriptableObject, IPassive
 {
     [Header("아이템 설정")]
     [SerializeField] private float duration = 5f;
+    [SerializeField] private Sprite uiSprite;
+    [SerializeField] private PassiveUIType uiType;
 
     public float AvailableTime => duration;
+    public Sprite UISprite => uiSprite;
+    public PassiveUIType UIType => uiType;  
 
     // 효과 본체. ItemManager에서 StartCoroutine으로 실행한다.
     public virtual IEnumerator Activate(GameObject owner)

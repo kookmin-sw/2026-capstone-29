@@ -518,7 +518,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  useActiveKey: 102
+  useActiveKey: 113
   pickUpKey: 101
 --- !u!114 &4115245814957560473
 MonoBehaviour:
