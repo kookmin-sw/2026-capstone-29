@@ -103,13 +103,6 @@ public class UnifiedSmokeGrenade_Effect : ScriptableObject, IActive
         {
             SpawnSmoke(vertices[i], owner);
         }
-
-        // duration 잔여 대기
-        float remaining = duration - throwDuration - secondaryDelay;
-        if (remaining > 0f)
-            yield return new WaitForSeconds(remaining);
-
-        Debug.Log("[UnifiedSmokeGrenade] 활성화 종료");
     }
 
     public virtual void OnDeactivate(GameObject owner)

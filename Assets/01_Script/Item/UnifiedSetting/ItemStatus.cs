@@ -25,10 +25,6 @@ public class ItemStatus : ScriptableObject
     [Tooltip("RecoveryDelay를 참조하여 아이템을 사용한 후 일정 시간 뒤에 사용할 수 있게끔 조정")]
     [SerializeField] public float RecoveryDelay; // 후딜
 
-    [Header("")]
-    [SerializeField] public bool Stun; // 감전 cc 및 스턴에 적용
-    [SerializeField] public bool knockBack; // 넉백 cc
-    [SerializeField] public bool stop; // 저지 cc
 
 
 

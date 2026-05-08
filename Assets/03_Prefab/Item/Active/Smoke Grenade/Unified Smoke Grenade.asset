@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c61c61d50e7dae4698f284054efd3a3, type: 3}
   m_Name: Unified Smoke Grenade
   m_EditorClassIdentifier: 
-  duration: 12
+  duration: 0.2
   uiSprite: {fileID: 21300000, guid: 85d9dd45cf002a64388a83cb47dac146, type: 3}
   spawnOffset: {x: 0, y: 0, z: 3}
-  throwDuration: 0.8
-  throwArcHeight: 3
+  throwDuration: 0.1
+  throwArcHeight: 0
   secondaryDelay: 2
   tetrahedronEdge: 6
   smokeColor: {r: 1, g: 1, b: 1, a: 1}

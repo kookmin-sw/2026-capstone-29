@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 85494039522739456}
   - component: {fileID: 2959969643338931924}
   - component: {fileID: 4438409776930416155}
-  - component: {fileID: 2255971204547584600}
+  - component: {fileID: -540784673040898669}
+  - component: {fileID: 7581099720835183321}
   m_Layer: 3
   m_Name: Trap_Object
   m_TagString: Untagged
@@ -97,8 +98,35 @@ MonoBehaviour:
   serverOnly: 0
   visibility: 0
   hasSpawned: 0
---- !u!135 &2255971204547584600
-SphereCollider:
+--- !u!54 &-540784673040898669
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2426771138486844728}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 1
+--- !u!65 &7581099720835183321
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -112,12 +140,12 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.36, y: 0.19, z: 0.85}
+  m_Center: {x: 0, y: 0.06, z: 0}
 --- !u!1 &3693721395711064156
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,6 +220,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6273325726571671385}
   - component: {fileID: 1494238765819117572}
+  - component: {fileID: 1825813811904596852}
+  - component: {fileID: 6700993545752459807}
   m_Layer: 3
   m_Name: beartrap2low
   m_TagString: Untagged
@@ -273,6 +303,39 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.3102189, y: -0.032722652, z: 0}
     m_Extent: {x: 0.4763017, y: 0.73008066, z: 0.5712485}
   m_DirtyAABB: 0
+--- !u!135 &1825813811904596852
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6973285989177793172}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.7691191
+  m_Center: {x: -0.10536402, y: 0.40550748, z: 3.3983488e-17}
+--- !u!114 &6700993545752459807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6973285989177793172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 583d8d99074839a48b44a9c302ac6b48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6989405602151187398
 GameObject:
   m_ObjectHideFlags: 0

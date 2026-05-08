@@ -113,41 +113,46 @@ public class UnifiedTrap_Object : NetworkBehaviour
             DestroyTrap();
             return;
         }
+    }
 
+    public void OnSensorTriggerEnter(Collider other)
+    {
+        HandleSensorHit(other);
+    }
+
+
+    //플레이어 바로 위에 소환되었을 경우를 위함
+    public void OnSensorTriggerStay(Collider other)
+    {
+        HandleSensorHit(other);
+    }
+
+    private void HandleSensorHit(Collider other)
+    {
         if (_consumed) return;
 
         bool hasAuthority = AuthorityGuard.IsOffline || isServer;
         if (!hasAuthority) return;
 
-        DetectAndTriggerPlayer();
-    }
+        GameObject playerRoot = FindPlayerRoot(other.gameObject);
+        if (playerRoot == null) return;
 
-    private void DetectAndTriggerPlayer()
-    {
-        Collider[] hits = Physics.OverlapSphere(transform.position, triggerRadius);
+        NetworkIdentity hitNid = playerRoot.GetComponent<NetworkIdentity>();
+        uint hitNetId = hitNid != null ? hitNid.netId : 0;
+        Debug.Log($"[UnifiedTrap] 센서가 플레이어 감지: name={playerRoot.name}, netId={hitNetId}, ownerNetId={ownerNetId}, IsOwner={IsOwner(playerRoot)}");
 
-        for (int i = 0; i < hits.Length; i++)
+        if (IsOwner(playerRoot)) return;
+
+        TriggerTrapOn(playerRoot);
+        FireTriggerAnimation();
+
+        if (consumeOnTrigger)
         {
-            GameObject playerRoot = FindPlayerRoot(hits[i].gameObject);
-            if (playerRoot == null) continue;
-
-            NetworkIdentity hitNid = playerRoot.GetComponent<NetworkIdentity>();
-            uint hitNetId = hitNid != null ? hitNid.netId : 0;
-            Debug.Log($"[UnifiedTrap] 덫 위에 플레이어 발견: name={playerRoot.name}, netId={hitNetId}, ownerNetId={ownerNetId}, IsOwner={IsOwner(playerRoot)}");
-
-            if (IsOwner(playerRoot)) continue;
-
-            TriggerTrapOn(playerRoot);
-            FireTriggerAnimation(); 
-
-            if (consumeOnTrigger)
-            {
-                _consumed = true;
-                ScheduleDestroyAfter(holdDuration);
-                return;
-            }
+            _consumed = true;
+            ScheduleDestroyAfter(holdDuration);
         }
     }
+
 
     // 모든 클라이언트에 애니메이션 신호 전파
     private void FireTriggerAnimation()
