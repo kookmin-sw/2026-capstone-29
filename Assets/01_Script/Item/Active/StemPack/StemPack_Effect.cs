@@ -1,4 +1,5 @@
-﻿using StarterAssets;
+﻿using Mirror;
+using StarterAssets;
 using System.Collections;
 using UnityEngine;
 
@@ -6,15 +7,20 @@ using UnityEngine;
 public class StemPack_Effect : ScriptableObject, IActive
 {
     [Header("아이템 설정")]
-    [SerializeField] private float duration = 8f;
+    [SerializeField] private float duration = 0.1f;
+    [SerializeField] private float effectDuration = 8f;
     [SerializeField] private float initialDamage = 10f;   // 사용 즉시 자해 데미지
-
     [SerializeField] private float moveSpeedMultiplier = 1.2f;   // 이동 속도 배율
     [SerializeField] private float animSpeedMultiplier = 1.2f; // 애니메이션 배율
 
+    [Header("ui 이미지")]
     [SerializeField] private Sprite uiSprite;
-    public Sprite UISprite => uiSprite;
 
+    [Header("Network")]
+    [Tooltip("효과 오브젝트 프리팹. NetworkManager의 spawnable prefabs에도 등록되어야 함.")]
+    [SerializeField] private GameObject effectPrefab;
+
+    public Sprite UISprite => uiSprite;
     public float AvailableTime => duration;
 
     public virtual IEnumerator Activate(GameObject owner)
@@ -23,71 +29,95 @@ public class StemPack_Effect : ScriptableObject, IActive
 
         Debug.Log("[StemPack] 활성화 시작");
 
+        //사용시 자해 데미지 적용
         ICharacterModel model = owner.GetComponent<ICharacterModel>();
         if (model != null)
         {
             model.RequestTakeDamage(initialDamage);
         }
 
-        //이동속도 조정
-        UnifiedThirdPersonController controller = owner.GetComponent<UnifiedThirdPersonController>();
-        float originalMoveMul = 1f;
-        bool moveApplied = false;
+        // 효과 오브젝트 스폰 또는 리프레시
+        SpawnOrRefresh(owner);
 
-        if (controller != null)
-        {
-            originalMoveMul = controller.GetSpeedMultiplier();
-            controller.SetSpeedMultiplier(originalMoveMul * moveSpeedMultiplier);
-            moveApplied = true;
-        }
-
-        //애니메이션 속도 조정
-        Animator animator = owner.GetComponentInChildren<Animator>();
-        float originalAnimSpeed = 1f;
-        bool animApplied = false;
-
-        if (animator != null)
-        {
-            originalAnimSpeed = animator.speed;
-            controller.RequestSetAnimatorSpeed(originalAnimSpeed * animSpeedMultiplier);
-            animApplied = true;
-        }
-
-        yield return new WaitForSeconds(duration);
-
-
-        if (moveApplied && controller != null)
-        {
-            controller.SetSpeedMultiplier(originalMoveMul);
-        }
-        if (animApplied && animator != null)
-        {
-            controller.RequestSetAnimatorSpeed(originalAnimSpeed);
-        }
-
-        Debug.Log("[StemPack] 활성화 종료");
+        // 코루틴 자체는 즉시 종료. 라이프사이클은 효과 오브젝트가 관리.
+        yield break;
     }
 
-    public virtual void OnDeactivate(GameObject owner)
+    private void SpawnOrRefresh(GameObject owner)
     {
-        if (owner == null) return;
-        RemoveEffect(owner);
+        NetworkIdentity ownerNid = owner.GetComponent<NetworkIdentity>();
+        uint netId = 0;
+
+        if (!AuthorityGuard.IsOffline)
+        {
+            if (!NetworkServer.active)
+            {
+                Debug.LogWarning("[StemPack] 서버 권한 없음.");
+                return;
+            }
+            if (ownerNid == null)
+            {
+                Debug.LogWarning("[StemPack] owner에 NetworkIdentity가 없음.");
+                return;
+            }
+            netId = ownerNid.netId;
+        }
+
+        // 이미 활성화된 효과가 있으면 리프레시
+        StemPackEffect_Object existing = StemPackEffect_Object.FindActiveOn(
+            AuthorityGuard.IsOffline ? owner : null,
+            netId
+        );
+        if (existing != null)
+        {
+            existing.RefreshDuration(effectDuration);
+            return;
+        }
+
+        // 새로 스폰
+        if (effectPrefab == null)
+        {
+            Debug.LogError("[StemPack] effectPrefab이 비어있음.");
+            return;
+        }
+
+        GameObject go = Instantiate(effectPrefab);
+        StemPackEffect_Object eff = go.GetComponent<StemPackEffect_Object>();
+        if (eff == null)
+        {
+            Debug.LogError("[StemPack] 프리팹에 StemPackEffect_Object 컴포넌트가 없음.");
+            Object.Destroy(go);
+            return;
+        }
+
+        //값 주입
+        eff.targetNetId = netId;
+        eff.duration = effectDuration;
+        eff.moveSpeedMultiplier = moveSpeedMultiplier;
+        eff.animSpeedMultiplier = animSpeedMultiplier;
+
+        if (AuthorityGuard.IsOffline)
+        {
+            HardenOfflineObject(go);
+            eff.InitializeOffline(owner, effectDuration, moveSpeedMultiplier, animSpeedMultiplier);
+        }
+        else
+        {
+            NetworkServer.Spawn(go);
+        }
+    }
+
+
+    private static void HardenOfflineObject(GameObject obj)
+    {
+        if (obj == null) return;
+        if (obj.TryGetComponent(out NetworkIdentity nid))
+            nid.enabled = false;
+        if (!obj.activeSelf) obj.SetActive(true);
     }
 
     protected virtual void ApplyEffect(GameObject owner) { }
 
-    protected virtual void RemoveEffect(GameObject owner)
-    {
-        UnifiedThirdPersonController controller = owner.GetComponent<UnifiedThirdPersonController>();
-        if (controller != null && moveSpeedMultiplier > 0f)
-        {
-            controller.SetSpeedMultiplier(controller.GetSpeedMultiplier() / moveSpeedMultiplier);
-        }
-
-        Animator animator = owner.GetComponentInChildren<Animator>();
-        if (controller != null && animator != null && animSpeedMultiplier > 0f)
-        {
-            controller.RequestSetAnimatorSpeed(animator.speed / animSpeedMultiplier);
-        }
-    }
+    protected virtual void RemoveEffect(GameObject owner) { }
+    public virtual void OnDeactivate(GameObject owner) { }
 }

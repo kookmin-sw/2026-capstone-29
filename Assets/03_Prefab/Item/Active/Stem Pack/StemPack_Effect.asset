@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10569cd162363d146baf1015f8c05369, type: 3}
   m_Name: StemPack_Effect
   m_EditorClassIdentifier: 
-  duration: 8
+  duration: 0.1
+  effectDuration: 8
   initialDamage: 10
   moveSpeedMultiplier: 1.8
   animSpeedMultiplier: 1.8
   uiSprite: {fileID: 21300000, guid: 176bebf0d17972042823eac3f203f279, type: 3}
+  effectPrefab: {fileID: 1478836824990737123, guid: 4015447a1c1d7af438894718bd3db094, type: 3}

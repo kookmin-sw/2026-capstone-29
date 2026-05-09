@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Snail_Effect
   m_EditorClassIdentifier: 
   duration: 10
-  moveSpeedMultiplier: 0.5
+  moveSpeedMultiplier: 0.7
