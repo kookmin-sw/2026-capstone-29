@@ -65,6 +65,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  uiSprite: {fileID: 21300000, guid: e82252dd4fa92964a9e40598115ae0ff, type: 3}
   missileCount: 15
   spawnInterval: 3
   warningDuration: 2

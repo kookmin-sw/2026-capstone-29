@@ -38,8 +38,14 @@ public class InGameUIManger : MonoBehaviour
     [SerializeField] private Transform passiveItemRoot;
     [SerializeField] private PassiveItemUISlot passiveItemSlotPrefab;
 
+    [Header("Field UI")]
+    [SerializeField] private Transform fieldItemRoot;
+    [SerializeField] private FieldItemUISlot fieldItemSlotPrefab;
+
     private readonly Dictionary<int, PassiveItemUISlot> passiveItemSlots = new Dictionary<int, PassiveItemUISlot>();
     private readonly Dictionary<int, Coroutine> passiveTimerCoroutines = new Dictionary<int, Coroutine>();
+    private readonly Dictionary<uint, FieldItemUISlot> fieldItemSlots = new();
+    private readonly Dictionary<uint, Coroutine> fieldItemCoroutines = new();
 
 
     [Header("HealthBar Anim")]
@@ -225,6 +231,22 @@ public class InGameUIManger : MonoBehaviour
         }
     }
 
+    // 필드 아이템 획득 시 호출
+    public void ShowFieldItem(uint uiId, Sprite sprite, float duration)
+    {
+        if (fieldItemRoot == null || fieldItemSlotPrefab == null) return;
+
+        HideFieldItem(uiId);
+
+        FieldItemUISlot slot = Instantiate(fieldItemSlotPrefab, fieldItemRoot);
+        slot.Initialize(sprite);
+        slot.transform.SetAsLastSibling();
+
+        fieldItemSlots[uiId] = slot;
+        fieldItemCoroutines[uiId] = StartCoroutine(FieldItemTimerCoroutine(uiId, duration));
+    }
+
+
     public void UpdatePassiveItemTimer(int uiId, float normalized)
     {
         if (!passiveItemSlots.TryGetValue(uiId, out PassiveItemUISlot slot)) return;
@@ -254,6 +276,20 @@ public class InGameUIManger : MonoBehaviour
             StopCoroutine(routine);
             passiveTimerCoroutines.Remove(uiId);
         }
+    }
+
+    public void HideFieldItem(uint uiId)
+    {
+        if (fieldItemCoroutines.TryGetValue(uiId, out Coroutine routine))
+        {
+            StopCoroutine(routine);
+            fieldItemCoroutines.Remove(uiId);
+        }
+
+        if (fieldItemSlots.TryGetValue(uiId, out FieldItemUISlot slot) && slot != null)
+            Destroy(slot.gameObject);
+
+        fieldItemSlots.Remove(uiId);
     }
 
     // 아이템 타이머 코루틴
@@ -302,6 +338,24 @@ public class InGameUIManger : MonoBehaviour
         }
 
         UpdatePassiveItemTimer(uiId, 0f);
+    }
+
+    private IEnumerator FieldItemTimerCoroutine(uint uiId, float duration)
+    {
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float normalized = 1f - elapsed / duration;
+
+            if (fieldItemSlots.TryGetValue(uiId, out FieldItemUISlot slot))
+                slot.SetTimer(normalized);
+
+            yield return null;
+        }
+
+        HideFieldItem(uiId);
     }
 
     // 키세팅 버튼 클릭 시 - ui 등장

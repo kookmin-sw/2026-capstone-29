@@ -68,6 +68,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  uiSprite: {fileID: 21300000, guid: d40b404b4a2b94d418f0a2b34c7458b5, type: 3}
   damagePerTick: 5
   damageTakeCycle: 5
 --- !u!65 &4841905537964888659

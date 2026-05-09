@@ -8,6 +8,8 @@ public abstract class FieldEffect : NetworkBehaviour
     protected float lifetime;
     private Coroutine _lifetimeCoroutine;
 
+    [SerializeField] private Sprite uiSprite;
+
     private bool HasAuthority => AuthorityGuard.IsOffline || isServer;
 
     public virtual void Initialize(float duration)
@@ -15,6 +17,12 @@ public abstract class FieldEffect : NetworkBehaviour
         lifetime = duration;
 
         if (!HasAuthority) return;
+
+        // UI 호출
+        if (AuthorityGuard.IsOffline)
+            ShowFieldUILocal(duration);
+        else
+            RpcShowFieldUI(duration);
 
         // 기존 코루틴이 있으면 정리 후 재시작
         if (_lifetimeCoroutine != null)
@@ -86,5 +94,30 @@ public abstract class FieldEffect : NetworkBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    [ClientRpc]
+    private void RpcShowFieldUI(float duration)
+    {
+        ShowFieldUILocal(duration);
+    }
+
+    private void ShowFieldUILocal(float duration)
+    {
+        var uiManager = FindObjectOfType<InGameUIManger>();
+        if (uiManager == null) return;
+
+        uint uiId = AuthorityGuard.IsOffline ? (uint)GetInstanceID() : netId;
+        uiManager.ShowFieldItem(uiId, uiSprite, duration);
+    }
+
+    // 파괴시 UI도 삭제
+    protected virtual void OnDestroy()
+    {
+        var uiManager = FindObjectOfType<InGameUIManger>();
+        if (uiManager == null) return;
+
+        uint uiId = AuthorityGuard.IsOffline ? (uint)GetInstanceID() : netId;
+        uiManager.HideFieldItem(uiId);
     }
 }

@@ -61,11 +61,11 @@ public class PoisonFog_Effect : FieldEffect
         }
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
+
         if (MistFogController.Instance != null)
-        {
             MistFogController.Instance.DeactivateMist();
-        }
     }
 }

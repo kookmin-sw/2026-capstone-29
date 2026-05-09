@@ -35,8 +35,10 @@ public class GravityController_Effect : FieldEffect
         _applied = true;
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
+        
         // 서버·클라 모두에서 복원 시도 (RPC가 도달하지 못할 경우 대비)
         RestoreGravityLocal();
     }

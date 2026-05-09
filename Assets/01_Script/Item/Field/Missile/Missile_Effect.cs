@@ -154,8 +154,10 @@ public class Missile_Effect : FieldEffect
         }
     }
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
+
         if (!HasAuthority) return;
 
         // 장판이 조기 파괴될 경우 남아있는 데칼/이펙트 정리
