@@ -393,6 +393,7 @@ public class UnifiedWeaponBow : NetworkBehaviour, IPlayerWeapon
         loadedArrowObj = null;
         chargeTimer = 0f;
         isCharging = false;
+        HideWeaponUI();
 
         if (bowAnim != null) bowAnim.SetPull(false);
 
@@ -528,6 +529,7 @@ public class UnifiedWeaponBow : NetworkBehaviour, IPlayerWeapon
     private void RpcOnRelease()
     {
         isCharging = false;
+        HideWeaponUI();
     }
 
     private void CancelChargeServer()
@@ -552,5 +554,16 @@ public class UnifiedWeaponBow : NetworkBehaviour, IPlayerWeapon
 
         var uiManager = FindObjectOfType<InGameUIManger>();
         uiManager?.ShowWeaponItem(uiData.weaponSprite, itemStat.availableTime);
+    }
+
+    private void HideWeaponUI()
+    {
+        if (owner == null) return;
+
+        var model = owner.GetComponent<UnifiedCharacterModel>();
+        if (!AuthorityGuard.IsOffline && (model == null || !model.isLocalPlayer)) return;
+
+        var uiManager = FindObjectOfType<InGameUIManger>();
+        uiManager?.HideWeaponItem();
     }
 }

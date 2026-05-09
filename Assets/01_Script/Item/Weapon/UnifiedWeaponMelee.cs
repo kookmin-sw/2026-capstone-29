@@ -251,6 +251,7 @@ public class UnifiedWeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
         isThrown = true;
 
         UnequipHandler();
+        HideWeaponUI();
 
         if (weaponHitbox != null) weaponHitbox.EnableHitbox();
 
@@ -292,5 +293,16 @@ public class UnifiedWeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
 
         var uiManager = FindObjectOfType<InGameUIManger>();
         uiManager?.ShowWeaponItem(uiData.weaponSprite, itemStat.availableTime);
+    }
+
+    private void HideWeaponUI()
+    {
+        if (owner == null) return;
+
+        var model = owner.GetComponent<UnifiedCharacterModel>();
+        if (!AuthorityGuard.IsOffline && (model == null || !model.isLocalPlayer)) return;
+
+        var uiManager = FindObjectOfType<InGameUIManger>();
+        uiManager?.HideWeaponItem();
     }
 }

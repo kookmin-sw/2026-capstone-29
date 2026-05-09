@@ -262,6 +262,21 @@ public class InGameUIManger : MonoBehaviour
         activeItemIcon.sprite = defaultActiveSprite;
     }
 
+    public void HideWeaponItem()
+    {
+        if (weaponItemCoroutine != null)
+        {
+            StopCoroutine(weaponItemCoroutine);
+            weaponItemCoroutine = null;
+        }
+
+        if (weaponItemTimerFill != null)
+            weaponItemTimerFill.fillAmount = 0f;
+
+        if (weaponItemIcon != null && defaultWeaponSprite != null)
+            weaponItemIcon.sprite = defaultWeaponSprite;
+    }
+
     public void HidePassiveItem(int uiId)
     {
         if (!passiveItemSlots.TryGetValue(uiId, out PassiveItemUISlot slot)) return;

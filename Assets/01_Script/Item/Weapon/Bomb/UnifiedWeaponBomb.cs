@@ -96,6 +96,7 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
         if (AuthorityGuard.IsOffline)
         {
             EquipHandler(user);
+            NotifyWeaponUI(user);
             return;
         }
 
@@ -108,6 +109,7 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
     {
         owner = user;
         EquipHandler(user);
+        NotifyWeaponUI(user);
     }
 
     //장착
@@ -186,6 +188,7 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
     private void RequestThrow()
     {
         float arcHeight = ResolveArcHeight();
+        HideWeaponUI();
 
         if (AuthorityGuard.IsOffline)
         {
@@ -263,6 +266,7 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
         SpawnBombProjectile(startPos, initialVelocity);
 
         remainingThrows--;
+        HideWeaponUI();
 
         if (remainingThrows <= 0)
         {
@@ -355,5 +359,30 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
             nid.enabled = false;
 
         if (!obj.activeSelf) obj.SetActive(true);
+    }
+
+    private void NotifyWeaponUI(GameObject user)
+    {
+        if (user == null) return;
+
+        var model = user.GetComponent<UnifiedCharacterModel>();
+        if (!AuthorityGuard.IsOffline && (model == null || !model.isLocalPlayer)) return;
+
+        var uiData = GetComponent<WeaponUIData>();
+        if (uiData == null) return;
+
+        var uiManager = FindObjectOfType<InGameUIManger>();
+        uiManager?.ShowWeaponItem(uiData.weaponSprite, itemStat.availableTime);
+    }
+
+    private void HideWeaponUI()
+    {
+        if (owner == null) return;
+
+        var model = owner.GetComponent<UnifiedCharacterModel>();
+        if (!AuthorityGuard.IsOffline && (model == null || !model.isLocalPlayer)) return;
+
+        var uiManager = FindObjectOfType<InGameUIManger>();
+        uiManager?.HideWeaponItem();
     }
 }
