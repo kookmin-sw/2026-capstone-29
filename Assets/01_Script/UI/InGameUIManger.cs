@@ -30,6 +30,7 @@ public class InGameUIManger : MonoBehaviour
     [Header("Object UI")]
     public Image weaponItemIcon; // 무기 아이콘 - 계속 변경됨
     public Image weaponItemTimerFill; // 지속시간 fill
+    public Text weaponItemCountText;
     public Sprite defaultWeaponSprite; // 기본 주무기 이미지
     public Image activeItemIcon;
     public Sprite defaultActiveSprite; // 빈 슬롯 이미지
@@ -188,10 +189,44 @@ public class InGameUIManger : MonoBehaviour
         if(weaponItemCoroutine != null)
             StopCoroutine(weaponItemCoroutine);
 
+        SetWeaponItemCountVisible(false);
+
         if(weaponItemIcon != null && itemSprite != null)
             weaponItemIcon.sprite = itemSprite; 
         
         weaponItemCoroutine = StartCoroutine(WeaponItemTimerCoroutine(duration));
+    }
+
+    public void ShowWeaponItemCount(Sprite itemSprite, int count)
+    {
+        if (weaponItemCoroutine != null)
+        {
+            StopCoroutine(weaponItemCoroutine);
+            weaponItemCoroutine = null;
+        }
+
+        if (weaponItemTimerFill != null)
+            weaponItemTimerFill.fillAmount = 0f;
+
+        if (weaponItemIcon != null && itemSprite != null)
+            weaponItemIcon.sprite = itemSprite;
+
+        UpdateWeaponItemCount(count);
+    }
+
+    public void UpdateWeaponItemCount(int count)
+    {
+        if (count <= 0)
+        {
+            HideWeaponItem();
+            return;
+        }
+
+        EnsureWeaponItemCountText();
+        if (weaponItemCountText == null) return;
+
+        weaponItemCountText.text = count.ToString();
+        SetWeaponItemCountVisible(true);
     }
 
     // 액티브 아이템 획득 시 호출
@@ -262,6 +297,23 @@ public class InGameUIManger : MonoBehaviour
         activeItemIcon.sprite = defaultActiveSprite;
     }
 
+    public void HideWeaponItem()
+    {
+        if (weaponItemCoroutine != null)
+        {
+            StopCoroutine(weaponItemCoroutine);
+            weaponItemCoroutine = null;
+        }
+
+        if (weaponItemTimerFill != null)
+            weaponItemTimerFill.fillAmount = 0f;
+
+        SetWeaponItemCountVisible(false);
+
+        if (weaponItemIcon != null && defaultWeaponSprite != null)
+            weaponItemIcon.sprite = defaultWeaponSprite;
+    }
+
     public void HidePassiveItem(int uiId)
     {
         if (!passiveItemSlots.TryGetValue(uiId, out PassiveItemUISlot slot)) return;
@@ -318,6 +370,35 @@ public class InGameUIManger : MonoBehaviour
 
 
         weaponItemCoroutine = null;
+    }
+
+    private void SetWeaponItemCountVisible(bool visible)
+    {
+        if (weaponItemCountText != null)
+            weaponItemCountText.gameObject.SetActive(visible);
+    }
+
+    private void EnsureWeaponItemCountText()
+    {
+        if (weaponItemCountText != null) return;
+        if (weaponItemIcon == null) return;
+
+        GameObject countObj = new GameObject("WeaponItemCountText", typeof(RectTransform));
+        countObj.transform.SetParent(weaponItemIcon.transform, false);
+
+        RectTransform rect = countObj.GetComponent<RectTransform>();
+        rect.anchorMin = new Vector2(0.65f, 0f);
+        rect.anchorMax = new Vector2(1f, 0.35f);
+        rect.offsetMin = Vector2.zero;
+        rect.offsetMax = Vector2.zero;
+
+        weaponItemCountText = countObj.AddComponent<Text>();
+        weaponItemCountText.alignment = TextAnchor.MiddleCenter;
+        weaponItemCountText.color = Color.white;
+        weaponItemCountText.fontSize = 24;
+        weaponItemCountText.raycastTarget = false;
+        weaponItemCountText.font = Resources.GetBuiltinResource<Font>("Arial.ttf");
+        weaponItemCountText.gameObject.SetActive(false);
     }
 
     // 패시브 아이템 타이머 코루틴

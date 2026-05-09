@@ -17,6 +17,7 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
     [Header("폭탄 설정")]
     [Tooltip("총 던질 수 있는 횟수. 0이 되면 무기 해제.")]
     [SerializeField] private int maxThrowCount = 3;
+    public int MaxThrowCount => maxThrowCount;
 
     [Tooltip("폭탄 투사체 프리팹. UnifiedBombProjectile 컴포넌트를 가져야 한다.")]
     [SerializeField] private GameObject bombProjectilePrefab;
@@ -72,6 +73,7 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
 
     private float lifeTimer;
     private bool isDepleted; // throwCount 소진 후 파괴 대기 중
+    private int displayedThrows;
 
     
     private void Awake()
@@ -80,6 +82,7 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
         if (AuthorityGuard.IsOffline)
         {
             remainingThrows = maxThrowCount;
+            displayedThrows = maxThrowCount;
         }
     }
 
@@ -87,15 +90,18 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
     {
         base.OnStartServer();
         remainingThrows = maxThrowCount;
+        displayedThrows = maxThrowCount;
     }
     //무기의 사용자 설정. 이 데이터 기반으로 오너 설정.
     public void SetUser(GameObject user)
     {
         owner = user;
+        displayedThrows = maxThrowCount;
 
         if (AuthorityGuard.IsOffline)
         {
             EquipHandler(user);
+            NotifyWeaponUI(user);
             return;
         }
 
@@ -107,7 +113,9 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
     private void RpcSetUser(GameObject user)
     {
         owner = user;
+        displayedThrows = maxThrowCount;
         EquipHandler(user);
+        NotifyWeaponUI(user);
     }
 
     //장착
@@ -193,6 +201,7 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
             return;
         }
 
+        UpdateBombWeaponUI(Mathf.Max(displayedThrows - 1, 0));
         CmdThrowBomb(arcHeight);
     }
 
@@ -263,6 +272,7 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
         SpawnBombProjectile(startPos, initialVelocity);
 
         remainingThrows--;
+        NotifyBombWeaponUIChanged(remainingThrows);
 
         if (remainingThrows <= 0)
         {
@@ -328,6 +338,8 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
 
     private void NotifyUnequip()
     {
+        HideWeaponUI();
+
         if (AuthorityGuard.IsOffline)
         {
             UnequipLocal();
@@ -355,5 +367,75 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
             nid.enabled = false;
 
         if (!obj.activeSelf) obj.SetActive(true);
+    }
+
+    private void NotifyWeaponUI(GameObject user)
+    {
+        if (user == null) return;
+
+        var model = user.GetComponent<UnifiedCharacterModel>();
+        if (!AuthorityGuard.IsOffline && (model == null || !model.isLocalPlayer)) return;
+
+        var uiManager = FindObjectOfType<InGameUIManger>();
+        uiManager?.ShowWeaponItemCount(ResolveWeaponUISprite(), maxThrowCount);
+    }
+
+    private void HideWeaponUI()
+    {
+        if (owner == null) return;
+
+        var model = owner.GetComponent<UnifiedCharacterModel>();
+        if (!AuthorityGuard.IsOffline && (model == null || !model.isLocalPlayer)) return;
+
+        var uiManager = FindObjectOfType<InGameUIManger>();
+        uiManager?.HideWeaponItem();
+    }
+
+    private void NotifyBombWeaponUIChanged(int count)
+    {
+        if (AuthorityGuard.IsOffline)
+        {
+            UpdateBombWeaponUI(count);
+            return;
+        }
+
+        if (NetworkServer.active)
+            TargetUpdateBombWeaponUI(connectionToClient, count);
+    }
+
+    [TargetRpc]
+    private void TargetUpdateBombWeaponUI(NetworkConnection target, int count)
+    {
+        UpdateBombWeaponUI(count);
+    }
+
+    private void UpdateBombWeaponUI(int count)
+    {
+        displayedThrows = count;
+
+        if (owner == null) return;
+
+        var model = owner.GetComponent<UnifiedCharacterModel>();
+        if (!AuthorityGuard.IsOffline && (model == null || !model.isLocalPlayer)) return;
+
+        var uiManager = FindObjectOfType<InGameUIManger>();
+        uiManager?.UpdateWeaponItemCount(count);
+    }
+
+    private Sprite ResolveWeaponUISprite()
+    {
+        var uiData = GetComponent<WeaponUIData>();
+        if (uiData != null && uiData.weaponSprite != null)
+            return uiData.weaponSprite;
+
+        var unifiedManager = owner != null ? owner.GetComponent<UnifiedItemManager>() : null;
+        if (unifiedManager?.weapon?.UISprite != null)
+            return unifiedManager.weapon.UISprite;
+
+        var legacyManager = owner != null ? owner.GetComponent<ItemManager>() : null;
+        if (legacyManager?.weapon?.UISprite != null)
+            return legacyManager.weapon.UISprite;
+
+        return null;
     }
 }

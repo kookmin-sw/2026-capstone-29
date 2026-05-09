@@ -75,14 +75,21 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
                 if (ipw != null) ipw.SetUser(user);
                 im.weaponAvailable = im.weapon.AvailableTime();
 
+                bool shouldShowLocalWeaponUI = AuthorityGuard.IsOffline
+                    || user.GetComponent<UnifiedCharacterModel>()?.isLocalPlayer == true;
+
                 // ★ 아이템 UI 표시 — 로컬 플레이어만 자기 화면에 표시
-                if (user.GetComponent<UnifiedCharacterModel>()?.isLocalPlayer == true)
+                if (weaponObj != null && shouldShowLocalWeaponUI)
                 {
                     var uiManager = FindObjectOfType<InGameUIManger>();
                     if (uiManager != null)
                     {
                         Sprite itemSprite = im.weapon.UISprite;
-                        uiManager.ShowWeaponItem(itemSprite, im.weapon.AvailableTime());
+                        var bomb = weaponObj.GetComponent<UnifiedWeaponBomb>();
+                        if (bomb != null)
+                            uiManager.ShowWeaponItemCount(itemSprite, bomb.MaxThrowCount);
+                        else
+                            uiManager.ShowWeaponItem(itemSprite, im.weapon.AvailableTime());
                     }
                 }
             }

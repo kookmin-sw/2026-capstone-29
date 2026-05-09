@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weapon: {fileID: 4271000206526716630, guid: bc9b040847b82954c85f2c52923ee74a, type: 3}
   availableTime: 1000
+  uiSprite: {fileID: 21300000, guid: 38eb26ebb8a0d4a41ba4a4b1177d9f38, type: 3}
