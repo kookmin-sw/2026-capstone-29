@@ -1,6 +1,6 @@
 ﻿using Mirror;
 using UnityEngine;
-
+//Legacy
 public class WeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
 {
     [Header("아이템 정보")]
@@ -194,4 +194,6 @@ public class WeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
         if (handler != null)
             handler.Unequip();
     }
+
+    public void ForceExpire() { }
 }

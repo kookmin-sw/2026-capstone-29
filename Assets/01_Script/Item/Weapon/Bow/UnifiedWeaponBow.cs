@@ -279,24 +279,7 @@ public class UnifiedWeaponBow : NetworkBehaviour, IPlayerWeapon
 
         if (lifeTimer > itemStat.availableTime)
         {
-            if (owner != null)
-            {
-                var model = owner.GetComponent<ICharacterModel>();
-                if (model != null) model.RequestSetHasBow(false);
-            }
-
-            if (AuthorityGuard.IsOffline)
-            {
-                UnequipLocal();
-                if (loadedArrowObj != null) Destroy(loadedArrowObj);
-                Destroy(gameObject);
-            }
-            else
-            {
-                RpcUnequip();
-                if (loadedArrowObj != null) NetworkServer.Destroy(loadedArrowObj);
-                NetworkServer.Destroy(gameObject);
-            }
+            ExpireAndDestroy();
         }
     }
 
@@ -346,6 +329,38 @@ public class UnifiedWeaponBow : NetworkBehaviour, IPlayerWeapon
                 var model = owner.GetComponent<ICharacterModel>();
                 if (model != null) model.RequestBowRelease();
             }
+        }
+    }
+
+    //활 수명 강제 종료
+    public void ForceExpire()
+    {
+        bool hasAuthority = AuthorityGuard.IsOffline || isServer;
+        if (!hasAuthority) return;
+
+        ExpireAndDestroy();
+    }
+
+    //활 수명 종료 처리
+    private void ExpireAndDestroy()
+    {
+        if (owner != null)
+        {
+            var model = owner.GetComponent<ICharacterModel>();
+            if (model != null) model.RequestSetHasBow(false);
+        }
+
+        if (AuthorityGuard.IsOffline)
+        {
+            UnequipLocal();
+            if (loadedArrowObj != null) Destroy(loadedArrowObj);
+            Destroy(gameObject);
+        }
+        else
+        {
+            RpcUnequip();
+            if (loadedArrowObj != null) NetworkServer.Destroy(loadedArrowObj);
+            NetworkServer.Destroy(gameObject);
         }
     }
 
@@ -447,6 +462,8 @@ public class UnifiedWeaponBow : NetworkBehaviour, IPlayerWeapon
         Transform spawnPoint = nockPoint != null ? nockPoint : transform;
         return (aimPoint - spawnPoint.position).normalized;
     }
+
+
 
     /// <summary>
     /// 오프라인 Instantiate된 오브젝트가 Mirror NetworkIdentity에 의해

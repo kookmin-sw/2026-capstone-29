@@ -37,6 +37,7 @@ public class UnifiedItemManager : NetworkBehaviour
     [SyncVar] private bool hasActive = false;
     [SyncVar] private bool activeUsed = false;
 
+    [SyncVar] private GameObject currentWeaponObject; // 현재 보유 무기 아이템.
     [SyncVar] private int passiveCount = 0; // 클라이언트 동기화용
 
     [SyncVar] public float weaponAvailable;
@@ -62,6 +63,7 @@ public class UnifiedItemManager : NetworkBehaviour
                 Debug.Log("아이템 해제.");
                 hasWeapon = false;
                 weapon = null;
+                currentWeaponObject = null;  // 추가
                 weaponTimer = 0;
                 weaponAvailable = 0;
 
@@ -221,7 +223,6 @@ public class UnifiedItemManager : NetworkBehaviour
     public bool HasPassive() => passiveEntries.Count > 0;
     public bool IsPassiveRunning() => passiveEntries.Any(e => e.routine != null);
 
-    public void GetWeapon() => hasWeapon = true;
     public void GetActive() => hasActive = true;
     public void GetPassive(IPassive newPassive, float available)
     {
@@ -246,6 +247,23 @@ public class UnifiedItemManager : NetworkBehaviour
             entry.consumedHandler = () => OnPassiveEarlyExpired(entry);
             amp.OnAllStacksConsumed += entry.consumedHandler;
         }
+    }
+
+    public void GetWeapon(GameObject weaponObject)
+    {
+        // 이미 무기가 있으면 먼저 강제 만료시킨다.
+        // 무기 본인의 ForceExpire가 NotifyUnequip → Destroy를 처리하므로
+        // 여기서는 참조만 비우면 된다.
+        if (hasWeapon && currentWeaponObject != null)
+        {
+            Debug.Log("[UnifiedItemManager] 기존 무기 강제 만료 후 새 무기 장착.");
+            var oldWeapon = currentWeaponObject.GetComponent<IPlayerWeapon>();
+            oldWeapon?.ForceExpire();
+        }
+
+        hasWeapon = true;
+        weaponTimer = 0f;
+        currentWeaponObject = weaponObject;
     }
 
     private void OnPassiveEarlyExpired(Passive entry)

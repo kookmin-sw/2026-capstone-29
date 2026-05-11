@@ -194,15 +194,26 @@ public class UnifiedWeaponMelee : NetworkBehaviour, IPlayerWeapon, IWeaponHitBox
     /// </summary>
     public void ForceExpire()
     {
+        Debug.Log($"[ForceExpire] 진입. IsOffline={AuthorityGuard.IsOffline}, isServer={isServer}, isThrown={isThrown}, name={name}");
+
         bool hasAuthority = AuthorityGuard.IsOffline || isServer;
-        if (!hasAuthority) return;
-        if (isThrown) return;
+        if (!hasAuthority) { Debug.Log("[ForceExpire] 권위 없음으로 리턴"); return; }
+        if (isThrown) { Debug.Log("[ForceExpire] isThrown으로 리턴"); return; }
 
         if (atkSpeed != null) atkSpeed.Remove();
         NotifyUnequip();
+        Debug.Log("[ForceExpire] NotifyUnequip 완료, Destroy 호출 직전");
 
-        if (AuthorityGuard.IsOffline) Destroy(gameObject);
-        else NetworkServer.Destroy(gameObject);
+        if (AuthorityGuard.IsOffline)
+        {
+            Debug.Log("[ForceExpire] 오프라인 Destroy 호출");
+            Destroy(gameObject);
+        }
+        else
+        {
+            Debug.Log("[ForceExpire] 온라인 NetworkServer.Destroy 호출");
+            NetworkServer.Destroy(gameObject);
+        }
     }
 
 

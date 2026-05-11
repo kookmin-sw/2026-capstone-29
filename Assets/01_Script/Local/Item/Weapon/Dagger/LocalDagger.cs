@@ -82,4 +82,6 @@ public class LocalDagger : MonoBehaviour, IWeaponHitBox, IPlayerWeapon
             : transform.forward;
         SetThrowDagger (direction);
     }
+
+    public void ForceExpire() { }
 }
