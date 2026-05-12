@@ -464,4 +464,14 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
 
         return null;
     }
+
+    public void ForceExpire()
+    {
+        bool hasAuthority = AuthorityGuard.IsOffline || isServer;
+        if (!hasAuthority) return;
+        if (isDepleted) return;
+
+        ExpireWeapon();
+    }
+
 }

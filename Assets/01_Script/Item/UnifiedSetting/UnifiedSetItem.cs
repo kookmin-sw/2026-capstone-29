@@ -64,32 +64,37 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
         if (item.CompareTag("Weapon"))
         {
             Debug.Log("[UnifiedSetItem] 무기 감지 (local)");
+            IWeapon weaponAsset = itemAsset as IWeapon;
             im.weapon = itemAsset as IWeapon;
-            im.GetWeapon();
 
-            if (im.weapon != null)
+            if (weaponAsset != null)
             {
-                GameObject weaponObj = im.weapon.SummonWeapon(user.transform.position, Quaternion.identity);
+                // 1) 새 무기 GameObject 먼저 생성
+                GameObject weaponObj = weaponAsset.SummonWeapon(user.transform.position, Quaternion.identity);
                 HardenOfflineObject(weaponObj);
+
+                // 2) ItemManager에 등록 — 이 안에서 기존 무기가 있다면 ForceExpire 호출됨
+                im.GetWeapon(weaponObj);
+                im.weaponAvailable = weaponAsset.AvailableTime();
+
+                // 3) 새 무기에게 사용자 통보 (장착, 사운드 override 등)
                 IPlayerWeapon ipw = weaponObj != null ? weaponObj.GetComponent<IPlayerWeapon>() : null;
                 if (ipw != null) ipw.SetUser(user);
-                im.weaponAvailable = im.weapon.AvailableTime();
 
                 bool shouldShowLocalWeaponUI = AuthorityGuard.IsOffline
                     || user.GetComponent<UnifiedCharacterModel>()?.isLocalPlayer == true;
 
-                // ★ 아이템 UI 표시 — 로컬 플레이어만 자기 화면에 표시
                 if (weaponObj != null && shouldShowLocalWeaponUI)
                 {
                     var uiManager = FindObjectOfType<InGameUIManger>();
                     if (uiManager != null)
                     {
-                        Sprite itemSprite = im.weapon.UISprite;
+                        Sprite itemSprite = weaponAsset.UISprite;
                         var bomb = weaponObj.GetComponent<UnifiedWeaponBomb>();
                         if (bomb != null)
                             uiManager.ShowWeaponItemCount(itemSprite, bomb.MaxThrowCount);
                         else
-                            uiManager.ShowWeaponItem(itemSprite, im.weapon.AvailableTime());
+                            uiManager.ShowWeaponItem(itemSprite, weaponAsset.AvailableTime());
                     }
                 }
             }
@@ -194,18 +199,30 @@ public class UnifiedSetItem : NetworkBehaviour, IEquip
         {
             Debug.Log("무기 감지.");
             IWeapon weaponAsset = itemAsset as IWeapon;
-            if (unified != null) { unified.weapon = weaponAsset; unified.GetWeapon(); }
-            else { legacy.weapon = weaponAsset; legacy.GetWeapon(); }
 
             if (weaponAsset != null)
             {
+                // 1) 새 무기 스폰
                 GameObject weaponObj = weaponAsset.SummonWeapon(user.transform.position, Quaternion.identity);
                 NetworkServer.Spawn(weaponObj, user.GetComponent<NetworkIdentity>().connectionToClient);
+
+                // 2) 등록 — unified 경로에서만 기존 무기 ForceExpire 발동
+                if (unified != null)
+                {
+                    unified.weapon = weaponAsset;
+                    unified.GetWeapon(weaponObj);
+                    unified.weaponAvailable = weaponAsset.AvailableTime();
+                }
+                else
+                {
+                    legacy.weapon = weaponAsset;
+                    legacy.GetWeapon();
+                    legacy.weaponAvailable = weaponAsset.AvailableTime();
+                }
+
+                // 3) 사용자 통보
                 IPlayerWeapon ipw = weaponObj.GetComponent<IPlayerWeapon>();
                 if (ipw != null) ipw.SetUser(user);
-
-                if (unified != null) unified.weaponAvailable = weaponAsset.AvailableTime();
-                else legacy.weaponAvailable = weaponAsset.AvailableTime();
             }
 
             RpcOnWeaponEquipped(user);

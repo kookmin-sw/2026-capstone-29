@@ -399,12 +399,26 @@ MonoBehaviour:
   chargeReadyEffect: {fileID: 3890617964109313627}
   rightHandHitbox: {fileID: 6716766317581853125}
   leftHandHitbox: {fileID: 1344337710141032076}
+  rightFootHitbox: {fileID: 0}
   leftFootHitbox: {fileID: 1077588120744126995}
+  stunBoolParam: Stunned
+  stunStarterInputs: {fileID: 0}
   audioSource: {fileID: 0}
-  punchSounds: {fileID: 0}
-  hitSounds: {fileID: 0}
+  attackSounds: []
+  attackVoiceSounds: []
+  hitSounds:
+  - {fileID: 0}
+  hitVoiceSounds: []
   chargeSounds: {fileID: 0}
   readySounds: {fileID: 0}
+  playAttackVoice: 1
+  playHitVoice: 1
+  attackVolume: 1
+  attackVoiceVolume: 1
+  hitVolume: 1
+  hitVoiceVolume: 1
+  chargeVolume: 1
+  readyVolume: 1
 --- !u!114 &7273128938097549508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,6 +454,14 @@ MonoBehaviour:
   CrouchSpeed: 3
   JumpMoveSpeed: 6
   AttackMoveSpeed: 6
+  EnableDistanceSpeedBoost: 1
+  ChaseBoostMinDistance: 5
+  ChaseBoostMaxDistance: 20
+  ChaseBoostMaxMultiplier: 1.4
+  ChaseBoostCurveExponent: 0.7
+  ChaseBoostOnlyWhenApproaching: 1
+  ChaseBoostScaleByAngle: 1
+  ChaseBoostDisableDuringAttack: 1
   ShiftCooldown: 1
   ShiftDashDistance: 3
   ShiftDashDuration: 0.3
@@ -529,12 +551,8 @@ MonoBehaviour:
   syncInterval: 0
   weaponAvailable: 0
   activeAvailable: 0
-  passiveAvailable: 0
-  fieldAvailable: 0
   weaponTimer: 0
   activeTimer: 0
-  passiveTimer: 0
-  fieldTimer: 0
 --- !u!1001 &5164279409534725719
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1221,6 +1239,9 @@ MonoBehaviour:
   effectIndex: 0
   hitEffectPrefab: {fileID: 1226031520979461127, guid: 9c692d73cd82e0d409bec909e987a5b8, type: 3}
   effectDuration: 2
+  audioSource: {fileID: 0}
+  attackHitSounds: []
+  attackHitVolume: 1
   allowedStates:
   - Strong Attack
 --- !u!65 &4645412204146245682
@@ -1271,6 +1292,9 @@ MonoBehaviour:
   effectIndex: 0
   hitEffectPrefab: {fileID: 7775297073632181632, guid: 7eefe271218ab3e4f816adc8b0c7278c, type: 3}
   effectDuration: 1
+  audioSource: {fileID: 0}
+  attackHitSounds: []
+  attackHitVolume: 1
   allowedStates:
   - Combo Attack 1
   - Combo Attack 2
@@ -1341,6 +1365,9 @@ MonoBehaviour:
   effectIndex: 0
   hitEffectPrefab: {fileID: 1226031520979461127, guid: 9c692d73cd82e0d409bec909e987a5b8, type: 3}
   effectDuration: 1
+  audioSource: {fileID: 0}
+  attackHitSounds: []
+  attackHitVolume: 1
   allowedStates:
   - Combo Attack 4
 --- !u!4 &5590067049883494825 stripped

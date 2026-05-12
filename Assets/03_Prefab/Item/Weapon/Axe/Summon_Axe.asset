@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Summon_Axe
   m_EditorClassIdentifier: 
   weapon: {fileID: 5544994200035857809, guid: c8f9dd236567ce6449e1f3a0cea8d630, type: 3}
-  availableTime: 100
+  availableTime: 10
+  uiSprite: {fileID: 0}

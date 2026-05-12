@@ -286,4 +286,6 @@ public class WeaponBow : NetworkBehaviour, IPlayerWeapon
         Debug.Log("이걸 왜던짐?ㅋ");
         return;
     }
+
+    public void ForceExpire() { }
 }

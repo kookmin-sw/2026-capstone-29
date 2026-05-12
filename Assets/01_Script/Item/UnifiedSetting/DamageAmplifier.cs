@@ -123,8 +123,11 @@ public class DamageAmplifier : NetworkBehaviour
             return;
         }
 
-        // 온라인 클라이언트: 서버에 위임
-        CmdConsumeOneAttempt();
+        if (isOwned)
+        {
+            CmdConsumeOneAttempt();
+        }
+        // else: 원격 플레이어의 DamageAmplifier — 서버가 알아서 처리하므로 무시
     }
 
     [Command]

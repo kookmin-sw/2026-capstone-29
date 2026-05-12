@@ -140,8 +140,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gripPoint: {fileID: 5132991809748092253}
   weaponHitbox: {fileID: 0}
-  attachPositionOffset: {x: 0, y: 0, z: 0}
-  attachRotationOffset: {x: 0, y: 0, z: 0}
+  attachPositionOffset: {x: -0.07, y: 0.03, z: 0}
+  attachRotationOffset: {x: 426.1, y: -6.67, z: 2.17}
   chargePositionDelta: {x: 0, y: 0, z: 0}
   chargeRotationDelta: {x: 0, y: 0, z: 0}
   chargeBlendDuration: 0.1

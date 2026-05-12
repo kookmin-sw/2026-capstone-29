@@ -73,36 +73,21 @@ public class WeaponTazorGun : NetworkBehaviour, IPlayerWeapon
     {
         if (tb == null) return;
 
-        //부모 위치/방햐 추적 - 양측 클라이언트
+        // 부모 위치/방향 추적 - 양측 클라이언트
         if (transform.parent != null)
         {
             transform.rotation = transform.parent.rotation;
             transform.position = transform.parent.position + transform.parent.forward * 1.5f;
         }
 
-        //수명 관리는 서버에서만 해준다.
+        // 수명 관리는 서버에서만
         if (isServer)
         {
             lifeTimer += Time.deltaTime;
-            
+
             if (lifeTimer > itemStat.availableTime || usedChance >= itemStat.useableTime)
             {
-                if (owner != null)
-                {
-                    var model = owner.GetComponent<NetworkCharacterModel>();
-                    if (model != null)
-                    {
-                        //model.ServerSetHasBow(false); // 활 모션 다루는 것과 동일
-                    }
-                }
-                //모든 클라이언트에서 복원
-                RpcUnequip();
-
-                if (loadedBulletObj != null)
-                    NetworkServer.Destroy(loadedBulletObj);
-
-
-                NetworkServer.Destroy(gameObject);
+                ExpireAndDestroy();
                 return;
             }
         }
@@ -128,6 +113,27 @@ public class WeaponTazorGun : NetworkBehaviour, IPlayerWeapon
         }
 
     }
+
+    [Server]
+    private void ExpireAndDestroy()
+    {
+        if (owner != null)
+        {
+            var model = owner.GetComponent<NetworkCharacterModel>();
+            if (model != null)
+            {
+                // model.ServerSetHasBow(false);
+            }
+        }
+
+        // 모든 클라이언트에서 장착 해제
+        RpcUnequip();
+
+        if (loadedBulletObj != null)
+            NetworkServer.Destroy(loadedBulletObj);
+
+        NetworkServer.Destroy(gameObject);
+    }
     [ClientRpc]
     private void RpcUnequip()
     {
@@ -135,6 +141,13 @@ public class WeaponTazorGun : NetworkBehaviour, IPlayerWeapon
         if (handler != null)
             handler.Unequip();
     }
+
+    public void ForceExpire()
+    {
+        if (!isServer) return;
+        ExpireAndDestroy();
+    }
+
     // 화살을 생성하고 활에 장전한다.
     [Command(requiresAuthority = true)]
     private void CmdBeginCharge()

@@ -92,6 +92,7 @@ public class UnifiedWeaponBow : NetworkBehaviour, IPlayerWeapon
 
     // 활 장착 시 비활성화한 다른 소켓의 무기 목록 (해제 시 복원용)
     private readonly List<GameObject> _disabledWeapons = new List<GameObject>();
+    private bool _suppressBaseWeaponRestore = false;
 
     public float ChargeRatio => isCharging ? Mathf.Clamp01(chargeTimer / maxChargeTime) : 0f;
 
@@ -202,8 +203,12 @@ public class UnifiedWeaponBow : NetworkBehaviour, IPlayerWeapon
     private void TryDisable(Transform t)
     {
         if (t == null) return;
-        if (!t.gameObject.activeSelf) return;
-        t.gameObject.SetActive(false);
+
+        // 이미 비활성 상태여도 리스트에 추가 — 다음 해제 시 복원해야 함
+        if (t.gameObject.activeSelf)
+        {
+            t.gameObject.SetActive(false);
+        }
         _disabledWeapons.Add(t.gameObject);
     }
 
@@ -227,7 +232,16 @@ public class UnifiedWeaponBow : NetworkBehaviour, IPlayerWeapon
             if (handler != null) handler.Unequip();
         }
 
-        RestoreOtherWeapons();
+        // 교체 해제일 때는 기본 무기 복원 생략. 새 무기가 곧 들어옴.
+        if (!_suppressBaseWeaponRestore)
+        {
+            RestoreOtherWeapons();
+        }
+        else
+        {
+            // 복원은 건너뛰되, 추적 리스트는 비워둔다 (중복 처리 방지).
+            _disabledWeapons.Clear();
+        }
 
         // 에임 모드 OFF
         if (owner != null)
@@ -279,24 +293,7 @@ public class UnifiedWeaponBow : NetworkBehaviour, IPlayerWeapon
 
         if (lifeTimer > itemStat.availableTime)
         {
-            if (owner != null)
-            {
-                var model = owner.GetComponent<ICharacterModel>();
-                if (model != null) model.RequestSetHasBow(false);
-            }
-
-            if (AuthorityGuard.IsOffline)
-            {
-                UnequipLocal();
-                if (loadedArrowObj != null) Destroy(loadedArrowObj);
-                Destroy(gameObject);
-            }
-            else
-            {
-                RpcUnequip();
-                if (loadedArrowObj != null) NetworkServer.Destroy(loadedArrowObj);
-                NetworkServer.Destroy(gameObject);
-            }
+            ExpireAndDestroy();
         }
     }
 
@@ -346,6 +343,39 @@ public class UnifiedWeaponBow : NetworkBehaviour, IPlayerWeapon
                 var model = owner.GetComponent<ICharacterModel>();
                 if (model != null) model.RequestBowRelease();
             }
+        }
+    }
+
+    //활 수명 강제 종료
+    public void ForceExpire()
+    {
+        bool hasAuthority = AuthorityGuard.IsOffline || isServer;
+        if (!hasAuthority) return;
+
+        _suppressBaseWeaponRestore = true;  // 교체로 인한 해제 — 기본 무기 복원 안 함
+        ExpireAndDestroy();
+    }
+
+    //활 수명 종료 처리
+    private void ExpireAndDestroy()
+    {
+        if (owner != null)
+        {
+            var model = owner.GetComponent<ICharacterModel>();
+            if (model != null) model.RequestSetHasBow(false);
+        }
+
+        if (AuthorityGuard.IsOffline)
+        {
+            UnequipLocal();
+            if (loadedArrowObj != null) Destroy(loadedArrowObj);
+            Destroy(gameObject);
+        }
+        else
+        {
+            RpcUnequip();
+            if (loadedArrowObj != null) NetworkServer.Destroy(loadedArrowObj);
+            NetworkServer.Destroy(gameObject);
         }
     }
 
@@ -447,6 +477,8 @@ public class UnifiedWeaponBow : NetworkBehaviour, IPlayerWeapon
         Transform spawnPoint = nockPoint != null ? nockPoint : transform;
         return (aimPoint - spawnPoint.position).normalized;
     }
+
+
 
     /// <summary>
     /// 오프라인 Instantiate된 오브젝트가 Mirror NetworkIdentity에 의해

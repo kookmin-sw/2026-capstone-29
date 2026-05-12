@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using StarterAssets;
 using UnityEngine.InputSystem;
 
@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 /// PlayerCombat + LocalPlayerCombat 를 합친 전투 입력 처리기.
 /// ICharacterModel만 호출하므로 네트워크/로컬 모드 모두 동일 코드로 동작한다.
 /// 드리프트 통합 방침(사용자 확정): "양쪽 다 적용"
-///  → HasBow 가드를 로컬 모드에서도 적용.
+///  → HasBow / HasGun 가드를 로컬 모드에서도 적용.
 /// </summary>
 public class UnifiedPlayerCombat : MonoBehaviour
 {
@@ -75,8 +75,11 @@ public class UnifiedPlayerCombat : MonoBehaviour
 
     private void HandlePunch()
     {
-        // 활 장착 중이면 펀치 금지 (양쪽 모드 공통 적용)
+        // 원거리 무기(활/총) 장착 중이면 펀치(콤보) 금지.
+        // 좌클릭은 무기 본인(UnifiedWeaponBow / UnifiedWeaponTazorGun)이 직접 잡아서
+        // 발사/차징 로직으로 보낸다. 콤보 시스템과의 이중 발화를 막기 위해 여기서 게이팅.
         if (_animator.GetBool("HasBow")) return;
+        if (_animator.GetBool("HasGun")) return;
 
         if (!_input.punch) return;
 

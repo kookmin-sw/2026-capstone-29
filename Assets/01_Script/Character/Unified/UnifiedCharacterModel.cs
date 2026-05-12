@@ -1,5 +1,6 @@
-using System;
+﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using Mirror;
 using UnityEngine;
 
@@ -44,8 +45,17 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
     [SyncVar(hook = nameof(OnBowReleaseHook))]
     private int bowReleaseCount = 0;
 
+    [SyncVar(hook = nameof(OnHasGunChangedHook))]
+    private bool hasGun = false;
+
+    [SyncVar(hook = nameof(OnGunShootHook))]
+    private int gunShootCount = 0;
+
     [SyncVar(hook = nameof(OnLivesChangedHook))]
     public int remaingLives; // 오타 유지(기존 호환)
+
+    [SyncVar(hook = nameof(OnStunChangedHook))]
+    private bool isStunned = false;
 
     // ---- 설정 ----
     [Header("Lives Setting")]
@@ -58,6 +68,18 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
     public GameObject[] hitEffectPrefabs;  // 0: 오른손, 1: 왼손, 2: 발, 3: --
     public float effectDuration = 2f;
 
+    // ---- 스턴 내부 상태 (서버/오프라인 권한자만 사용) ----
+    private float _stunRemainingTime;
+    private Coroutine _stunCoroutine;
+
+    /// <summary>
+    /// 스턴이 절대 이 시간을 넘기지 못하도록 강제하는 워치독 상한.
+    /// 코루틴이 어떤 이유로든 자연 종료되지 못하더라도 이 시간이 지나면 강제 해제된다.
+    /// 갱신(중복 피격)이 거듭되어도 한 번 스턴이 시작된 후 이 시간이 지나면 무조건 풀림.
+    /// 정상적인 스턴 지속시간보다 충분히 길게 둘 것 (예: 일반 스턴 2초 / 워치독 15초).
+    /// </summary>
+    private const float StunAbsoluteCap = 15f;
+
     // ============================================================
     // ICharacterModel 조회 프로퍼티
     // ============================================================
@@ -69,6 +91,8 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
     public bool IsChargeReady => isChargeReady;
     public bool HasBow => hasBow;
     public bool IsBowDraw => isBowDraw;
+    public bool IsStunned => isStunned;
+    public bool HasGun => hasGun;
 
     // ============================================================
     // 이벤트
@@ -86,6 +110,10 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
     public event Action<bool> OnBowDrawChanged;
     public event Action OnBowRelease;
     public event Action OnVictory;
+    public event Action<bool> OnHasGunChanged;
+    public event Action OnGunShoot;
+    public event Action<bool> OnStunChanged;
+    public event Action<GameObject, Vector3, Vector3> OnStunVfxSpawnRequested;
 
     // ============================================================
     // 라이프사이클
@@ -252,6 +280,59 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
         }
     }
 
+    // ---- 총 (활과 평행한 구조) ----
+    public void RequestSetHasGun(bool state)
+    {
+        if (AuthorityGuard.IsOffline)
+        {
+            bool old = hasGun;
+            hasGun = state;
+            OnHasGunChangedHook(old, state);
+        }
+        else
+        {
+            if (isServer) ServerSetHasGun(state);
+        }
+    }
+
+    /// <summary>
+    /// 총 발사 트리거. 활의 RequestBowRelease와 동일한 1회성 이벤트 패턴.
+    /// View는 OnGunShoot 이벤트로 애니메이터 트리거를 한 번 발화한다.
+    /// </summary>
+    public void RequestGunShoot()
+    {
+        if (AuthorityGuard.IsOffline)
+        {
+            gunShootCount++;
+            OnGunShoot?.Invoke();
+        }
+        else CmdGunShoot();
+    }
+
+    // ---- 스턴 ----
+    public void RequestApplyStun(float duration, GameObject vfxPrefab, Vector3 vfxPositionOffset, Vector3 vfxRotationOffset)
+    {
+        if (duration <= 0f) return;
+
+        if (AuthorityGuard.IsOffline)
+        {
+            ApplyStunLocal(duration, vfxPrefab, vfxPositionOffset, vfxRotationOffset);
+        }
+        else
+        {
+            // 권한자: 서버. 무기(TazorBullet)는 OnTriggerEnter에서 isServer일 때만 호출하지만
+            // 안전하게 한 번 더 검사하고 분기.
+            if (isServer)
+            {
+                ApplyStunServer(duration, vfxPrefab, vfxPositionOffset, vfxRotationOffset);
+            }
+            else
+            {
+                Debug.LogWarning("[UnifiedCharacterModel] RequestApplyStun: 클라이언트에서 호출됨. 서버에서만 호출해야 함.");
+            }
+        }
+    }
+
     // ============================================================
     // 오프라인 데미지 로직
     // ============================================================
@@ -278,6 +359,100 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
     }
 
     // ============================================================
+    // 스턴 로직 — 서버/오프라인 권한자 측에서만 실행
+    // ============================================================
+    [Server]
+    private void ApplyStunServer(float duration, GameObject vfxPrefab, Vector3 vfxPosOffset, Vector3 vfxRotOffset)
+    {
+        // 중복 피격: 더 긴 쪽으로 갱신
+        _stunRemainingTime = Mathf.Max(_stunRemainingTime, duration);
+
+        bool wasStunned = isStunned;
+        isStunned = true; // SyncVar hook이 모든 클라이언트에서 OnStunChanged 발화
+
+        // VFX 동기화: 모든 클라이언트에 RPC. 프리팹은 이름으로 식별 (StunVfxRegistry 사용).
+        string prefabName = vfxPrefab != null ? vfxPrefab.name : null;
+        RpcSpawnStunVfx(prefabName, vfxPosOffset, vfxRotOffset);
+
+        // 호스트(서버 + 로컬 클라이언트)에서는 RPC가 두 번 호출되는 것을 피하기 위해
+        // 호스트 환경에서는 RpcSpawnStunVfx가 이미 로컬에서 한 번 발화하므로 추가 호출 불필요.
+        // → Mirror에서 [ClientRpc]는 호스트의 클라이언트에서도 자동 실행됨.
+
+        if (_stunCoroutine == null)
+            _stunCoroutine = StartCoroutine(ServerStunTimer());
+    }
+
+    [Server]
+    private IEnumerator ServerStunTimer()
+    {
+        // 워치독: 코루틴이 살아있는 절대 시간. 갱신과 무관하게 이 시간이 지나면 강제 해제.
+        float elapsed = 0f;
+
+        while (_stunRemainingTime > 0f)
+        {
+            float dt = Time.deltaTime;
+            _stunRemainingTime -= dt;
+            elapsed += dt;
+            if (elapsed >= StunAbsoluteCap)
+            {
+                Debug.LogWarning($"[{nameof(UnifiedCharacterModel)}] 스턴 워치독 발동: {StunAbsoluteCap}초 상한 도달 → 강제 해제");
+                break;
+            }
+            yield return null;
+        }
+
+        _stunRemainingTime = 0f;
+        _stunCoroutine = null;
+        isStunned = false; // SyncVar hook으로 클라이언트 전파
+    }
+
+    private void ApplyStunLocal(float duration, GameObject vfxPrefab, Vector3 vfxPosOffset, Vector3 vfxRotOffset)
+    {
+        _stunRemainingTime = Mathf.Max(_stunRemainingTime, duration);
+
+        bool wasStunned = isStunned;
+        isStunned = true;
+        if (!wasStunned) OnStunChangedHook(false, true);
+
+        // 오프라인: VFX 이벤트를 직접 발화 (RPC 없음)
+        OnStunVfxSpawnRequested?.Invoke(vfxPrefab, vfxPosOffset, vfxRotOffset);
+
+        if (_stunCoroutine == null)
+            _stunCoroutine = StartCoroutine(LocalStunTimer());
+    }
+
+    private IEnumerator LocalStunTimer()
+    {
+        float elapsed = 0f;
+
+        while (_stunRemainingTime > 0f)
+        {
+            float dt = Time.deltaTime;
+            _stunRemainingTime -= dt;
+            elapsed += dt;
+            if (elapsed >= StunAbsoluteCap)
+            {
+                Debug.LogWarning($"[{nameof(UnifiedCharacterModel)}] 스턴 워치독 발동: {StunAbsoluteCap}초 상한 도달 → 강제 해제");
+                break;
+            }
+            yield return null;
+        }
+
+        _stunRemainingTime = 0f;
+        _stunCoroutine = null;
+        bool oldStunned = isStunned;
+        isStunned = false;
+        if (oldStunned) OnStunChangedHook(true, false);
+    }
+
+    [ClientRpc]
+    private void RpcSpawnStunVfx(string prefabName, Vector3 posOffset, Vector3 rotOffset)
+    {
+        var prefab = StunVfxRegistry.Resolve(prefabName);
+        OnStunVfxSpawnRequested?.Invoke(prefab, posOffset, rotOffset);
+    }
+
+    // ============================================================
     // Mirror Cmd / Rpc / Server (네트워크 모드 전용)
     // ============================================================
     [Command] private void CmdNextCombo() { comboCount = (comboCount % 4) + 1; }
@@ -287,6 +462,7 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
     [Command] private void CmdStrongAttack() { RpcPlayStrongAttack(); }
     [Command] private void CmdSetBowDraw(bool s) { isBowDraw = s; }
     [Command] private void CmdBowRelease() { isBowDraw = false; bowReleaseCount++; }
+    [Command] private void CmdGunShoot() { gunShootCount++; }
 
     [Command(requiresAuthority = false)]
     private void CmdTakeDamage(float amount)
@@ -323,6 +499,12 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
     {
         hasBow = state;
         if (!state) isBowDraw = false;
+    }
+
+    [Server]
+    public void ServerSetHasGun(bool state)
+    {
+        hasGun = state;
     }
 
     [ClientRpc]
@@ -369,7 +551,10 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
     private void OnHasBowChangedHook(bool oldV, bool newV) => OnHasBowChanged?.Invoke(newV);
     private void OnBowDrawChangedHook(bool oldV, bool newV) => OnBowDrawChanged?.Invoke(newV);
     private void OnBowReleaseHook(int oldV, int newV) => OnBowRelease?.Invoke();
+    private void OnHasGunChangedHook(bool oldV, bool newV) => OnHasGunChanged?.Invoke(newV);
+    private void OnGunShootHook(int oldV, int newV) => OnGunShoot?.Invoke();
     private void OnLivesChangedHook(int oldV, int newV) => OnLivesChanged?.Invoke(newV);
+    private void OnStunChangedHook(bool oldV, bool newV) => OnStunChanged?.Invoke(newV);
 
     private void OnHealthChangedHook(float oldV, float newV)
     {
@@ -455,5 +640,28 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
             ps.Play();
         }
         Destroy(effect, effectDuration);
+    }
+}
+
+/// <summary>
+/// 스턴 VFX 프리팹 이름 → 프리팹 객체 매핑.
+/// VFX 프리팹을 NetworkServer.Spawn하지 않고 각 클라이언트가 로컬 Instantiate하기 위해 필요.
+/// TazorBullet 등 VFX를 보유한 컴포넌트가 Awake에서 자신의 프리팹을 등록한다.
+/// </summary>
+public static class StunVfxRegistry
+{
+    private static readonly Dictionary<string, GameObject> _map = new Dictionary<string, GameObject>();
+
+    public static void Register(GameObject prefab)
+    {
+        if (prefab == null) return;
+        _map[prefab.name] = prefab;
+    }
+
+    public static GameObject Resolve(string name)
+    {
+        if (string.IsNullOrEmpty(name)) return null;
+        _map.TryGetValue(name, out var prefab);
+        return prefab;
     }
 }

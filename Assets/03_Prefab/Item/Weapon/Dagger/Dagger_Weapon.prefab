@@ -308,6 +308,9 @@ MonoBehaviour:
   effectIndex: 0
   hitEffectPrefab: {fileID: 0}
   effectDuration: 2
+  audioSource: {fileID: 0}
+  attackHitSounds: []
+  attackHitVolume: 1
   allowedStates: []
 --- !u!114 &3071611137906053025
 MonoBehaviour:
@@ -330,6 +333,9 @@ MonoBehaviour:
   attachSlot: 0
   boneFallbackPath: 
   throwKey: 102
+  audioSource: {fileID: 0}
+  swingSounds: []
+  swingVolume: 1
 --- !u!114 &6285363726532668069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -361,7 +367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gripPoint: {fileID: 6778283694768901054}
   weaponHitbox: {fileID: 0}
-  attachPositionOffset: {x: 0, y: 0, z: 0}
+  attachPositionOffset: {x: -0.07, y: 0.03, z: 0}
   attachRotationOffset: {x: 0, y: 0, z: 0}
   chargePositionDelta: {x: 0, y: 0, z: 0}
   chargeRotationDelta: {x: 0, y: 0, z: 0}

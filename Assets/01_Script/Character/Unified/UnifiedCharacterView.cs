@@ -1,4 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
+using StarterAssets;
 
 /// <summary>
 /// CharacterView + CharacterLocalView를 하나로 합친 뷰.
@@ -21,6 +22,13 @@ public class UnifiedCharacterView : MonoBehaviour
     public CharacterHitBox leftHandHitbox;
     public CharacterHitBox rightFootHitbox;
     public CharacterHitBox leftFootHitbox;
+
+    [Header("스턴 설정")]
+    [Tooltip("Animator의 스턴 Bool 파라미터 이름")]
+    [SerializeField] private string stunBoolParam = "Stunned";
+
+    [Tooltip("스턴 중 비활성화할 StarterAssetsInputs. 비워두면 자동 탐색.")]
+    [SerializeField] private StarterAssetsInputs stunStarterInputs;
 
     [Header("Sound Settings")]
     public AudioSource audioSource;
@@ -59,6 +67,9 @@ public class UnifiedCharacterView : MonoBehaviour
     // null이면 캐릭터 기본 attackSounds(맨손 펀치)가 재생됨.
     private UnifiedWeaponMelee _meleeOverride;
 
+    // 현재 활성 스턴 VFX 인스턴스 (재스폰 시 파괴용)
+    private GameObject _activeStunVfx;
+
     /// <summary>
     /// 근접무기가 장착될 때 자기 자신을 등록한다.
     /// 등록되면 HandleCombo에서 캐릭터 기본 펀치 대신 무기 swingSounds가 재생됨.
@@ -80,6 +91,9 @@ public class UnifiedCharacterView : MonoBehaviour
         model = GetComponent<ICharacterModel>();
         if (model == null)
             Debug.LogError($"[{nameof(UnifiedCharacterView)}] ICharacterModel이 같은 오브젝트에 없음.");
+
+        if (stunStarterInputs == null) stunStarterInputs = GetComponent<StarterAssetsInputs>();
+        if (stunStarterInputs == null) stunStarterInputs = GetComponentInChildren<StarterAssetsInputs>();
     }
 
     private void OnEnable()
@@ -94,7 +108,11 @@ public class UnifiedCharacterView : MonoBehaviour
         model.OnHealthChanged += HandleHealthChange;
         model.OnDie += HandleDie;
         model.OnRespawn += HandleRespawn;
-        model.OnVictory  += HandleVictory;
+        model.OnVictory += HandleVictory;
+        model.OnStunChanged += HandleStunChanged;
+        model.OnStunVfxSpawnRequested += HandleStunVfxSpawn;
+        model.OnHasGunChanged += HandleHasGun;
+        model.OnGunShoot += HandleGunShoot;
     }
 
     private void OnDisable()
@@ -108,7 +126,18 @@ public class UnifiedCharacterView : MonoBehaviour
         model.OnHealthChanged -= HandleHealthChange;
         model.OnDie -= HandleDie;
         model.OnRespawn -= HandleRespawn;
-        model.OnVictory  -= HandleVictory;
+        model.OnVictory -= HandleVictory;
+        model.OnStunChanged -= HandleStunChanged;
+        model.OnStunVfxSpawnRequested -= HandleStunVfxSpawn;
+        model.OnHasGunChanged -= HandleHasGun;
+        model.OnGunShoot -= HandleGunShoot;
+    }
+
+    private void OnDestroy()
+    {
+        // 안전망: 스턴 중에 오브젝트가 파괴되어도 입력은 반드시 복구.
+        if (stunStarterInputs != null) stunStarterInputs.enabled = true;
+        if (_activeStunVfx != null) Destroy(_activeStunVfx);
     }
 
     private void Update()
@@ -172,6 +201,11 @@ public class UnifiedCharacterView : MonoBehaviour
         anim.ResetTrigger("SelfHarm");
         anim.SetBool("Die", false);
         anim.Play("Movement");
+
+        // 리스폰 시 스턴 상태도 안전하게 해제
+        ClearStunVfx();
+        if (stunStarterInputs != null) stunStarterInputs.enabled = true;
+        if (!string.IsNullOrEmpty(stunBoolParam)) anim.SetBool(stunBoolParam, false);
     }
 
     private void HandleVictory()
@@ -221,6 +255,74 @@ public class UnifiedCharacterView : MonoBehaviour
     {
         anim.SetBool("IsDraw", false);
         anim.SetTrigger("BowRelease");
+    }
+
+    // -------- 총 핸들러 (활과 평행) --------
+
+    /// <summary>
+    /// 총 보유 상태 변경. 'HasGun' Bool 토글.
+    /// 해제 시 'Gun' 트리거 잔여물을 리셋해 다음 장착에 영향이 가지 않도록 한다.
+    /// </summary>
+    private void HandleHasGun(bool hasGun)
+    {
+        anim.SetBool("HasGun", hasGun);
+        if (!hasGun) anim.ResetTrigger("GunShot");
+    }
+
+    /// <summary>
+    /// 발사 트리거. 활의 BowRelease와 동일하게 1회성 Trigger.
+    /// 사용자가 'AttackTrigger와 동일 방식'으로 요청 — Animator의 'Gun' 파라미터를 Trigger 타입으로 정의.
+    /// </summary>
+    private void HandleGunShoot()
+    {
+        Debug.Log($"[UnifiedCharacterView] HandleGunShoot 진입. HasGun={anim.GetBool("HasGun")}, " +
+                  $"current state hash={anim.GetCurrentAnimatorStateInfo(0).fullPathHash}");
+        anim.SetTrigger("GunShot");
+    }
+
+    // -------- 스턴 핸들러 --------
+
+    /// <summary>
+    /// 스턴 상태 변경 시 호출.
+    /// - 애니메이터 SS_Stun Bool 토글
+    /// - StarterAssetsInputs 컴포넌트의 enabled를 토글해 입력을 차단/복구
+    /// - 해제 시 VFX도 함께 정리
+    ///
+    /// 참고: 다른 캐릭터의 StarterAssetsInputs도 enabled가 토글되지만,
+    /// isLocalPlayer가 아닌 캐릭터는 어차피 입력을 받지 않으므로 무해.
+    /// </summary>
+    private void HandleStunChanged(bool stunned)
+    {
+        if (!string.IsNullOrEmpty(stunBoolParam))
+            anim.SetBool(stunBoolParam, stunned);
+
+        if (stunStarterInputs != null)
+            stunStarterInputs.enabled = !stunned;
+
+        if (!stunned) ClearStunVfx();
+    }
+
+    /// <summary>
+    /// 새 스턴이 시작될 때마다 모델이 발화 — 갱신 시에도 다시 발화되어
+    /// 기존 VFX 파괴 후 새 VFX 인스턴스가 자식으로 부착됨.
+    /// </summary>
+    private void HandleStunVfxSpawn(GameObject prefab, Vector3 posOffset, Vector3 rotOffset)
+    {
+        ClearStunVfx();
+        if (prefab == null) return;
+
+        _activeStunVfx = Instantiate(prefab, transform);
+        _activeStunVfx.transform.localPosition = posOffset;
+        _activeStunVfx.transform.localRotation = Quaternion.Euler(rotOffset);
+    }
+
+    private void ClearStunVfx()
+    {
+        if (_activeStunVfx != null)
+        {
+            Destroy(_activeStunVfx);
+            _activeStunVfx = null;
+        }
     }
 
     // -------- 차지 이펙트 (Combat이 직접 호출) --------

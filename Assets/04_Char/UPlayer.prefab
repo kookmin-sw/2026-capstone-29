@@ -406,6 +406,8 @@ MonoBehaviour:
   leftHandHitbox: {fileID: 1344337710141032076}
   rightFootHitbox: {fileID: 8028383408365553793}
   leftFootHitbox: {fileID: 1077588120744126995}
+  stunBoolParam: Stunned
+  stunStarterInputs: {fileID: 0}
   audioSource: {fileID: 5858724634432584369}
   attackSounds:
   - {fileID: 8300000, guid: 114e6cf8b0bebb94db9dba1fd2456a26, type: 3}
