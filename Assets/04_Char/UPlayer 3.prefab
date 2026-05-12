@@ -594,6 +594,7 @@ MonoBehaviour:
   distanceBackoff: 0.4
   ultimateAnimTrigger: Ultimate
   ultimateWeaponPrefab: {fileID: 0}
+  characterData: {fileID: 11400000, guid: 163f27a8d44d2584390b10b5e8e65dcf, type: 2}
   selfModel: {fileID: 5743782909195610571}
   selfAnimator: {fileID: 3138135253671594071}
 --- !u!1 &2316993326076443843
