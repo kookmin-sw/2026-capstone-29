@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15bc02fb6c2c37948940bdbf20b507d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponSprite: {fileID: 21300000, guid: ce25fc2ebdb2bac48a6dd47f24051148, type: 3}
+  weaponSprite: {fileID: 21300000, guid: 8f352a0a69ca9af47a4bd65f0c8e8c74, type: 3}
 --- !u!82 &2121465417306078082
 AudioSource:
   m_ObjectHideFlags: 0
