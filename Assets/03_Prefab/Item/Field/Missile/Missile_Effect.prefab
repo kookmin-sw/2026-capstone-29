@@ -69,8 +69,8 @@ MonoBehaviour:
   missileCount: 15
   spawnInterval: 3
   warningDuration: 2
-  damage: 100
-  explosionRadius: 10
+  damage: 60
+  explosionRadius: 5
   cornerA: {x: -40, y: 0}
   cornerB: {x: 4, y: 42}
   raycastHeight: 100
