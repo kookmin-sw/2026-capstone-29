@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee2f7b9dd0b9416429ed72d3574c8b71, type: 3}
   m_Name: PoisionFog
   m_EditorClassIdentifier: 
-  duration: 10
+  duration: 20
   fieldPrefab: {fileID: 4438388044275851841, guid: 5b5dee1e8bc28734e8ad83223e2dcd7f, type: 3}
   spawnPosition: {x: -18, y: 0, z: 22.8}
