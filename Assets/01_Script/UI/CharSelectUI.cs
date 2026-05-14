@@ -9,10 +9,12 @@ public class CharSelectUI : MonoBehaviour
 
     [Header("P1 패널")]
     public Image p1Portrait;
+    public Image p1NameImage;
     public GameObject p1ReadyBadge;
 
     [Header("P2 패널")]
     public Image p2Portrait;
+    public Image p2NameImage;
     public GameObject p2ReadyBadge;
 
     [Header("썸네일 행")]
@@ -239,17 +241,32 @@ public class CharSelectUI : MonoBehaviour
 
     // ── UI 업데이트 ───────────────────────────────────────────────
 
+    private void ApplyCharacterVisual(int playerIndex, int characterIndex)
+    {
+        if (characters == null || characterIndex < 0 || characterIndex >= characters.Length) return;
+
+        var data = characters[characterIndex];
+        var portrait = playerIndex == 0 ? p1Portrait : p2Portrait;
+        var nameImage = playerIndex == 0 ? p1NameImage : p2NameImage;
+
+        if (portrait != null && data.portrait != null)
+            portrait.sprite = data.portrait;
+
+        if (nameImage != null)
+        {
+            nameImage.sprite = data.nameImage;
+            nameImage.gameObject.SetActive(data.nameImage != null);
+        }
+    }
+
     public void UpdateCursor(int playerIndex, int cursorIndex, bool isLocked)
     {
         if (characters == null || cursorIndex < 0 || cursorIndex >= characters.Length) return;
         var indicator = (playerIndex == 0) ? p1CursorIndicator : p2CursorIndicator;
         MoveCursorIndicator(indicator, cursorIndex);
+        
         if (!isLocked)
-        {
-            var portrait = (playerIndex == 0) ? p1Portrait : p2Portrait;
-            if (portrait != null && characters[cursorIndex].portrait != null)
-                portrait.sprite = characters[cursorIndex].portrait;
-        }
+            ApplyCharacterVisual(playerIndex, cursorIndex);
     }
 
     public void UpdateSelection(int playerIndex, int selectedIndex)
@@ -263,9 +280,8 @@ public class CharSelectUI : MonoBehaviour
         if (readyBadge != null && !isCinematicPlaying)
             readyBadge.SetActive(isReady);
 
-        if (isReady && characters != null && selectedIndex < characters.Length)
-            if (portrait != null && characters[selectedIndex].portrait != null)
-                portrait.sprite = characters[selectedIndex].portrait;
+        if (isReady)
+            ApplyCharacterVisual(playerIndex, selectedIndex);
 
         if (isReady && lastSelectedIndexes[playerIndex] < 0)
             PlayPortraitSelectEffect(playerIndex, portrait);
@@ -518,21 +534,6 @@ public class CharSelectUI : MonoBehaviour
         if (characters == null || index < 0 || index >= characters.Length) return;
         if (characterNameText != null) characterNameText.text = characters[index].characterName;
         if (characterDescText  != null) characterDescText.text  = characters[index].description;
-    }
-
-    private IEnumerator CountdownRoutine()
-    {
-        string[] steps = { "3", "2", "1", "FIGHT!" };
-        foreach (var step in steps)
-        {
-            if (countdownText != null) countdownText.text = step;
-
-            // 카운트 숫자마다 팝 스케일 연출
-            if (countdownPanel != null)
-                StartCoroutine(PopScale(countdownPanel.GetComponent<RectTransform>()));
-
-            yield return new WaitForSeconds(step == "FIGHT!" ? 0.8f : 1f);
-        }
     }
 
     /// <summary>
