@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 10
   moveSpeedMultiplier: 0.5
-  uiSprite: {fileID: 21300000, guid: b85a3786fab55084491c8dbc2d5a7371, type: 3}
+  uiSprite: {fileID: 21300000, guid: b3d6648df4bf1704b9eabfd3293db9cf, type: 3}
   uiType: 1
