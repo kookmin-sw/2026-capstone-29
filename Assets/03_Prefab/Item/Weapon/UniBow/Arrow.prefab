@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -4179355378918491307}
   - component: {fileID: -7266600929504728432}
   - component: {fileID: 5219123303811581019}
+  - component: {fileID: -6657221235448886575}
   m_Layer: 3
   m_Name: Arrow
   m_TagString: Untagged
@@ -158,6 +159,29 @@ MonoBehaviour:
   syncInterval: 0
   itemStat: {fileID: 11400000, guid: 4927c8e9507a5864cadab62e0808350a, type: 2}
   hitBox: {fileID: -7266600929504728432}
+--- !u!114 &-6657221235448886575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2019689283678102327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff4f5a8991d7fa47baed5c5ff25979f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 253c3b5da1752334680b1284c910ab82, type: 2}
+  duration: 0.1
+  corner: 1
+  loop: 1
+  points:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0.05, y: 0.05, z: 0.5}
+  - {x: 0, y: 0, z: 1}
+  - {x: -0.05, y: -0.05, z: 0.5}
+  - {x: -0.05, y: 0.05, z: 0.5}
+  - {x: 0.05, y: -0.05, z: 0.5}
 --- !u!1001 &4583243189055386551
 PrefabInstance:
   m_ObjectHideFlags: 0

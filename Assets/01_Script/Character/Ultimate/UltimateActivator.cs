@@ -121,6 +121,10 @@ public class UltimateActivator : NetworkBehaviour
              "충분히 크게 설정 권장 — 자체 lifeTimer가 ForceExpire 전에 만료되지 않도록.")]
     public GameObject ultimateWeaponPrefab;
 
+    [Header("연출 - UI 컷인")]
+    [Tooltip("궁극기 슬로우 시간 동안 표시할 캐릭터 데이터. portrait 이미지를 사용합니다.")]
+    public CharacterData characterData;
+
     [Header("참조 (비워두면 자동 검색)")]
     public UnifiedCharacterModel selfModel;
     public Animator selfAnimator;
@@ -392,6 +396,7 @@ public class UltimateActivator : NetworkBehaviour
     private IEnumerator PlayUltimateLocal(Transform target, GameObject ultimateWeapon)
     {
         isPlaying = true;
+        UltimateCutInUI.Instance?.Play(characterData != null ? characterData.portrait : null, slowMotionDuration);
 
         // 1) 자기 클라의 활성 vcam 캐싱
         cachedVcam = Object.FindAnyObjectByType<CinemachineVirtualCamera>();

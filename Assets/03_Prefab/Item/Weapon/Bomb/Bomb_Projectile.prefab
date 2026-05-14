@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7356058093109323981}
   - component: {fileID: 604655094660640917}
   - component: {fileID: -4323000891049638471}
+  - component: {fileID: 2547227437112724831}
   m_Layer: 3
   m_Name: Bomb_Projectile
   m_TagString: Untagged
@@ -158,6 +159,31 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2547227437112724831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8696884393526128840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff4f5a8991d7fa47baed5c5ff25979f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: 30bfeb2846da04846a9977cf2553ceda, type: 2}
+  duration: 0.1
+  corner: 1
+  loop: 1
+  points:
+  - {x: 0.1, y: 0.1, z: 0.1}
+  - {x: 0.1, y: 0.1, z: -0.1}
+  - {x: 0.1, y: -0.1, z: 0.1}
+  - {x: 0.1, y: -0.1, z: -0.1}
+  - {x: -0.1, y: 0.1, z: 0.1}
+  - {x: -0.1, y: 0.1, z: -0.1}
+  - {x: -0.1, y: -0.1, z: 0.1}
+  - {x: -0.1, y: -0.1, z: -0.1}
 --- !u!1001 &4470380614230455073
 PrefabInstance:
   m_ObjectHideFlags: 0

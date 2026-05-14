@@ -55,6 +55,14 @@ public class CharSelectUI : MonoBehaviour
     [Header("로딩 패널")]
     public GameObject loadingPanel;
 
+    [Header("Portrait Select Effect")]
+    public float portraitPulseScale = 1.08f;
+    public float portraitPulseDuration = 0.18f;
+    public float portraitAfterImageScale = 1.14f;
+    public float portraitAfterImageDuration = 0.28f;
+    [Range(0f, 1f)]
+    public float portraitAfterImageAlpha = 0.45f;
+
 
     [Header("입력 쿨다운")]
     public float inputCooldown = 0.18f;
@@ -69,6 +77,8 @@ public class CharSelectUI : MonoBehaviour
 
     // ── 연출 중에는 입력 차단 플래그 ────────────────────────────
     private bool isCinematicPlaying = false;
+    private readonly int[] lastSelectedIndexes = { -1, -1 };
+    private readonly Coroutine[] portraitEffectRoutines = new Coroutine[2];
 
     private void Awake()
     {
@@ -256,6 +266,87 @@ public class CharSelectUI : MonoBehaviour
         if (isReady && characters != null && selectedIndex < characters.Length)
             if (portrait != null && characters[selectedIndex].portrait != null)
                 portrait.sprite = characters[selectedIndex].portrait;
+
+        if (isReady && lastSelectedIndexes[playerIndex] < 0)
+            PlayPortraitSelectEffect(playerIndex, portrait);
+
+        lastSelectedIndexes[playerIndex] = selectedIndex;
+    }
+
+    private void PlayPortraitSelectEffect(int playerIndex, Image portrait)
+    {
+        if (portrait == null) return;
+        if (portraitEffectRoutines[playerIndex] != null) return;
+
+        portraitEffectRoutines[playerIndex] = StartCoroutine(PortraitSelectEffectRoutine(playerIndex, portrait));
+    }
+
+    private IEnumerator PortraitSelectEffectRoutine(int playerIndex, Image portrait)
+    {
+        RectTransform portraitRect = portrait.rectTransform;
+        Vector3 baseScale = portraitRect.localScale;
+
+        Image afterImage = CreatePortraitAfterImage(portrait);
+        float duration = Mathf.Max(0.01f, portraitAfterImageDuration);
+        float pulseDuration = Mathf.Max(0.01f, portraitPulseDuration);
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / duration);
+            float pulseT = Mathf.Clamp01(elapsed / pulseDuration);
+
+            float pulse = Mathf.Sin(pulseT * Mathf.PI);
+            portraitRect.localScale = baseScale * Mathf.Lerp(1f, portraitPulseScale, pulse);
+
+            if (afterImage != null)
+            {
+                float ghostScale = Mathf.Lerp(1f, portraitAfterImageScale, t);
+                afterImage.rectTransform.localScale = baseScale * ghostScale;
+
+                Color color = afterImage.color;
+                color.a = Mathf.Lerp(portraitAfterImageAlpha, 0f, t);
+                afterImage.color = color;
+            }
+
+            yield return null;
+        }
+
+        portraitRect.localScale = baseScale;
+        if (afterImage != null)
+            Destroy(afterImage.gameObject);
+
+        portraitEffectRoutines[playerIndex] = null;
+    }
+
+    private Image CreatePortraitAfterImage(Image portrait)
+    {
+        RectTransform sourceRect = portrait.rectTransform;
+        Transform parent = sourceRect.parent;
+        if (parent == null) return null;
+
+        GameObject ghostObject = new GameObject($"{portrait.name}_AfterImage", typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        RectTransform ghostRect = ghostObject.GetComponent<RectTransform>();
+        ghostRect.SetParent(parent, false);
+        ghostRect.SetSiblingIndex(sourceRect.GetSiblingIndex());
+
+        ghostRect.anchorMin = sourceRect.anchorMin;
+        ghostRect.anchorMax = sourceRect.anchorMax;
+        ghostRect.pivot = sourceRect.pivot;
+        ghostRect.anchoredPosition = sourceRect.anchoredPosition;
+        ghostRect.sizeDelta = sourceRect.sizeDelta;
+        ghostRect.localRotation = sourceRect.localRotation;
+        ghostRect.localScale = sourceRect.localScale;
+
+        Image ghostImage = ghostObject.GetComponent<Image>();
+        ghostImage.sprite = portrait.sprite;
+        ghostImage.type = portrait.type;
+        ghostImage.preserveAspect = portrait.preserveAspect;
+        ghostImage.raycastTarget = false;
+        ghostImage.color = new Color(portrait.color.r, portrait.color.g, portrait.color.b, portraitAfterImageAlpha);
+
+        return ghostImage;
     }
 
     public void UpdateReadyState(int readyCount)
