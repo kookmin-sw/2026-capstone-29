@@ -33,7 +33,7 @@ public class InGameUIManger : MonoBehaviour
     public Text weaponItemCountText;
     public Sprite defaultWeaponSprite; // 기본 주무기 이미지
     public Image activeItemIcon;
-    public Sprite defaultActiveSprite; // 빈 슬롯 이미지
+    // public Sprite defaultActiveSprite; // 빈 슬롯 이미지
 
     [Header("Passive UI")]
     [SerializeField] private Transform passiveItemRoot;
@@ -60,6 +60,11 @@ public class InGameUIManger : MonoBehaviour
     private PlayerInput playerInput;
     private Coroutine weaponItemCoroutine;
     private Coroutine activeItemCoroutine;
+
+    private void Awake()
+    {
+        SetActiveItemIconVisible(false);
+    }
 
     // 게임 매니저에서 RegisterPlayer에서 호출 - p1, p2 구분하여 체력바 UI 등록
     public void RegisterHealthBar(int playerIndex, float initialHealth) 
@@ -233,8 +238,15 @@ public class InGameUIManger : MonoBehaviour
     public void ShowActiveItem(Sprite itemSprite)
     {
         if (activeItemIcon == null) return;
-        
-        activeItemIcon.sprite = itemSprite != null ? itemSprite : defaultActiveSprite;
+
+        if (itemSprite == null)
+        {
+            HideActiveItem();
+            return;
+        }
+
+        activeItemIcon.sprite = itemSprite;
+        SetActiveItemIconVisible(true);
     }
 
     // 패시브 아이템 획득 시 호출
@@ -294,7 +306,14 @@ public class InGameUIManger : MonoBehaviour
     public void HideActiveItem()
     {
         if (activeItemIcon == null) return;
-        activeItemIcon.sprite = defaultActiveSprite;
+        activeItemIcon.sprite = null;
+        SetActiveItemIconVisible(false);
+    }
+
+    private void SetActiveItemIconVisible(bool visible)
+    {
+        if (activeItemIcon != null)
+            activeItemIcon.gameObject.SetActive(visible);
     }
 
     public void HideWeaponItem()

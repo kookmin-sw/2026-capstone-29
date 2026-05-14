@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TrapEffect
   m_EditorClassIdentifier: 
   duration: 3
-  uiSprite: {fileID: 21300000, guid: 10f90186d4aabb749b5ca81ae89b1c4c, type: 3}
+  uiSprite: {fileID: 21300000, guid: d1bd00db027be094eb27da9e5a4df8ae, type: 3}
   spawnOffset: {x: 0, y: 0, z: 2}
   trapLifetime: 30
   trapRadius: 1.2
