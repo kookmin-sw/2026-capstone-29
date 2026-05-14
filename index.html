@@ -4,157 +4,224 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Heroines of Storm</title>
-<link rel="icon" type="image/png" href="titleLogo.png">
+  <link rel="icon" type="image/png" href="titleLogo.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
 
-    <!-- 헤더 -->
-    <header class="hero">
-      <h1>Heroines of Storm</h1>
-      <p class="tagline">캐주얼 3D 격투 게임</p>
-    </header>
+  <!-- ============ 배경 이미지 영역 ============ -->
+  <div class="hero-bg">
+    <!-- 배경 이미지는 CSS에서 --hero-bg-image 변수로 지정 -->
 
-    <!-- 데모 영상 -->
-    <section>
-      <h2>데모 영상</h2>
-      <div class="video-placeholder">
-        <p>영상 추가 예정</p>
-        <!-- 추후 유튜브 임베드:
-        <iframe width="100%" height="400" src="https://www.youtube.com/embed/VIDEO_ID" 
-                frameborder="0" allowfullscreen></iframe>
-        -->
+    <div class="hero-content">
+      <h1 class="hero-title">HEROINES OF STORM</h1>
+      <p class="hero-subtitle">3D 캐주얼 1 vs 1 격투게임</p>
+
+      <!-- 데모 영상 -->
+      <div class="demo-video-section">
+        <h2 class="section-label">DEMO</h2>
+        <div class="video-wrapper">
+          <div class="video-placeholder">            
+<iframe width="100%" height="100%" src="https://www.youtube.com/embed/S0okkCAmI4M" frameborder="0" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- 스토리 -->
+      <div class="story-section">
+        <h2 class="section-label">STORY</h2>
+        <p class="story-text">
+          히로인들은 비록 은 나쁘게 자신의 차원에서 떨어졌지만, 다시 원래 세계에 돌아가기 위해 콜로세움에서 자신의 위용을 뽐내며 1등을 해서 메테오 결정을 만들어 만다. 콜로세움에 상기하자마자 시작된 것은 무제한 격투. 우선 이기고 보자.
+        </p>
+      </div>
+
+      <!-- 스크롤 유도 -->
+      <div class="scroll-indicator">
+        <span>아래로 스크롤</span>
+        <div class="scroll-arrow"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 메인 콘텐츠 ============ -->
+  <div class="main-layer">
+
+    <!-- 챕터 네비게이션 -->
+    <nav class="chapter-nav">
+      <a href="#multiplayer" class="chapter-btn">멀티플레이</a>
+      <a href="#map" class="chapter-btn">맵 소개</a>
+      <a href="#player" class="chapter-btn">플레이어</a>
+      <a href="#items" class="chapter-btn">아이템</a>
+      <a href="#architecture" class="chapter-btn">아키텍처</a>
+      <a href="#team" class="chapter-btn">Made By</a>
+    </nav>
+
+    <!-- 멀티플레이 소개 -->
+    <section id="multiplayer" class="chapter">
+      <h2 class="chapter-title">멀티플레이</h2>
+      <div class="chapter-body">
+        <div class="chapter-card">
+          <div class="image-placeholder">멀티플레이 스크린샷 추가 예정</div>
+          <h3>MIRROR 네트워크</h3>
+          <p>Mirror 네트워크를 통해 플레이어 매칭 및 네트워크를 정확히 동기화한다.</p>
+          <p>각 클라이언트의 입력과 변수, 게임 시간 등을 일관성 있게 반영한다.</p>
+        </div>
+        <div class="chapter-card">
+          <h3>핵심 특징</h3>
+          <ul class="feature-list">
+            <li><strong>Easy to Play</strong> — 복잡한 커맨드 없이 키 하나로 매핑된 직관적인 전투</li>
+            <li><strong>빠른 템포</strong> — 5분 내외의 짧은 매치로 자투리 시간에 즐길 수 있는 게임</li>
+            <li><strong>전략적 깊이</strong> — 아이템과 지형지물을 활용한 다채로운 전략 구사</li>
+          </ul>
+        </div>
       </div>
     </section>
 
-    <!-- 게임 소개 -->
-    <section>
-      <h2>게임 소개</h2>
-      <blockquote>3D 캐주얼 격투 게임</blockquote>
-
-      <h3>핵심 특징</h3>
-      <ul class="feature-list">
-        <li><strong>Easy to Play</strong> 복잡한 커맨드 없이 키 하나로 매핑된 직관적인 전투</li>
-        <li><strong>빠른 템포</strong> 5분 내외의 짧은 매치로 자투리 시간에 즐길 수 있는 게임</li>
-        <li><strong>전략적 깊이</strong> 아이템과 지형지물을 활용한 다채로운 전략 구사</li>
-      </ul>
+    <!-- 맵 소개 -->
+    <section id="map" class="chapter">
+      <h2 class="chapter-title">맵 소개</h2>
+      <div class="chapter-body">
+        <div class="chapter-card wide">
+          <div class="image-placeholder">맵 전경 이미지 추가 예정</div>
+          <p>3D 다층 구조의 넓은 맵을 통해 여러가지 전투방식을 구사할 수 있다.</p>
+          <p>상대방과 거리를 벌려 원거리 데미지를 구사하거나, 맵 오브젝트를 활용해 높은 위치를 선점할 수 있다.</p>
+        </div>
+        <div class="chapter-card">
+          <h3>지형지물</h3>
+          <table>
+            <thead>
+              <tr><th>지형지물</th><th>효과</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>점프대</td><td>밟으면 위로 높이 솟아오름</td></tr>
+              <tr><td>폭포</td><td>거슬러 올라가거나 천천히 낙하</td></tr>
+              <tr><td>장외 구역</td><td>닿으면 체력 50% 피해</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </section>
 
-    <!-- 캐릭터 소개 -->
-    <section>
-      <h2>캐릭터 소개</h2>
-      <p>각 캐릭터를 소개.</p>
-      <div class="image-placeholder">캐릭터 일러스트 추가 예정</div>
+    <!-- 플레이어 소개 -->
+    <section id="player" class="chapter">
+      <h2 class="chapter-title">플레이어</h2>
+      <div class="chapter-body">
+        <div class="chapter-card">
+          <div class="image-placeholder">플레이어 스크린샷 추가 예정</div>
+          <p>플레이어는 이동 및 점프, 회피를 통해 움직일 수 있다.</p>
+          <p>기본 공격 및 강공격을 이용해 상대를 공격할 수 있다.</p>
+        </div>
+        <div class="chapter-card">
+          <h3>조작법</h3>
+          <table>
+            <thead>
+              <tr><th>동작</th><th>키 입력</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>이동</td><td><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> <kbd>Space</kbd></td></tr>
+              <tr><td>대시</td><td><kbd>Shift</kbd></td></tr>
+              <tr><td>기본 공격 (콤보)</td><td>마우스 좌클릭</td></tr>
+              <tr><td>강공격 (차지)</td><td>마우스 우클릭 길게</td></tr>
+              <tr><td>앉기</td><td><kbd>C</kbd></td></tr>
+              <tr><td>아이템 획득</td><td><kbd>E</kbd></td></tr>
+              <tr><td>필살기 사용</td><td><kbd>R</kbd></td></tr>
+              <tr><td>액티브 아이템</td><td><kbd>Q</kbd></td></tr>
+              <tr><td>근접 무기 던지기</td><td>마우스 우클릭</td></tr>
+              <tr><td>뒤로가기</td><td><kbd>ESC</kbd></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </section>
 
     <!-- 아이템 소개 -->
-    <section>
-      <h2>아이템 소개</h2>
-      <p>맵 곳곳에 배치된 다양한 아이템을 활용한 짜릿한 역전을 노려보자.</p>
-
-      <h3>아이템 카테고리</h3>
-      <div class="item-grid">
-        <div class="item-card">
-          <h4>무기 아이템</h4>
-          <p>무기 이미지로 설명</p>
+    <section id="items" class="chapter">
+      <h2 class="chapter-title">아이템 소개</h2>
+      <div class="chapter-body">
+        <p class="chapter-intro">맵 곳곳에 배치된 다양한 아이템을 활용한 짜릿한 역전을 노려보자.</p>
+        <div class="item-grid">
+          <div class="item-card">
+            <h4>무기 아이템</h4>
+            <p>다양한 무기와 아이템을 활용할 수 있다.</p>
+          </div>
+          <div class="item-card">
+            <h4>액티브 아이템</h4>
+            <p>액티브 아이템을 활용해 상대방을 방해하거나 추가 효과를 얻을 수 있다.</p>
+          </div>
+          <div class="item-card">
+            <h4>필드 아이템</h4>
+            <p>필드에 배치된 오브젝트를 통해 불가능한 변수를 만들자.</p>
+          </div>
+          <div class="item-card">
+            <h4>패시브 아이템</h4>
+            <p>패시브 효과로 전투를 유리하게 이끌자.</p>
+          </div>
         </div>
-        <div class="item-card">
-          <h4>액티브 아이템</h4>
-          <p>액티브 이미지로 설명</p>
-        </div>
-        <div class="item-card">
-          <h4>필드 아이템</h4>
-          <p>필드 이미지로 설명</p>
-        </div>
-        <div class="item-card">
-          <h4>패시브 아이템</h4>
-          <p>패시브 이비지로 설명</p>
+        <div class="chapter-card wide">
+          <h3>아이템 플레이의 장점</h3>
+          <ul class="feature-list">
+            <li><strong>실력 격차 완화</strong> — 강력한 아이템으로 역전의 기회를 제공</li>
+            <li><strong>변수 창출</strong> — 매 경기마다 다른 양상의 전투</li>
+            <li><strong>시너지의 즐거움</strong> — 아이템 조합으로 전략적 승리</li>
+          </ul>
         </div>
       </div>
-
-      <div class="image-placeholder">아이템 활용 플레이 장면 추가 예정</div>
-
-      <h3>아이템 플레이의 장점</h3>
-      <ul class="feature-list">
-        <li><strong>실력 격차 완화</strong> — 강력한 아이템으로 역전의 기회를 제공</li>
-        <li><strong>변수 창출</strong> — 매 경기마다 다른 양상의 전투</li>
-        <li><strong>시너지의 즐거움</strong> — 아이템 조합으로 전략적 승리</li>
-      </ul>
     </section>
 
-    <!-- 3D 맵 소개 -->
-    <section>
-      <h2>3D 맵 소개</h2>
-      <p>원형 아레나에서 펼쳐지는 전투</p>
-
-      <div class="image-placeholder">맵 전경 이미지 추가</div>
-
-      <h3>지형지물</h3>
-      <table>
-        <thead>
-          <tr><th>지형지물</th><th>효과</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>점프대</strong></td><td>밟으면 위로 높이 솟아오름</td></tr>
-          <tr><td><strong>폭포</strong></td><td>거슬러 올라가거나 천천히 낙하</td></tr>
-          <tr><td><strong>장외 구역</strong></td><td>닿으면 체력 50% 피해</td></tr>
-        </tbody>
-      </table>
+    <!-- 아키텍처 -->
+    <section id="architecture" class="chapter">
+      <h2 class="chapter-title">ARCHITECTURE</h2>
+      <div class="chapter-body">
+        <div class="chapter-card wide">
+          <div class="image-placeholder tall">시스템 아키텍처 다이어그램 추가 예정</div>
+        </div>
+        <div class="chapter-card wide">
+          <h3>기술 스택</h3>
+          <div class="stack-grid">
+            <div class="stack-item">
+              <span class="stack-label">Engine</span>
+              <span class="stack-value">Unity 2022.3.62f3</span>
+            </div>
+            <div class="stack-item">
+              <span class="stack-label">Networking</span>
+              <span class="stack-value">Mirror (P2P)</span>
+            </div>
+            <div class="stack-item">
+              <span class="stack-label">Language</span>
+              <span class="stack-value">C#</span>
+            </div>
+            <div class="stack-item">
+              <span class="stack-label">3D Modeling</span>
+              <span class="stack-value">Blender</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- 시스템 다이어그램 -->
-    <section>
-      <h2>시스템 다이어그램</h2>
-      <div class="image-placeholder">시스템 아키텍처 다이어그램 추가</div>
-    </section>
-
-    <!-- 조작법 -->
-    <section>
-      <h2>조작법</h2>
-      <table>
-        <thead>
-          <tr><th>동작</th><th>키 입력</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>이동</td><td><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> <kbd>Space</kbd></td></tr>
-          <tr><td>대시</td><td><kbd>Shift</kbd></td></tr>
-          <tr><td>기본 공격 (콤보)</td><td>마우스 좌클릭</td></tr>
-          <tr><td>강공격 (차지)</td><td>마우스 우클릭 길게 누르기</td></tr>
-          <tr><td>앉기</td><td><kbd>C</kbd></td></tr>
-          <tr><td>아이템 획득</td><td><kbd>E</kbd></td></tr>
-          <tr><td>필살기 사용</td><td><kbd>R</kbd></td></tr>
-          <tr><td>액티브 아이템 사용</td><td><kbd>Q</kbd></td></tr>
-          <tr><td>근접 무기 던지기</td><td>마우스 우클릭</td></tr>
-          <tr><td>뒤로가기</td><td><kbd>ESC</kbd></td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- 팀 소개 -->
-    <section>
-      <h2>팀 LTS</h2>
-      <table>
-        <thead>
-          <tr><th>이름</th><th>담당</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>이성재</strong> (팀장)</td><td>클라이언트 · 기획</td></tr>
-          <tr><td><strong>백승현</strong></td><td>클라이언트 · 서버 · UI</td></tr>
-          <tr><td><strong>전영환</strong></td><td>클라이언트 · 백엔드</td></tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- 기술 스택 -->
-    <section>
-      <h2>기술 스택</h2>
-      <ul class="feature-list">
-        <li><strong>Engine</strong> — Unity 2022.3.62f3</li>
-        <li><strong>Networking</strong> — Mirror (P2P)</li>
-        <li><strong>Language</strong> — C#</li>
-        <li><strong>3D Modeling</strong> — Blender</li>
-      </ul>
+    <!-- Made By -->
+    <section id="team" class="chapter">
+      <h2 class="chapter-title">Made By</h2>
+      <div class="chapter-body">
+        <p class="chapter-intro">2026 캡스톤 디자인 29조 / TEAM LTS</p>
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-role">팀장 · 클라이언트 · 기획</div>
+            <div class="team-name">이성재</div>
+            <div class="team-id">20213041</div>
+          </div>
+          <div class="team-card">
+            <div class="team-role">클라이언트 · 서버 · UI</div>
+            <div class="team-name">백승현</div>
+            <div class="team-id">20213007</div>
+          </div>
+          <div class="team-card">
+            <div class="team-role">클라이언트 · 백엔드</div>
+            <div class="team-name">전영환</div>
+            <div class="team-id">20213077</div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- 푸터 -->
@@ -163,5 +230,32 @@
     </footer>
 
   </div>
+
+  <script>
+    // 스크롤 시 챕터 등장 애니메이션
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.chapter, .chapter-card, .item-card, .team-card').forEach(el => {
+      observer.observe(el);
+    });
+
+    // 네비게이션 스무스 스크롤
+    document.querySelectorAll('.chapter-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(btn.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
 </body>
 </html>
