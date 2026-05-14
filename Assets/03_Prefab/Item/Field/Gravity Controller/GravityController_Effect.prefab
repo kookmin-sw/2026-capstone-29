@@ -65,6 +65,6 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  uiSprite: {fileID: 21300000, guid: bbe2d037c50888c4db754b66130fc3d2, type: 3}
+  uiSprite: {fileID: 21300000, guid: a43426ffaf683314d954233dc914bd82, type: 3}
   jumpHeightMultiplier: 1
   gravityMultiplier: 0.2
