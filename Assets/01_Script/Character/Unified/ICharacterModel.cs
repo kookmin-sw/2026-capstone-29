@@ -19,6 +19,7 @@ public interface ICharacterModel
     bool IsBowDraw { get; }
     bool IsStunned { get; }
     bool HasGun { get; }
+    bool HasBomb { get; }
 
     // ---- 상태 변경 요청 (구현체가 네트워크/로컬 분기) ----
     void RequestNextCombo();
@@ -36,7 +37,9 @@ public interface ICharacterModel
     void RequestGunShoot();
     void RequestSpawnHitEffect(Vector3 hitPoint, Vector3 hitNormal, int effectIndex);
     void RequestMeleeThrow();
+    void RequestUseActive();
     void RequestApplyStun(float duration, GameObject vfxPrefab, Vector3 vfxPositionOffset, Vector3 vfxRotationOffset);
+    void RequestSetHasBomb(bool state);
 
     // ---- 이벤트 ----
     event Action<int> OnComboChanged;
@@ -56,5 +59,7 @@ public interface ICharacterModel
     event Action OnGunShoot; 
     event Action OnMeleeThrow;
     event Action<bool> OnStunChanged;
+    event Action OnUseActive;
+    event Action<bool> OnHasBombChanged;
     event Action<GameObject, Vector3, Vector3> OnStunVfxSpawnRequested;
 }

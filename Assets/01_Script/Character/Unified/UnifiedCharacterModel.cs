@@ -48,6 +48,9 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
     [SyncVar(hook = nameof(OnHasGunChangedHook))]
     private bool hasGun = false;
 
+    [SyncVar(hook = nameof(OnHasBombChangedHook))]
+    private bool hasBomb = false;
+
     [SyncVar(hook = nameof(OnGunShootHook))]
     private int gunShootCount = 0;
 
@@ -59,6 +62,10 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
 
     [SyncVar(hook = nameof(OnMeleeThrowHook))]
     private int meleeThrowCount = 0;
+
+    [SyncVar(hook = nameof(OnUseActiveHook))]
+    private int useActiveCount = 0;
+
 
     // ---- 설정 ----
     [Header("Lives Setting")]
@@ -96,6 +103,7 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
     public bool IsBowDraw => isBowDraw;
     public bool IsStunned => isStunned;
     public bool HasGun => hasGun;
+    public bool HasBomb => hasBomb;
 
     // ============================================================
     // 이벤트
@@ -114,10 +122,12 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
     public event Action OnBowRelease;
     public event Action OnVictory;
     public event Action<bool> OnHasGunChanged;
+    public event Action<bool> OnHasBombChanged;
     public event Action OnGunShoot;
     public event Action<bool> OnStunChanged;
     public event Action<GameObject, Vector3, Vector3> OnStunVfxSpawnRequested;
     public event Action OnMeleeThrow;
+    public event Action OnUseActive;
 
     // ============================================================
     // 라이프사이클
@@ -299,6 +309,7 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
         }
     }
 
+
     /// <summary>
     /// 총 발사 트리거. 활의 RequestBowRelease와 동일한 1회성 이벤트 패턴.
     /// View는 OnGunShoot 이벤트로 애니메이터 트리거를 한 번 발화한다.
@@ -311,6 +322,20 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
             OnGunShoot?.Invoke();
         }
         else CmdGunShoot();
+    }
+
+    public void RequestSetHasBomb(bool state)
+    {
+        if (AuthorityGuard.IsOffline)
+        {
+            bool old = hasBomb;
+            hasBomb = state;
+            OnHasBombChangedHook(old, state);
+        }
+        else
+        {
+            if (isServer) ServerSetHasBomb(state);
+        }
     }
 
     // ---- 스턴 ----
@@ -352,6 +377,23 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
         {
             // 클라이언트에서 직접 호출된 경우.
             CmdMeleeThrow();
+        }
+    }
+
+    public void RequestUseActive()
+    {
+        if (AuthorityGuard.IsOffline)
+        {
+            useActiveCount++;
+            OnUseActive?.Invoke();
+        }
+        else if (isServer)
+        {
+            useActiveCount++;   // 서버에서 호출되면 SyncVar 직접 증가
+        }
+        else
+        {
+            CmdUseActive();
         }
     }
 
@@ -486,6 +528,7 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
     [Command] private void CmdBowRelease() { isBowDraw = false; bowReleaseCount++; }
     [Command] private void CmdGunShoot() { gunShootCount++; }
     [Command] private void CmdMeleeThrow() { meleeThrowCount++; }
+    [Command] private void CmdUseActive() { useActiveCount++; }
 
     [Command(requiresAuthority = false)]
     private void CmdTakeDamage(float amount)
@@ -528,6 +571,12 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
     public void ServerSetHasGun(bool state)
     {
         hasGun = state;
+    }
+
+    [Server]
+    public void ServerSetHasBomb(bool state)
+    {
+        hasBomb = state;
     }
 
     [ClientRpc]
@@ -576,9 +625,11 @@ public class UnifiedCharacterModel : NetworkBehaviour, ICharacterModel
     private void OnBowReleaseHook(int oldV, int newV) => OnBowRelease?.Invoke();
     private void OnHasGunChangedHook(bool oldV, bool newV) => OnHasGunChanged?.Invoke(newV);
     private void OnGunShootHook(int oldV, int newV) => OnGunShoot?.Invoke();
+    private void OnHasBombChangedHook(bool oldV, bool newV) => OnHasBombChanged?.Invoke(newV);
     private void OnLivesChangedHook(int oldV, int newV) => OnLivesChanged?.Invoke(newV);
     private void OnStunChangedHook(bool oldV, bool newV) => OnStunChanged?.Invoke(newV);
-    private void OnMeleeThrowHook(int oldV, int newV) => OnMeleeThrow?.Invoke();
+    private void OnMeleeThrowHook(int oldV, int newV) => OnMeleeThrow?.Invoke(); 
+    private void OnUseActiveHook(int oldV, int newV) => OnUseActive?.Invoke();
 
     private void OnHealthChangedHook(float oldV, float newV)
     {

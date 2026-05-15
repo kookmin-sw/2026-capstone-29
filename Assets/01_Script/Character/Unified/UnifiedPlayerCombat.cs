@@ -77,11 +77,12 @@ public class UnifiedPlayerCombat : MonoBehaviour
 
     private void HandlePunch()
     {
-        // 원거리 무기(활/총) 장착 중이면 펀치(콤보) 금지.
-        // 좌클릭은 무기 본인(UnifiedWeaponBow / UnifiedWeaponTazorGun)이 직접 잡아서
+        // 원거리 무기(활/총/폭탄) 장착 중이면 펀치(콤보) 금지.
+        // 좌클릭은 무기 본인(UnifiedWeaponBow / UnifiedWeaponTazorGun / UnifiedWewaponBomb)이 직접 잡아서
         // 발사/차징 로직으로 보낸다. 콤보 시스템과의 이중 발화를 막기 위해 여기서 게이팅.
         if (_animator.GetBool("HasBow")) return;
         if (_animator.GetBool("HasGun")) return;
+        if (_animator.GetBool("HasBomb")) return;
 
         if (!_input.punch) return;
 

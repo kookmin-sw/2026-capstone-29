@@ -74,8 +74,15 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
     public AudioClip[] throwSounds;
     [Range(0f, 1f)] public float throwVolume = 1f;
 
-    [SyncVar] private GameObject owner;
+    //오프라인용
+    private GameObject owner;
+    //네트워크 동기화용. 온라인에서는 이것을 참조할 예정
+    [SyncVar(hook = nameof(OnOwnerNetIdChanged))] private uint ownerNetId;
+
     [SyncVar] private int remainingThrows;
+
+    //던지기 입력에 대해 무기가 일시적으로 관리하게 변경해둠.
+    private StarterAssets.StarterAssetsInputs _ownerInputs;
 
     private float lifeTimer;
     private bool isDepleted; // throwCount 소진 후 파괴 대기 중
@@ -98,6 +105,22 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
         remainingThrows = maxThrowCount;
         displayedThrows = maxThrowCount;
     }
+
+    private void OnOwnerNetIdChanged(uint oldId, uint newId)
+    {
+        // 클라이언트 측에서 netId → GameObject 복원
+        if (newId == 0)
+        {
+            owner = null;
+            return;
+        }
+
+        if (NetworkClient.spawned.TryGetValue(newId, out var identity))
+        {
+            owner = identity.gameObject;
+        }
+    }
+
     //무기의 사용자 설정. 이 데이터 기반으로 오너 설정.
     public void SetUser(GameObject user)
     {
@@ -108,11 +131,19 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
         {
             EquipHandler(user);
             NotifyWeaponUI(user);
+            CacheOwnerInputs(user);
+            SetHasBombOnOwner(user, true); 
+ 
             return;
         }
 
-        // 온라인: 서버 측 처리 + 모든 클라 RPC
+        // 온라인: SyncVar로 다른 클라이언트에게 전파
+        var userIdentity = user.GetComponent<NetworkIdentity>();
+        if (userIdentity != null) ownerNetId = userIdentity.netId;
+
         RpcSetUser(user);
+        CacheOwnerInputs(user);
+        SetHasBombOnOwner(user, true);
     }
 
     [ClientRpc]
@@ -122,6 +153,7 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
         displayedThrows = maxThrowCount;
         EquipHandler(user);
         NotifyWeaponUI(user);
+        CacheOwnerInputs(user);
     }
 
     //장착
@@ -159,6 +191,21 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
         if (handler != null) handler.Unequip();
     }
 
+    //Input Cashing
+    private void CacheOwnerInputs(GameObject user)
+    {
+        if (user == null) { _ownerInputs = null; return; }
+        _ownerInputs = user.GetComponent<StarterAssets.StarterAssetsInputs>();
+    }
+
+    //무기 owner 세팅
+    private void SetHasBombOnOwner(GameObject user, bool state)
+    {
+        if (user == null) return;
+        var model = user.GetComponent<ICharacterModel>();
+        if (model != null) model.RequestSetHasBomb(state);
+    }
+
     //라이프사이클 관리 및 던지기 신호 받음
     private void Update()
     {
@@ -179,6 +226,10 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
         bool canInput = AuthorityGuard.IsOffline || isOwned;
         if (canInput && !isDepleted && Input.GetKeyDown(throwKey))
         {
+            Debug.LogError($"[Bomb.Update] 좌클릭 감지. owner={owner?.name}, " +
+            $"ownerInputs={_ownerInputs != null}");
+
+            _ownerInputs.punch = false;
             RequestThrow();
         }
     }
@@ -283,6 +334,13 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
         else
             RpcPlayThrowSound();
 
+        //던지기 모션 트리거.
+        if (owner != null)
+        {
+            var model = owner.GetComponent<ICharacterModel>();
+            if (model != null) model.RequestMeleeThrow(); // 원래 있던거 쓰니까 Melee 가져다슴
+        }
+
         remainingThrows--;
         NotifyBombWeaponUIChanged(remainingThrows);
 
@@ -346,7 +404,9 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
     // 무기 소진 / 수명 만료 처리
     private void DepletedAndDestroy()
     {
+        Debug.LogError($"[Bomb.DepletedAndDestroy] owner={owner?.name}, isOffline={AuthorityGuard.IsOffline}");
         isDepleted = true;
+        SetHasBombOnOwner(owner, false);
         NotifyUnequip();
 
         if (AuthorityGuard.IsOffline) Destroy(gameObject);
@@ -356,6 +416,7 @@ public class UnifiedWeaponBomb : NetworkBehaviour, IPlayerWeapon
     private void ExpireWeapon()
     {
         isDepleted = true;
+        SetHasBombOnOwner(owner, false);
         NotifyUnequip();
 
         if (AuthorityGuard.IsOffline) Destroy(gameObject);

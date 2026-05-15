@@ -41,6 +41,9 @@ public class NetworkCharacterModel : NetworkBehaviour, ICharacterModel
     [SyncVar(hook = nameof(OnGunShootHook))]
     private int gunShootCount = 0;
 
+    [SyncVar(hook = nameof(OnHasBombChangedHook))]
+    private bool hasBomb = false;
+
     [SyncVar(hook = nameof(OnStunChangedHook))]
     private bool isStunned = false;
 
@@ -49,6 +52,9 @@ public class NetworkCharacterModel : NetworkBehaviour, ICharacterModel
 
     [SyncVar(hook = nameof(OnMeleeThrowHook))]
     private int meleeThrowCount = 0;
+
+    [SyncVar(hook = nameof(OnUseActiveHook))]
+    private int useActiveCount = 0;
 
     // ---- 설정 ----
     [Header("Lives Setting")]
@@ -78,6 +84,7 @@ public class NetworkCharacterModel : NetworkBehaviour, ICharacterModel
     public bool IsDead => isDead;
     public bool HasBow => hasBow;
     public bool HasGun => hasGun;
+    public bool HasBomb => hasBomb;
     public bool IsChargeReady => isChargeReady;
     public bool IsBowDraw => isBowDraw;
     public bool IsStunned => isStunned;
@@ -101,8 +108,10 @@ public class NetworkCharacterModel : NetworkBehaviour, ICharacterModel
     public event Action<bool> OnStunChanged;
     public event Action<bool> OnHasGunChanged;
     public event Action OnGunShoot;
+    public event Action<bool> OnHasBombChanged;
     public event Action OnMeleeThrow;
     public event Action<GameObject, Vector3, Vector3> OnStunVfxSpawnRequested;
+    public event Action OnUseActive;
 
     // ============================================================
     // 라이프사이클
@@ -141,6 +150,7 @@ public class NetworkCharacterModel : NetworkBehaviour, ICharacterModel
     [Command] public void CmdSetChargeReady(bool state) { isChargeReady = state; }
     [Command] public void CmdStrongAttack() { RpcPlayStrongAttack(); }
     [Command] public void CmdSetBowDraw(bool state) { isBowDraw = state; }
+    [Command] public void CmdUseActive() { useActiveCount++; }
 
     [Command(requiresAuthority = false)]
     public void CmdTakeDamage(float damageAmount)
@@ -183,6 +193,9 @@ public class NetworkCharacterModel : NetworkBehaviour, ICharacterModel
     {
         hasGun = state;
     }
+
+    [Server]
+    public void ServerSetHasBomb(bool state) { hasBomb = state; }
 
     [Command]
     public void CmdSelfHarm(float damageAmount)
@@ -267,9 +280,11 @@ public class NetworkCharacterModel : NetworkBehaviour, ICharacterModel
     void OnBowReleaseHook(int oldV, int newV) => OnBowRelease?.Invoke();
     void OnHasGunChangedHook(bool oldV, bool newV) => OnHasGunChanged?.Invoke(newV);
     void OnGunShootHook(int oldV, int newV) => OnGunShoot?.Invoke();
+    void OnHasBombChangedHook(bool oldV, bool newV) => OnHasBombChanged?.Invoke(newV);
     void OnStunChangedHook(bool oldV, bool newV) => OnStunChanged?.Invoke(newV);
     void OnLivesChangedHook(int oldV, int newV) => OnLivesChanged?.Invoke(newV);
     void OnMeleeThrowHook(int oldV, int newV) => OnMeleeThrow?.Invoke();
+    void OnUseActiveHook(int oldV, int newV) => OnUseActive?.Invoke();
     void OnHealthChangedHook(float oldV, float newV)
     {
         Debug.Log($"Health Changed: {oldV} -> {newV}");
@@ -372,6 +387,11 @@ public class NetworkCharacterModel : NetworkBehaviour, ICharacterModel
         if (isServer) ServerSetHasGun(state);
     }
 
+    public void RequestSetHasBomb(bool state)
+    {
+        if (isServer) ServerSetHasBomb(state);
+    }
+
     public void RequestGunShoot() => CmdGunShoot();
 
     public void RequestSpawnHitEffect(Vector3 hitPoint, Vector3 hitNormal, int effectIndex)
@@ -391,5 +411,10 @@ public class NetworkCharacterModel : NetworkBehaviour, ICharacterModel
             // 안전하게 한 번 더 검사. 클라이언트에서 들어오면 무시.
             Debug.LogWarning("[NetworkCharacterModel] RequestApplyStun: 클라이언트에서 호출됨. 서버에서만 호출해야 함.");
         }
+    }
+    public void RequestUseActive()
+    {
+        if (isServer) useActiveCount++;
+        else CmdUseActive();
     }
 }
