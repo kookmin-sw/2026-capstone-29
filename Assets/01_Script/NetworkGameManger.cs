@@ -45,9 +45,17 @@ public class NetworkGameManger : NetworkBehaviour
 
     public bool _isLeavingVoluntarily = false; // 클라이언트 자발적 종료시 UI 등장 방지
 
+    // 캐릭터 썸네일 등록하기 위한 인덱스
+    [SyncVar(hook = nameof(OnP1CharacterChanged))]
+    private int p1CharacterIndex;
+
+    [SyncVar(hook = nameof(OnP2CharacterChanged))]
+    private int p2CharacterIndex;
+
     private void Start()
     {
         uiManager = FindObjectOfType<InGameUIManger>(); // ui 매니저 찾아서 등록
+        ApplyCharacterThumbnails();
     }
 
     private void Awake()
@@ -58,8 +66,42 @@ public class NetworkGameManger : NetworkBehaviour
 
     public override void OnStartServer()
     {
+        if (NetworkManager.singleton is MatchManager mm)
+        {
+            p1CharacterIndex = mm.p1CharacterIndex;
+            p2CharacterIndex = mm.p2CharacterIndex;
+        }
+
         // 서버에서 타이머 시작
         StartCoroutine(TimerCoroutine());
+    }
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        ApplyCharacterThumbnails();
+    }
+
+    private void OnP1CharacterChanged(int oldValue, int newValue)
+    {
+        ApplyCharacterThumbnails();
+    }
+
+    private void OnP2CharacterChanged(int oldValue, int newValue)
+    {
+        ApplyCharacterThumbnails();
+    }
+
+    // 캐릭 썸네일 적용
+    private void ApplyCharacterThumbnails()
+    {
+        if (uiManager == null)
+            uiManager = FindObjectOfType<InGameUIManger>();
+
+        if (uiManager == null) return;
+
+        uiManager.SetCharacterThumbnail(1, p1CharacterIndex);
+        uiManager.SetCharacterThumbnail(2, p2CharacterIndex);
     }
 
     [Server]

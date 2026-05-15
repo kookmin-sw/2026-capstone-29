@@ -15,6 +15,11 @@ public class InGameUIManger : MonoBehaviour
     public GameObject KeySettingPanel; // 키세팅 패널
     public GameObject ExitPanel; // 나가기 패널
 
+    [Header("Character Thumbnail")]
+    public Image p1CharacterThumbnail;
+    public Image p2CharacterThumbnail;
+    public CharacterData[] characters;
+
     [Header("HealthBar Setting")]
     public Image p1CurrentBar;
     public Image p1DelayBar;
@@ -81,6 +86,18 @@ public class InGameUIManger : MonoBehaviour
             if(p2CurrentBar != null) p2CurrentBar.fillAmount = fill;
             if(p2DelayBar != null) p2DelayBar.fillAmount = fill;
         }
+    }
+
+    // 각 플레이어 캐릭터 썸네일 등록
+    public void SetCharacterThumbnail(int playerIndex, int characterIndex)
+    {
+        if (characters == null || characterIndex < 0 || characterIndex >= characters.Length) return;
+
+        Sprite sprite = characters[characterIndex].inGameThumbnail;
+        if (sprite == null) sprite = characters[characterIndex].thumbnail;
+
+        Image target = playerIndex == 1 ? p1CharacterThumbnail : p2CharacterThumbnail;
+        if (target != null) target.sprite = sprite;
     }
 
     // 각 플레이어 목숨 초기 등록

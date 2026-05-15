@@ -17,4 +17,5 @@ MonoBehaviour:
   portrait: {fileID: 21300000, guid: 592543a260f226c4a9595ecd064cfa89, type: 3}
   thumbnail: {fileID: 21300000, guid: ed51beeedd2080145963d87b5f9fb114, type: 3}
   nameImage: {fileID: 21300000, guid: 882f87ac2f6a65a4a91cccdd7df74249, type: 3}
+  inGameThumbnail: {fileID: 21300000, guid: 4c8d9d426bacba341b6033b94de0542a, type: 3}
   accentColor: {r: 0.4292453, g: 0.7238583, b: 1, a: 1}

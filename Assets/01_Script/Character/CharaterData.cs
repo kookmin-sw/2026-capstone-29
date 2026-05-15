@@ -12,6 +12,7 @@ public class CharacterData : ScriptableObject
     public Sprite portrait;    // 선택창 풀샷 일러스트
     public Sprite thumbnail;   // 하단 썸네일
     public Sprite nameImage; // 선택창 이름 이미지
+    public Sprite inGameThumbnail; // 인게임 캐릭터 썸네일
 
     [Header("테마 색상")]
     public Color accentColor = Color.white;
