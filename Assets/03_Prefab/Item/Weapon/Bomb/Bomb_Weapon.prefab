@@ -109,11 +109,11 @@ MonoBehaviour:
   bombProjectilePrefab: {fileID: 8696884393526128840, guid: c650f1ed4895d4b4bbc0479a18142206, type: 3}
   throwStartOffset: {x: 0, y: 2, z: 1}
   throwDuration: 0.8
-  minArcHeight: 0.5
-  maxArcHeight: 6
+  minArcHeight: 0.1
+  maxArcHeight: 4
   useFixedArc: 0
   fixedArcHeight: 3
-  throwDistance: 6
+  throwDistance: 9
   fuseDuration: 1.5
   explosionRadius: 4.5
   explosionDamage: 30
