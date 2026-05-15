@@ -48,8 +48,15 @@ GameObject:
   - component: {fileID: 5858724634432584369}
   - component: {fileID: 7855732287384375741}
   - component: {fileID: -5529837541750225669}
+<<<<<<< Updated upstream
   - component: {fileID: 7839693004817587941}
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
   - component: {fileID: 8167354500296773072}
+=======
+  - component: {fileID: 7839693004817587941}
+>>>>>>> Stashed changes
   - component: {fileID: -8163085030667433099}
   - component: {fileID: 6064403931058115902}
   - component: {fileID: 7273128938097549508}
@@ -336,7 +343,15 @@ MonoBehaviour:
   syncInterval: 0
   clientAuthority: 1
   animator: {fileID: 3873752212823095745}
+<<<<<<< Updated upstream
 --- !u!114 &7839693004817587941
+=======
+<<<<<<< Updated upstream
+--- !u!114 &8167354500296773072
+=======
+--- !u!114 &7839693004817587941
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -345,6 +360,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7046033076753342609}
   m_Enabled: 1
   m_EditorHideFlags: 0
+<<<<<<< Updated upstream
   m_Script: {fileID: 11500000, guid: a553cb17010b2403e8523b558bffbc14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -379,7 +395,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7046033076753342609}
   m_Enabled: 0
   m_EditorHideFlags: 0
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
   m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
+=======
+  m_Script: {fileID: 11500000, guid: a553cb17010b2403e8523b558bffbc14, type: 3}
+>>>>>>> Stashed changes
   m_Name: 
   m_EditorClassIdentifier: 
   syncDirection: 1
@@ -399,11 +421,19 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+<<<<<<< Updated upstream
   onlySyncOnChangeCorrectionMultiplier: 2
   useFixedUpdate: 0
   rotationSensitivity: 0.01
   positionPrecision: 0.01
   scalePrecision: 0.01
+=======
+  bufferResetMultiplier: 1
+  useFixedUpdate: 1
+  positionSensitivity: 0.01
+  rotationSensitivity: 0.01
+  scaleSensitivity: 0.01
+>>>>>>> Stashed changes
 --- !u!114 &-8163085030667433099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1241,6 +1271,46 @@ PrefabInstance:
     - target: {fileID: 6830896707015664557, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845529714357214634, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.05901036
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845529714357214634, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.021008201
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845529714357214634, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.01647352
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845529714357214634, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6331429
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845529714357214634, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7415213
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845529714357214634, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.1994003
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845529714357214634, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.09754922
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845529714357214634, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -115.832
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845529714357214634, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 65.712
+      objectReference: {fileID: 0}
+    - target: {fileID: 6845529714357214634, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -74.18701
       objectReference: {fileID: 0}
     - target: {fileID: 7115501923060816871, guid: e75bb88d724d4734dbf99ea8ff3f10d4, type: 3}
       propertyPath: m_Layer
