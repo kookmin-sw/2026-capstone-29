@@ -16,8 +16,15 @@ GameObject:
   - component: {fileID: 7505074961941872041}
   - component: {fileID: 6562449300323122143}
   - component: {fileID: 6466662519140030887}
+<<<<<<< Updated upstream
   - component: {fileID: 4099364772278258312}
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
   - component: {fileID: 5798365815444061422}
+=======
+  - component: {fileID: 4099364772278258312}
+>>>>>>> Stashed changes
   - component: {fileID: 6612363529411960550}
   - component: {fileID: 5743782909195610571}
   - component: {fileID: 340597318631594795}
@@ -287,7 +294,15 @@ MonoBehaviour:
   serverOnly: 0
   visibility: 0
   hasSpawned: 0
+<<<<<<< Updated upstream
 --- !u!114 &4099364772278258312
+=======
+<<<<<<< Updated upstream
+--- !u!114 &5798365815444061422
+=======
+--- !u!114 &4099364772278258312
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -296,6 +311,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 444122467208145566}
   m_Enabled: 1
   m_EditorHideFlags: 0
+<<<<<<< Updated upstream
   m_Script: {fileID: 11500000, guid: a553cb17010b2403e8523b558bffbc14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -330,7 +346,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 444122467208145566}
   m_Enabled: 0
   m_EditorHideFlags: 0
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
   m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
+=======
+  m_Script: {fileID: 11500000, guid: a553cb17010b2403e8523b558bffbc14, type: 3}
+>>>>>>> Stashed changes
   m_Name: 
   m_EditorClassIdentifier: 
   syncDirection: 1
@@ -350,11 +372,19 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+<<<<<<< Updated upstream
   onlySyncOnChangeCorrectionMultiplier: 2
   useFixedUpdate: 0
   rotationSensitivity: 0.01
   positionPrecision: 0.01
   scalePrecision: 0.01
+=======
+  bufferResetMultiplier: 1
+  useFixedUpdate: 1
+  positionSensitivity: 0.01
+  rotationSensitivity: 0.01
+  scaleSensitivity: 0.01
+>>>>>>> Stashed changes
 --- !u!114 &6612363529411960550
 MonoBehaviour:
   m_ObjectHideFlags: 0
