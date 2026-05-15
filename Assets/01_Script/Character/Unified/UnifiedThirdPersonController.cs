@@ -94,6 +94,23 @@ namespace StarterAssets
         public float JumpTimeout = 0.50f;
         public float FallTimeout = 0.15f;
 
+        [Header("Multi Jump")]
+        [Tooltip("멀티 점프(더블 점프 등) 활성화. 끄면 기존처럼 지상 점프만 가능.")]
+        public bool EnableMultiJump = false;
+        [Tooltip("최대 점프 횟수. 첫(지상) 점프를 포함한 총 횟수. 2 = 더블 점프, 3 = 트리플 점프.")]
+        [Min(1)]
+        public int MaxJumpCount = 2;
+        [Tooltip("연속 점프(공중 점프 포함) 사이 최소 간격(초). 0이면 입력 들어오는 즉시 다음 점프.")]
+        [Min(0f)]
+        public float MultiJumpInterval = 0.15f;
+        [Tooltip("절벽에서 걸어 떨어졌을 때 첫 점프를 '지상 점프'로 인정해 멀티 점프 횟수를 깎을지 여부. 체크 시 walk-off → 한 번 점프하면 공중 점프 1회만 남음. 해제 시 walk-off 후에도 풀(MaxJumpCount) 점프 가능.")]
+        public bool ConsumeJumpOnWalkOff = false;
+
+        // 남은 점프 횟수. 착지 시 MaxJumpCount 로 리셋되고 점프할 때마다 -1.
+        private int _jumpCountRemaining;
+        // 직전 프레임의 Grounded 상태 (walk-off 감지용)
+        private bool _wasGroundedLastFrame = true;
+
         [Header("Player Grounded")]
         public bool Grounded = true;
         public float GroundedOffset = -0.14f;
@@ -278,6 +295,8 @@ namespace StarterAssets
             AssignAnimationIDs();
             _jumpTimeoutDelta = JumpTimeout;
             _fallTimeoutDelta = FallTimeout;
+            _jumpCountRemaining = EnableMultiJump ? Mathf.Max(1, MaxJumpCount) : 1;
+            _wasGroundedLastFrame = true;
         }
 
         // ============================================================
@@ -291,8 +310,11 @@ namespace StarterAssets
 
             _hasAnimator = TryGetComponent(out _animator);
 
-            JumpAndGravity();
+            // 순서 중요: 먼저 Grounded 갱신 → 그 결과로 JumpAndGravity 가 분기.
+            // 이렇게 해야 착지 프레임에 stale Grounded 값으로 else 분기를 타며
+            // _jumpTimeoutDelta 가 한 번 더 리셋되는 문제(즉시 재점프 막힘)가 사라진다.
             GroundedCheck();
+            JumpAndGravity();
             if (!_isDashing) Move();
         }
 
@@ -490,32 +512,66 @@ namespace StarterAssets
 
         private void JumpAndGravity()
         {
+            // 점프 쿨타임은 지상/공중 무관하게 항상 틱 다운 (공중 체공시간 동안에도 흘러야
+            // 착지 직후 즉시 재점프가 자연스러움).
+            if (_jumpTimeoutDelta > 0.0f) _jumpTimeoutDelta -= Time.deltaTime;
+
+            int maxJumps = EnableMultiJump ? Mathf.Max(1, MaxJumpCount) : 1;
+
             if (Grounded)
             {
                 _fallTimeoutDelta = FallTimeout;
                 if (_hasAnimator) _animator.SetBool(_animIDGrounded, true);
+
+                // 착지(또는 지상 유지) 시 점프 카운터 리필.
+                _jumpCountRemaining = maxJumps;
+
                 if (_verticalVelocity < 0.0f) _verticalVelocity = -2f;
 
-                if (_input.jump && _jumpTimeoutDelta <= 0.0f)
+                if (_input.jump && _jumpTimeoutDelta <= 0.0f && _jumpCountRemaining > 0)
                 {
                     _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                    _jumpCountRemaining--;
+                    _jumpTimeoutDelta = JumpTimeout;
+                    _input.jump = false; // 한 번 누름 = 한 번 점프 (홀드 시 자동 연사 방지)
                     if (_hasAnimator) _animator.SetBool(_animIDGrounded, false);
                 }
-
-                if (_jumpTimeoutDelta >= 0.0f) _jumpTimeoutDelta -= Time.deltaTime;
             }
             else
             {
-                _jumpTimeoutDelta = JumpTimeout;
+                // walk-off 감지: 직전 프레임엔 Grounded 였는데 지금은 공중 = 점프 안 하고 떨어짐.
+                // 옵션에 따라 첫 점프(지상 점프) 한 칸을 소비한 것으로 처리.
+                if (_wasGroundedLastFrame && ConsumeJumpOnWalkOff && _jumpCountRemaining == maxJumps)
+                {
+                    _jumpCountRemaining = Mathf.Max(0, _jumpCountRemaining - 1);
+                }
 
                 if (_fallTimeoutDelta >= 0.0f) _fallTimeoutDelta -= Time.deltaTime;
                 else if (_hasAnimator) _animator.SetBool(_animIDGrounded, false);
 
-                _input.jump = false;
+                // 공중 점프(멀티 점프). EnableMultiJump 가 꺼져 있으면 maxJumps=1 이라
+                // walk-off 후엔 _jumpCountRemaining<=1 → 옵션에 따라 막히거나 1회 가능.
+                if (_input.jump && _jumpCountRemaining > 0 && _jumpTimeoutDelta <= 0.0f && EnableMultiJump)
+                {
+                    _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                    _jumpCountRemaining--;
+                    // 공중 연속 점프 사이의 최소 간격은 MultiJumpInterval 로 별도 관리
+                    _jumpTimeoutDelta = MultiJumpInterval;
+                    _input.jump = false; // 한 번 누름 = 한 번 점프
+                    if (_hasAnimator) _animator.SetBool(_animIDGrounded, false);
+                    // 공중 점프 시 fall 타임아웃 살짝 리셋해 Falling 트랜지션이 한 박자 늦게 들어가게 함
+                    _fallTimeoutDelta = FallTimeout;
+                }
+
+                // 주의: 기존엔 _input.jump = false 를 매 프레임 호출했으나 제거.
+                // 그 결과 공중에서 미리 누른 점프 입력이 다음 점프(착지/멀티)까지 살아남아
+                // 자연스러운 입력 버퍼링이 동작한다.
             }
 
             if (_verticalVelocity < _terminalVelocity) _verticalVelocity += Gravity * Time.deltaTime;
             if (_hasAnimator) _animator.SetFloat(_animIDVerticalSpeed, _verticalVelocity);
+
+            _wasGroundedLastFrame = Grounded;
         }
 
         private static float ClampAngle(float lfAngle, float lfMin, float lfMax)
