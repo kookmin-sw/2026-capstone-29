@@ -167,7 +167,36 @@ public class UnifiedCharacterView : MonoBehaviour
         {
             _prevStateHash = stateInfo.fullPathHash;
             ResetAllHitboxes();
+
+            // 콤보 공격 스테이트로 "실제 진입"한 순간에만 사운드 재생
+            // → 연타로 사운드가 애니메이션보다 빠르게 튀어나가던 싱크 어긋남 방지
+            if (IsComboAttackState(stateInfo))
+            {
+                PlayAttackSound();
+            }
         }
+    }
+
+    private bool IsComboAttackState(AnimatorStateInfo stateInfo)
+    {
+        return stateInfo.IsName("Combo Attack 1")
+            || stateInfo.IsName("Combo Attack 2")
+            || stateInfo.IsName("Combo Attack 3")
+            || stateInfo.IsName("Combo Attack 4")
+            || stateInfo.IsName("Combo Attack 5");
+    }
+
+    private void PlayAttackSound()
+    {
+        if (audioSource == null) return;
+
+        // 근접무기 장착 중이면 무기 swingSounds, 아니면 캐릭터 기본 펀치
+        if (_meleeOverride != null)
+            _meleeOverride.PlaySwingSound();
+        else
+            PlayRandom(attackSounds, attackVolume);
+
+        if (playAttackVoice) PlayRandom(attackVoiceSounds, attackVoiceVolume);
     }
 
     private void ResetAllHitboxes()
@@ -237,14 +266,9 @@ public class UnifiedCharacterView : MonoBehaviour
             anim.SetInteger("ComboStep", step);
             anim.SetTrigger("AttackTrigger");
 
-            // 공격 모션 시작과 동시에 사운드 재생
-            // 근접무기 장착 중이면 무기 swingSounds, 아니면 캐릭터 기본 펀치
-            if (_meleeOverride != null)
-                _meleeOverride.PlaySwingSound();
-            else
-                PlayRandom(attackSounds, attackVolume);
-
-            if (playAttackVoice) PlayRandom(attackVoiceSounds, attackVoiceVolume);
+            // 사운드는 여기서 재생하지 않는다.
+            // 입력(연타) 빈도와 애니메이션 트랜지션 속도가 달라서 싱크가 어긋남.
+            // → 실제 콤보 어택 스테이트로 진입했을 때 Update()에서 재생.
         }
         else
         {
