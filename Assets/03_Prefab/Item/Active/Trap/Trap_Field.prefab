@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6700886438092791546}
   - component: {fileID: 6883768979605760790}
   - component: {fileID: -8523587167006363521}
+  - component: {fileID: 5405157830288328773}
   m_Layer: 3
   m_Name: Trap_Field
   m_TagString: Active
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2451240541909540556}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: 0.14332755, w: 0.98967534}
   m_LocalPosition: {x: -37.451904, y: 46.02, z: 15.956}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 1
@@ -36,7 +37,7 @@ Transform:
   - {fileID: 8344369467122567452}
   - {fileID: 3997690253088320874}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 16.481}
 --- !u!114 &510822029673109629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,6 +107,20 @@ MonoBehaviour:
   pickupSounds:
   - {fileID: 8300000, guid: c532aa0b2df53d547b40b1829c816e99, type: 3}
   pickupVolume: 1
+--- !u!114 &5405157830288328773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2451240541909540556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd9496595d673f46b4b4917339769e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 50, z: 0}
+  rotationSpace: 1
 --- !u!1001 &5371150704299056961
 PrefabInstance:
   m_ObjectHideFlags: 0

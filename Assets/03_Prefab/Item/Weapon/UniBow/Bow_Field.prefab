@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6571596502844392106}
   - component: {fileID: -1777153429643231678}
   - component: {fileID: 8235032759974747357}
+  - component: {fileID: -6715726259655293431}
   m_Layer: 3
   m_Name: Bow_Field
   m_TagString: Weapon
@@ -93,6 +94,20 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   itemAsset: {fileID: 11400000, guid: a2be90cb5273b4c409d2451ebdf0b6c7, type: 2}
+--- !u!114 &-6715726259655293431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4656205910049893236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd9496595d673f46b4b4917339769e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 50, z: 0}
+  rotationSpace: 1
 --- !u!1001 &536305553050241040
 PrefabInstance:
   m_ObjectHideFlags: 0

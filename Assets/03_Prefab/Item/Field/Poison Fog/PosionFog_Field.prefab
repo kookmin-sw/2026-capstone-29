@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8400015361815401627}
   - component: {fileID: -9131747313509832101}
   - component: {fileID: 1038863152743047785}
+  - component: {fileID: -2203245754209418796}
   m_Layer: 3
   m_Name: PosionFog_Field
   m_TagString: Field
@@ -28,15 +29,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2339528841912398717}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.07008555, y: -0, z: -0, w: 0.99754107}
+  m_LocalPosition: {x: 0, y: -0.015471801, z: -0.026417345}
   m_LocalScale: {x: 0.42, y: 0.42, z: 0.42}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4050341553381315428}
   - {fileID: 8851148604467419980}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 8.038, y: 0, z: 0}
 --- !u!135 &8728744114424484992
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -106,6 +107,20 @@ MonoBehaviour:
   pickupSounds:
   - {fileID: 8300000, guid: 0daa27b0eb07ed74d9c64825b465c4cf, type: 3}
   pickupVolume: 1
+--- !u!114 &-2203245754209418796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2339528841912398717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd9496595d673f46b4b4917339769e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 50, z: 0}
+  rotationSpace: 1
 --- !u!1001 &1505938943628612693
 PrefabInstance:
   m_ObjectHideFlags: 0

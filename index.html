@@ -9,14 +9,12 @@
 </head>
 <body>
 
-  <!-- ============ 배경 이미지 영역 ============ -->
   <div class="hero-bg">
     <div class="hero-content">
       <div class="hero-badge">TEAM LTS PRESENTS</div>
       <h1 class="hero-title">HEROINES<br>OF STORM</h1>
-      <p class="hero-subtitle">3D 캐주얼 1 vs 1 격투게임</p>
+      <p class="hero-subtitle">3D 캐주얼 격투게임</p>
 
-      <!-- 데모 영상 -->
       <div class="demo-video-section">
         <h2 class="section-label"><span class="label-accent">01</span> DEMO</h2>
         <div class="video-wrapper">
@@ -26,7 +24,6 @@
         </div>
       </div>
 
-      <!-- 스토리 -->
       <div class="story-section">
         <h2 class="section-label"><span class="label-accent">02</span> STORY</h2>
         <div class="story-card">
@@ -36,7 +33,6 @@
         </div>
       </div>
 
-      <!-- 스크롤 유도 -->
       <div class="scroll-indicator">
         <div class="scroll-line"></div>
         <span>SCROLL</span>
@@ -44,22 +40,276 @@
     </div>
   </div>
 
-  <!-- ============ 메인 콘텐츠 ============ -->
   <div class="main-layer">
 
     <nav class="chapter-nav">
-      <a href="#multiplayer" class="chapter-btn"><span class="btn-num">01</span>멀티플레이</a>
-      <a href="#map" class="chapter-btn"><span class="btn-num">02</span>맵 소개</a>
-      <a href="#player" class="chapter-btn"><span class="btn-num">03</span>플레이어</a>
-      <a href="#items" class="chapter-btn"><span class="btn-num">04</span>아이템</a>
-      <a href="#architecture" class="chapter-btn"><span class="btn-num">05</span>아키텍처</a>
-      <a href="#team" class="chapter-btn"><span class="btn-num">06</span>Made By</a>
+      <a href="#player"       class="chapter-btn"><span class="btn-num"></span>플레이어</a>
+      <a href="#items"        class="chapter-btn"><span class="btn-num"></span>아이템</a>
+      <a href="#map"          class="chapter-btn"><span class="btn-num"></span>맵 소개</a>
+      <a href="#multiplayer"  class="chapter-btn"><span class="btn-num"></span>멀티플레이</a>
+      <a href="#architecture" class="chapter-btn"><span class="btn-num"></span>아키텍처</a>
+      <a href="#team"         class="chapter-btn"><span class="btn-num"></span>Made By</a>
     </nav>
 
-    <!-- 멀티플레이 -->
+
+    <!-- ===== 플레이어 ===== -->
+    <section id="player" class="chapter">
+      <div class="chapter-header">
+        <h2 class="chapter-title">플레이어</h2>
+      </div>
+      <div class="chapter-body">
+
+        <div class="chapter-card wide">
+          <h3>캐릭터</h3>
+          <div class="character-grid">
+            <div class="character-card">
+              <div class="character-img-box image-placeholder">애쉬포드 이미지</div>
+              <div class="character-name">애쉬포드</div>
+            </div>
+            <div class="character-card">
+              <div class="character-img-box image-placeholder">츠바키 이미지</div>
+              <div class="character-name">츠바키</div>
+            </div>
+            <div class="character-card">
+              <div class="character-img-box image-placeholder">제로 이미지</div>
+              <div class="character-name">제로</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chapter-card wide">
+          <h3>전략적으로 전투를 이어나가자</h3>
+          <div class="action-grid">
+            <div class="action-card">
+              <div class="gif-box image-placeholder">행동 GIF 1</div>
+              <div class="action-label">이동 · 점프 · 회피</div>
+            </div>
+            <div class="action-card">
+              <div class="gif-box image-placeholder">행동 GIF 2</div>
+              <div class="action-label">기본 공격 콤보</div>
+            </div>
+            <div class="action-card">
+              <div class="gif-box image-placeholder">행동 GIF 3</div>
+              <div class="action-label">강공격 · 필살기</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="chapter-card">
+          <h3>조작법</h3>
+          <table>
+            <thead><tr><th>동작</th><th>키 입력</th></tr></thead>
+            <tbody>
+              <tr><td>이동</td><td><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> <kbd>Space</kbd></td></tr>
+              <tr><td>대시</td><td><kbd>Shift</kbd></td></tr>
+              <tr><td>기본 공격 (콤보)</td><td>마우스 좌클릭</td></tr>
+              <tr><td>강공격 (차지)</td><td>마우스 우클릭 길게</td></tr>
+              <tr><td>앉기</td><td><kbd>C</kbd></td></tr>
+              <tr><td>아이템 획득</td><td><kbd>E</kbd></td></tr>
+              <tr><td>필살기 사용</td><td><kbd>R</kbd></td></tr>
+              <tr><td>액티브 아이템</td><td><kbd>Q</kbd></td></tr>
+              <tr><td>근접 무기 던지기</td><td>마우스 우클릭</td></tr>
+              <tr><td>뒤로가기</td><td><kbd>ESC</kbd></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ===== 아이템 ===== -->
+    <section id="items" class="chapter">
+      <div class="chapter-header">
+        <h2 class="chapter-title">아이템 소개</h2>
+      </div>
+      <div class="chapter-body">
+
+        <p class="chapter-intro">맵 곳곳에 배치된 다양한 아이템을 활용하여 전장을 유리하게 이끌어나가자.</p>
+
+        <!-- 무기 -->
+        <div class="chapter-card wide">
+          <h3>무기 아이템</h3>
+          <div class="item-detail-grid">
+            <div class="item-detail-card">
+              <div class="item-gif-box image-placeholder">GIF</div>
+              <div class="item-info">
+                <div class="item-detail-name">활</div>
+                <div class="item-detail-desc">원거리에서 화살을 발사해 적을 공격한다.</div>
+              </div>
+            </div>
+            <div class="item-detail-card">
+              <div class="item-gif-box image-placeholder">GIF</div>
+              <div class="item-info">
+                <div class="item-detail-name">점착 폭탄</div>
+                <div class="item-detail-desc">표면에 달라붙는 폭탄을 투척해 폭발 데미지를 입힌다.</div>
+              </div>
+            </div>
+            <div class="item-detail-card">
+              <div class="item-gif-box image-placeholder">GIF</div>
+              <div class="item-info">
+                <div class="item-detail-name">단검</div>
+                <div class="item-detail-desc">빠른 속도로 연속 공격이 가능한 근접 무기.</div>
+              </div>
+            </div>
+            <div class="item-detail-card">
+              <div class="item-gif-box image-placeholder">GIF</div>
+              <div class="item-info">
+                <div class="item-detail-name">테이저 건</div>
+                <div class="item-detail-desc">전기 충격으로 적을 잠시 감전·경직시킨다.</div>
+              </div>
+            </div>
+            <div class="item-detail-card">
+              <div class="item-gif-box image-placeholder">GIF</div>
+              <div class="item-info">
+                <div class="item-detail-name">도끼</div>
+                <div class="item-detail-desc">강력한 한 방으로 높은 데미지를 가하는 무기.</div>
+              </div>
+            </div>
+            <div class="item-detail-card">
+              <div class="item-gif-box image-placeholder">GIF</div>
+              <div class="item-info">
+                <div class="item-detail-name">활</div>
+                <div class="item-detail-desc">화살을 발사하여 원거리에서 적에게 피해를 입힌다.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 패시브 -->
+        <div class="chapter-card wide">
+          <h3> 패시브 아이템</h3>
+          <div class="item-detail-grid col3">
+            <div class="item-detail-card">
+              <div class="item-gif-box image-placeholder">GIF</div>
+              <div class="item-info">
+                <div class="item-detail-name">질주</div>
+                <div class="item-detail-desc">획득 즉시 이동 속도가 영구적으로 증가한다.</div>
+              </div>
+            </div>
+            <div class="item-detail-card">
+              <div class="item-gif-box image-placeholder">GIF</div>
+              <div class="item-info">
+                <div class="item-detail-name">배터리</div>
+                <div class="item-detail-desc">최대 체력이 증가한다.</div>
+              </div>
+            </div>
+            <div class="item-detail-card">
+              <div class="item-gif-box image-placeholder">GIF</div>
+              <div class="item-info">
+                <div class="item-detail-name">달팽이</div>
+                <div class="item-detail-desc">상대방에게 적용하면 이동 속도를 감소시킨다.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 액티브 -->
+        <div class="chapter-card wide">
+          <h3> 액티브 아이템</h3>
+          <div class="item-detail-grid col3">
+            <div class="item-detail-card">
+              <div class="item-gif-box image-placeholder">GIF</div>
+              <div class="item-info">
+                <div class="item-detail-name">덫</div>
+                <div class="item-detail-desc">바닥에 설치해 밟은 적을 일시 구속한다.</div>
+              </div>
+            </div>
+            <div class="item-detail-card">
+              <div class="item-gif-box image-placeholder">GIF</div>
+              <div class="item-info">
+                <div class="item-detail-name">스팀팩</div>
+                <div class="item-detail-desc">사용 시 일정 시간 동안 공격력과 이동 속도가 급격히 상승한다.</div>
+              </div>
+            </div>
+            <div class="item-detail-card">
+              <div class="item-gif-box image-placeholder">GIF</div>
+              <div class="item-info">
+                <div class="item-detail-name">연막탄</div>
+                <div class="item-detail-desc">연막을 퍼뜨려 시야를 가리고 상대방의 판단을 방해한다.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 필드 -->
+        <div class="chapter-card wide">
+          <h3> 필드 아이템</h3>
+          <div class="item-detail-grid col3">
+            <div class="item-detail-card">
+              <div class="item-gif-box image-placeholder">GIF</div>
+              <div class="item-info">
+                <div class="item-detail-name">미사일</div>
+                <div class="item-detail-desc">넓은 범위에 강력한 폭발 데미지를 준다.</div>
+              </div>
+            </div>
+            <div class="item-detail-card">
+              <div class="item-gif-box image-placeholder">GIF</div>
+              <div class="item-info">
+                <div class="item-detail-name">중력변환장치</div>
+                <div class="item-detail-desc">맵 전체의 중력 방향을 일시적으로 반전시킨다.</div>
+              </div>
+            </div>
+            <div class="item-detail-card">
+              <div class="item-gif-box image-placeholder">GIF</div>
+              <div class="item-info">
+                <div class="item-detail-name">독안개</div>
+                <div class="item-detail-desc">맵 전역에 독안개를 퍼뜨려 지속 데미지를 준다.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== 03 맵 소개 ===== -->
+    <section id="map" class="chapter">
+      <div class="chapter-header">
+        <h2 class="chapter-title">맵 소개</h2>
+      </div>
+      <div class="chapter-body">
+
+        <div class="chapter-card wide">
+          <div class="image-placeholder">맵 전경 이미지 추가 예정</div>
+          <p>3D 다층 구조의 넓은 맵을 통해 여러가지 전투방식을 구사할 수 있다.</p>
+          <p>상대방과 거리를 벌려 원거리 데미지를 구사하거나, 맵 오브젝트를 활용해 높은 위치를 선점할 수 있다.</p>
+        </div>
+
+        <div class="chapter-card wide">
+          <h3>맵 오브젝트</h3>
+          <div class="map-object-list">
+            <div class="map-object-card">
+              <div class="map-gif-box image-placeholder">점프대 GIF</div>
+              <div class="map-object-info">
+                <div class="map-object-name">점프대</div>
+                <div class="map-object-desc">플레이어가 점프대에 닿으면 y축 방향으로 높이 솟아오른다. 빠른 수직 이동과 회피에 활용할 수 있다.</div>
+              </div>
+            </div>
+            <div class="map-object-card">
+              <div class="map-gif-box image-placeholder">물줄기 GIF</div>
+              <div class="map-object-info">
+                <div class="map-object-name">물줄기</div>
+                <div class="map-object-desc">가만히 있으면 물줄기를 따라 아래로 천천히 떨어진다. 수영으로 느린 속도로 거슬러 올라갈 수 있어 회피·기동에 활용된다.</div>
+              </div>
+            </div>
+            <div class="map-object-card">
+              <div class="map-gif-box image-placeholder">낙사구역 GIF</div>
+              <div class="map-object-info">
+                <div class="map-object-name">낙사 구역</div>
+                <div class="map-object-desc">맵 가장자리의 위험 구역. 닿으면 체력의 일정 비율 데미지를 받는다. 상대를 밀어 낙사를 유도하는 전략이 가능하다.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ===== 04 멀티플레이 ===== -->
     <section id="multiplayer" class="chapter">
       <div class="chapter-header">
-        <span class="chapter-num">01</span>
         <h2 class="chapter-title">멀티플레이</h2>
       </div>
       <div class="chapter-body">
@@ -80,114 +330,10 @@
       </div>
     </section>
 
-    <!-- 맵 소개 -->
-    <section id="map" class="chapter">
-      <div class="chapter-header">
-        <span class="chapter-num">02</span>
-        <h2 class="chapter-title">맵 소개</h2>
-      </div>
-      <div class="chapter-body">
-        <div class="chapter-card wide">
-          <div class="image-placeholder">맵 전경 이미지 추가 예정</div>
-          <p>3D 다층 구조의 넓은 맵을 통해 여러가지 전투방식을 구사할 수 있다.</p>
-          <p>상대방과 거리를 벌려 원거리 데미지를 구사하거나, 맵 오브젝트를 활용해 높은 위치를 선점할 수 있다.</p>
-        </div>
-        <div class="chapter-card">
-          <h3>지형지물</h3>
-          <table>
-            <thead>
-              <tr><th>지형지물</th><th>효과</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>점프대</td><td>밟으면 위로 높이 솟아오름</td></tr>
-              <tr><td>폭포</td><td>거슬러 올라가거나 천천히 낙하</td></tr>
-              <tr><td>장외 구역</td><td>닿으면 체력 50% 피해</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
 
-    <!-- 플레이어 -->
-    <section id="player" class="chapter">
-      <div class="chapter-header">
-        <span class="chapter-num">03</span>
-        <h2 class="chapter-title">플레이어</h2>
-      </div>
-      <div class="chapter-body">
-        <div class="chapter-card">
-          <div class="image-placeholder">플레이어 스크린샷 추가 예정</div>
-          <p>플레이어는 이동 및 점프, 회피를 통해 움직일 수 있다.</p>
-          <p>기본 공격 및 강공격을 이용해 상대를 공격할 수 있다.</p>
-        </div>
-        <div class="chapter-card">
-          <h3>조작법</h3>
-          <table>
-            <thead>
-              <tr><th>동작</th><th>키 입력</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>이동</td><td><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd> <kbd>Space</kbd></td></tr>
-              <tr><td>대시</td><td><kbd>Shift</kbd></td></tr>
-              <tr><td>기본 공격 (콤보)</td><td>마우스 좌클릭</td></tr>
-              <tr><td>강공격 (차지)</td><td>마우스 우클릭 길게</td></tr>
-              <tr><td>앉기</td><td><kbd>C</kbd></td></tr>
-              <tr><td>아이템 획득</td><td><kbd>E</kbd></td></tr>
-              <tr><td>필살기 사용</td><td><kbd>R</kbd></td></tr>
-              <tr><td>액티브 아이템</td><td><kbd>Q</kbd></td></tr>
-              <tr><td>근접 무기 던지기</td><td>마우스 우클릭</td></tr>
-              <tr><td>뒤로가기</td><td><kbd>ESC</kbd></td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
-    <!-- 아이템 -->
-    <section id="items" class="chapter">
-      <div class="chapter-header">
-        <span class="chapter-num">04</span>
-        <h2 class="chapter-title">아이템 소개</h2>
-      </div>
-      <div class="chapter-body">
-        <p class="chapter-intro">맵 곳곳에 배치된 다양한 아이템을 활용한 짜릿한 역전을 노려보자.</p>
-        <div class="item-grid">
-          <div class="item-card">
-            <div class="item-icon">⚔</div>
-            <h4>무기 아이템</h4>
-            <p>다양한 무기와 아이템을 활용할 수 있다.</p>
-          </div>
-          <div class="item-card">
-            <div class="item-icon">⚡</div>
-            <h4>액티브 아이템</h4>
-            <p>액티브 아이템을 활용해 상대방을 방해하거나 추가 효과를 얻을 수 있다.</p>
-          </div>
-          <div class="item-card">
-            <div class="item-icon">🌀</div>
-            <h4>필드 아이템</h4>
-            <p>필드에 배치된 오브젝트를 통해 불가능한 변수를 만들자.</p>
-          </div>
-          <div class="item-card">
-            <div class="item-icon">🛡</div>
-            <h4>패시브 아이템</h4>
-            <p>패시브 효과로 전투를 유리하게 이끌자.</p>
-          </div>
-        </div>
-        <div class="chapter-card wide">
-          <h3>아이템 플레이의 장점</h3>
-          <ul class="feature-list">
-            <li><strong>실력 격차 완화</strong> <span class="divider">—</span> 강력한 아이템으로 역전의 기회를 제공</li>
-            <li><strong>변수 창출</strong> <span class="divider">—</span> 매 경기마다 다른 양상의 전투</li>
-            <li><strong>시너지의 즐거움</strong> <span class="divider">—</span> 아이템 조합으로 전략적 승리</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- 아키텍처 -->
+    <!-- ===== 05 아키텍처 ===== -->
     <section id="architecture" class="chapter">
       <div class="chapter-header">
-        <span class="chapter-num">05</span>
         <h2 class="chapter-title">ARCHITECTURE</h2>
       </div>
       <div class="chapter-body">
@@ -197,31 +343,19 @@
         <div class="chapter-card wide">
           <h3>기술 스택</h3>
           <div class="stack-grid">
-            <div class="stack-item">
-              <span class="stack-label">Engine</span>
-              <span class="stack-value">Unity 2022.3.62f3</span>
-            </div>
-            <div class="stack-item">
-              <span class="stack-label">Networking</span>
-              <span class="stack-value">Mirror (P2P)</span>
-            </div>
-            <div class="stack-item">
-              <span class="stack-label">Language</span>
-              <span class="stack-value">C#</span>
-            </div>
-            <div class="stack-item">
-              <span class="stack-label">3D Modeling</span>
-              <span class="stack-value">Blender</span>
-            </div>
+            <div class="stack-item"><span class="stack-label">Engine</span><span class="stack-value">Unity 2022.3.62f3</span></div>
+            <div class="stack-item"><span class="stack-label">Networking</span><span class="stack-value">Mirror (P2P)</span></div>
+            <div class="stack-item"><span class="stack-label">Language</span><span class="stack-value">C#</span></div>
+            <div class="stack-item"><span class="stack-label">3D Modeling</span><span class="stack-value">Blender</span></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Made By -->
+
+    <!-- ===== 06 Made By ===== -->
     <section id="team" class="chapter">
       <div class="chapter-header">
-        <span class="chapter-num">06</span>
         <h2 class="chapter-title">Made By</h2>
       </div>
       <div class="chapter-body">
@@ -254,19 +388,17 @@
   </div>
 
   <script>
-    // 등장 애니메이션 (순차 딜레이)
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) entry.target.classList.add('visible');
       });
-    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
 
-    document.querySelectorAll('.chapter, .chapter-card, .item-card, .team-card').forEach((el, i) => {
-      el.style.transitionDelay = `${(i % 4) * 0.08}s`;
+    document.querySelectorAll('.chapter, .chapter-card, .item-detail-card, .team-card, .character-card, .action-card, .map-object-card').forEach((el, i) => {
+      el.style.transitionDelay = `${(i % 5) * 0.07}s`;
       observer.observe(el);
     });
 
-    // 네비게이션 스무스 스크롤
     const navBtns = document.querySelectorAll('.chapter-btn');
     const chapters = document.querySelectorAll('.chapter');
 
@@ -278,7 +410,6 @@
       });
     });
 
-    // 스크롤 시 active 네비게이션
     const navObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -287,11 +418,10 @@
           if (activeBtn) activeBtn.classList.add('active');
         }
       });
-    }, { threshold: 0.3, rootMargin: '-80px 0px -50% 0px' });
+    }, { threshold: 0.25, rootMargin: '-80px 0px -50% 0px' });
 
     chapters.forEach(ch => navObserver.observe(ch));
 
-    // 히어로 패럴랙스
     const heroContent = document.querySelector('.hero-content');
     const heroBg = document.querySelector('.hero-bg');
     window.addEventListener('scroll', () => {

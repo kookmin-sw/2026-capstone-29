@@ -4842,6 +4842,7 @@ GameObject:
   - component: {fileID: 8938454126617745337}
   - component: {fileID: 6549559305639098973}
   - component: {fileID: 7346585493323235981}
+  - component: {fileID: 3834126971191638073}
   m_Layer: 0
   m_Name: TazorGun_Field
   m_TagString: Weapon
@@ -4920,6 +4921,20 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   itemAsset: {fileID: 11400000, guid: 34bf7fb288bf71e43ba6792a0b10bba4, type: 2}
+--- !u!114 &3834126971191638073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2406057304800879942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd9496595d673f46b4b4917339769e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 50, z: 0}
+  rotationSpace: 1
 --- !u!1001 &7738981064836781616
 PrefabInstance:
   m_ObjectHideFlags: 0

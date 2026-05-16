@@ -6586,6 +6586,7 @@ GameObject:
   - component: {fileID: 6012899906229956230}
   - component: {fileID: 6922622268062660442}
   - component: {fileID: -262134239758193027}
+  - component: {fileID: 7853652041728516384}
   m_Layer: 3
   m_Name: Snail_Field
   m_TagString: Passive
@@ -6679,6 +6680,20 @@ MonoBehaviour:
   pickupSounds:
   - {fileID: 8300000, guid: 8404efa2afe311244a08dc1eeb82e197, type: 3}
   pickupVolume: 1
+--- !u!114 &7853652041728516384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5738594806650731305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd9496595d673f46b4b4917339769e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 50, z: 0}
+  rotationSpace: 1
 --- !u!1 &5953701511919655942
 GameObject:
   m_ObjectHideFlags: 0

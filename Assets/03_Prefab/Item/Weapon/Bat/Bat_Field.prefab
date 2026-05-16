@@ -4925,6 +4925,7 @@ GameObject:
   - component: {fileID: 2194721147163561609}
   - component: {fileID: 730071089149718368}
   - component: {fileID: 3347806401281561582}
+  - component: {fileID: 8101640519716745132}
   m_Layer: 3
   m_Name: Bat_Field
   m_TagString: Weapon
@@ -4940,15 +4941,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6630323124785233130}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.33235404, w: 0.9431547}
+  m_LocalPosition: {x: -0.02492093, y: 0.008781774, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5350557442048303328}
   - {fileID: 3751851805716189473}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -38.823}
 --- !u!135 &2194721147163561609
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5003,6 +5004,20 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   itemAsset: {fileID: 11400000, guid: ea848395af638fd46a1797b84c5d6453, type: 2}
+--- !u!114 &8101640519716745132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6630323124785233130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd9496595d673f46b4b4917339769e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 50, z: 0}
+  rotationSpace: 1
 --- !u!1 &7312998605670664487
 GameObject:
   m_ObjectHideFlags: 0

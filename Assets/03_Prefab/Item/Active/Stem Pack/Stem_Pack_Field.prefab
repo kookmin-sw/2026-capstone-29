@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 1690793954672409645}
   - component: {fileID: 957863597585928727}
   - component: {fileID: 7115569299111334866}
+  - component: {fileID: 5776976894128745379}
   m_Layer: 3
   m_Name: Stem_Pack_Field
   m_TagString: Active
@@ -194,15 +195,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2167918261752081878}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.22421162, y: -0, z: -0, w: 0.97454053}
+  m_LocalPosition: {x: 0, y: 0.01908034, z: -0.08293317}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4897101819545145835}
   - {fileID: 9100123637480571758}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 25.913, y: 0, z: 0}
 --- !u!114 &1615501050177247395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,6 +273,20 @@ MonoBehaviour:
   pickupSounds:
   - {fileID: 8300000, guid: 2380a0332666841498e7f7b96b10751f, type: 3}
   pickupVolume: 1
+--- !u!114 &5776976894128745379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2167918261752081878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd9496595d673f46b4b4917339769e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 50, z: 0}
+  rotationSpace: 1
 --- !u!1 &2385271199996418426
 GameObject:
   m_ObjectHideFlags: 0

@@ -4844,6 +4844,7 @@ GameObject:
   - component: {fileID: 7665403694913785545}
   - component: {fileID: 4965376645417210752}
   - component: {fileID: 4318958448332046242}
+  - component: {fileID: 4765186218389708505}
   m_Layer: 3
   m_Name: Axe_Field
   m_TagString: Weapon
@@ -4859,14 +4860,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8888579313979457346}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.03507656, y: -0.41348645, z: 0.88028663, w: -0.22998716}
-  m_LocalPosition: {x: -3.5330982, y: 37.738, z: 14.345}
+  m_LocalRotation: {x: -0.12205315, y: -0.39661625, z: 0.81140107, w: -0.411615}
+  m_LocalPosition: {x: -3.3965394, y: 37.801872, z: 14.390724}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8452182170378088963}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 48.082, y: -348.91602, z: -145.759}
+  m_LocalEulerAnglesHint: {x: 48.082, y: -348.91602, z: -121.247}
 --- !u!33 &8402473531641474966
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4971,3 +4972,17 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   itemAsset: {fileID: 11400000, guid: 19439bf68999789418fc746ca9a4770d, type: 2}
+--- !u!114 &4765186218389708505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8888579313979457346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd9496595d673f46b4b4917339769e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 50, z: 0}
+  rotationSpace: 1

@@ -5088,6 +5088,7 @@ GameObject:
   - component: {fileID: 5037056369805476124}
   - component: {fileID: 830794134624308111}
   - component: {fileID: 7465058859468705205}
+  - component: {fileID: 8680976557810477121}
   m_Layer: 3
   m_Name: Dagger_Field
   m_TagString: Weapon
@@ -5166,3 +5167,17 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   itemAsset: {fileID: 11400000, guid: e32d32d8be737604a900a4a57fbebc70, type: 2}
+--- !u!114 &8680976557810477121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8826999024464848779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd9496595d673f46b4b4917339769e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 50, z: 0}
+  rotationSpace: 1

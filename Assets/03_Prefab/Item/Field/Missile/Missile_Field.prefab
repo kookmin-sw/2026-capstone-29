@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5425811453541634093}
   - component: {fileID: 7529535631385424956}
   - component: {fileID: -2209571831205297188}
+  - component: {fileID: 7434069253410988251}
   m_Layer: 3
   m_Name: Missile_Field
   m_TagString: Field
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4114549932321689632}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.25703356, y: -0, z: -0, w: 0.96640253}
   m_LocalPosition: {x: -29.872005, y: 37.923, z: 14.854526}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -36,7 +37,7 @@ Transform:
   - {fileID: 9175329167427990713}
   - {fileID: 7023749600825186819}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -29.788, y: 0, z: 0}
 --- !u!114 &1836472802585025823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -106,6 +107,20 @@ MonoBehaviour:
   pickupSounds:
   - {fileID: 8300000, guid: 08997492040f4664f8f0294528e08bac, type: 3}
   pickupVolume: 1
+--- !u!114 &7434069253410988251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4114549932321689632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbd9496595d673f46b4b4917339769e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 50, z: 0}
+  rotationSpace: 1
 --- !u!1001 &8174486240602287867
 PrefabInstance:
   m_ObjectHideFlags: 0
