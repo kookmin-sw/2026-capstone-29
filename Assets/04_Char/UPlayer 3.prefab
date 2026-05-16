@@ -357,9 +357,9 @@ MonoBehaviour:
   maxLives: 3
   startHealth: 100
   hitEffectPrefabs:
+  - {fileID: 1295152798636446, guid: 7bc5cf6046eb9334fbe9d6990beae341, type: 3}
   - {fileID: 1386863584468592, guid: 870267e33195a014cb7a46b117e2f3ac, type: 3}
-  - {fileID: 1386863584468592, guid: 870267e33195a014cb7a46b117e2f3ac, type: 3}
-  - {fileID: 1386863584468592, guid: 870267e33195a014cb7a46b117e2f3ac, type: 3}
+  - {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
   effectDuration: 1
 --- !u!114 &340597318631594795
 MonoBehaviour:
@@ -438,10 +438,10 @@ MonoBehaviour:
   Gravity: -15
   JumpTimeout: 0.1
   FallTimeout: 0.15
-  EnableMultiJump: 0
+  EnableMultiJump: 1
   MaxJumpCount: 2
   MultiJumpInterval: 0.15
-  ConsumeJumpOnWalkOff: 0
+  ConsumeJumpOnWalkOff: 1
   Grounded: 1
   GroundedOffset: -0.1
   GroundedRadius: 0.25
@@ -752,6 +752,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6562449300323122143}
     - target: {fileID: 836958307239943615, guid: c822ccc94298e6044a6191815437b7c4, type: 3}
+      propertyPath: effectIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 836958307239943615, guid: c822ccc94298e6044a6191815437b7c4, type: 3}
       propertyPath: hitboxCollider
       value: 
       objectReference: {fileID: 2841408776849543666}
@@ -783,6 +787,10 @@ PrefabInstance:
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 6562449300323122143}
+    - target: {fileID: 961499791541720170, guid: c822ccc94298e6044a6191815437b7c4, type: 3}
+      propertyPath: effectIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 961499791541720170, guid: c822ccc94298e6044a6191815437b7c4, type: 3}
       propertyPath: hitEffectPrefab
       value: 

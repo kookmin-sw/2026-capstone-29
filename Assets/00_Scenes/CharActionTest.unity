@@ -3123,18 +3123,6 @@ PrefabInstance:
       propertyPath: sceneId
       value: 2459301703
       objectReference: {fileID: 0}
-    - target: {fileID: 4665905575940984341, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
-      propertyPath: hitEffectPrefabs.Array.data[0]
-      value: 
-      objectReference: {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
-    - target: {fileID: 4665905575940984341, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
-      propertyPath: hitEffectPrefabs.Array.data[1]
-      value: 
-      objectReference: {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
-    - target: {fileID: 4665905575940984341, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
-      propertyPath: hitEffectPrefabs.Array.data[2]
-      value: 
-      objectReference: {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
     - target: {fileID: 5278848616009620587, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
       propertyPath: redOverlay
       value: 

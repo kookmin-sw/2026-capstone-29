@@ -390,8 +390,8 @@ MonoBehaviour:
   startHealth: 100
   hitEffectPrefabs:
   - {fileID: 1295152798636446, guid: 7bc5cf6046eb9334fbe9d6990beae341, type: 3}
-  - {fileID: 1295152798636446, guid: 7bc5cf6046eb9334fbe9d6990beae341, type: 3}
-  - {fileID: 1295152798636446, guid: 7bc5cf6046eb9334fbe9d6990beae341, type: 3}
+  - {fileID: 1386863584468592, guid: 870267e33195a014cb7a46b117e2f3ac, type: 3}
+  - {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
   effectDuration: 1
 --- !u!114 &6064403931058115902
 MonoBehaviour:
@@ -484,10 +484,10 @@ MonoBehaviour:
   Gravity: -15
   JumpTimeout: 0.1
   FallTimeout: 0.15
-  EnableMultiJump: 0
+  EnableMultiJump: 1
   MaxJumpCount: 2
   MultiJumpInterval: 0.15
-  ConsumeJumpOnWalkOff: 0
+  ConsumeJumpOnWalkOff: 1
   Grounded: 1
   GroundedOffset: -0.1
   GroundedRadius: 0.25
@@ -1527,7 +1527,7 @@ MonoBehaviour:
   knockbackVerticalPower: 0
   knockbackInputLockDuration: 0.2
   knockbackFromOwner: 1
-  effectIndex: 3
+  effectIndex: 0
   hitEffectPrefab: {fileID: 1295152798636446, guid: 7bc5cf6046eb9334fbe9d6990beae341, type: 3}
   effectDuration: 1
   audioSource: {fileID: 5858724634432584369}
@@ -1568,7 +1568,7 @@ MonoBehaviour:
   knockbackVerticalPower: 0
   knockbackInputLockDuration: 0.4
   knockbackFromOwner: 1
-  effectIndex: 1
+  effectIndex: 0
   hitEffectPrefab: {fileID: 1295152798636446, guid: 7bc5cf6046eb9334fbe9d6990beae341, type: 3}
   effectDuration: 2
   audioSource: {fileID: 5858724634432584369}
@@ -1754,7 +1754,7 @@ MonoBehaviour:
   knockbackVerticalPower: 0
   knockbackInputLockDuration: 0.2
   knockbackFromOwner: 1
-  effectIndex: 2
+  effectIndex: 0
   hitEffectPrefab: {fileID: 1295152798636446, guid: 7bc5cf6046eb9334fbe9d6990beae341, type: 3}
   effectDuration: 1
   audioSource: {fileID: 5858724634432584369}

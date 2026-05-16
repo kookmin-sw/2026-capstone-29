@@ -357,9 +357,9 @@ MonoBehaviour:
   maxLives: 3
   startHealth: 100
   hitEffectPrefabs:
-  - {fileID: 7775297073632181632, guid: 7eefe271218ab3e4f816adc8b0c7278c, type: 3}
-  - {fileID: 1226031520979461127, guid: 9c692d73cd82e0d409bec909e987a5b8, type: 3}
-  - {fileID: 1226031520979461127, guid: 9c692d73cd82e0d409bec909e987a5b8, type: 3}
+  - {fileID: 1295152798636446, guid: 7bc5cf6046eb9334fbe9d6990beae341, type: 3}
+  - {fileID: 1386863584468592, guid: 870267e33195a014cb7a46b117e2f3ac, type: 3}
+  - {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
   effectDuration: 1
 --- !u!114 &8009985321600727323
 MonoBehaviour:
@@ -438,10 +438,10 @@ MonoBehaviour:
   Gravity: -15
   JumpTimeout: 0.1
   FallTimeout: 0.15
-  EnableMultiJump: 0
+  EnableMultiJump: 1
   MaxJumpCount: 2
   MultiJumpInterval: 0.15
-  ConsumeJumpOnWalkOff: 0
+  ConsumeJumpOnWalkOff: 1
   Grounded: 1
   GroundedOffset: -0.1
   GroundedRadius: 0.25
@@ -760,9 +760,17 @@ PrefabInstance:
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 2688375583297803400, guid: 2639f5d4e5038934cb9418e0f5b196dd, type: 3}
+      propertyPath: effectIndex
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2688375583297803400, guid: 2639f5d4e5038934cb9418e0f5b196dd, type: 3}
       propertyPath: hitEffectPrefab
       value: 
       objectReference: {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
+    - target: {fileID: 2688375583297803400, guid: 2639f5d4e5038934cb9418e0f5b196dd, type: 3}
+      propertyPath: knockbackFromOwner
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2732849374937069461, guid: 2639f5d4e5038934cb9418e0f5b196dd, type: 3}
       propertyPath: points.Array.size
       value: 7
@@ -1962,7 +1970,7 @@ MonoBehaviour:
   knockbackVerticalPower: 0
   knockbackInputLockDuration: 0.2
   knockbackFromOwner: 1
-  effectIndex: 1
+  effectIndex: 2
   hitEffectPrefab: {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
   effectDuration: 1
   audioSource: {fileID: 1557915836691104627}
@@ -2046,7 +2054,7 @@ MonoBehaviour:
   knockbackVerticalPower: 0
   knockbackInputLockDuration: 0.2
   knockbackFromOwner: 1
-  effectIndex: 1
+  effectIndex: 2
   hitEffectPrefab: {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
   effectDuration: 1
   audioSource: {fileID: 1557915836691104627}
@@ -2167,6 +2175,10 @@ PrefabInstance:
     - target: {fileID: 3745027184528515937, guid: 45abcbddf4fe2dd448e04fc28cb22822, type: 3}
       propertyPath: damage
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3745027184528515937, guid: 45abcbddf4fe2dd448e04fc28cb22822, type: 3}
+      propertyPath: effectIndex
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3745027184528515937, guid: 45abcbddf4fe2dd448e04fc28cb22822, type: 3}
       propertyPath: hitEffectPrefab
