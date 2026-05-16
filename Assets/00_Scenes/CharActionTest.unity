@@ -3075,18 +3075,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1264423251303297213, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
-      propertyPath: hitEffectPrefab
-      value: 
-      objectReference: {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
-    - target: {fileID: 1855292913417074298, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
-      propertyPath: effectIndex
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1855292913417074298, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
-      propertyPath: hitEffectPrefab
-      value: 
-      objectReference: {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
     - target: {fileID: 2878894047224720791, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -11.213727
@@ -3135,22 +3123,22 @@ PrefabInstance:
       propertyPath: sceneId
       value: 2459301703
       objectReference: {fileID: 0}
+    - target: {fileID: 4665905575940984341, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
+      propertyPath: hitEffectPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
+    - target: {fileID: 4665905575940984341, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
+      propertyPath: hitEffectPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
+    - target: {fileID: 4665905575940984341, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
+      propertyPath: hitEffectPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
     - target: {fileID: 5278848616009620587, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
       propertyPath: redOverlay
       value: 
       objectReference: {fileID: 959362177}
-    - target: {fileID: 6896701883193997806, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
-      propertyPath: hitEffectPrefab
-      value: 
-      objectReference: {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
-    - target: {fileID: 9222692267412066493, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
-      propertyPath: effectIndex
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9222692267412066493, guid: feb1b062780cf6a41adc2b8bdd3b16c9, type: 3}
-      propertyPath: hitEffectPrefab
-      value: 
-      objectReference: {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

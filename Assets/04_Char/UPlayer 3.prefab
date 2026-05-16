@@ -357,9 +357,9 @@ MonoBehaviour:
   maxLives: 3
   startHealth: 100
   hitEffectPrefabs:
-  - {fileID: 7775297073632181632, guid: 7eefe271218ab3e4f816adc8b0c7278c, type: 3}
-  - {fileID: 1226031520979461127, guid: 9c692d73cd82e0d409bec909e987a5b8, type: 3}
-  - {fileID: 1226031520979461127, guid: 9c692d73cd82e0d409bec909e987a5b8, type: 3}
+  - {fileID: 1386863584468592, guid: 870267e33195a014cb7a46b117e2f3ac, type: 3}
+  - {fileID: 1386863584468592, guid: 870267e33195a014cb7a46b117e2f3ac, type: 3}
+  - {fileID: 1386863584468592, guid: 870267e33195a014cb7a46b117e2f3ac, type: 3}
   effectDuration: 1
 --- !u!114 &340597318631594795
 MonoBehaviour:

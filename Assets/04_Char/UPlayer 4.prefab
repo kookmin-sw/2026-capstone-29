@@ -759,6 +759,10 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2688375583297803400, guid: 2639f5d4e5038934cb9418e0f5b196dd, type: 3}
+      propertyPath: hitEffectPrefab
+      value: 
+      objectReference: {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
     - target: {fileID: 2732849374937069461, guid: 2639f5d4e5038934cb9418e0f5b196dd, type: 3}
       propertyPath: points.Array.size
       value: 7
@@ -1958,8 +1962,8 @@ MonoBehaviour:
   knockbackVerticalPower: 0
   knockbackInputLockDuration: 0.2
   knockbackFromOwner: 1
-  effectIndex: 3
-  hitEffectPrefab: {fileID: 1226031520979461127, guid: 9c692d73cd82e0d409bec909e987a5b8, type: 3}
+  effectIndex: 1
+  hitEffectPrefab: {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
   effectDuration: 1
   audioSource: {fileID: 1557915836691104627}
   attackHitSounds:
@@ -2042,8 +2046,8 @@ MonoBehaviour:
   knockbackVerticalPower: 0
   knockbackInputLockDuration: 0.2
   knockbackFromOwner: 1
-  effectIndex: 2
-  hitEffectPrefab: {fileID: 1226031520979461127, guid: 9c692d73cd82e0d409bec909e987a5b8, type: 3}
+  effectIndex: 1
+  hitEffectPrefab: {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
   effectDuration: 1
   audioSource: {fileID: 1557915836691104627}
   attackHitSounds:
@@ -2164,6 +2168,10 @@ PrefabInstance:
       propertyPath: damage
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 3745027184528515937, guid: 45abcbddf4fe2dd448e04fc28cb22822, type: 3}
+      propertyPath: hitEffectPrefab
+      value: 
+      objectReference: {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
     - target: {fileID: 5166745192933960912, guid: 45abcbddf4fe2dd448e04fc28cb22822, type: 3}
       propertyPath: m_Size.z
       value: 3
