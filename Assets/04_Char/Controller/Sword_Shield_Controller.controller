@@ -4736,7 +4736,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14d912eafa575a1458d0278972e06864, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trailName: 
+  trailName: Weapon_Sword
 --- !u!1101 &7372256340232541443
 AnimatorStateTransition:
   m_ObjectHideFlags: 1

@@ -13,9 +13,9 @@ public class UnifiedCharacterView : MonoBehaviour
     private Animator anim;
     private ICharacterModel model;
 
-    [Header("이펙트")]
-    public GameObject chargingEffect;
-    public GameObject chargeReadyEffect;
+    [Header("차지 트레일")]
+    public Tiny.Trail chargingTrail;
+    public Tiny.Trail chargeReadyTrail;
 
     [Header("전투 히트박스")]
     public CharacterHitBox rightHandHitbox;
@@ -332,15 +332,15 @@ public class UnifiedCharacterView : MonoBehaviour
         anim.SetTrigger("UseActive");
     }
 
-    // -------- 차지 이펙트 (Combat이 직접 호출) --------
+    // -------- 차지 트레일 (Combat이 직접 호출) --------
     public void UpdateChargeEffect(bool isCharging, bool isReady)
     {
         anim.SetBool("IsCharging", isCharging);
 
         if (!isCharging)
         {
-            if (chargingEffect) chargingEffect.SetActive(false);
-            if (chargeReadyEffect) chargeReadyEffect.SetActive(false);
+            if (chargingTrail)    chargingTrail.enabled = false;
+            if (chargeReadyTrail) chargeReadyTrail.enabled = false;
             return;
         }
         if (audioSource != null && chargeSounds != null) audioSource.PlayOneShot(chargeSounds, chargeVolume);
@@ -348,19 +348,19 @@ public class UnifiedCharacterView : MonoBehaviour
         if (isReady)
         {
             if (audioSource != null && readySounds != null) audioSource.PlayOneShot(readySounds, readyVolume);
-            if (chargingEffect) chargingEffect.SetActive(false);
-            if (chargeReadyEffect) chargeReadyEffect.SetActive(true);
+            if (chargingTrail)    chargingTrail.enabled = false;
+            if (chargeReadyTrail) chargeReadyTrail.enabled = true;
         }
         else
         {
-            if (chargingEffect) chargingEffect.SetActive(true);
-            if (chargeReadyEffect) chargeReadyEffect.SetActive(false);
+            if (chargingTrail)    chargingTrail.enabled = true;
+            if (chargeReadyTrail) chargeReadyTrail.enabled = false;
         }
     }
     public void ClearChargeEffectsOnly()
     {
-        if (chargingEffect) chargingEffect.SetActive(false);
-        if (chargeReadyEffect) chargeReadyEffect.SetActive(false);
+        if (chargingTrail)    chargingTrail.enabled = false;
+        if (chargeReadyTrail) chargeReadyTrail.enabled = false;
     }
 
     public void PlayStrongAttackEffect() => anim.SetTrigger("DoStrongAttack");

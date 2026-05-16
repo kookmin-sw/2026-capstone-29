@@ -373,8 +373,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a19c1f02620a349a3d89460d3c9e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chargingEffect: {fileID: 301151529960463488}
-  chargeReadyEffect: {fileID: 194571080888789570}
+  chargingTrail: {fileID: 6825777411624251366}
+  chargeReadyTrail: {fileID: 1060333553230713639}
   rightHandHitbox: {fileID: 4201773838606648079}
   leftHandHitbox: {fileID: 4360932330215328474}
   rightFootHitbox: {fileID: 0}
@@ -946,17 +946,13 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2837334159784789007, guid: c822ccc94298e6044a6191815437b7c4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 227553395301651829}
+    - targetCorrespondingSourceObject: {fileID: 203744496703016314, guid: c822ccc94298e6044a6191815437b7c4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6825777411624251366}
+    - targetCorrespondingSourceObject: {fileID: 203744496703016314, guid: c822ccc94298e6044a6191815437b7c4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1060333553230713639}
   m_SourcePrefab: {fileID: 100100000, guid: c822ccc94298e6044a6191815437b7c4, type: 3}
---- !u!1 &194571080888789570 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3867216187090386215, guid: c822ccc94298e6044a6191815437b7c4, type: 3}
-  m_PrefabInstance: {fileID: 3970026408488015717}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &301151529960463488 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3690060273269525477, guid: c822ccc94298e6044a6191815437b7c4, type: 3}
-  m_PrefabInstance: {fileID: 3970026408488015717}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1186805835961258858 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2837334159784789007, guid: c822ccc94298e6044a6191815437b7c4, type: 3}
@@ -1032,6 +1028,65 @@ MonoBehaviour:
   - {x: 0.02, y: 0.1, z: 0}
   - {x: -0.02, y: 0.1, z: 0}
   - {x: -0.02, y: 0.7, z: 0}
+--- !u!1 &3876338647413660191 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 203744496703016314, guid: c822ccc94298e6044a6191815437b7c4, type: 3}
+  m_PrefabInstance: {fileID: 3970026408488015717}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6825777411624251366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3876338647413660191}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff4f5a8991d7fa47baed5c5ff25979f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: fe001d40187ee4d44babc1341d8eb084, type: 2}
+  duration: 0.1
+  corner: 1
+  loop: 1
+  points:
+  - {x: 0.07151575, y: 0.00032602903, z: 0.04732137}
+  - {x: 0.07151575, y: -0.029063217, z: 0.037772223}
+  - {x: 0.07151575, y: -0.047226757, z: 0.012772208}
+  - {x: 0.07151575, y: -0.047226757, z: -0.018129477}
+  - {x: 0.07151575, y: -0.029063217, z: -0.04312946}
+  - {x: 0.07151575, y: 0.00032603275, z: -0.052678607}
+  - {x: 0.07151575, y: 0.02971527, z: -0.04312946}
+  - {x: 0.07151575, y: 0.047878787, z: -0.018129477}
+  - {x: 0.07151575, y: 0.047878787, z: 0.0127722155}
+  - {x: 0.07151575, y: 0.02971524, z: 0.03777223}
+--- !u!114 &1060333553230713639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3876338647413660191}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff4f5a8991d7fa47baed5c5ff25979f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: cc1c823a00d962b4b84872fd155c05d2, type: 2}
+  duration: 0.1
+  corner: 1
+  loop: 1
+  points:
+  - {x: 0.07151575, y: 0.00032602903, z: 0.04732137}
+  - {x: 0.07151575, y: -0.029063217, z: 0.037772223}
+  - {x: 0.07151575, y: -0.047226757, z: 0.012772208}
+  - {x: 0.07151575, y: -0.047226757, z: -0.018129477}
+  - {x: 0.07151575, y: -0.029063217, z: -0.04312946}
+  - {x: 0.07151575, y: 0.00032603275, z: -0.052678607}
+  - {x: 0.07151575, y: 0.02971527, z: -0.04312946}
+  - {x: 0.07151575, y: 0.047878787, z: -0.018129477}
+  - {x: 0.07151575, y: 0.047878787, z: 0.0127722155}
+  - {x: 0.07151575, y: 0.02971524, z: 0.03777223}
 --- !u!114 &4201773838606648079 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 961499791541720170, guid: c822ccc94298e6044a6191815437b7c4, type: 3}

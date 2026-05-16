@@ -328,7 +328,7 @@
                     "name": "",
                     "id": "2745b954-7afd-4da2-a795-3eea33104bf7",
                     "path": "<Mouse>/rightButton",
-                    "interactions": "Hold(duration=1.5)",
+                    "interactions": "Hold(duration=1)",
                     "processors": "",
                     "groups": ";KeyboardMouse",
                     "action": "Charge",

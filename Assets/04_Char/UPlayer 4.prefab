@@ -373,8 +373,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67a19c1f02620a349a3d89460d3c9e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chargingEffect: {fileID: 270914613847802365}
-  chargeReadyEffect: {fileID: 7111934320433939124}
+  chargingTrail: {fileID: 4709132391332698685}
+  chargeReadyTrail: {fileID: 3050042506884467676}
   rightHandHitbox: {fileID: 1264423251303297213}
   leftHandHitbox: {fileID: 6896701883193997806}
   rightFootHitbox: {fileID: 9222692267412066493}
@@ -771,6 +771,14 @@ PrefabInstance:
       propertyPath: knockbackFromOwner
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2688375583297803400, guid: 2639f5d4e5038934cb9418e0f5b196dd, type: 3}
+      propertyPath: attackHitSounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2688375583297803400, guid: 2639f5d4e5038934cb9418e0f5b196dd, type: 3}
+      propertyPath: attackHitSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 71534a05c8122054b8b9f10fd16462cb, type: 3}
     - target: {fileID: 2732849374937069461, guid: 2639f5d4e5038934cb9418e0f5b196dd, type: 3}
       propertyPath: points.Array.size
       value: 7
@@ -993,11 +1001,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9074910485312926251, guid: 3f37ec0a1f92e3e43bfe41b86859602b, type: 3}
   m_PrefabInstance: {fileID: 3848282965331693605}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7111934320433939124 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6329090619601293969, guid: 3f37ec0a1f92e3e43bfe41b86859602b, type: 3}
-  m_PrefabInstance: {fileID: 3848282965331693605}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4014518711043926261
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1063,11 +1066,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9d33eee6c6f44c1439259472e21a309d, type: 3}
---- !u!1 &270914613847802365 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3779668083152709896, guid: 9d33eee6c6f44c1439259472e21a309d, type: 3}
-  m_PrefabInstance: {fileID: 4014518711043926261}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2863915116468788237 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1155389773390607608, guid: 9d33eee6c6f44c1439259472e21a309d, type: 3}
@@ -1929,6 +1927,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 5230746209010000398}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8031151647489284619, guid: 57ae2734981a5e64db0d48f300b3e636, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4709132391332698685}
+    - targetCorrespondingSourceObject: {fileID: 8031151647489284619, guid: 57ae2734981a5e64db0d48f300b3e636, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3050042506884467676}
     - targetCorrespondingSourceObject: {fileID: 2008180202201827477, guid: 57ae2734981a5e64db0d48f300b3e636, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4526037637296270256}
@@ -2000,6 +2004,65 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.7, y: 0.3, z: 0.3}
   m_Center: {x: -0.3, y: 0, z: 0}
+--- !u!1 &2511053907081652093 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8031151647489284619, guid: 57ae2734981a5e64db0d48f300b3e636, type: 3}
+  m_PrefabInstance: {fileID: 5597252946372935030}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4709132391332698685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2511053907081652093}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff4f5a8991d7fa47baed5c5ff25979f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: fe001d40187ee4d44babc1341d8eb084, type: 2}
+  duration: 0.1
+  corner: 1
+  loop: 1
+  points:
+  - {x: 0.07151575, y: 0.00032602903, z: 0.04732137}
+  - {x: 0.07151575, y: -0.029063217, z: 0.037772223}
+  - {x: 0.07151575, y: -0.047226757, z: 0.012772208}
+  - {x: 0.07151575, y: -0.047226757, z: -0.018129477}
+  - {x: 0.07151575, y: -0.029063217, z: -0.04312946}
+  - {x: 0.07151575, y: 0.00032603275, z: -0.052678607}
+  - {x: 0.07151575, y: 0.02971527, z: -0.04312946}
+  - {x: 0.07151575, y: 0.047878787, z: -0.018129477}
+  - {x: 0.07151575, y: 0.047878787, z: 0.0127722155}
+  - {x: 0.07151575, y: 0.02971524, z: 0.03777223}
+--- !u!114 &3050042506884467676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2511053907081652093}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bff4f5a8991d7fa47baed5c5ff25979f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: cc1c823a00d962b4b84872fd155c05d2, type: 2}
+  duration: 0.1
+  corner: 1
+  loop: 1
+  points:
+  - {x: 0.07151575, y: 0.00032602903, z: 0.04732137}
+  - {x: 0.07151575, y: -0.029063217, z: 0.037772223}
+  - {x: 0.07151575, y: -0.047226757, z: 0.012772208}
+  - {x: 0.07151575, y: -0.047226757, z: -0.018129477}
+  - {x: 0.07151575, y: -0.029063217, z: -0.04312946}
+  - {x: 0.07151575, y: 0.00032603275, z: -0.052678607}
+  - {x: 0.07151575, y: 0.02971527, z: -0.04312946}
+  - {x: 0.07151575, y: 0.047878787, z: -0.018129477}
+  - {x: 0.07151575, y: 0.047878787, z: 0.0127722155}
+  - {x: 0.07151575, y: 0.02971524, z: 0.03777223}
 --- !u!4 &3071291120826669506 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7436011323587978420, guid: 57ae2734981a5e64db0d48f300b3e636, type: 3}
@@ -2184,6 +2247,14 @@ PrefabInstance:
       propertyPath: hitEffectPrefab
       value: 
       objectReference: {fileID: 1106933244615982, guid: 65faa7584675c9a4d90f4ea0b229eb11, type: 3}
+    - target: {fileID: 3745027184528515937, guid: 45abcbddf4fe2dd448e04fc28cb22822, type: 3}
+      propertyPath: attackHitSounds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3745027184528515937, guid: 45abcbddf4fe2dd448e04fc28cb22822, type: 3}
+      propertyPath: attackHitSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 71534a05c8122054b8b9f10fd16462cb, type: 3}
     - target: {fileID: 5166745192933960912, guid: 45abcbddf4fe2dd448e04fc28cb22822, type: 3}
       propertyPath: m_Size.z
       value: 3
